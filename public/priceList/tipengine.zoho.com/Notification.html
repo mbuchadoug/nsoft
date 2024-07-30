@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'> </head>
+
+<body>
+    <script>
+        var csrfParamName = 'iamcsrcoo';
+        var wmsenabled = false;
+
+        function getCSRFCookie(name) {
+            var cookie_name = name + '=';
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(cookie_name) === 0) {
+                    return c.substring(cookie_name.length, c.length);
+                }
+            }
+            return '';
+        }
+        var parentDomain = 'https\x3A\x2F\x2Fbooks.zoho.com';
+        window.addEventListener('message', function(e) {
+            if (e.origin === 'https\x3A\x2F\x2Fbooks.zoho.com') {
+                var dataobject = {};
+                dataobject[csrfParamName] = getCSRFCookie('iamcsr');
+                if (e.data.type === 'tabSwitch') {
+                    checkTip(e.data.promotionID, e.data.feedback);
+                } else if (!(e.data.promotionID === undefined)) {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.open('OPTIONS', 'Notification?Pidentifier=' + e.data.promotionID + '&ORGID=857813325&ServiceID=106&Feedback=' + e.data.feedback, true);
+                    xhttp.send(dataobject);
+                }
+                if (e.data.emittype == 'Bannerwmscallbackserver') {
+                    wmsenabled = e.data.serverup;
+                }
+                if (e.data.emittype == 'Bannerwmscallback') {
+                    wmsenabled ? getData() : ''
+                }
+                if (e.data.emittype == 'Bannerwmspoll') {
+                    var delaytime = 1800000;
+                    setTimeout(wmsenabled ? getData : '', delaytime);
+                }
+            }
+        });
+
+        function getData(param) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(data) {
+                if (this.readyState == 4 && this.status == 200) {
+                    var postData = replaceTild(JSON.parse(xhttp.response));
+                    window.parent.postMessage(postData, parentDomain);
+                    timeout(JSON.parse(xhttp.response));
+                } else if (this.readyState == 4 && this.status != 200) {
+                    timeout({
+                        Timeout: 1800000
+                    });
+                }
+            };
+            xhttp.open('GET', 'Notification?ORGID=857813325&ServiceID=106&Feedback=3', true);
+            xhttp.send();
+        }
+
+        function timeout(data) {
+            setTimeout(wmsenabled ? '' : getData, data.Timeout);
+        }
+        getData();
+
+        function replaceTild(json) {
+            return JSON.stringify(json);
+        }
+
+        function checkTip(pid, feedback) {
+            var dataobject = {};
+            dataobject[csrfParamName] = getCSRFCookie('iamcsr');
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(data) {
+                if (this.readyState == 4 && this.status == 200) {
+                    var checkTipData = {
+                        type: 'tabSwitch',
+                        IsActive: JSON.parse(xhttp.response).IsActive
+                    };
+                    window.parent.postMessage(checkTipData, parentDomain);
+                }
+            };
+            xhttp.open('OPTIONS', 'Notification?Pidentifier=' + pid + '&ORGID=857813325&ServiceID=106&Feedback=' + feedback, true);
+            xhttp.send(dataobject);
+        }
+    </script>
+</body>
+
+</html>
