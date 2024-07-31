@@ -123,7 +123,7 @@ router.get("/logout",(req,res)=>{
 
 
 
-router.get('/blog',function(req,res){
+router.get('/info',function(req,res){
   res.render('kambucha/setup')
 })
 
