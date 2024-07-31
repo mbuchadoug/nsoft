@@ -753,6 +753,11 @@ console.log(arr,'doc7')
     res.render('kambucha/batch')
   })
 
+
+  router.get('/batchDispatch',isLoggedIn,function(req,res){
+    res.render('kambucha/batchDisp')
+  })
+
   router.post('/batch',isLoggedIn,function(req,res){
 
     //var refNumber = req.body.referenceNumber

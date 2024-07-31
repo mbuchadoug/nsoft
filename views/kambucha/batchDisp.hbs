@@ -2,17 +2,9 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>New Adjustment | Zoho Inventory</title>
+    <title>Dispatch Stock || Kambucha App</title>
 
-    <!-- To check whether the browser is modern/legacy to help determine which bundle to load
-
-    Modern browsers that support ES6 features like promises, arrow functions, ES6 classes
-    support `type="module"` attribute for scripts. They also support a `nomodule` attribute
-    that allows us to define scripts that will not run in browsers that support `type="module"`
-
-    In legacy browsers where this attribute is not supported, the browsers will just execute this
-    script and set the window.legacyBrowser property to true. It will be undefined in modern
-    browsers because this script won't run at all. -->
+  
     <script type="text/javascript" id="zsiqscript" defer="" src="https://salesiq.zoho.com/widget"></script><script nomodule="">
       window.legacyBrowser = true;
     </script>
@@ -396,48 +388,75 @@
       </div>
        
 
-      <div class="form-group row">
-  <label class="col-lg-2 col-form-label required">Shift</label> 
+
+<div class="form-group row">
+<label class="col-lg-2 col-form-label required">Time</label> 
     <div class="col-lg-4">
-    <!--<select class="form-select form-select-solid" name="shift"   >
-		<option></option>
-		<option value="day" >Day</option>
-		<option value="night" >Night</option>
-																	
-																		
-		</select>-->
+      <input placeholder="dd MMM yyyy" id="ember372" name="date" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="time"></div>
+      </div>
 
-      <input class="form-select form-select-solid" list="browsers" name="browser" id="browser">
-
-<datalist id="browsers">
-  <option value="Edge">
-  <option value="Firefox">
-  <option value="Chrome">
-  <option value="Opera">
-  <option value="Safari">
-</datalist>  
-    </div></div>
+     
     <div class="form-group row">
     <label class="col-lg-2 col-form-label required">Warehouse</label> 
     <div class="col-lg-4">
-     <select class="form-select form-select-solid" name="warehouse" id="warehouse"   >
+       <input class="form-select form-select-solid" list="warehouse" name="warehouse" id="warehouse">
+
+<datalist id="warehouse">
+		<option value="warehouse1" >Warehouse 1</option>
+			<option value="warehouse2" >Warehouse 2</option>
+</datalist>
+      
+      </div></div> <!----><!----> 
+
+          <div class="form-group row">
+    <label class="col-lg-2 col-form-label required">Salesperson</label> 
+    <div class="col-lg-4">
+
+      <input class="form-select form-select-solid" list="sales" name="sales" id="sales1">
+
+<datalist id="sales">
+  <option value="Jim">
+  <option value="Jane">
+  <option value="Chris">
+
+</datalist>
+     <!--<select class="form-select form-select-solid" name="warehouse" id="warehouse"   >
 			<option></option>
 			<option value="warehouse1" >Warehouse 1</option>
 			<option value="warehouse2" >Warehouse 2</option>
 																	
 																		
-			</select></div></div> <!----><!----> 
+			</select>-->
+      </div></div>
+
+
+
+          <div class="form-group row">
+    <label class="col-lg-2 col-form-label required">Truck</label> 
+    <div class="col-lg-4">
+      <input class="form-select form-select-solid" list="trucks" name="trucks" id="trucks1">
+
+<datalist id="trucks">
+  <option value="TRCV55">
+  <option value="TRCF33">
+  <option value="TRCQ44">
+  <option value="TRCA22">
+  <option value="TRCX47">
+</datalist>
+      </div></div>
+
+
   <div class="form-group row"><label for="aefdd00cb" class="col-lg-2 col-form-label">Product</label> 
 <div class="col-lg-4">
-  <select class="form-select form-select-solid" name="product" id="product"   >
-			<option></option>
-			<option value="kambucha lite" >Kambucha Lite</option>
+   <input class="form-select form-select-solid" list="products" name="products" id="products1">
+
+<datalist id="products">
+		<option value="kambucha lite" >Kambucha Lite</option>
 			<option value="kambucha no1" >Kambucha No 1</option>
       <option value="kambucha no2" >Kambucha No 2</option>
       <option value="kambucha no3" >Kambucha No 3</option>
-																	
-																		
-			</select></div></div>
+</datalist>
+      </div></div>
 
 <!--<div class="form-group row"><label for="aa8fb9166" class="col-lg-2 col-form-label">Lot Number</label> 
   <div class="col-lg-4">
