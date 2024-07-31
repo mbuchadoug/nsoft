@@ -1047,6 +1047,10 @@ console.log(arr,'doc7')
                     
   })
 
+  router.get('/blog',function(req,res){
+    res.render('kambucha/setup')
+  })
+
   router.get('/eodRepo/',isLoggedIn,function(req,res){
     //var code = req.user.invoNumber
     //var code = "Tiana Madzima"
