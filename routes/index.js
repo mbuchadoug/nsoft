@@ -123,7 +123,9 @@ router.get("/logout",(req,res)=>{
 
 
 
-
+router.get('/blog',function(req,res){
+  res.render('kambucha/setup')
+})
 
 
 router.get('/newItem2',function(req,res){
@@ -1047,9 +1049,7 @@ console.log(arr,'doc7')
                     
   })
 
-  router.get('/blog',function(req,res){
-    res.render('kambucha/setup')
-  })
+ 
 
   router.get('/eodRepo/',isLoggedIn,function(req,res){
     //var code = req.user.invoNumber
