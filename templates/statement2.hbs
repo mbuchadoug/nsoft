@@ -98,7 +98,7 @@ table {
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url("https://lh3.googleusercontent.com/p/AF1QipM4QsTyJAvH2mqbi7nscU_rI0itolqM4uAEL9G2=s680-w680-h510");
+    background-image: url("https://joldrillingsolutions.co.zw/kambuchaLogo.jpeg");
     background-size: 500px;
     background-position: center;
     background-repeat: no-repeat;
@@ -158,74 +158,28 @@ body {
     
   <div class="d-flex">
     <div class="leftpane">
-     <img src="https://lh3.googleusercontent.com/p/AF1QipM4QsTyJAvH2mqbi7nscU_rI0itolqM4uAEL9G2=s680-w680-h510" style="width: 200px; height:250px; display:inline-block; " alt="ST EURIT logo">
+     <!--<img src="https://lh3.googleusercontent.com/p/AF1QipM4QsTyJAvH2mqbi7nscU_rI0itolqM4uAEL9G2=s680-w680-h510" style="width: 200px; height:250px; display:inline-block; " alt="ST EURIT logo">-->
+
     </div>
     <div class="middlepane">
         <h1 style="text-align: center;font-family: Georgia, serif; font-size:25px;"> <b></b> FRESH KAMBUCHA DRINKS <b></h1>
          
-        <!--<p style="text-align: center; ">129 Bishop Gaul Ave<br> Avondale <br>Harare,Zim <br>  </p>
-        <p style="text-align: center;   "> admin@steuritinternationalschool.org</p>-->
+        <p style="text-align: center; ">DAILY STOCK REPORT   </p>
+        <!--<p style="text-align: center;   "> admin@steuritinternationalschool.org</p>-->
        
     </div>
     <div class="rightpane">
-      <h1>STOCK DAILY REPORT</h1>
+      <!--<h1>STOCK DAILY REPORT</h1>-->
     </div>
   </div>
-</div>
+
 
 
 
 
 
 <div class="row">
-    <div class="column" style="margin-bottom: -7px;padding-right:3px;">   
-
-      
-
- 
-
-    <!--<table border="1"   >
-    
-     <tr>
-         <td colspan="2" style=" height: 5px; text-align:center;border: 0cm;">Statement To</td>
-      
-     </tr>
-     <tr>
-        <td colspan="2" style=" height: 10px; text-align:center;border: 0cm;"> {{this.0.studentName}} <br>
-        {{this.0.studentAddress}}  <br>{{this.0.studentMobile}} <br> {{this.0.studentEmail}} </td>
-      
-    </tr>
-    
-    </table>-->
-
-</div>
-
-        <div class="column1"  >
-    
-    
-    <table border="1"  style="height: 90px;margin-bottom:10px;">
-        <tr >
-            <td style="text-align:center;height:5px;">Date</td>
-      
-         
-        </tr>
-        <tr>
-           <td  style="text-align:center;height:5px;" id="date" > </td>
-          
-         
-       </tr>
-       
-       </table>
-
-    </div>
-
-
-
-
-
-<div class="column" style="width: 100%; margin-bottom:10px;">
-
-    <table border="1" class="column-bordered-table td thead"  style="border-bottom:1px solid black; margin-bottom:10px;" >
+<table border="1" class="column-bordered-table td thead"  style="border-bottom:1px solid black; margin-left:auto;margin-right:auto;" >
 
    
     <thead>
@@ -236,7 +190,7 @@ body {
              Date Received
             </th>
 
-            <th style="text-align:center;width: 40%;"  >
+            <th style="text-align:center;width: 25%;"  >
              Item
             </th>
 
@@ -253,7 +207,7 @@ body {
 
               
 
-               <th  style="text-align:center">
+               <th  style="text-align:center;width: 25%; ">
                 Ref. No 
                 </th>
         
@@ -263,6 +217,7 @@ body {
 
     <tbody >
             {{#each this}}
+                {{#each this}}
         <tr style="border: 0; ">
        
           
@@ -277,13 +232,18 @@ body {
             </td>
 
                <td style="text-align: right; ">
-             {{this.typeAmount}}.00
+            Tidings
             </td>
 
             <td style="text-align: right;">
-          {{this.studentBalance}}.00
+          {{this.casesReceived}}
+             </td>
+
+                <td style="text-align: right;">
+          {{this.refNumber}}
              </td>
         </tr>
+        {{/each}}
         {{/each}}
 
 
@@ -314,7 +274,7 @@ body {
  
 </table>
 
-</div>
+
 </div>
 
     

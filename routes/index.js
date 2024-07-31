@@ -8,19 +8,24 @@ const keys = require('../config1/keys')
 const stripe = require('stripe')('sk_test_IbxDt5lsOreFtqzmDUFocXIp0051Hd5Jol');
 var xlsx = require('xlsx')
 var multer = require('multer')
-const fs = require('fs')
+const fs = require('fs-extra')
 var path = require('path');
 var passport = require('passport');
 var moment = require('moment')
+var hbs = require('handlebars');
 var mongoose = require('mongoose')
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
+const puppeteer = require('puppeteer')
 const jwt = require('jsonwebtoken');
 const JWT_KEY = "jwtactive987";
 const JWT_RESET_KEY = "jwtreset987";
 var bcrypt = require('bcrypt-nodejs');
 const crypto = require('crypto');
-
+var multer = require('multer')
+var Axios = require('axios')
+var mongodb = require('mongodb');
+var FormData = require('form-data')
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
@@ -30,7 +35,7 @@ const arr2 = {}
 const arrE ={}
 const arrE2 ={}
 
-
+const arrStatement = {}
 var storageX = multer.diskStorage({
   destination:function(req,file,cb){
       cb(null,'./public/uploads/')
@@ -271,6 +276,8 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
 
   router.post('/receiveStock',isLoggedIn, function(req,res){
     console.log('receive Stock2')
+    var date4 = req.body.date
+    console.log(date4,'date4')
     var date2 = req.body.date
     var refNo = req.user.refNumber
     var product = req.body.product;
@@ -349,6 +356,7 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
     book.dateValue = dateValue
     book.unitCases = unitCases
     book.zwl = zwl
+    book.date = date4
     book.usd = usd
     book.rand = rand
     book.rate = rate
@@ -472,6 +480,7 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
       book.barcodeNumber = barcodeNumber
       book.status = 'saved'
       book.cases = 0
+      book.date = date2
       book.casesReceived = casesReceived
       book.availableCases = hoc.cases
       book.shift = shift
@@ -1041,7 +1050,7 @@ console.log(arr,'doc7')
   RefNo.find({date:date},function(err,docs){
    for(var i = 0;i<docs.length;i++){
 let refNumber = docs[i].refNumber
-    arrRefs[refNumber]=[]
+arrStatement[refNumber]=[]
    }   
     res.redirect('/arrRefsProcess/')
   })
@@ -1052,28 +1061,26 @@ let refNumber = docs[i].refNumber
   
 
     router.get('/arrRefsProcess',isLoggedIn,function(req,res){
-      console.log(arrRefs,'arrRefs')
+      console.log(arrStatement,'arrRefs')
         //var code = "Tiana Madzima"
     
-        var code = req.params.id
-        
-        console.log(code,'code')
+  let date = req.user.date
         //console.log(docs[i].uid,'ccc')
         
         //let uid = "SZ125"
         
         
         //TestX.find({year:year,uid:uid},function(err,vocs) {
-        InvoiceFile.find({studentId:code}).lean().sort({dateValue:1}).then(vocs=>{
+        StockV.find({date:date}).lean().sort({date:1}).then(vocs=>{
         console.log(vocs.length,'vocs')
         
         for(var x = 0;x<vocs.length;x++){
         let size = vocs.length - 1
-        let studentBalance = vocs[size].studentBalance
-        let studentName = vocs[x].studentName
-        if( arrStatement[code].length > 0 && arrStatement[code].find(value => value.studentId == code) ){
-          arrStatement[code].find(value => value.studentId == code).typeBalance = studentBalance;
-          arrStatement[code].push(vocs[x])
+        let code = vocs[x].refNumber
+        if( arrStatement[code].length > 0 && arrStatement[code].find(value => value.refNumber == code) ){
+          arrStatement[code].find(value => value.refNumber == code).casesReceived++;
+          //arrStatement[code].find(value => value.uid == uid).size++;
+          //arrStatement[code].push(vocs[x])
         
             }
             
@@ -1082,7 +1089,7 @@ let refNumber = docs[i].refNumber
             
             else{
               arrStatement[code].push(vocs[x])
-              arrStatement[code].find(value => value.studentId == code).typeBalance = studentBalance;
+              //arrStatement[code].find(value => value.refNumber == code).typeBalance = studentBalance;
               } 
         
         
@@ -1090,10 +1097,11 @@ let refNumber = docs[i].refNumber
         
              
         
-        }  
+        }
+       
             })
             
-            res.redirect('/clerk/statementGen/'+code)
+            res.redirect('/statementGen/')
           
         
         /*})*/
@@ -1101,6 +1109,185 @@ let refNumber = docs[i].refNumber
         })
         
     
+    
+router.get('/statementGen/',isLoggedIn,function(req,res){
+  console.log(arrStatement,'arrSingleUpdate')
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  var date = req.user.date
+
+  //var code ="Tiana Madzima"
+  var code = req.params.id
+
+  //var studentName = 'Tiana Madzima'
+ 
+  /*console.log(arr,'iiii')*/
+  
+  
+  //console.log(docs,'docs')
+  
+  const compile = async function (templateName, arrStatement){
+  const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+  
+  const html = await fs.readFile(filePath, 'utf8')
+  
+  return hbs.compile(html)(arrStatement)
+  
+  };
+  
+  
+  
+  
+  (async function(){
+  
+  try{
+  //const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+  headless: true,
+  args: [
+  "--disable-setuid-sandbox",
+  "--no-sandbox",
+  "--single-process",
+  "--no-zygote",
+  ],
+  executablePath:
+  process.env.NODE_ENV === "production"
+    ? process.env.PUPPETEER_EXECUTABLE_PATH
+    : puppeteer.executablePath(),
+  });
+  
+  const page = await browser.newPage()
+  
+  
+  
+  //const content = await compile('report3',arr[uid])
+  const content = await compile('statement2',arrStatement)
+  
+  //const content = await compile('index',arr[code])
+  
+  await page.setContent(content, { waitUntil: 'networkidle2'});
+  //await page.setContent(content)
+  //create a pdf document
+  await page.emulateMediaType('screen')
+  //let height = await page.evaluate(() => document.documentElement.offsetHeight);
+  await page.evaluate(() => matchMedia('screen').matches);
+  await page.setContent(content, { waitUntil: 'networkidle0'});
+  //console.log(await page.pdf(),'7777')
+   
+let filename = 'statement'+'_'+date+'.pdf'
+  await page.pdf({
+  //path:('../gitzoid2/reports/'+year+'/'+month+'/'+uid+'.pdf'),
+  path:(`./public/statements/${year}/${month}/statement_${date}`+'.pdf'),
+  format:"A4",
+  width:'30cm',
+  height:'21cm',
+  //height: height + 'px',
+  printBackground:true
+  
+  })
+  
+  
+  //upload.single('3400_Blessing_Musasa.pdf')
+
+  
+  
+  /*await browser.close()
+  
+  /*process.exit()*/
+  
+  const file = await fs.readFile(`./public/statements/${year}/${month}/statement_${date}`+'.pdf');
+  const form = new FormData();
+  form.append("file", file,filename);
+ //const headers = form.getHeaders();
+  //Axios.defaults.headers.cookie = cookies;
+  //console.log(form)
+await Axios({
+    method: "POST",
+   //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+     url: 'http://localhost:8000/uploadStatement',
+    headers: {
+      "Content-Type": "multipart/form-data"  
+    },
+    data: form
+  });
+  
+
+  
+  res.redirect('/fileId/'+filename);
+  
+  
+  }catch(e) {
+  
+  console.log(e)
+  
+  
+  }
+  
+  
+  }) ()
+  
+  
+  
+  
+  //res.redirect('/hostel/discList')
+  
+  })
+  
+  
+
+
+  router.post('/uploadStatement',upload.single('file'),(req,res,nxt)=>{
+    var fileId = req.file.id
+    console.log(fileId,'fileId')
+    var filename = req.file.filename
+    console.log(filename,'filename')
+/*InvoiceFile.find({filename:filename},function(err,docs){
+if(docs.length>0){
+
+
+  //console.log(docs,'docs')
+  let id = docs[0]._id
+  InvoiceFile.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+
+  })
+
+}*/
+  res.redirect('/fileId/'+filename)
+//})
+  
+  })
+
+
+router.get('/fileId/:id',function(req,res){
+console.log(req.params.id)
+var id = req.params.id
+
+res.redirect('/openStatement/'+id)
+
+})
+
+
+  router.get('/openStatement/:id',(req,res)=>{
+    var filename = req.params.id
+    console.log(filename,'fileId')
+      const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+      gfs.files.find({filename: filename}).toArray((err, files) => {
+      console.log(files[0])
+    
+        const readStream = bucket.openDownloadStream(files[0]._id);
+            readStream.pipe(res);
+    
+      })
+     //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+    })
+
+ 
+
+
+
+  
 
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  

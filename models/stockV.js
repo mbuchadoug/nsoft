@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var schemaV = new Schema({
 
     barcodeNumber: {type: String },
+    date: {type: String },
     name: {type: String, required:true },
     casesReceived: {type: Number, required: true},
     cases: {type: Number, required: true},
