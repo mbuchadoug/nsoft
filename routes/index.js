@@ -90,11 +90,158 @@ const upload = multer({ storage })
 
 
 
+router.get('/add',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addUser',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/add', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                var email = req.body.email
+                var password = req.body.password
+                var role = req.body.role
+                var username = req.body.username
+                var uid = req.body.username
+                var fullname = req.body.fullname
+                req.check('fullname','Enter Name').notEmpty();
+               
+              
+                req.check('email','Enter email').notEmpty().isEmail();
+         
+                
+             
+               
+                req.check('password', 'Password do not match').isLength({min: 4}).equals(req.body.confirmPassword);
+                    
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/add');
+                      
+                    
+                  }
+                  else
+                
+                 {
+                    User.findOne({'email':email})
+                    .then(user =>{
+                        if(user){ 
+                      // req.session.errors = errors
+                        //req.success.user = false;
+                    
+                       req.session.message = {
+                         type:'errors',
+                         message:'user id already in use'
+                       }     
+                       
+                       req.flash('danger', req.session.errors[0].msg);
+         
+          
+                       res.redirect('/add');
+                       
+                        
+                  }
+                  
+                                else  {   
+               
+
+                  
+                  var user = new User();
+                  user.fullname = fullname;
+                  user.email = email;
+                  user.uid = username
+                  user.username = username
+                  user.mobile = "null";
+                  user.photo = 'propic.jpg';
+                  user.date = "null";
+                  user.shift = "null";
+                  user.warehouse = "null";
+                  user.product = "null";
+                  user.lot = 0;
+                  user.refNumber = "null";
+                  user.location = "null";
+                  user.role = role
+                 
+
+                  
+                  
+                  user.password = user.encryptPassword(password)
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                })
+              }
+              req.flash('success', 'User added Successfully');
+         
+          
+              res.redirect('/add');
+                    })
+                  }
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //login route
 router.get('/', function (req, res, next) {
   var messages = req.flash('error');
   
-  res.render('kambucha/login', { messages: messages, hasErrors: messages.length > 0});
+  res.render('kambucha/addUser', { messages: messages, hasErrors: messages.length > 0});
 });
 router.post('/', passport.authenticate('local.signin', {
   failureRedirect: '/',
@@ -918,138 +1065,6 @@ console.log(arr,'doc7')
 
 
 
-
-  router.get('/add',function(req,res){
-
-    var errorMsg = req.flash('danger')[0];
-    var successMsg = req.flash('success')[0];
-    res.render('kambucha/addUser',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
-
-  
-  
-  })
-  
-  router.post('/add', function(req,res){
-    var m = moment()
-  
-    var year = m.format('YYYY')
-    var dateValue = m.valueOf()
-  
-  
-  
-  var date = m.format('L')
-                    
-                  var name = req.body.name
-              
-                
-                  var email = req.body.email
-                  var password = req.body.password
-                  var role = req.body.role
-                  var username = req.body.username
-                  var uid = req.body.username
-                  var fullname = req.body.fullname
-                  req.check('fullname','Enter Name').notEmpty();
-                 
-                
-                  req.check('email','Enter email').notEmpty().isEmail();
-           
-                  
-               
-                 
-                  req.check('password', 'Password do not match').isLength({min: 4}).equals(req.body.confirmPassword);
-                      
-                  
-                        
-                     
-                  var errors = req.validationErrors();
-                      if (errors) {
-                  
-                      
-                        req.session.errors = errors;
-                        req.session.success = false;
-                        req.flash('danger', req.session.errors[0].msg);
-           
-            
-                    res.redirect('/add');
-                        
-                      
-                    }
-                    else
-                  
-                   {
-                      User.findOne({'email':email})
-                      .then(user =>{
-                          if(user){ 
-                        // req.session.errors = errors
-                          //req.success.user = false;
-                      
-                         req.session.message = {
-                           type:'errors',
-                           message:'user id already in use'
-                         }     
-                         
-                         req.flash('danger', req.session.errors[0].msg);
-           
-            
-                         res.redirect('/add');
-                         
-                          
-                    }
-                    
-                                  else  {   
-                 
-  
-                    
-                    var user = new User();
-                    user.fullname = fullname;
-                    user.email = email;
-                    user.uid = username
-                    user.username = username
-                    user.mobile = "null";
-                    user.photo = 'propic.jpg';
-                    user.date = "null";
-                    user.shift = "null";
-                    user.warehouse = "null";
-                    user.product = "null";
-                    user.lot = 0;
-                    user.refNumber = "null";
-                    user.location = "null";
-                    user.role = role
-                   
-  
-                    
-                    
-                    user.password = user.encryptPassword(password)
-  
-                    
-                     
-                
-                     
-            
-                    user.save()
-                      .then(user =>{
-                        
-                  })
-                }
-                req.flash('success', 'User added Successfully');
-           
-            
-                res.redirect('/add');
-                      })
-                    }
-                
-                   
-                  
-                      
-                      
-                  
-                   
-                    
-  
-                    
-  })
-
- 
 
   router.get('/eodRepo/',isLoggedIn,function(req,res){
     //var code = req.user.invoNumber
