@@ -241,7 +241,7 @@ var date = m.format('L')
 router.get('/', function (req, res, next) {
   var messages = req.flash('error');
   
-  res.render('kambucha/addUser', { messages: messages, hasErrors: messages.length > 0});
+  res.render('kambucha/login', { messages: messages, hasErrors: messages.length > 0});
 });
 router.post('/', passport.authenticate('local.signin', {
   failureRedirect: '/',
