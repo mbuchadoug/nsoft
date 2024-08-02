@@ -990,6 +990,7 @@ console.log(arr,'doc7')
     var salesPerson = req.body.salesPerson
     var truck = req.body.truck
     var cases = req.body.cases
+    var destination = req.body.destination
 
    // var lotNumber = req.body.lotNumber
     //var location = req.body.location
@@ -1055,7 +1056,7 @@ console.log(arr,'doc7')
 
       var id = req.user._id
       User.findByIdAndUpdate(id,{$set:{date:date,cases:cases, truck:truck, salesPerson:salesPerson, time:time, warehouse:warehouse,
-      product:product,refNumber:refNo  }},function(err,docs){
+      product:product,refNumber:refNo,destination:destination  }},function(err,docs){
   
       })
 
@@ -1098,10 +1099,11 @@ console.log(arr,'doc7')
     var cases = req.user.cases
     var warehouse = req.user.warehouse
     var product = req.user.product
+    var destination = req.user.destination
     var refNumber = req.user.refNumber
     Product.find(function(err,docs){
      res.render('kambucha/dispStock2',{listX:docs,date:date,time:time,salesPerson:salesPerson, truck:truck,
-    product:product,cases:cases,refNumber:refNumber,warehouse:warehouse})
+    product:product,cases:cases,refNumber:refNumber,warehouse:warehouse,destination:destination})
     })
   
   })
@@ -1513,7 +1515,7 @@ let filename = 'statement'+'_'+date+'.pdf'
 await Axios({
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     url: 'http://localhost:8000/uploadStatement',
+     url: 'http://niyonsoft.org/uploadStatement',
     headers: {
       "Content-Type": "multipart/form-data"  
     },

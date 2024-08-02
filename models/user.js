@@ -11,6 +11,7 @@ var userSchema = new mongoose.Schema({
     time:{type:String},
     salesPerson:{type:String},
     truck:{type:String},
+    destination:{type:String},
     invoCode:{type:String},
     quoteCode:{type:String},
     num:{type:Number},
