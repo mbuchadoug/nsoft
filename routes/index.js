@@ -966,7 +966,8 @@ console.log(arr,'doc7')
   router.get('/batchDispatch',isLoggedIn,function(req,res){
     var errorMsg = req.flash('danger')[0];
   var successMsg = req.flash('success')[0];
-  res.render('kambucha/batchDisp',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+  var pro = req.user
+  res.render('kambucha/batchDisp',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,pro:pro})
 
 
    
