@@ -364,7 +364,7 @@ ul.no-bullets {
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Receive Stock </h3></div>
+<h3 class="over-flow">Dispatch Stock </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
@@ -402,14 +402,14 @@ ul.no-bullets {
                     
                 },
                 type: 'POST',
-                url: "./receiveScan",
+                url: "./dispatchScan",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
                
                
                  
-                 alert('case already received')
+                 alert('case already dispatched')
                    $("#barcodeNumber").val("")
                  
                  
@@ -444,10 +444,10 @@ link.classList.add('text-end','pe-0')*/
     td1.innerHTML = data.barcodeNumber;
     td2.innerHTML = data.availableCases;
    // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data.availableCases + data.casesReceived ;
+    td4.innerHTML=  data.availableCases - data.casesDispatched ;
     td5.innerHTML = data.mformat
     td6.innerHTML = data.warehouse
-    td7.innerHTML = data.shift
+    td7.innerHTML = data.time
     //let link2 = "/rec/delete/"+data._id
 
     //td5.innerHTML = "Delete"
@@ -458,7 +458,7 @@ link.classList.add('text-end','pe-0')*/
     //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
 
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.cases)
+    $("#availableCases").val(data.availableCases - data.casesDispatched)
      $("#barcodeNumber").val("")
 
                     }
@@ -562,7 +562,7 @@ link.classList.add('text-end','pe-0')*/
 	<th>Closing Balance</th>
   <th>Date</th>
    <th>Warehouse</th>
-   <th>Shift</th>
+   <th>Time</th>
 
                               </tr>
 </thead>
@@ -586,7 +586,7 @@ link.classList.add('text-end','pe-0')*/
      <hr> <div class="btn-toolbar">
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
 
-     <a onclick="receiveStock()" id="ember334" class="btn btn-primary ember-view" id="ember334" >Receive</a>
+     <!--<a onclick="receiveStock()" id="ember334" class="btn btn-primary ember-view" id="ember334" >Receive</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>-->
       <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/eodReport">Run Report</button></div>
       </form></div>

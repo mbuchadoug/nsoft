@@ -401,26 +401,21 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
     
     })
   
-    router.get('/receiveStock2',isLoggedIn,function(req,res){
+    router.get('/receiveStock',isLoggedIn,function(req,res){
       var date = req.user.date
       var shift = req.user.shift
       var warehouse = req.user.warehouse
       var product = req.user.product
       var refNumber = req.user.refNumber
+      var pro = req.user
       Product.find(function(err,docs){
        res.render('kambucha/addStock2',{listX:docs,date:date,shift:shift,
-      product:product,refNumber:refNumber,warehouse:warehouse})
+      product:product,refNumber:refNumber,warehouse:warehouse,pro:pro})
       })
     
      })
 
 
-  router.get('/receiveStock',isLoggedIn,function(req,res){
-   Product.find(function(err,docs){
-    res.render('kambucha/addStock',{listX:docs})
-   })
- 
-  })
   
 
 
@@ -969,7 +964,12 @@ console.log(arr,'doc7')
 
 
   router.get('/batchDispatch',isLoggedIn,function(req,res){
-    res.render('kambucha/batchDisp')
+    var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/batchDisp',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+   
   })
 
 
@@ -982,7 +982,7 @@ console.log(arr,'doc7')
     var time = req.body.time
     var warehouse = req.body.warehouse
     var product = req.body.product
-    var salesPerson = req.body.salePerson
+    var salesPerson = req.body.salesPerson
     var truck = req.body.truck
     var cases = req.body.cases
 
@@ -995,11 +995,55 @@ console.log(arr,'doc7')
    let date7 =  date6.replace(/\//g, "");
   
     console.log(date6,'date')
+
+    
   
+    req.check('warehouse','Enter Warehouse').notEmpty();
+    req.check('product','Enter Product Name').notEmpty();
+    req.check('date','Enter Date').notEmpty();
+    req.check('time','Enter Time').notEmpty();
+    req.check('truck','Enter Truck').notEmpty();
+    req.check('cases','Enter Cases To Be Dispatched').notEmpty();
+    req.check('salesPerson','Enter Sales Person').notEmpty();
+   
+    
+  
+    
+    
+    var errors = req.validationErrors();
+     
+    if (errors) {
+  
+      req.session.errors = errors;
+      req.session.success = false;
+     // res.render('product/stock',{ errors:req.session.errors,pro:pro})
+     req.flash('success', req.session.errors[0].msg);
+         
+          
+     res.redirect('/batchDispatch');
+    
+    }else{
+
+    
+  
+
+    Product.findOne({'name':product})
+    .then(hoc=>{
+
+      if(hoc.cases < cases){
+
+        req.flash('danger', 'Stock Unavailable');
+         
+          
+        res.redirect('/batchDispatch');
+
+      }else{
+
+      
   
     RefNo.find({date:date},function(err,docs){
       let size = docs.length + 1
-      let refNo = date7+'B'+size+'R'
+      let refNo = date7+'B'+size+'D'
       console.log(refNo,'refNo')
 
 
@@ -1024,16 +1068,19 @@ console.log(arr,'doc7')
     })
     
   
+  })
+  res.redirect('/dispatchStock')
+}
     })
   
+
+  }
+
+
     
 
 
-
-    
-
-
-    res.redirect('/dispatchStock')
+ 
   })
 
 
@@ -1074,7 +1121,7 @@ console.log(arr,'doc7')
   var time = req.user.time
   var truck = req.user.truck
   var casesDispatched = 1
-  var casesBatch = req.cases
+  var casesBatch = req.user.cases
   var lot = req.user.lot
   var refNumber = req.user.refNumber
   var salesPerson = req.user.salesPerson
@@ -1084,7 +1131,7 @@ console.log(arr,'doc7')
   var mformat = m.format("L")
     //var receiver = req.user.fullname
   
-  console.log(product,shift,casesReceived,warehouse,'out')
+  console.log(product,casesDispatched,warehouse,'out')
   
  
   
@@ -1093,12 +1140,12 @@ console.log(arr,'doc7')
     .then(hoc=>{
   
 
-      StockV.findOne({'barcodeNumber':barcodeNumber})
+      StockD.findOne({'barcodeNumber':barcodeNumber})
       .then(doc=>{
         console.log(doc,'doc',hoc,'hoc')
 
       if( doc == null){
-    var book = new StockV();
+    var book = new StockD();
 
     let unitCases = hoc.unitCases
     let usd= hoc.usd
@@ -1153,10 +1200,11 @@ console.log(arr,'doc7')
                  let dispatchedQty = pro.casesDispatched
                  let openingQuantity = docs[0].cases
                 //nqty = pro.quantity + docs[0].quantity
-                nqty =  docs[0].cases - pro.casesDispacthed
+                nqty =  docs[0].cases - pro.casesDispatched
+                console.log(docs[0].cases, '**',pro.casesDispatched)
                 nqty2 = nqty * docs[0].unitCases
                 console.log(nqty,'nqty')
-                Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, quantity:nqty2}},function(err,nocs){
+                Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
    
                 })
    
@@ -1539,7 +1587,7 @@ res.redirect('/openStatement/'+id)
 
  
 
-router.get('updateStockV',function(req,res){
+router.get('/updateStockV',function(req,res){
   StockV.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
      let id = docs[i]._id
@@ -1547,6 +1595,7 @@ router.get('updateStockV',function(req,res){
 
      }) 
     }
+    res.redirect('/updateStockD')
   })
 })
 
@@ -1554,7 +1603,7 @@ router.get('updateStockV',function(req,res){
 
 
 
-router.get('updateStockD',function(req,res){
+router.get('/updateStockD',function(req,res){
   StockD.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
      let id = docs[i]._id
@@ -1562,19 +1611,33 @@ router.get('updateStockD',function(req,res){
 
      }) 
     }
+    res.redirect('/updateRefN')
   })
 })
 
 
+router.get('/updateRefN',function(req,res){
+  RefNo.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     RefNo.findByIdAndRemove(id,(err,doc)=>{
 
-router.get('updateProduct',function(req,res){
+     }) 
+    }
+    res.redirect('/updateProduct')
+  })
+})
+
+
+router.get('/updateProduct',function(req,res){
   Product.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
      let id = docs[i]._id
    Product.findByIdAndUpdate(id,{$set:{qauntity:0,openingQuantity:0,rcvdQuanity:0,cases:0}},function(err,locs){
-     
+
    })
     }
+    res.redirect('/batch')
   })
 })
   

@@ -257,6 +257,19 @@
              <h3>Stock Batch</h3></div>
   <div class="scroll-y noscroll-x fill body scrollbox">
 <form method="POST" action="/batchDispatch" class="item-creation">
+	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" {{#if noMessages}}hidden{{/if}}>
+            {{ successMsg }}
+     
+        </div>
+    </div>
+						
+		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="danger" class="alert alert-danger" {{#if noMessages2}}hidden{{/if}}>
+            {{ errorMsg }}
+     
+        </div>
+    </div>	
   <div class="zb-txn-form overflow-container w-100">
 <div tabindex="-1" id="ember370" class="no-outline ember-view"><!----></div> 
 
