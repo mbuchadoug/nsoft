@@ -861,9 +861,7 @@ console.log(arr,'doc7')
 
 
 
-  router.get('/dispatchStock',function(req,res){
-    res.render('kambucha/dispatch')
-  })
+
   
   router.get('/customer',function(req,res){
     res.render('kambucha/addCustomer')
@@ -903,9 +901,6 @@ console.log(arr,'doc7')
   })
 
 
-  router.get('/batchDispatch',isLoggedIn,function(req,res){
-    res.render('kambucha/batchDisp')
-  })
 
   router.post('/batch',isLoggedIn,function(req,res){
 
@@ -933,7 +928,7 @@ console.log(arr,'doc7')
   
     RefNo.find({date:date},function(err,docs){
       let size = docs.length + 1
-      let refNo = date7+code+'B'+size
+      let refNo = date7+code+'B'+size+'R'
       console.log(refNo,'refNo')
 
 
@@ -970,6 +965,78 @@ console.log(arr,'doc7')
   })
 
 
+
+  router.get('/batchDispatch',isLoggedIn,function(req,res){
+    res.render('kambucha/batchDisp')
+  })
+
+
+  ////////////////
+
+  router.post('/batchDispatch',isLoggedIn,function(req,res){
+
+    //var refNumber = req.body.referenceNumber
+    var date = req.body.date
+    var time = req.body.time
+    var warehouse = req.body.warehouse
+    var product = req.body.product
+    var salesPerson = req.body.salePerson
+    var truck = req.body.truck
+    var cases = req.body.cases
+
+   // var lotNumber = req.body.lotNumber
+    //var location = req.body.location
+  
+    let date6 =  moment(date).format('l');
+  let code
+  //let shift = req.user.shift
+   let date7 =  date6.replace(/\//g, "");
+  
+    console.log(date6,'date')
+  
+  
+    RefNo.find({date:date},function(err,docs){
+      let size = docs.length + 1
+      let refNo = date7+'B'+size+'R'
+      console.log(refNo,'refNo')
+
+
+
+      var id = req.user._id
+      User.findByIdAndUpdate(id,{$set:{date:date,cases:cases, truck:truck, salesPerson:salesPerson, time:time, warehouse:warehouse,
+      product:product,refNumber:refNo  }},function(err,docs){
+  
+      })
+
+
+
+      var book = new RefNo();
+    book.refNumber = refNo
+    book.date = date
+    book.save()
+    .then(pro =>{
+
+      console.log('success')
+
+    })
+    
+  
+    })
+  
+    
+
+
+
+    
+
+
+    res.redirect('/dispatchStock')
+  })
+
+
+  router.get('/dispatchStock',function(req,res){
+    res.render('kambucha/dispatch')
+  })
 
  
 

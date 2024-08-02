@@ -8,11 +8,13 @@ var userSchema = new mongoose.Schema({
    
     fullname:{type:String,required:true},
     dob:{type:String},
-    
-
+    time:{type:String},
+    salesPerson:{type:String},
+    truck:{type:String},
     invoCode:{type:String},
     quoteCode:{type:String},
     num:{type:Number},
+    cases:{type:Number},
     uid:{type:String, required:true},
     username:{type:String, required:true},
     date:{type:String, required:true},
