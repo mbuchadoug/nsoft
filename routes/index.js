@@ -250,7 +250,10 @@ router.post('/', passport.authenticate('local.signin', {
 }), function (req, res, next) {
   if(req.user.role == "receiver"){
     res.redirect("/batch");
+  }else if(req.user.role == "dispatcher"){
+    res.redirect('/batchDispatcher')
   }
+
 
   
 });
@@ -893,7 +896,8 @@ console.log(arr,'doc7')
   })
 
   router.get('/batch',isLoggedIn,function(req,res){
-    res.render('kambucha/batch')
+    var pro = req.user
+    res.render('kambucha/batch',{pro:pro})
   })
 
 
