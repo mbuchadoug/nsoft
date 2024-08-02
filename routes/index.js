@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 var RefNo = require('../models/refNo');
 var StockV = require('../models/stockV');
+var StockD = require('../models/stockD');
 var Product = require('../models/product');
 const keys = require('../config1/keys')
 const stripe = require('stripe')('sk_test_IbxDt5lsOreFtqzmDUFocXIp0051Hd5Jol');
@@ -944,6 +945,7 @@ console.log(arr,'doc7')
       var book = new RefNo();
     book.refNumber = refNo
     book.date = date
+    book.type = 'receiving'
     book.save()
     .then(pro =>{
 
@@ -1013,6 +1015,7 @@ console.log(arr,'doc7')
       var book = new RefNo();
     book.refNumber = refNo
     book.date = date
+    book.type = 'dispatch'
     book.save()
     .then(pro =>{
 
@@ -1034,11 +1037,171 @@ console.log(arr,'doc7')
   })
 
 
-  router.get('/dispatchStock',function(req,res){
-    res.render('kambucha/dispatch')
+  router.get('/dispatchStock',isLoggedIn,function(req,res){
+
+    var date = req.user.date
+    var time = req.user.time
+    var salesPerson = req.user.salesPerson
+    var truck = req.user.truck
+    var cases = req.user.cases
+    var warehouse = req.user.warehouse
+    var product = req.user.product
+    var refNumber = req.user.refNumber
+    Product.find(function(err,docs){
+     res.render('kambucha/dispStock2',{listX:docs,date:date,time:time,salesPerson:salesPerson, truck:truck,
+    product:product,cases:cases,refNumber:refNumber,warehouse:warehouse})
+    })
+  
   })
 
  
+
+
+
+
+  router.post('/dispatchScan',isLoggedIn, function(req,res){
+ 
+    var date2 = req.user.date
+    var product = req.user.product;
+    var m = moment(date2)
+    var dispatcher = req.user.fullname
+    var year = m.format('YYYY')
+    var dateValue = m.valueOf()
+    var date = m.toString()
+    var numDate = m.valueOf()
+    var barcodeNumber = req.body.code
+  var month = m.format('MMMM')
+  var time = req.user.time
+  var truck = req.user.truck
+  var casesDispatched = 1
+  var casesBatch = req.cases
+  var lot = req.user.lot
+  var refNumber = req.user.refNumber
+  var salesPerson = req.user.salesPerson
+  var warehouse = req.user.warehouse
+
+ var arr = []
+  var mformat = m.format("L")
+    //var receiver = req.user.fullname
+  
+  console.log(product,shift,casesReceived,warehouse,'out')
+  
+ 
+  
+  
+    Product.findOne({'name':product})
+    .then(hoc=>{
+  
+
+      StockV.findOne({'barcodeNumber':barcodeNumber})
+      .then(doc=>{
+        console.log(doc,'doc',hoc,'hoc')
+
+      if( doc == null){
+    var book = new StockV();
+
+    let unitCases = hoc.unitCases
+    let usd= hoc.usd
+    let zwl = hoc.zwl
+    let rand = hoc.rand
+    let rate = hoc.rate
+  
+    let category = hoc.category
+    let subCategory = hoc.subCategory
+    book.name = product
+    book.mformat = mformat
+    //book.code =  code
+    book.warehouse = warehouse
+    book.barcodeNumber = barcodeNumber
+    book.status = 'saved'
+    book.cases = 0
+    book.date = date2
+    book.casesDispatched = casesDispatched
+    book.availableCases = hoc.cases
+    book.time = time
+    book.year = year
+    book.month = month
+    book.truck = truck
+    book.salesPerson = salesPerson
+    book.dispatcher = dispatcher
+    book.casesBatch = casesBatch
+    book.dateValue = dateValue
+    book.unitCases = unitCases
+    book.zwl = zwl
+    book.usd = usd
+    book.rand = rand
+    book.rate = rate
+    book.category = category
+    book.subCategory = subCategory
+    book.refNumber = refNumber
+    book.lot = lot
+  
+        
+         
+          book.save()
+            .then(pro =>{
+  let stock = pro.casesDispatched + pro.availableCases
+
+  StockD.findByIdAndUpdate(pro._id,{$set:{cases:stock}},function(err,vocs){
+
+  })
+
+              Product.find({'name':product},function(err,docs){
+                let id = docs[0]._id
+                console.log(id,'id')
+                let nqty, nqty2
+                 let dispatchedQty = pro.casesDispatched
+                 let openingQuantity = docs[0].cases
+                //nqty = pro.quantity + docs[0].quantity
+                nqty =  docs[0].cases - pro.casesDispacthed
+                nqty2 = nqty * docs[0].unitCases
+                console.log(nqty,'nqty')
+                Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, quantity:nqty2}},function(err,nocs){
+   
+                })
+   
+                
+   
+               })
+
+
+              
+              StockD.find({mformat:mformat},(err, ocs) => {
+                let size = ocs.length - 1
+                console.log(ocs[size],'fff')
+                res.send(ocs[size])
+                        })
+          })
+         
+        
+        }else{
+
+console.log(arr,'doc7')
+          res.send(arr)
+        }
+      })
+      }) 
+  
+        
+  })
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   router.post('/verifyScan',function(req,res){
   
@@ -1376,8 +1539,44 @@ res.redirect('/openStatement/'+id)
 
  
 
+router.get('updateStockV',function(req,res){
+  StockV.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     StockV.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+  })
+})
 
 
+
+
+
+router.get('updateStockD',function(req,res){
+  StockD.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     StockD.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+  })
+})
+
+
+
+router.get('updateProduct',function(req,res){
+  Product.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+   Product.findByIdAndUpdate(id,{$set:{qauntity:0,openingQuantity:0,rcvdQuanity:0,cases:0}},function(err,locs){
+     
+   })
+    }
+  })
+})
   
 
 function encryptPassword(password) {

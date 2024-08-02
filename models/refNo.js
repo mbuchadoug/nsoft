@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var refSchemaV = new Schema({
 
     date: {type: String },
-
+    type: {type: String },
     refNumber:{type:String, required:true},
 
    
