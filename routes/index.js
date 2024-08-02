@@ -958,7 +958,7 @@ console.log(arr,'doc7')
     
 
 
-    res.redirect('/receiveStock2')
+    res.redirect('/receiveStock')
   })
 
 
