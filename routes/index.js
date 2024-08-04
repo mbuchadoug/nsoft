@@ -1706,7 +1706,7 @@ router.get('/updateRepo',function(req,res){
 
      }) 
     }
-    res.redirect('/updateStockD')
+    res.redirect('/batch')
   })
 })
 
