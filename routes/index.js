@@ -1509,8 +1509,8 @@ repo.save().then(poll =>{
 await Axios({
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     url: 'http://niyonsoft.org/uploadStatement',
-     //url:'http://localhost:8000/uploadStatement',
+//     url: 'http://niyonsoft.org/uploadStatement',
+     url:'http://localhost:8000/uploadStatement',
     headers: {
       "Content-Type": "multipart/form-data"  
     },
@@ -1587,14 +1587,7 @@ res.redirect('/openStatementName/'+id)
      
     })
     
-    router.get('/deleteBucket',(req,res)=>{
-      var filename = req.params.id
-      console.log(filename,'fileId')
-        const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
-        bucket.drop();
-       
-      })
-
+   
     router.get('/openStatement/:id',(req,res)=>{
       var fileId = req.params.id
         const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
@@ -1980,6 +1973,13 @@ router.get('/openStatementNameDispatch/:id',(req,res)=>{
      //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
     })
 
+
+    router.get('/deleteBucket',(req,res)=>{
+     
+      const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+      bucket.drop();
+     
+    })
 
   
 
