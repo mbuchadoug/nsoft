@@ -1586,6 +1586,14 @@ res.redirect('/openStatementName/'+id)
       })
      
     })
+    
+    router.get('/deleteBucket',(req,res)=>{
+      var filename = req.params.id
+      console.log(filename,'fileId')
+        const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+        bucket.drop();
+       
+      })
 
     router.get('/openStatement/:id',(req,res)=>{
       var fileId = req.params.id
