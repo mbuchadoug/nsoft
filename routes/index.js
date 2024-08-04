@@ -1693,6 +1693,19 @@ router.get('/updateProduct',function(req,res){
 
    })
     }
+    res.redirect('/updateRepo')
+  })
+})
+
+
+router.get('/updateRepo',function(req,res){
+  RepoFiles.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     RepoFiles.findByIdAndUpdate(id,{$set:{qauntity:0,openingQuantity:0,rcvdQuanity:0,cases:0}},function(err,locs){
+
+   })
+    }
     res.redirect('/batch')
   })
 })
