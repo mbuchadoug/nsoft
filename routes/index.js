@@ -1693,6 +1693,19 @@ router.get('/updateProduct',function(req,res){
 
    })
     }
+    res.redirect('/updateBatchD')
+  })
+})
+
+
+router.get('/updateBatchD',function(req,res){
+  BatchD.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     BatchD.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
     res.redirect('/updateRepo')
   })
 })
