@@ -1,4 +1,4 @@
-FROM node:18.6.0-alpine
+FROM node:18.20.4-alpine
 FROM ghcr.io/puppeteer/puppeteer:19.7.2
 USER root
 

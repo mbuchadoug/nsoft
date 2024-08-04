@@ -22,6 +22,7 @@ var userSchema = new mongoose.Schema({
     shift:{type:String, required:true},
     warehouse:{type:String, required:true},
     product:{type:String, required:true},
+    batchId:{type:String},
     lot:{type:Number, required:true},
     refNumber:{type:String, required:true},
     location:{type:String, required:true},

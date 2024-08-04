@@ -2,7 +2,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Receive Stock | Kambucha Inventory</title>
+    <title>Dispatch Stock | Kambucha Inventory</title>
 
     <!-- To check whether the browser is modern/legacy to help determine which bundle to load
 
@@ -83,6 +83,7 @@ ul.no-bullets {
 .sidebar .nav-link:hover {
     color: var(--bs-primary);
 }
+
 
 </style>
     <style type="text/css">
@@ -250,6 +251,217 @@ ul.no-bullets {
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
 <h3 class="over-flow">Dispatch Stock </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
+
+
+
+
+<script>
+
+
+$.ajax({
+   
+    dataType: 'json',
+    type: 'POST',
+	
+    url: "/dispStock3",
+    success: function(data) {
+    console.log(data)
+    console.log(data.length,'wwww')
+
+    
+   for(var i = 0;i<data.length;i++){
+    var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+	//var td3 = tr.appendChild(document.createElement('td'));
+    var td4 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
+    var link= tr.appendChild(document.createElement('td'));
+   
+    td1.id =data[i]._id
+    td4.id = data[i]._id
+/*td2.classList.add('text-end', 'pe-0')
+td3.classList.add('text-end', 'pe-0')
+td4.classList.add('text-end', 'pe-1')
+link.classList.add('text-end','pe-0')
+link.setAttribute("href", "/rec/delete")
+link.className = "text-end";*/
+
+/*let link = document.createTextNode("Delete")
+
+td5.appendChild(link);*/
+
+
+td1.innerHTML = data[i].barcodeNumber;
+td2.innerHTML = data[i].availableCases;
+//td3.innerHTML = data[i].casesDispatched;
+td4.innerHTML=  data[i].availableCases - data[i].casesDispatched 
+td5.innerHTML = data[i].mformat
+td6.innerHTML = data[i].warehouse
+td7.innerHTML = data[i].time
+    /*let link2 = "/rec/delete/"+data[i]._id
+
+    var linkText = 'Delete'
+link.href="/rec/delete/"+data[i]._id*/
+ 
+    /*link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+
+    console.log(link,'33tt')
+  
+
+    console.log(td4,'yeah')*/
+
+  document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+
+   }
+
+
+
+
+
+var table = document.getElementById('kt_ecommerce_report_sales_table')
+var cells = table.getElementsByClassName("text-end pe-1")
+for(var i = 0; i< cells.length; i++){
+cells[i].onclick = function(){
+console.log(i,'this')
+if(this.hasAttribute('data-clicked')){
+    
+    return;
+}
+
+this.setAttribute('data-clicked', 'yes')
+this.setAttribute('data-text', this.innerHTML)
+
+var input = document.createElement('input');
+input.setAttribute('type', 'text')
+input.value = this.innerHTML
+input.style.width = this.offsetWidth - (this.clientLeft * 2) + 'px';
+input.style.height = this.offsetHeight - (this.clientTop * 2) + "px";
+input.style.border = '0px';
+input.style.fontFamily ="inherit";
+input.style.fontSize ="inherit";
+input.style.textAlign = "inherit";
+input.style.backgroundColor = 'LightGoldenRodYellow';
+
+input.onblur = function(){
+
+    var td = input.parentElement;
+        console.log(td.id,'td')
+    var orig_text = input.parentElement.getAttribute('data-text');
+    var current_text = this.value;
+
+     let reg = /\d+\.*\d*/g;
+
+let result = current_text.match(reg)
+let currentMark = Number(result)
+
+
+
+
+let resultX = orig_text.match(reg)
+let originalMark = Number(resultX)
+
+console.log(currentMark,originalMark,'mark')
+
+
+
+
+
+    if(orig_text != current_text ){
+  
+        console.log(current_text,'current_text')
+$.ajax({
+  dataType: 'json',
+            data: {
+                code: current_text,
+                
+            },
+            type: 'POST',
+            url: "/rec/stock/update/"+td.id,
+
+
+  success: function(data) {
+ 
+
+console.log(td.id,'id2')
+console.log(td,'coalition')
+        td.removeAttribute('data-clicked')
+        td.removeAttribute('data-text')
+        td.innerHTML = current_text
+        
+        td.style.cssText = 'padding: 5px';
+
+    
+  
+    }
+
+
+});
+        console.log(td.id,'id2')
+        td.removeAttribute('data-clicked')
+        td.removeAttribute('data-text')
+        td.innerHTML = current_text
+
+        td.style.cssText = 'padding: 5px';
+        
+        console.log(orig_text + 'is change to ' + current_text)
+    
+    } else{
+        td.removeAttribute('data-clicked')
+        td.removeAttribute('data-text')
+        td.innerHTML = orig_text
+        td.style.cssText = 'padding: 5px';
+        console.log('No changes made')
+    
+    }
+
+}
+
+this.innerHTML = ''
+this.style.cssText = 'padding: 0px';
+this.append(input);
+this.firstElementChild.select();
+
+}
+}
+
+
+
+
+
+	}
+
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
   <script>
 
   $(":input").keypress(function(event){
@@ -289,6 +501,10 @@ ul.no-bullets {
                 url: "./dispatchScan",
                 success: function(data) {
                   console.log(data,'dat666')
+
+
+
+
                if(data.length === 0){
                
                
@@ -301,6 +517,12 @@ ul.no-bullets {
                
                 }
                     else{
+
+        if(data.size === data.casesBatch){
+             alert('Batch Closed')
+              window.location.href = "http://localhost:8000/batchDispatch"
+
+        }
 
                     
                     var tr = document.createElement('tr');
@@ -367,44 +589,44 @@ link.classList.add('text-end','pe-0')*/
          <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
          <div class="row form-group">
         <div class="col-lg-2"><label class="col-form-label required">Date</label> 
-         <input placeholder="dd MMM yyyy" id="ember329" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="date" value="{{date}}"></div>
+         <input placeholder="dd MMM yyyy" id="ember329" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="date" value="{{date}}" readonly></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Time</label> <div id="ember330" class="ember-view"><div class="ac-box "><input autofocus="" id="time" name="time" class="ember-text-field ember-view form-control" type="text" value="{{time}}"></div> </div></div>
+         <div class="col-lg-2"><label class="col-form-label required">Time</label> <div id="ember330" class="ember-view"><div class="ac-box "><input  id="time" name="time" class="ember-text-field ember-view form-control" type="text" value="{{time}}" readonly></div> </div></div>
 
                                     <div class="col-lg-2"><label class="col-form-label required">Warehouse</label> <div id="ember330" class="ember-view"><div class="ac-box ">
 
-      <input autofocus="" id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}">
+      <input  id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}" readonly>
                   </div> </div></div>
 
 
 
                     <div class="col-lg-2"><label class="col-form-label required">Sales Person</label> <div id="ember330" class="ember-view"><div class="ac-box ">
 
-      <input autofocus="" id="salesPerson" class="ember-text-field ember-view form-control" type="text" value="{{salesPerson}}">
+      <input  id="salesPerson" class="ember-text-field ember-view form-control" type="text" value="{{salesPerson}}" readonly>
                   </div> </div></div>
 
 
                    <div class="col-lg-2"><label class="col-form-label required">Truck</label> <div id="ember330" class="ember-view"><div class="ac-box ">
 
-      <input autofocus="" id="truck" class="ember-text-field ember-view form-control" type="text" value="{{truck}}">
+      <input  id="truck" class="ember-text-field ember-view form-control" type="text" value="{{truck}}" readonly>
                   </div> </div></div>
 
                        <div class="col-lg-2"><label class="col-form-label required">Batch Cases</label> <div id="ember330" class="ember-view"><div class="ac-box ">
 
-      <input autofocus="" id="cases" class="ember-text-field ember-view form-control" type="text" value="{{cases}}">
+      <input  id="cases" class="ember-text-field ember-view form-control" type="text" value="{{cases}}" readonly>
                   </div> </div></div>
         <!--<div class="col-lg-3"><label class="col-form-label required">Account</label> <div id="ember330" class="ember-view"><div class="ac-box "><span class="ac-selected form-control " tabindex="0"> <span data-integrity-label="" class="flex-grow-1 me-0">Cost of Goods Sold</span>
         <div class="ac-toggle-container">
      <i class="zf-ac-toggler"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.98 227.51"><path d="M187.46 227.51c-10.23 0-20.46-3.9-28.27-11.71L11.73 68.45C-3.9 52.83-3.91 27.51 11.71 11.88c15.62-15.63 40.94-15.64 56.57-.02l119.18 119.09L306.69 11.72c15.62-15.62 40.95-15.62 56.57 0 15.62 15.62 15.62 40.95 0 56.57L215.75 215.8c-7.81 7.81-18.05 11.72-28.28 11.72z" id="Layer_1-2"></path></svg></i></div></span></div> </div></div>--> 
      
       <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
-    <input autofocus="" id="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}"></div>
+    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}" readonly></div>
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref.No</label> 
-    <input autofocus="" id="product" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}"></div>
+    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
 
     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Destination</label> 
-    <input autofocus="" id="destination" class="ember-text-field ember-view form-control" type="text"  value="{{destination}}"></div>
+    <input  id="destination" class="ember-text-field ember-view form-control" type="text"  value="{{destination}}" readonly></div>
     
     
     </div> 
@@ -413,7 +635,7 @@ link.classList.add('text-end','pe-0')*/
         <tbody><!----><!----> <tr>
           <td>
     <span class="float-end">
-      <input  id="barcodeNumber" class="ember-text-field text-end ember-view form-control" type="text" name="barcodeNumber"> 
+      <input autofocus=""  id="barcodeNumber" class="ember-text-field text-end ember-view form-control" type="text" name="barcodeNumber"> 
     <!--<span class="font-small float-end">kg</span>--></span> <label class="col-form-label">Barcode Number</label> <!----></td>
     
      <td>

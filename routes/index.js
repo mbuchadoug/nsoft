@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var BatchR = require('../models/batchR');
+var BatchD = require('../models/batchD');
 var RefNo = require('../models/refNo');
+var RepoFiles = require('../models/repoFiles');
 var StockV = require('../models/stockV');
 var StockD = require('../models/stockD');
 var Product = require('../models/product');
@@ -404,7 +407,7 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
     
     })
   
-    router.get('/receiveStock',isLoggedIn,function(req,res){
+/*    router.get('/receiveStock',isLoggedIn,function(req,res){
       var date = req.user.date
       var shift = req.user.shift
       var warehouse = req.user.warehouse
@@ -416,7 +419,7 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
       product:product,refNumber:refNumber,warehouse:warehouse,pro:pro})
       })
     
-     })
+     })*/
 
 
   
@@ -560,12 +563,157 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
 
   
 
+  
+  router.get('/customer',function(req,res){
+    res.render('kambucha/addCustomer')
+  })
+  
+  router.get('/quote',function(req,res){
+    res.render('kambucha/addQuote')
+  })
+  
+  router.get('/priceList',function(req,res){
+    res.render('kambucha/priceList')
+  })
+  
+  router.get('/viewItem',function(req,res){
+    res.render('kambucha/viewItem')
+  })
+  
+  router.get('/item',function(req,res){
+    res.render('kambucha/items')
+  })
+  
+  router.get('/item2',function(req,res){
+    res.render('kambucha/item2')
+  })
+
+
+
+
+  router.get('/summary',function(req,res){
+    res.render('kambucha/stockSummary')
+  })
+
+  router.get('/barcode',function(req,res){
+    res.render('kambucha/addStockBarc')
+  })
+
+  router.get('/batch',isLoggedIn,function(req,res){
+    var pro = req.user
+    res.render('kambucha/batch',{pro:pro})
+  })
+
+
+
+  router.post('/batch',isLoggedIn,function(req,res){
+
+    //var refNumber = req.body.referenceNumber
+    var date = req.body.date
+    var shift = req.body.shift
+    var warehouse = req.body.warehouse
+    var product = req.body.product
+    let refNo
+   // var lotNumber = req.body.lotNumber
+    //var location = req.body.location
+  
+    let date6 =  moment(date).format('l');
+  let code
+  //let shift = req.user.shift
+   let date7 =  date6.replace(/\//g, "");
+  
+    console.log(date6,'date')
+  
+  
+    if( shift == 'day'){
+      code = "S1"
+    }else{
+      code = "S2"
+    }
+  
+    RefNo.find({date:date},function(err,docs){
+      let size = docs.length + 1
+     refNo = date7+code+'B'+size+'R'
+      console.log(refNo,'refNo')
+
+      var truck = new BatchR()
+      truck.date = date
+      truck.shift = shift
+      truck.warehouse = warehouse
+      truck.product = product
+      truck.refNumber = refNo
+      truck.cases = 0
+      truck.receiver = req.user.fullname
+     
+
+      truck.save()
+          .then(pro =>{
+
+
+
+      var id = req.user._id
+      User.findByIdAndUpdate(id,{$set:{date:date, shift:shift, warehouse:warehouse,
+      product:product,refNumber:refNo,batchId:pro._id  }},function(err,docs){
+  
+      })
+
+
+
+      var book = new RefNo();
+    book.refNumber = refNo
+    book.date = date
+    book.type = 'receiving'
+    book.save()
+    .then(pro =>{
+
+      console.log('success')
+      res.redirect('/receiveStock/'+refNo)
+
+    })
+  })
+  
+    })
+  
+    
+
+
+
+    
+
+
+    
+  })
+
+
+
+
+  router.get('/receiveStock/:id',isLoggedIn,function(req,res){
+    var date = req.user.date
+    var shift = req.user.shift
+    var warehouse = req.user.warehouse
+    var product = req.user.product
+    var refNumber = req.user.refNumber
+    var pro = req.user
+    var id = req.params.id
+    Product.find(function(err,docs){
+     res.render('kambucha/addStock2',{listX:docs,date:date,shift:shift,
+    product:product,refNumber:refNumber,warehouse:warehouse,pro:pro,id:id})
+    })
+  
+   })
+
+
+
+
+   
+
   router.post('/addStock3',isLoggedIn, (req, res) => {
     var pro = req.user
     var m = moment()
+    var code = req.user.refNumber
     var mformat = m.format("L")
     
-    StockV.find({mformat:mfromat},(err, docs) => {
+    StockV.find({refNumber:code},(err, docs) => {
    
       res.send(docs)
               })
@@ -580,7 +728,7 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
       var date2 = req.user.date
       var product = req.user.product;
       var m = moment(date2)
-      var receiver = 'Tidings'
+      var receiver = req.user.fullname
       var year = m.format('YYYY')
       var dateValue = m.valueOf()
       var date = m.toString()
@@ -594,6 +742,7 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
     var location = req.user.location
     var warehouse = req.user.warehouse
    var arr = []
+   var batchId = req.user.batchId
     var mformat = m.format("L")
       //var receiver = req.user.fullname
     
@@ -611,6 +760,12 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
           console.log(doc,'doc',hoc,'hoc')
 
         if( doc == null){
+          
+  StockD.find({refNumber:refNumber},function(err,focs){
+    let size  = focs.length + 1
+    BatchR.findByIdAndUpdate(batchId,{$set:{cases:size}},function(err,noc){
+
+    })
       var book = new StockV();
   
       let unitCases = hoc.unitCases
@@ -683,6 +838,8 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
                   res.send(ocs[size])
                           })
             })
+
+          })
            
           
           }else{
@@ -702,268 +859,9 @@ console.log(arr,'doc7')
 
 
 
-  router.get('/saveBatch/:id',isLoggedIn, function(req,res){
-    var pro = req.user
-   var receiver = req.user.fullname
-   var code = req.params.id
-   var uid = req.user._id
-  
-  var m2 = moment()
-  var wformat = m2.format('L')
-  var year = m2.format('YYYY')
-  var dateValue = m2.valueOf()
-  var date = m2.toString()
-  var numDate = m2.valueOf()
-  var month = m2.format('MMMM')
-  
-  
-  //var mformat = m.format("L")
-  
-  
-  
-  StockV.find({code:code,status:'null'},function(err,locs){
-  
-  for(var i=0;i<locs.length;i++){
-  let barcodeNumber = locs[i].barcodeNumber
-  let cases = locs[i].cases
-  let quantity = locs[i].cases * locs[i].unitCases
-  let date3 = locs[i].mformat
-  let m = moment(date3)
-  let year = m.format('YYYY')
-  let dateValue = m.valueOf()
-  let date = m.toString()
-  let numDate = m.valueOf()
-  let month = m.format('MMMM')
-  let idN = locs[i]._id
-  
-  
-    StockV.findByIdAndUpdate(idN,{$set:{status:'saved'}},function(err,pocs){
-  
-    })
-    
-  
-    
-  
-    Product.findOne({'barcodeNumber':barcodeNumber})
-    .then(hoc=>{
-  
-      if(hoc){
-    var book = new Stock();
-    book.barcodeNumber = hoc.barcodeNumber
-    book.category = hoc.category
-    book.subCategory = hoc.subCategory
-    book.name = hoc.name
-    book.mformat = date3
-    book.month = month
-    book.year = year 
-    book.stockUpdate = 'no'
-    book.receiver = receiver;
-    book.date  = date
-    book.dateValue = dateValue
-    book.quantity = 0
-    book.unitCases = hoc.unitCases
-    book.cases = cases
-    book.rate = 0
-    book.zwl = 0
-    book.price = 0
-        
-         
-          book.save()
-            .then(pro =>{
-  
-              Product.find({barcodeNumber:barcodeNumber},function(err,docs){
-               let id = docs[0]._id
-                let rcvdQty = pro.cases
-                let openingQuantity = docs[0].cases
-               //nqty = pro.quantity + docs[0].quantity
-               nqty = pro.cases + docs[0].cases
-               nqty2 = nqty * docs[0].unitCases
-               console.log(nqty,'nqty')
-               Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, rcvdQuantity:rcvdQty,quantity:nqty2}},function(err,nocs){
-  
-               })
-  
-               
-  
-              })
-  
-  console.log(i,'ccc')
-                 /*  req.session.message = {
-                type:'success',
-                message:'Product added'
-              }  
-              res.render('product/stock',{message:req.session.message,pro:pro});*/
-            
-          
-          })
-  
-         /* req.flash('success', 'Stock Received Successfully');
-          res.redirect('/rec/addStock')*/
-        }  /* else{
-          req.flash('danger', 'Product Does Not Exist');
-        
-          res.redirect('/rec/addStock');
-        }*/
-      }) 
-  
-       
-  }
-  
-  User.find({role:'admin'},function(err,ocs){
-    
-    for(var i = 0; i<ocs.length;i++){
-    
-  
-  
-  let id = ocs[i]._id
-  var not = new Note();
-  not.role = 'receiver'
-  not.subject = 'Stock Received';
-  not.message = code+" "+'Truck Code'+" "+"received"+" "+'on'+" "+wformat
-  not.status = 'not viewed';
-  not.link = 'http://'+req.headers.host+'/viewStockRcvd/'+code;
-  not.status1 = 'new';
-  not.user = receiver;
-  not.type = 'receiving'
-  not.status2 = 'new'
-  not.status3 = 'new'
-  not.status4 = 'null'
-  not.date = m2
-  not.dateViewed = 'null'
-  not.recId = ocs[i]._id
-  not.recRole = 'admin'
-  not.senderPhoto = req.user.photo
-  not.numDate = numDate
-  not.customer = 'null'
-  not.shop = 'null'
-  
-  
-   
-  
-  not.save()
-    .then(user =>{
-  User.findByIdAndUpdate(uid,{$set:{truckCode:'null'}},function(err,doc){
-  
-  })
-  })
-  
-  }
-  })
-  
-  
-  req.flash('success', 'Stock Received Successfully');
-  res.redirect('/rec/stockBatch')
-  }) 
-  })
-  
 
 
 
-
-
-  
-  router.get('/customer',function(req,res){
-    res.render('kambucha/addCustomer')
-  })
-  
-  router.get('/quote',function(req,res){
-    res.render('kambucha/addQuote')
-  })
-  
-  router.get('/priceList',function(req,res){
-    res.render('kambucha/priceList')
-  })
-  
-  router.get('/viewItem',function(req,res){
-    res.render('kambucha/viewItem')
-  })
-  
-  router.get('/item',function(req,res){
-    res.render('kambucha/items')
-  })
-  
-  router.get('/item2',function(req,res){
-    res.render('kambucha/item2')
-  })
-
-
-  router.get('/summary',function(req,res){
-    res.render('kambucha/stockSummary')
-  })
-
-  router.get('/barcode',function(req,res){
-    res.render('kambucha/addStockBarc')
-  })
-
-  router.get('/batch',isLoggedIn,function(req,res){
-    var pro = req.user
-    res.render('kambucha/batch',{pro:pro})
-  })
-
-
-
-  router.post('/batch',isLoggedIn,function(req,res){
-
-    //var refNumber = req.body.referenceNumber
-    var date = req.body.date
-    var shift = req.body.shift
-    var warehouse = req.body.warehouse
-    var product = req.body.product
-   // var lotNumber = req.body.lotNumber
-    //var location = req.body.location
-  
-    let date6 =  moment(date).format('l');
-  let code
-  //let shift = req.user.shift
-   let date7 =  date6.replace(/\//g, "");
-  
-    console.log(date6,'date')
-  
-  
-    if( shift == 'day'){
-      code = "S1"
-    }else{
-      code = "S2"
-    }
-  
-    RefNo.find({date:date},function(err,docs){
-      let size = docs.length + 1
-      let refNo = date7+code+'B'+size+'R'
-      console.log(refNo,'refNo')
-
-
-
-      var id = req.user._id
-      User.findByIdAndUpdate(id,{$set:{date:date, shift:shift, warehouse:warehouse,
-      product:product,refNumber:refNo  }},function(err,docs){
-  
-      })
-
-
-
-      var book = new RefNo();
-    book.refNumber = refNo
-    book.date = date
-    book.type = 'receiving'
-    book.save()
-    .then(pro =>{
-
-      console.log('success')
-
-    })
-    
-  
-    })
-  
-    
-
-
-
-    
-
-
-    res.redirect('/receiveStock')
-  })
 
 
 
@@ -971,7 +869,10 @@ console.log(arr,'doc7')
     var errorMsg = req.flash('danger')[0];
   var successMsg = req.flash('success')[0];
   var pro = req.user
-  res.render('kambucha/batchDisp',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,pro:pro})
+  var readonly = 'hidden'
+  var read =''
+  
+  res.render('kambucha/batchDisp',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,pro:pro,user:req.query,readonly:readonly,read:read})
 
 
    
@@ -991,10 +892,14 @@ console.log(arr,'doc7')
     var truck = req.body.truck
     var cases = req.body.cases
     var destination = req.body.destination
-
+    var read = 'readonly'
+    var reason = req.body.reason
+    var readF2 = 'disabled'
+    console.log(reason,'reason')
    // var lotNumber = req.body.lotNumber
     //var location = req.body.location
-  
+  var readonly = ''
+  var readF = 'hidden'
     let date6 =  moment(date).format('l');
   let code
   //let shift = req.user.shift
@@ -1023,27 +928,43 @@ console.log(arr,'doc7')
       req.session.errors = errors;
       req.session.success = false;
      // res.render('product/stock',{ errors:req.session.errors,pro:pro})
-     req.flash('success', req.session.errors[0].msg);
+     req.flash('danger', req.session.errors[0].msg);
          
           
      res.redirect('/batchDispatch');
     
     }else{
 
-    
+
+      Product.findOne({'name':product})
+      .then(hoc=>{
   
+        if(hoc.cases < cases){
+  
+          req.flash('danger', 'Stock Unavailable');
+           
+            
+          res.redirect('/batchDispatch');
+  
+        }else{
 
-    Product.findOne({'name':product})
-    .then(hoc=>{
+          StockD.findOne({'date':date,'salesPerson':salesPerson})
+          .then(oc=>{
+        
+            if(oc && reason =='' ){
+        
+              console.log(reason,'reason')
+              req.session.message = {
+                type:'errors',
+                message:'Reason for Additional Batch to'+' '+salesPerson
+              }
+              res.render('kambucha/batchDisp',{user:req.body, use:req.user,message:req.session.message,readonly:readonly,
+                read:read,readF:readF,readF2:readF2})
+        
+            }else{
 
-      if(hoc.cases < cases){
+            
 
-        req.flash('danger', 'Stock Unavailable');
-         
-          
-        res.redirect('/batchDispatch');
-
-      }else{
 
       
   
@@ -1052,11 +973,24 @@ console.log(arr,'doc7')
       let refNo = date7+'B'+size+'D'
       console.log(refNo,'refNo')
 
+      var book = new BatchD()
+      book.date = date
+      book.cases = 0
+      book.truck = truck
+      book.salesPerson = salesPerson
+      book.time = time
+      book.destination = destination
+      book.warehouse = warehouse
+      book.product = product
+      book.refNumber = refNo
+      book.dispatcher = req.user.fullname
 
+      book.save()
+      .then(pro =>{
 
       var id = req.user._id
       User.findByIdAndUpdate(id,{$set:{date:date,cases:cases, truck:truck, salesPerson:salesPerson, time:time, warehouse:warehouse,
-      product:product,refNumber:refNo,destination:destination  }},function(err,docs){
+      product:product,refNumber:refNo,destination:destination,batchId:pro._id  }},function(err,docs){
   
       })
 
@@ -1066,23 +1000,29 @@ console.log(arr,'doc7')
     book.refNumber = refNo
     book.date = date
     book.type = 'dispatch'
+    book.reason = reason
     book.save()
     .then(pro =>{
 
       console.log('success')
+      res.redirect('/dispatchStock/'+refNo)
 
     })
     
-  
+    
   })
-  res.redirect('/dispatchStock')
+    })
 }
     })
-  
+  }
+  })
+
+
+
 
   }
 
-
+  
     
 
 
@@ -1090,7 +1030,7 @@ console.log(arr,'doc7')
   })
 
 
-  router.get('/dispatchStock',isLoggedIn,function(req,res){
+  router.get('/dispatchStock/:id',isLoggedIn,function(req,res){
 
     var date = req.user.date
     var time = req.user.time
@@ -1101,6 +1041,7 @@ console.log(arr,'doc7')
     var product = req.user.product
     var destination = req.user.destination
     var refNumber = req.user.refNumber
+    
     Product.find(function(err,docs){
      res.render('kambucha/dispStock2',{listX:docs,date:date,time:time,salesPerson:salesPerson, truck:truck,
     product:product,cases:cases,refNumber:refNumber,warehouse:warehouse,destination:destination})
@@ -1110,6 +1051,20 @@ console.log(arr,'doc7')
 
  
 
+
+
+  router.post('/dispStock3',isLoggedIn, (req, res) => {
+    var pro = req.user
+    var m = moment()
+    var code = req.user.refNumber
+    var mformat = m.format("L")
+    
+    StockD.find({refNumber:code},(err, docs) => {
+   
+      res.send(docs)
+              })
+
+    }); 
 
 
 
@@ -1133,7 +1088,8 @@ console.log(arr,'doc7')
   var refNumber = req.user.refNumber
   var salesPerson = req.user.salesPerson
   var warehouse = req.user.warehouse
-
+  var batchId = req.user.batchId
+ console.log(batchId,'batchId')
  var arr = []
   var mformat = m.format("L")
     //var receiver = req.user.fullname
@@ -1141,7 +1097,23 @@ console.log(arr,'doc7')
   console.log(product,casesDispatched,warehouse,'out')
   
  
-  
+  StockD.find({refNumber:refNumber},function(err,focs){
+    let size  = focs.length + 1
+
+    if(size > casesBatch){
+User.findByIdAndUpdate(id,{$set:{refNumber:"null"}},function(err,noc){
+
+})
+/*req.flash('success', 'Batch Complete');
+         
+          
+
+res.redirect('/batchDispatch')*/
+    }
+    
+
+    
+
   
     Product.findOne({'name':product})
     .then(hoc=>{
@@ -1154,6 +1126,9 @@ console.log(arr,'doc7')
       if( doc == null){
     var book = new StockD();
 
+    BatchD.findByIdAndUpdate(batchId,{$set:{cases:size}},function(err,noc){
+
+    })
     let unitCases = hoc.unitCases
     let usd= hoc.usd
     let zwl = hoc.zwl
@@ -1181,6 +1156,7 @@ console.log(arr,'doc7')
     book.casesBatch = casesBatch
     book.dateValue = dateValue
     book.unitCases = unitCases
+    book.size = size
     book.zwl = zwl
     book.usd = usd
     book.rand = rand
@@ -1221,7 +1197,7 @@ console.log(arr,'doc7')
 
 
               
-              StockD.find({mformat:mformat},(err, ocs) => {
+              StockD.find({refNumber:refNumber},(err, ocs) => {
                 let size = ocs.length - 1
                 console.log(ocs[size],'fff')
                 res.send(ocs[size])
@@ -1236,6 +1212,8 @@ console.log(arr,'doc7')
         }
       })
       }) 
+    
+    })
   
         
   })
@@ -1426,7 +1404,7 @@ router.get('/statementGen/',isLoggedIn,function(req,res){
   var month = m.format('MMMM')
   var year = m.format('YYYY')
   var date = req.user.date
-
+  var refNumber = req.user.refNumber
   //var code ="Tiana Madzima"
   var code = req.params.id
 
@@ -1496,6 +1474,22 @@ let filename = 'statement'+'_'+date+'.pdf'
   printBackground:true
   
   })
+
+  
+var repo = new RepoFiles();
+
+repo.filename = filename;
+repo.fileId = "null";
+repo.year = year;
+repo.month = month
+repo.refNumber = refNumber
+
+console.log('done')
+
+repo.save().then(poll =>{
+
+})
+
   
   
   //upload.single('3400_Blessing_Musasa.pdf')
@@ -1515,7 +1509,8 @@ let filename = 'statement'+'_'+date+'.pdf'
 await Axios({
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     url: 'http://niyonsoft.org/uploadStatement',
+     //url: 'http://niyonsoft.org/uploadStatement',
+     url:'http://localhost:8000/uploadStatement',
     headers: {
       "Content-Type": "multipart/form-data"  
     },
@@ -1552,19 +1547,19 @@ await Axios({
     console.log(fileId,'fileId')
     var filename = req.file.filename
     console.log(filename,'filename')
-/*InvoiceFile.find({filename:filename},function(err,docs){
+RepoFiles.find({filename:filename},function(err,docs){
 if(docs.length>0){
 
 
   //console.log(docs,'docs')
   let id = docs[0]._id
-  InvoiceFile.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
 
   })
 
-}*/
+}
   res.redirect('/fileId/'+filename)
-//})
+})
   
   })
 
@@ -1573,12 +1568,12 @@ router.get('/fileId/:id',function(req,res){
 console.log(req.params.id)
 var id = req.params.id
 
-res.redirect('/openStatement/'+id)
+res.redirect('/openStatementName/'+id)
 
 })
 
 
-  router.get('/openStatement/:id',(req,res)=>{
+  router.get('/openStatementName/:id',(req,res)=>{
     var filename = req.params.id
     console.log(filename,'fileId')
       const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
@@ -1589,11 +1584,64 @@ res.redirect('/openStatement/'+id)
             readStream.pipe(res);
     
       })
-     //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+     
     })
 
+    router.get('/openStatement/:id',(req,res)=>{
+      var fileId = req.params.id
+        const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+        gfs.files.find({_id: mongodb.ObjectId(fileId)}).toArray((err, files) => {
+        
+      
+          const readStream = bucket.openDownloadStream(files[0]._id);
+              readStream.pipe(res);
+      
+        })
+       //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+      })
  
 
+    router.get('/folderReg',function(req,res){
+      res.render('kambucha/itemFolder')
+    })
+  
+   
+  
+
+
+    
+  
+  router.get('/folderFiles/',isLoggedIn,function(req,res){
+    var arr = []
+    
+    var errorMsg = req.flash('danger')[0];
+    var successMsg = req.flash('success')[0];
+     var term = req.user.term
+     var m = moment()
+     var pro = req.user
+     
+     var year = m.format('YYYY')
+     var month = m.format('MMMM')
+  
+     var date = req.user.invoCode
+   RepoFiles.find({year:year,month:month},function(err,docs){
+       if(docs){
+   
+     console.log(docs,'docs')
+        let arr=[]
+        for(var i = docs.length - 1; i>=0; i--){
+    
+          arr.push(docs[i])
+        }
+   
+   
+   res.render('kambucha/itemFiles',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+   }
+   })
+      
+   })
+   
+  
 router.get('/updateStockV',function(req,res){
   StockV.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
@@ -1647,6 +1695,284 @@ router.get('/updateProduct',function(req,res){
     res.redirect('/batch')
   })
 })
+
+
+
+
+
+router.get('/eodRepoDispatch/',isLoggedIn,function(req,res){
+  //var code = req.user.invoNumber
+  //var code = "Tiana Madzima"
+  let date  = req.user.date
+var id = req.params.id
+RefNo.find({date:date,type:'dispatch'},function(err,docs){
+ for(var i = 0;i<docs.length;i++){
+let refNumber = docs[i].refNumber
+arrStatement[refNumber]=[]
+ }   
+  res.redirect('/arrRefsProcessDispatch/')
+})
+  })
+
+
+
+
+
+  router.get('/arrRefsProcessDispatch',isLoggedIn,function(req,res){
+    console.log(arrStatement,'arrRefs')
+      //var code = "Tiana Madzima"
+  
+let date = req.user.date
+      //console.log(docs[i].uid,'ccc')
+      
+      //let uid = "SZ125"
+      
+      
+      //TestX.find({year:year,uid:uid},function(err,vocs) {
+      BatchD.find({date:date}).lean().sort({date:1}).then(vocs=>{
+      console.log(vocs.length,'vocs')
+      
+      for(var x = 0;x<vocs.length;x++){
+      let size = vocs.length - 1
+      let code = vocs[x].refNumber
+      if( arrStatement[code].length > 0 && arrStatement[code].find(value => value.refNumber == code) ){
+        arrStatement[code].find(value => value.refNumber == code).casesReceived++;
+        //arrStatement[code].find(value => value.uid == uid).size++;
+        //arrStatement[code].push(vocs[x])
+      
+          }
+          
+           
+          
+          
+          else{
+            arrStatement[code].push(vocs[x])
+            //arrStatement[code].find(value => value.refNumber == code).typeBalance = studentBalance;
+            } 
+      
+      
+       
+      
+           
+      
+      }
+     
+          })
+          
+          res.redirect('/statementGenDispatch/')
+        
+      
+      /*})*/
+      
+      })
+      
+  
+  
+router.get('/statementGenDispatch/',isLoggedIn,function(req,res){
+console.log(arrStatement,'arrSingleUpdate')
+var m = moment()
+var mformat = m.format('L')
+var month = m.format('MMMM')
+var year = m.format('YYYY')
+var date = req.user.date
+var refNumber = req.user.refNumber
+//var code ="Tiana Madzima"
+var code = req.params.id
+
+//var studentName = 'Tiana Madzima'
+
+/*console.log(arr,'iiii')*/
+
+
+//console.log(docs,'docs')
+
+const compile = async function (templateName, arrStatement){
+const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+
+const html = await fs.readFile(filePath, 'utf8')
+
+return hbs.compile(html)(arrStatement)
+
+};
+
+
+
+
+(async function(){
+
+try{
+//const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({
+headless: true,
+args: [
+"--disable-setuid-sandbox",
+"--no-sandbox",
+"--single-process",
+"--no-zygote",
+],
+executablePath:
+process.env.NODE_ENV === "production"
+  ? process.env.PUPPETEER_EXECUTABLE_PATH
+  : puppeteer.executablePath(),
+});
+
+const page = await browser.newPage()
+
+
+
+//const content = await compile('report3',arr[uid])
+const content = await compile('statement3',arrStatement)
+
+//const content = await compile('index',arr[code])
+
+await page.setContent(content, { waitUntil: 'networkidle2'});
+//await page.setContent(content)
+//create a pdf document
+await page.emulateMediaType('screen')
+//let height = await page.evaluate(() => document.documentElement.offsetHeight);
+await page.evaluate(() => matchMedia('screen').matches);
+await page.setContent(content, { waitUntil: 'networkidle0'});
+//console.log(await page.pdf(),'7777')
+ 
+let filename = 'statement'+'_'+date+'.pdf'
+await page.pdf({
+//path:('../gitzoid2/reports/'+year+'/'+month+'/'+uid+'.pdf'),
+path:(`./public/statements/${year}/${month}/statement_${date}`+'.pdf'),
+format:"A4",
+width:'30cm',
+height:'21cm',
+//height: height + 'px',
+printBackground:true
+
+})
+
+
+var repo = new RepoFiles();
+
+repo.filename = filename;
+repo.fileId = "null";
+repo.year = year;
+repo.type = 'dispatch'
+repo.month = month
+
+
+console.log('done')
+
+repo.save().then(poll =>{
+
+})
+
+
+
+//upload.single('3400_Blessing_Musasa.pdf')
+
+
+
+/*await browser.close()
+
+/*process.exit()*/
+
+const file = await fs.readFile(`./public/statements/${year}/${month}/statement_${date}`+'.pdf');
+const form = new FormData();
+form.append("file", file,filename);
+//const headers = form.getHeaders();
+//Axios.defaults.headers.cookie = cookies;
+//console.log(form)
+await Axios({
+  method: "POST",
+ //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+   //url: 'http://niyonsoft.org/uploadStatement',
+   url:'http://localhost:8000/uploadStatementDispatch',
+  headers: {
+    "Content-Type": "multipart/form-data"  
+  },
+  data: form
+});
+
+
+
+res.redirect('/fileIdDispatch/'+filename);
+
+
+}catch(e) {
+
+console.log(e)
+
+
+}
+
+
+}) ()
+
+
+
+
+//res.redirect('/hostel/discList')
+
+})
+
+
+
+
+router.post('/uploadStatementDispatch',upload.single('file'),(req,res,nxt)=>{
+  var fileId = req.file.id
+  console.log(fileId,'fileId')
+  var filename = req.file.filename
+  console.log(filename,'filename')
+RepoFiles.find({filename:filename},function(err,docs){
+if(docs.length>0){
+
+
+//console.log(docs,'docs')
+let id = docs[0]._id
+RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+
+})
+
+}
+res.redirect('/fileIdDispatch/'+filename)
+})
+
+})
+
+
+router.get('/fileIdDispatch/:id',function(req,res){
+console.log(req.params.id)
+var id = req.params.id
+
+res.redirect('/openStatementNameDispatch/'+id)
+
+})
+
+
+router.get('/openStatementNameDispatch/:id',(req,res)=>{
+  var filename = req.params.id
+  console.log(filename,'fileId')
+    const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+    gfs.files.find({filename: filename}).toArray((err, files) => {
+    console.log(files[0])
+  
+      const readStream = bucket.openDownloadStream(files[0]._id);
+          readStream.pipe(res);
+  
+    })
+   
+  })
+
+  router.get('/openStatement/:id',(req,res)=>{
+    var fileId = req.params.id
+      const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+      gfs.files.find({_id: mongodb.ObjectId(fileId)}).toArray((err, files) => {
+      
+    
+        const readStream = bucket.openDownloadStream(files[0]._id);
+            readStream.pipe(res);
+    
+      })
+     //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+    })
+
+
   
 
 function encryptPassword(password) {

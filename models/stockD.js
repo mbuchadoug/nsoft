@@ -10,7 +10,8 @@ var schemaD = new Schema({
     cases: {type: Number, required: true},
     casesBatch: {type: Number, required: true},
     mformat: {type: String, required: true},
-    status: {type: String, required: true},
+    status: {type: String},
+    reason: {type: String},
     salesPerson: {type: String, required: true},
     truck: {type: String, required: true},
     warehouse: {type: String, required: true},
@@ -23,6 +24,7 @@ var schemaD = new Schema({
     category: { type: String, required:true },
     subCategory: { type: String, required:true },
     lot:{type:Number},
+    size:{type:Number},
     refNumber:{type:String, required:true},
 
    
