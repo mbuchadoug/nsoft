@@ -1889,8 +1889,8 @@ form.append("file", file,filename);
 await Axios({
   method: "POST",
  //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   url: 'http://niyonsoft.org/uploadStatementDispatch',
-   //url:'http://localhost:8000/uploadStatementDispatch',
+   //url: 'https://niyonsoft.org/uploadStatementDispatch',
+   url:'http://localhost:8000/uploadStatementDispatch',
   headers: {
     "Content-Type": "multipart/form-data"  
   },
