@@ -1509,8 +1509,8 @@ repo.save().then(poll =>{
 await Axios({
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     //url: 'http://niyonsoft.org/uploadStatement',
-     url:'http://localhost:8000/uploadStatement',
+     url: 'http://niyonsoft.org/uploadStatement',
+     //url:'http://localhost:8000/uploadStatement',
     headers: {
       "Content-Type": "multipart/form-data"  
     },
@@ -1881,8 +1881,8 @@ form.append("file", file,filename);
 await Axios({
   method: "POST",
  //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   //url: 'http://niyonsoft.org/uploadStatement',
-   url:'http://localhost:8000/uploadStatementDispatch',
+   url: 'http://niyonsoft.org/uploadStatementDispatch',
+   //url:'http://localhost:8000/uploadStatementDispatch',
   headers: {
     "Content-Type": "multipart/form-data"  
   },
