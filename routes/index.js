@@ -1706,6 +1706,21 @@ router.get('/updateBatchD',function(req,res){
 
      }) 
     }
+    res.redirect('/updateBatchR')
+  })
+})
+
+
+
+
+router.get('/updateBatchR',function(req,res){
+  BatchR.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     BatchR.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
     res.redirect('/updateRepo')
   })
 })
