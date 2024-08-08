@@ -186,11 +186,11 @@ body {
       
     
         <tr >
-            <th  style="text-align:center;width: 20%;" >
+            <th  style="text-align:center;" >
              Date Received
             </th>
 
-            <th style="text-align:center;width: 25%;"  >
+            <th style="text-align:center;"  >
              Item
             </th>
 
@@ -200,14 +200,24 @@ body {
              
                </th>
 
+                 <th  style="text-align:center">
+            Opening Bal
+             
+               </th>
+
                   <th  style="text-align:center">
             Cases Received 
              
                </th>
 
+                 <th  style="text-align:center">
+            Closing Bal
+             
+               </th>
+
               
 
-               <th  style="text-align:center;width: 25%; ">
+               <th  style="text-align:center; ">
                 Ref. No 
                 </th>
         
@@ -216,7 +226,7 @@ body {
     </thead>
 
     <tbody >
-            {{#each this}}
+           
                 {{#each this}}
         <tr style="border: 0; ">
        
@@ -225,26 +235,36 @@ body {
                 <td style="text-align:center; ">
             {{this.date}}
             </td>
+
+                 
           
        
             <td style="text-align: left; ">
-             {{this.name}}
+             {{this.product}}
             </td>
 
                <td style="text-align: right; ">
-            Tidings
+           {{this.receiver}}
+            </td>
+
+              <td style="text-align:center; ">
+            {{this.openingBal}}
             </td>
 
             <td style="text-align: right;">
-          {{this.casesReceived}}
+          {{this.cases}}
              </td>
+
+              <td style="text-align:center; ">
+            {{this.closingBal}}
+            </td>
 
                 <td style="text-align: right;">
           {{this.refNumber}}
              </td>
         </tr>
         {{/each}}
-        {{/each}}
+     
 
 
              
@@ -318,16 +338,16 @@ body {
         <tr >
        
            <td style="text-align:center;height:90%;">
-             ${{this.0.typeBalance}}
+                {{this.0.openingBalX}}
            </td>
            
             <td style="text-align:center;height:10%;">
-        -
+               {{this.0.casesRcvdX}}
             </td>
           
        
             <td style="text-align: center;height:10%; ">
-        -
+                  {{this.0.closingBalX}}
             </td>
 
               <!-- <td style="text-align: center; height:10%;">
@@ -355,6 +375,8 @@ body {
     var date = new Date().toISOString().substring(0, 10),
         field = document.querySelector('#date');
            field.innerText = date;
+
+           
 
 
 })()

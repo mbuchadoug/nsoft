@@ -304,7 +304,7 @@ $.ajax({
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-	var td3 = tr.appendChild(document.createElement('td'));
+	//var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
@@ -325,13 +325,13 @@ link.className = "text-end";*/
 td5.appendChild(link);*/
 
 
-td1.innerHTML = data[i].name;
-td2.innerHTML = data[i].availableCases;
-td3.innerHTML = data[i].casesReceived;
-td4.innerHTML=  data[i].availableCases + data[i].cases ;
-td5.innerHTML = data[i].mformat
-td6.innerHTML = data[i].warehouse
-td7.innerHTML = data[i].shift
+td1.innerHTML = data[i].barcodeNumber;
+    td2.innerHTML = data[i].availableCases;
+   // td3.innerHTML = data.casesReceived;
+    td4.innerHTML=  data[i].availableCases + data[i].casesReceived ;
+    td5.innerHTML = data[i].mformat
+    td6.innerHTML = data[i].warehouse
+    td7.innerHTML = data[i].shift
     /*let link2 = "/rec/delete/"+data[i]._id
 
     var linkText = 'Delete'

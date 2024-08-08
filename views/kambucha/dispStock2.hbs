@@ -296,9 +296,9 @@ td5.appendChild(link);*/
 
 
 td1.innerHTML = data[i].barcodeNumber;
-td2.innerHTML = data[i].availableCases;
+td2.innerHTML = data[i].availableCasesDispatch;
 //td3.innerHTML = data[i].casesDispatched;
-td4.innerHTML=  data[i].availableCases - data[i].casesDispatched 
+td4.innerHTML=  data[i].availableCasesDispatch - data[i].casesDispatched 
 td5.innerHTML = data[i].mformat
 td6.innerHTML = data[i].warehouse
 td7.innerHTML = data[i].time
@@ -509,6 +509,18 @@ this.firstElementChild.select();
                
                
                  
+                 alert('case not received or does not belong to batch ')
+                   $("#barcodeNumber").val("")
+                 
+                 
+                 
+               
+                }
+
+             else if(data.statusV == 'dispatched'){
+               
+               
+                 
                  alert('case already dispatched')
                    $("#barcodeNumber").val("")
                  
@@ -516,16 +528,24 @@ this.firstElementChild.select();
                  
                
                 }
-                    else{
 
-        if(data.size === data.casesBatch){
+
+
+          
+
+       else if(data.size === data.casesBatch){
              alert('Batch Closed')
-              window.location.href = "http://niyonsoft.org/batchDispatch"
+             // window.location.href = "http://niyonsoft.org/batchDispatch"
+             //window.location.href = "http://localhost:8000/fifoUpdate"
 
-        }
+             window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
+
+        } else
 
                     
-                    var tr = document.createElement('tr');
+        {
+
+                   var tr = document.createElement('tr');
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
@@ -548,12 +568,12 @@ link.classList.add('text-end','pe-0')*/
 
 
     td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.availableCases;
+    td2.innerHTML = data.availableCasesDispatch;
    // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data.availableCases - data.casesDispatched ;
+    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
     td5.innerHTML = data.mformat
     td6.innerHTML = data.warehouse
-    td7.innerHTML = data.time
+    td7.innerHTML = data.timeOfDispatch
     //let link2 = "/rec/delete/"+data._id
 
     //td5.innerHTML = "Delete"
@@ -564,12 +584,12 @@ link.classList.add('text-end','pe-0')*/
     //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
 
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCases - data.casesDispatched)
+    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
      $("#barcodeNumber").val("")
 
                     }
                
-                
+             
                 
                  
                 }

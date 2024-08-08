@@ -4,6 +4,8 @@ var Schema = mongoose.Schema;
 var schemaV = new Schema({
 
     barcodeNumber: {type: String },
+    batchId: {type: String },
+    dispatchStatus: {type: String },
     date: {type: String },
     name: {type: String, required:true },
     casesReceived: {type: Number, required: true},
@@ -22,6 +24,24 @@ var schemaV = new Schema({
     lot:{type:Number},
     refNumber:{type:String, required:true},
     location:{type:String},
+    expiryDate: {type: String },
+    mformat: {type: String },
+    expiryDateValue: {type: String },
+    expiryMformat: {type: String },
+    casesDispatched: {type: Number },
+    availableCasesDispatch: {type: Number },
+    timeOfDispatch: {type: String },
+    truck: {type: String },
+    mformatDispatch: {type: String },
+    salesPerson: {type: String },
+    dispatcher: {type: String },
+    casesBatch: {type: Number },
+    dateValueDispatch: {type: Number},
+    refNumDispatch: {type: String },
+    size: {type: Number },
+    dispatchValue: {type: Number },
+    fifoPosition: {type: Number }
+ 
    
    
 });

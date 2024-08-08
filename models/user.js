@@ -24,8 +24,14 @@ var userSchema = new mongoose.Schema({
     product:{type:String, required:true},
     batchId:{type:String},
     lot:{type:Number, required:true},
-    refNumber:{type:String, required:true},
+    refNumber:{type:String},
     location:{type:String, required:true},
+    mformat: {type: String },
+    dateValue: {type: String },
+    expiryDateValue: {type: String },
+    expiryMformat: {type: String },
+    expiryDate: {type: String },
+    refNumDispatch:{type:String},
     password: {type: String, required: true}
    
 });

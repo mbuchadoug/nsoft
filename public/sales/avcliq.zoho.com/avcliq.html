@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        $zcg = {};
+        $zcg._CFPARAMNAME = 'zchat_csrparam';
+        $zcg._CFCOOKIENAME = 'CT_CSRF_TOKEN';
+        $zcg.JSON_EXCEPTION_HEADER = "X-XHR-exception"; //No I18N
+        $zcg._PUSH_CONFERENCE_STATS_VIA_WEBSOCKET = true;
+        $zcg._AV_FRAME_ORIGIN = 'https\x3A\x2F\x2Fbooks.zoho.com';
+        $zcg._WMSCLIENTSRIVALUES = {
+            "sv.js": "sha384-zv1M2OziiWKR29mmQBhshs4K35rncUWggoYfwzyK3AuT1JyDpVAm1g1+D/oMMMRl",
+            "ta.js": "sha384-SogK2hucmWkyGrJyzlaqFenr9L6a5+ETvXIGyUUm9fro+zpD7aUxri4l9CiR9U98",
+            "wmsbarimpl.js": "sha384-eoQo0WA68U4yxjmTcZclEJ2g2PyAbvR362o2RANGFalwVKsxF0fC81rAGlvTXeLG",
+            "de.js": "sha384-gbZT533865jnl/gYIP+1cMCFwuwqD9drc8MnQRlGF1M3/EBK7RULNgex217KEErk",
+            "hr.js": "sha384-eHvRn4LOXxp4NCulUlSX0WQpyFAJqwmOkhmynRhUbgyIuGURu5Xl4BoITXtuFsrK",
+            "fr.js": "sha384-LAqR60OoybT2CXVYb9jmZ/16xU4Hh32+0tYTYGClhgohB3zBCUWZvZCFcI3Y4y9b",
+            "pex.js": "sha384-2HtSHb8ygMPS/f1kg1QkJnDBi7PrDya34UshOF0lXyqt4xOAFpygk6mPE4nWEp9O",
+            "uk.js": "sha384-EOGUOZ4nzOhbm1esXYi619eJl+61ZiR2WHgGqSjBH46wKrWphbCx57wMyMI0t+EI",
+            "hu.js": "sha384-te9Me1fhM1FLky2nVCtLbgfzje9YGZCcpIJ2rAWwogbxh2XzYFkEthCz2dw2WZ7G",
+            "lt.js": "sha384-YHCX/mOKccgDUUnbmW8cumgx9LPCGpsQOHoD/WWOM44Dquk7kHmeN9gJaNKRtrQZ",
+            "wmsliteapi.js": "sha384-ONqkoGWglPQmtIeafdmwC8j/YlrPIB4S1ZQu6RR2L7DrhecNGclNIo9ue+xAFpF0",
+            "pl.js": "sha384-dZnczwJ5IMIx+IBVIUxRfAWeApsVi6hXlq4glIyR3eh2/mpPBeb+8xLteLfSOye6",
+            "da.js": "sha384-4u6HqFUKRRFNTxEa3DSuRXuv18TsT1zzkbP3GWe9895cpnCJr89WAaHd9fXYA8xD",
+            "annotator.js": "sha384-OanGtIZg7h787s7FeYCe8n4Q45QkbKEv26RiLSuocDeumBLpolaDZEQsuhQ1h6k3",
+            "el.js": "sha384-OfJdWv3OdvT64T7XD79uJUOjgwjEU+4sLOoxqm6/gLkPxoyPoc80eanYW6OWOtTv",
+            "ro.js": "sha384-INc5jVHM+yQksheFmRRY5A0zYe8CCHY5pthXcEOcLy/uvj4qm05rLabEqvoxAAfV",
+            "pt.js": "sha384-x0QTNt/Vr4QVg7BjulKqB/WSb5ppt/7VrgIaLsWDWlcr9I2+D5I+rYBhbJx8y+h2",
+            "ca.js": "sha384-2wbeCHDLxq3hVSUtYEwa4wcMxO6O1Z7E06ipyQfhNzy1b/hkwyqunc2TPNV162Tx",
+            "zh_tw.js": "sha384-g0KH4oU58BaFHnV7+u1aVyjxWkh3QhGylZrQUGvLuDWUWjoTsm7zXaq7VGsc7y4j",
+            "es.js": "sha384-fNKYPyz9m0PirVvynn47NoJsLqtzxRFC3gjBSti9WEOjd8bKzScBkPXPXyLr633Y",
+            "ar.js": "sha384-XlgeoaGUOjujQlHnd8+PjHByM+You87WQXJLAsnNh73BB+MSBZSeQMbp7rtbrDoB",
+            "nl.js": "sha384-8UsP7naP9jua/2/FqKBKdRaU0iOWpVaVZdYND4goZe/q8x9of1HSSHGaEddyYGRK",
+            "vi.js": "sha384-t0sLrPVtzJEI56wAbgj2S1Z511KqIiMLEb6NeSGWPKD3W0QD3HLgIbl8yeW4dx6e",
+            "wmsbridge.js": "sha384-lsGMX9HxS1u34mj1HsbBSNm4ol+JeSAyYk41Fd4hdANq6urs3BNZ/AEGqEOlcjAz",
+            "wmsbar.css": "sha384-EIHouS8TK8MzhG8higaY5radCw8nKA8IHat/AUHJNs+aFdEOCqW0CyMg5KILdZdz",
+            "cs.js": "sha384-Jik3UETN5uji6C6KMiZCaUg3cvr0esKsxva2XzFePvYw82MSO9DWO/SBB8lBquyK",
+            "it.js": "sha384-UWFXCQORbPDZeW7rz4PvCJy9elD0hIwib9z5zPVJW3y8Hyi3Wbh5d86uyHj2OxM/",
+            "ru.js": "sha384-Ub8RqfUylpfxWviYYv0OOnzfoWvCqqchjrN2C8VFKjQ2SGZcJ3nXcbO7Po3+Vi9x",
+            "nb.js": "sha384-TYHkNqaxZJmAQ4qgZ5eDQnrGL8SN5/FZ/KeAe0r40M3/WOvuRxLiG1+V28nNEbMk",
+            "th.js": "sha384-+AYjHfYA37ECGgc0RZJNSbyJGpJ+UjSFgRplaELXcwrDm6Ayn71QBhR5tbPAzfyB",
+            "annotator.css": "sha384-C4vXzWbCZfPDMR02H6YRAYcraXn8VR16u+L28VvBd+Gq47VYZ0v8zrHtGhEcvIxq",
+            "zohomaps.css": "sha384-izVmC3JI2X6pY619g1c1cau8iCGDFKx0mdN6y3gzIwnee48/OASki4GRe9zfgayQ",
+            "json2.min.js": "sha384-3c1dceIGdekW+gFEQusxzWDXKeA7O0W7gHY5NJVd8pBuR0C4zve+WZYbQZ/5dSFl",
+            "psconnect.js": "sha384-Tal13huwpoEe8+X18Ig3OcCCkkk4BIgeUiTdL7F5E6CKotsJ06q/gyVEhGHqQUP6",
+            "wmsbar.js": "sha384-VN+mJqbnWdzDo7dsvtuyeycHLuskrEcXXZw1VztI7dRuz2T0wBmwsg4iF9/TyUhc",
+            "et.js": "sha384-1uf0Ge8CuO31rAs5yk1MHaQDM7Z5ThoxMnp4rgF+4tjTsdiE/Fm/hp5gOg/XVelg",
+            "ja.js": "sha384-0DwOvyaGOLdHvvOi2f8pulbIopYWXfbGcuINt7lsoc7rTTkCtJztzrXHmNgx5w46",
+            "zh.js": "sha384-HmvUpkSQjvuWvD87/vt3E0z0smSwedtHUMsZJ/e8C9dPpkBcKPvQCLXa5fHdOKzJ",
+            "tr.js": "sha384-EC+SMrRZQGYKE6RaaIao+89W82ZgwQQv6GnqwYRqQCkwAUohY8wZeTP/RlBYEFci",
+            "sk.js": "sha384-dulHIRh1VuqpgUAW0jm1RQTia0CZYvkuMvkkg85kAqliWY8sIRgR4JdvYL9H0/FF",
+            "zohomaps.js": "sha384-hYTc87fdIOWOyV8u7d/dTHaiQHfUui+NEBb6hpPVWIS2sPdFVdCTpymN1obKtLXb",
+            "ko.js": "sha384-XPd2ptDuVWQo12yJIUtj8QzhQ150TZCc03EAvRyi/ELV14UIGd28JInerVYAHlFX",
+            "en.js": "sha384-3h0HzEow9LDkzg+IygvRIqLwdXFFIMzvImyTALzCYuvZcboDWEvzXTywqkgzZJyk",
+            "pubsubapi.js": "sha384-XfbhdTVHR1WhufM4PITKx/HUcKElQNCjhPQ9wa7CM+840eHZillEjf5nvBE/rlN5",
+            "fi.js": "sha384-z0x97rWHzsRebLBYZFJ0B94H3Ro+so/dj0zXixxBKlgrZnGhLuOGQj7yAw51Z3AI"
+        };
+        $zcg._PRD = 'CT';
+        $zcg._ZUID = '772539688';
+    </script>
+    <script crossorigin="anonymous" src="//static.zohocdn.com/chat/source/officechat/js/avcliq-init-min.f919609ff19a497159aa8df32d31e24f.js"></script>
+</head>
+
+<body></body>
+
+</html>

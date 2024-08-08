@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var batchSchemaD = new Schema({
 
     date: {type: String },
+    status: {type: String },
     truck: {type: String },
     salesPerson: {type: String },
     time: {type: String },
@@ -13,6 +14,12 @@ var batchSchemaD = new Schema({
     product: {type: String },
     dispatcher: {type: String },
     cases: {type: Number },
+    month: {type: String },
+    year: {type: Number },
+    openingBalance: {type: Number},
+    closingBalance: {type: Number},
+    dispatchMformat: {type: String },
+    dateValueDispatch: {type: Number },
     refNumber:{type:String, required:true},
 
    

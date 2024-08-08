@@ -181,7 +181,7 @@
         {{/if}}
 
 <form method="POST" action="/batchDispatch" class="item-creation">
-	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3" {{readF}}>
+	<!--<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3" {{readF}}>
         <div id="success" class="alert alert-success" {{#if noMessages}}hidden{{/if}}>
             {{ successMsg }}
      
@@ -193,7 +193,7 @@
             {{ errorMsg }}
      
         </div>
-    </div>	
+    </div>-->	
   <div class="zb-txn-form overflow-container w-100">
 <div tabindex="-1" id="ember370" class="no-outline ember-view"><!----></div> 
 
@@ -267,17 +267,17 @@
       </div></div>
 
 
-  <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Product</label> 
-<div class="col-lg-4">
-   <input class="form-select form-select-solid {{readF2}}" list="products" name="product" id="products1" value="{{user.product}}">
 
-<datalist id="products" {>
-		<option value="kambucha lite" >Kambucha Lite</option>
-			<option  value="kambucha no1" >Kambucha No 1</option>
-      <option value="kambucha no2" >Kambucha No 2</option>
-      <option  value="kambucha no3" >Kambucha No 3</option>
-</datalist>
-      </div></div>
+
+       <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Select Batch</label> 
+<div class="col-lg-4">
+   <select class="form-select form-select-solid {{readF2}}"  name="refNumber" id="refNumber" value="{{user.refNumber}}">
+
+                                                              {{#each arr}}
+                                                               <option value="{{this.refNumber}}">{{this.product}} || {{this.refNumber}}||Cases:{{this.statsRemainingCases}}</option>
+                                                                     {{/each}}
+    </select>  </div></div>
+
 
       
 <div class="form-group row" >
