@@ -2437,8 +2437,18 @@ router.get('/openStatementNameDispatch/:id',(req,res)=>{
      
     })
 
-  
+    router.get('/popup',function(req,res){
+      res.render('kambucha/pop')
+    })
 
+
+    router.get('/printInvoice',function(req,res){
+      res.render('kambucha/pdf')
+    })
+
+    router.get('/printPaid',function(req,res){
+      res.render('kambucha/paid')
+    })
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  
   };

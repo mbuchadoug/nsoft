@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' /> </head>
+
+<body>
+    <script>
+        var micsestatus = false;
+        var csrfParamName = 'iamcsrcoo';
+
+        function getCSRFCookie(name) {
+            var cookie_name = name + '=';
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(cookie_name) === 0) {
+                    return c.substring(cookie_name.length, c.length);
+                }
+            }
+            return '';
+        }
+        var parentDomain = 'https\x3A\x2F\x2Fbooks.zoho.com';
+        window.addEventListener('message', function(e) {
+            if (e.origin === 'https\x3A\x2F\x2Fbooks.zoho.com') {
+                var dataobject = {};
+                dataobject[csrfParamName] = getCSRFCookie('iamcsr');
+                if (e.data.type === 'tabSwitch') {
+                    checkTip(e.data.promotionID, e.data.feedback, e.data.platform);
+                } else if (!(e.data.promotionID === undefined)) {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.open('OPTIONS', 'Notification?Pidentifier=' + e.data.promotionID + '&ORGID=825431405&ServiceID=106&Feedback=' + e.data.feedback + (e.data.platform === undefined ? '' : ('&Platform=' + e.data.platform)), true);
+                    xhttp.setRequestHeader('Content-Type', 'application/json');
+                    xhttp.send(JSON.stringify(dataobject));
+                }
+            }
+        });
+
+        function getDataforMicse() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var parsedData = JSON.parse(xhttp.responseText);
+                    parsedData.PromotionID ? parsedData.Platform = 1 : '';
+                    var postData = replaceTild(parsedData);
+                    window.parent.postMessage(postData, parentDomain);
+                    if (parsedData.PromotionID) {
+                        timeout(parsedData);
+                        return;
+                    }
+                    getDataforMics();
+                } else if (this.readyState == 4 && this.status != 200) {
+                    micsestatus = this.status == 401 ? false : true;
+                    getDataforMics();
+                }
+            };
+            xhttp.open('GET', 'Notification?ORGID=825431405&ServiceID=106&Feedback=3&Platform=1', true);
+            xhttp.send();
+        }
+
+        function getDataforMics() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var parsedData = JSON.parse(xhttp.responseText);
+                    parsedData.PromotionID ? parsedData.Platform = 0 : '';
+                    var postData = replaceTild(parsedData);
+                    window.parent.postMessage(postData, parentDomain);
+                    timeout(parsedData);
+                } else if (this.readyState == 4 && this.status != 200) {
+                    timeout({
+                        Timeout: 900000
+                    });
+                }
+            };
+            xhttp.open('GET', 'Notification?ORGID=825431405&ServiceID=106&Feedback=3&Platform=0', true);
+            xhttp.send();
+        }
+
+        function getData(param) {
+            if (micsestatus) {
+                getDataforMicse(param);
+                return;
+            }
+            getDataforMics(param);
+        }
+
+        function timeout(data) {
+            setTimeout(getData, data.Timeout);
+        }
+        getData();
+
+        function replaceTild(json) {
+            return JSON.stringify(json);
+        }
+
+        function checkTip(pid, feedback, platform) {
+            var dataobject = {};
+            dataobject[csrfParamName] = getCSRFCookie('iamcsr');
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var checkTipData = {
+                        type: 'tabSwitch',
+                        IsActive: JSON.parse(xhttp.responseText).IsActive,
+                    };
+                    window.parent.postMessage(checkTipData, parentDomain);
+                }
+            };
+            xhttp.open('OPTIONS', 'Notification?Pidentifier=' + pid + '&ORGID=825431405&ServiceID=106&Feedback=' + feedback + (platform === undefined ? '' : ('&Platform=' + platform)), true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify(dataobject));
+        }
+    </script>
+</body>
+
+</html>
