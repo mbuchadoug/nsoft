@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Ware = require('../models/ware');
+var Warehouse = require('../models/warehouse');
+var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
+var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var SaleStock = require('../models/salesStock');
 var BatchD = require('../models/batchD');
 var RefNo = require('../models/refNo');
@@ -11,6 +15,8 @@ var RepoFiles = require('../models/repoFiles');
 var StockV = require('../models/stockV');
 var StockD = require('../models/stockD');
 var Product = require('../models/product');
+var Truck = require('../models/truck');
+var SalesList = require('../models/salesList');
 const keys = require('../config1/keys')
 const stripe = require('stripe')('sk_test_IbxDt5lsOreFtqzmDUFocXIp0051Hd5Jol');
 var xlsx = require('xlsx')
@@ -97,6 +103,59 @@ const upload = multer({ storage })
 
 router.get('/search',function(req,res){
   res.render('kambucha/search')
+})
+
+
+
+router.get('/warehouseUpdate',function(req,res){
+let arr16=[]
+Product.find(function(err,docs){
+  for(var i = 0;i<docs.length;i++){
+    let product = docs[i].name
+
+    Ware.find(function(err,locs){
+for(var i = 0;i<locs.length;i++){
+  let warehouse = locs[i].name
+
+  Warehouse.find({product:product,warehouse:warehouse},function(err,vocs){
+
+    if(vocs.length == 0){
+
+      StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
+      let cases = nocs.length
+ 
+      var ware = new Warehouse()
+
+      ware.warehouse=warehouse
+      ware.product = product
+      ware.cases = cases
+
+      ware.save()
+      .then(user =>{
+        
+  })
+
+    })
+
+    }else{
+      let id = vocs[0]._id
+      StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
+        let cases = nocs.length
+  
+      Warehouse.findByIdAndUpdate(id,{$set:{cases:cases}},function(err,tocs){
+
+      })
+
+          })
+    }
+  })
+}
+    })
+  }
+})
+
+
+
 })
 
 router.get('/add',function(req,res){
@@ -234,6 +293,101 @@ var date = m.format('L')
 
 
 
+router.get('/addWarehouse',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addW',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/addWarehouse', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addWarehouse');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new Ware();
+                  user.name = name;
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'User added Successfully');
+         
+          
+              res.redirect('/addWarehouse');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
+
+
+
+
+
 
 
 
@@ -279,6 +433,522 @@ router.get("/logout",(req,res)=>{
     res.redirect('/');
   });
 });
+
+
+
+
+
+router.post('/dashChartStockXI',isLoggedIn,function(req,res){
+
+  
+
+  var date = req.body.date
+  var arr = []
+  var id = req.user._id
+  let num = req.user.num
+  num++
+  
+ 
+ 
+  Product.find({},function(err,docs) {
+   // console.log(docs,'docs')
+    for(var i = 0;i<docs.length;i++){
+ 
+ 
+       if(arr.length > 0 && arr.find(value => value.name == docs[i].name)){
+              console.log('true')
+             arr.find(value => value.name == docs[i].name).cases += docs[i].cases;
+        }else{
+ arr.push(docs[i])
+        }
+ 
+      
+    }
+   // console.log(arr,'arr')
+   res.send(arr)
+  })
+ 
+ })
+ 
+
+
+
+
+
+
+
+
+
+
+ router.post('/dashChartStockX',isLoggedIn,function(req,res){
+
+  var warehouse = req.body.warehouse
+console.log(warehouse,'warehouse')
+ var date = req.body.date
+ var arr = []
+ var id = req.user._id
+ let num = req.user.num
+ num++
+ 
+
+
+ Warehouse.find({warehouse:warehouse},function(err,docs) {
+  // console.log(docs,'docs')
+   for(var i = 0;i<docs.length;i++){
+  let product = docs[i].product
+  console.log(docs,'docs')
+
+      if(arr.length > 0 && arr.find(value => value.warehouse == docs[i].warehouse  && value.product == docs[i].product )){
+             console.log('true')
+            arr.find(value => value.product == docs[i].product).cases += docs[i].cases;
+       }else{
+arr.push(docs[i])
+       }
+
+     
+   }
+  console.log(arr,'arr')
+  res.send(arr)
+ })
+
+})
+
+
+
+router.post('/dashChartStockSub',isLoggedIn,function(req,res){
+
+  
+  var warehouse = req.body.warehouse
+console.log(warehouse,'warehouse')
+ var date = req.body.date
+ var arr = []
+ var id = req.user._id
+ let num = req.user.num
+ num++
+ 
+
+
+ Warehouse.find({warehouse:warehouse},function(err,docs) {
+  // console.log(docs,'docs')
+   for(var i = 0;i<docs.length;i++){
+  let product = docs[i].product
+  console.log(docs,'docs')
+
+      if(arr.length > 0 && arr.find(value => value.warehouse == docs[i].warehouse  && value.product == docs[i].product )){
+             console.log('true')
+            arr.find(value => value.product == docs[i].product).cases += docs[i].cases;
+       }else{
+arr.push(docs[i])
+       }
+
+     
+   }
+  console.log(arr,'arr')
+  res.send(arr)
+ })
+
+
+})
+
+
+
+router.post('/dashChartStockSales',isLoggedIn,function(req,res){
+
+  
+  var product = req.body.product
+//console.log(warehouse,'warehouse')
+ var date = req.body.date
+ var arr = []
+ var id = req.user._id
+ let num = req.user.num
+ num++
+ 
+
+
+ SaleStock.find({product:product},function(err,docs) {
+  // console.log(docs,'docs')
+   for(var i = 0;i<docs.length;i++){
+  let product = docs[i].product
+  console.log(docs,'docs')
+
+      if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson  && value.product == docs[i].product )){
+             console.log('true')
+            arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases;
+       }else{
+arr.push(docs[i])
+       }
+
+     
+   }
+  console.log(arr,'arr')
+  res.send(arr)
+ })
+
+
+})
+
+
+
+router.get('/warehouseStock',isLoggedIn,function(req,res){
+  var pro = req.user
+  //res.render('admin/dash6',{pro:pro})
+  Product.find({},function(err,docs){
+ Warehouse.find({},function(err,hocs){
+  res.render('kambucha/dash7',{pro:pro,arr:docs,arr1:hocs})
+})
+  })
+})
+
+
+
+
+
+
+
+router.get('/importSales',isLoggedIn,function(req,res){
+  var pro = req.user
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('imports/sales',{pro:pro,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+})
+
+
+
+
+
+
+router.post('/importSales',isLoggedIn,uploadX.single('file'),  (req,res)=>{
+ 
+ 
+
+/*  if(!req.file){
+      req.session.message = {
+        type:'errors',
+        message:'Select File!'
+      }     
+        res.render('imports/students', {message:req.session.message,pro:pro}) */
+   if (!req.file || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+          req.session.message = {
+              type:'errors',
+              message:'Upload Excel File'
+            }     
+              res.render('imports/sales', {message:req.session.message,pro:pro
+                   
+               }) 
+
+
+
+      }
+        
+      else{
+   
+
+      
+         const file = req.file.filename;
+  
+          
+              var wb =  xlsx.readFile('./public/uploads/' + file)
+
+           
+       
+               var sheets = wb.Sheets;
+               var sheetNames = wb.SheetNames;
+   
+               var sheetName = wb.SheetNames[0];
+   var sheet = wb.Sheets[sheetName ];
+   
+      for (var i = 0; i < wb.SheetNames.length; ++i) {
+       var sheet = wb.Sheets[wb.SheetNames[i]];
+   
+       console.log(wb.SheetNames.length)
+       var data =xlsx.utils.sheet_to_json(sheet)
+           
+       var newData = data.map(function (record){
+   
+      
+     
+    
+        
+       
+      
+         
+          let salesPerson = record.salesPerson
+          let driver = record.driver;
+         
+
+req.body.salesPerson = record.salesPerson 
+req.body.driver = record.driver
+
+
+//req.body.photo = record.photo          
+
+          
+      
+          
+            req.check('salesPerson','Enter SalesPerson').notEmpty();
+            //req.check('name','Enter Name').notEmpty();
+        
+            
+            var errors = req.validationErrors();
+
+            if (errors) {
+              
+              req.session.errors = errors;
+              req.session.success = false;
+              req.flash('danger', req.session.errors[0].msg);
+     
+      
+              res.redirect('/importSales');
+            
+        }
+else
+
+
+{
+SalesList.findOne({'salesPerson':salesPerson})
+.then(user =>{
+    if(user){ 
+  // req.session.errors = errors
+    //req.success.user = false;
+
+
+
+    req.flash('danger', 'Item already in the system');
+
+    res.redirect('/importSales')
+}
+else{
+
+
+
+
+        
+var product = new SalesList();
+product.salesPerson = salesPerson;
+product.driver = driver;
+
+product.save()
+  .then(user =>{
+
+
+  })
+
+}
+
+})
+
+
+
+
+}     
+               
+                   
+ 
+                  // .catch(err => console.log(err))
+           
+               
+                  })
+                
+                  req.flash('success', 'File Successfully!');
+
+                  res.redirect('/importSales')  
+       
+                }
+                
+                
+                  
+                  
+      
+                 
+      
+                  
+           
+              }
+    
+      
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get('/importTrucks',function(req,res){
+  var pro = req.user
+  res.render('imports/trucks',{pro:pro})
+})
+
+
+
+router.post('/importTrucks', uploadX.single('file'),  (req,res)=>{
+ 
+  if (!req.file || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+    req.session.message = {
+        type:'errors',
+        message:'Upload Excel File'
+      }     
+        res.render('imports/trucks', {message:req.session.message,pro:pro
+             
+         }) 
+
+
+
+}
+  
+else{
+
+
+
+   const file = req.file.filename;
+
+    
+        var wb =  xlsx.readFile('./public/uploads/' + file)
+
+     
+ 
+         var sheets = wb.Sheets;
+         var sheetNames = wb.SheetNames;
+
+         var sheetName = wb.SheetNames[0];
+var sheet = wb.Sheets[sheetName ];
+
+for (var i = 0; i < wb.SheetNames.length; ++i) {
+ var sheet = wb.Sheets[wb.SheetNames[i]];
+
+ console.log(wb.SheetNames.length)
+ var data =xlsx.utils.sheet_to_json(sheet)
+     
+ var newData = data.map(function (record){
+
+
+
+
+  
+ 
+
+   
+    let truckNo = record.truckNo
+    let driver = record.driver;
+    let make = record.make;
+    let weight = record.weight
+
+req.body.truckNo = record.truckNo
+req.body.driver = record.driver
+req.body.make = record.make
+req.body.weight = record.weight
+
+
+//req.body.photo = record.photo          
+
+    
+
+    
+      req.check('truckNo','Enter Truck No').notEmpty();
+      //req.check('name','Enter Name').notEmpty();
+  
+      
+      var errors = req.validationErrors();
+
+      if (errors) {
+        
+        req.session.errors = errors;
+        req.session.success = false;
+        req.flash('danger', req.session.errors[0].msg);
+
+
+        res.redirect('/importTrucks');
+      
+  }
+else
+
+
+{
+Truck.findOne({'truckNo':truckNo})
+.then(user =>{
+if(user){ 
+// req.session.errors = errors
+//req.success.user = false;
+
+
+
+req.flash('danger', 'Item already in the system');
+
+res.redirect('/importTrucks')
+}
+else{
+
+
+
+
+  
+var product = new Truck();
+product.truckNo = truckNo;
+product.driver = driver;
+product.make = make;
+product.weight = weight;
+
+product.save()
+.then(user =>{
+
+
+})
+
+}
+
+})
+
+
+
+
+}     
+         
+             
+
+            // .catch(err => console.log(err))
+     
+         
+            })
+          
+            req.flash('success', 'File Successfully!');
+
+            res.redirect('/importTrucks')  
+ 
+          }
+          
+          
+            
+            
+
+           
+
+            
+     
+        }
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -725,14 +1395,174 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
   })
 
 
-
-  
-
-  
   router.get('/customer',function(req,res){
-    res.render('kambucha/addCustomer')
+
+    
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addCustomer',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
   })
+
+
+  router.post('/customer', function(req,res){
+    var salutation= req.body.salutation
+    var firstName = req.body.firstName
+    var lastName = req.body.lastName
+    //var barcodeNumber = req.body.barcodeNumber
+    var companyName = req.body.companyName
+    var email = req.body.email
+    var mobile = req.body.mobile
+    var mobile2 = req.body.mobile2
+    var address = req.body.address
+    var town = req.body.town
+    var city = req.body.city
+    var country = req.body.country
+
+    
   
+
+   
+      var m = moment()
+      var year = m.format('YYYY')
+      var dateValue = m.valueOf()
+      /*if (!req.file){
+        req.flash('danger', 'Select Picture');
+  
+        res.redirect('/newItem');
+  
+  
+  
+    }*/
+    
+        var date = m.format('L')
+        req.check('firstName','Enter FirstName').notEmpty();
+        req.check('lastName','Enter LastName ').notEmpty();
+        req.check('companyName','Enter Company ').notEmpty();
+        req.check('email','Enter Email ').notEmpty();
+        req.check('mobile','Enter Work Phone ').notEmpty();
+        req.check('mobile2','Enter Mobile Phone ').notEmpty();
+        req.check('address','Enter Address').notEmpty();
+        req.check('town','Enter Town ').notEmpty();
+        req.check('city','Enter City').notEmpty();
+        req.check('country','Enter Country').notEmpty();
+       
+        var errors = req.validationErrors();
+       
+        if (errors) {
+      
+          req.session.errors = errors;
+          req.session.success = false;
+          //res.render('hurlings/students/admit',{ errors:req.session.errors, arr1:arr1,pro:pro})
+  
+          req.flash('danger', req.session.errors[0].msg);
+       
+        
+          res.redirect('/customer');
+  
+        
+      }
+      else
+    
+     {
+        Customer.findOne({'email':email})
+        .then(user =>{
+            if(user){ 
+          // req.session.errors = errors
+            //req.success.user = false;
+              
+      req.flash('danger', 'Customer already exists');
+  
+      res.redirect('/customer');
+      }
+      
+      
+        
+        else{
+    
+        var book = new Customer();
+        book.salutation = salutation
+        book.firstName= firstName
+        book.lastName = lastName
+        book.companyName = companyName
+        book.email = email
+        book.mobile = mobile
+        book.mobile2 = mobile2
+        book.address = address
+        book.town= town
+        book.city = city
+        book.country=country
+      
+            
+             
+              book.save()
+                .then(pro =>{
+      
+               
+                  req.flash('success', 'Cutomer Added Successfully');
+     
+                  res.redirect('/customer');
+               
+                
+              
+              })
+            }
+            
+  
+          })
+        
+          }
+      
+      //res.redirect('/newItem')
+  
+      
+      })
+
+
+      router.get('/custAuto',function(req,res){
+        console.log('dog day')
+        Customer.find(function(err,docs){
+          res.send(docs)
+        })
+      })
+
+
+      router.post('/custAuto2',function(req,res){
+      let  code = req.body.code
+      console.log(code)
+        Customer.find({companyName:code}, function(err,docs){
+          console.log(docs,'docs')
+          res.send(docs[0])
+        })
+      })
+  
+
+
+      router.get('/proAuto',function(req,res){
+        console.log('product day')
+       Product.find(function(err,docs){
+          res.send(docs)
+        })
+      })
+
+      router.post('/proAutoV',function(req,res){
+        let  code = req.body.code
+        console.log(code)
+          Product.find({name:code}, function(err,docs){
+            console.log(docs,'docs')
+            res.send(docs[0])
+          })
+        })
+    
+        router.post('/proAuto2',function(req,res){
+          let  code = req.body.code
+          console.log(code,'codePro')
+           Product.find({name:code}, function(err,docs){
+              console.log(docs,'docs')
+              res.send(docs[0])
+            })
+          })
+      
   router.get('/quote',function(req,res){
     res.render('kambucha/addQuote')
   })
@@ -764,6 +1594,108 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
     res.render('kambucha/invoice')
   })
 
+  router.post('/invoice',function(req,res){
+    console.log(req.body)
+    //res.render('kambucha/invoice')
+
+
+    ar1 = req.body['product[]']
+    ar2 = req.body['quantity[]']
+    ar3=req.body['price[]']
+  
+
+
+    
+
+ar1 = ar1.filter(v=>v!='')
+ar2 = ar2.filter(v=>v!='')
+ar3 = ar3.filter(v=>v!='')
+
+
+console.log(ar1,'iwee1')
+console.log(ar2,'iwee2')
+console.log(ar3,'iwee3')
+for(var i = 0; i<ar1.length;i++){
+  console.log(ar1[i])
+  let code = ar1[i]
+  
+
+
+var book = new InvoiceSubBatch();
+  book.item = ar1[i]
+
+  book.itemId = 'cccc'
+  book.qty = 0
+  book.price = 0
+  book.total = 0
+
+  book.status = 'not saved'
+
+  book.type = "Invoice"
+
+  book.size = i
+  book.subtotal = 0
+ 
+
+
+      
+       
+        book.save()
+          .then(title =>{
+//let client = title.clientName
+let subtotal = 0
+let pId = title._id
+console.log(pId,"idd")
+
+let size = title.size
+
+console.log(size,'size')
+let qty = ar2[size]
+let price = ar3[size]
+
+let total = qty * price
+subtotal += total
+InvoiceSubBatch.findByIdAndUpdate(pId,{$set:{qty:qty,price:price,total:total,subtotal:subtotal}},function(err,ocs){
+      
+      })
+          })
+}
+  })
+
+
+  
+router.get('/subtotalUpdate',isLoggedIn,function(req,res){
+  var invoiceId = req.user.invoiceId
+  console.log(invoiceId)
+  let subtotal
+  let arr16 = []
+  InvoiceSubBatch.find({invoiceCode:invoiceId},function(err,hods){
+  
+    for(var q = 0;q<hods.length; q++){
+        
+      arr16.push(hods[q].total)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+         number1=0;
+        for(var z in arr16) { number1 += arr16[z]; }
+  
+   InvoiceSubBatch.find({invoiceCode:invoiceId},function(err,docs){
+  for(var i = 0;i <docs.length;i++){
+    let id =  docs[i]._id
+    InvoiceSubBatch.findByIdAndUpdate(id,{$set:{subtotal:number1}},function(err,focs){
+  
+    })
+  }
+  })
+  
+  //aggVouchers
+  
+  res.redirect('/invoiceSubFile')
+       
+  })
+  
+  })  
+  
 
 
   router.get('/fifoUpdate',isLoggedIn,function(req,res){
@@ -1168,11 +2100,16 @@ console.log(arr,'doc7')
   var readonly = 'hidden'
   var read =''
 
+  SalesList.find(function(err,nocs){
+  Truck.find(function(err,vocs){
   BatchR.find({status:'received'}).lean().sort({fifoPosition:1}).then(docs=>{
   var arr = docs
-  res.render('kambucha/batchDisp',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
-
+  var arr1 = nocs
+  var arr2 = vocs
+  res.render('kambucha/batchDisp',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read,arr1:arr1,arr2:arr2})
   })
+  })
+})
    
   })
 

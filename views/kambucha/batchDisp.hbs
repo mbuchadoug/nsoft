@@ -236,9 +236,9 @@
       <input class="form-select form-select-solid {{readF2}}" list="sales" name="salesPerson" id="sales1" value="{{user.salesPerson}}">
 
 <datalist id="sales">
-  <option value="Jim">
-  <option value="Jane">
-  <option value="Chris">
+       {{#each arr1}}
+  <option value="{{this.salesPerson}}">{{this.salesPerson}} </option>
+                  {{/each}}
 
 </datalist>
      <!--<select class="form-select form-select-solid" name="warehouse" id="warehouse"   >
@@ -258,11 +258,9 @@
       <input class="form-select form-select-solid {{readF2}}" list="trucks" name="truck" id="trucks1" value="{{user.truck}}">
 
 <datalist id="trucks">
-  <option value="TRCV55">
-  <option value="TRCF33">
-  <option value="TRCQ44">
-  <option value="TRCA22">
-  <option value="TRCX47">
+                                                             {{#each arr2}}
+                                                               <option value="{{this.truckNo}}">{{this.truckNo}}</option>
+                                                                     {{/each}}
 </datalist>
       </div></div>
 

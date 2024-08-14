@@ -152,7 +152,7 @@ cloneBtn.onclick = function(){
   let sizeArea = f2.length-1
   let nSize = f.length -1
   f[nSize].id = 'area'+sizeArea
-  f[nSize].data = 'area'+sizeArea
+  f[nSize].name = 'area'+sizeArea
   console.log(f[nSize],'text')
   console.log(f,'text2')
   f2[sizeArea].value= ''
@@ -168,8 +168,8 @@ cloneBtn.onclick = function(){
 
  n[0].id = 'quantity'+trSize
  n[1].id = 'price'+trSize
- n[0].data = 'quantity'+trSize
- n[1].data = 'price'+trSize
+ n[0].name = 'quantity'+trSize
+ n[1].name = 'price'+trSize
 
  var n2 = document.getElementsByName('cross')
  n2[trSize-1].id = 'autoPro'+trSize
