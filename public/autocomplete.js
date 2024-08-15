@@ -98,7 +98,12 @@ function selectInput(list){
           let city = data.city
           let town = data.town
           let country = data.country
+
     resultBox1.style.display="none"
+    document.getElementById('company').value= data.companyName
+    document.getElementById('address').value = data.address
+    document.getElementById('clientName').value = fullname
+
     document.getElementById('embr4').textContent=data.companyName
     octaneBox.innerHTML =`<div class="row" ><div class="col-lg-10 offset-lg-2"><!----> <!----> 
     <div id="ember520" class="ember-view info-item cursor-pointer">

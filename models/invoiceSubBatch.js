@@ -12,8 +12,10 @@ var invoiceSubBatchSchema = new Schema({
     total:{type:Number,required:true},
     balance:{type:Number,},
     invoiceAmount:{type:Number},
-
-    invoNumber: {type: Number},
+    clientCompany:{type:String},
+    clientAddress:{type:String},
+    clientName:{type:String},
+    invoiceNumber: {type: Number},
     invoiceDescription: {type: String},
     itemId: {type: String},
     date: {type: String},

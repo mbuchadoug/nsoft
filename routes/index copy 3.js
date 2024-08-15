@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var InvoiceSubFile = require('../models/invoiceSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
 var Warehouse = require('../models/warehouse');
@@ -9,7 +8,6 @@ var BatchR = require('../models/batchR');
 var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var SaleStock = require('../models/salesStock');
 var BatchD = require('../models/batchD');
-var InvoNum = require('../models/invoNum');
 var RefNo = require('../models/refNo');
 var RefNoSeq = require('../models/refNoSeq');
 var RefNoSeqDisp = require('../models/refNoSeqDisp');
@@ -22,7 +20,6 @@ var SalesList = require('../models/salesList');
 const keys = require('../config1/keys')
 const stripe = require('stripe')('sk_test_IbxDt5lsOreFtqzmDUFocXIp0051Hd5Jol');
 var xlsx = require('xlsx')
-const Month =require('../models/month')
 var multer = require('multer')
 const fs = require('fs-extra')
 var path = require('path');
@@ -949,80 +946,6 @@ product.save()
 
 
 
-router.get('/addInvoNum',function(req,res){
-  
-  res.render('kambucha/invoNum2')
-})
-
-router.post('/addInvoNum',function(req,res){
-
-  var invoiceNumber = req.body.invoiceNumber;
-  //var idNumber = req.body.idNumber;
-  
- 
-      req.check('invoiceNumber','Enter Invoice Number').notEmpty().isNumeric();
-      //req.check('idNumber','Enter ID Number').notEmpty().isNumeric();
-
-    
-      
-      var errors = req.validationErrors();
-           
-      if (errors) {
-      
-        req.session.errors = errors;
-        req.session.success = false;
-        res.render('kambucha/invoNum2',{ errors:req.session.errors,})
-      
-    }
-    else{
-      
-      InvoNum.findOne({'num':invoiceNumber})
-        .then(dept =>{
-            if(dept){ 
-  
-           req.session.message = {
-            type:'errors',
-             message:'Number already exists'
-           }     
-              res.render('kambucha/invoNum2', {
-                 message:req.session.message ,
-              })
-            }else{
-
-          
-    
-      var num = new InvoNum();
-    
-      num.num = invoiceNumber;
-     
-     
-   
-    
-    
-      num.save()
-        .then(dep =>{
-         
-          req.session.message = {
-            type:'success',
-            message:'Number added'
-          }  
-          res.render('kambucha/invoNum2',{message:req.session.message,});
-      
-    
-      })
-    
-     }
-      
-      
-      })
-    }
-    
-    
-})
-
-
-
-
 
 
 
@@ -1667,55 +1590,15 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
     res.render('kambucha/stockSummary')
   })
 
-
-  router.get('/invoiceNumberUpdate',isLoggedIn,function(req,res){
-    var id = req.user._id
-   
-      InvoNum.find(function(err,doc){
-        let invoiceNum = doc[0].num
-        let invoId = doc[0]._id
-    
-    
-    User.findByIdAndUpdate(id,{$set:{invoiceNumber:invoiceNum}},function(err,docs){
-    
-    })
-    invoiceNum++
-    
-    InvoNum.findByIdAndUpdate(invoId,{$set:{num:invoiceNum}},function(err,tocs){
-    
-    })
-
-    res.redirect('/invoice')
-    
-      })
-    
-    })
-
-
-  router.get('/invoice',isLoggedIn,function(req,res){
-    var invoiceNumber = req.user.invoiceNumber
-    var salesPerson = req.user.fullname
-    console.log(invoiceNumber,'invoiceNumber')
-    res.render('kambucha/invoice',{invoiceNumber:invoiceNumber,salesPerson:salesPerson})
+  router.get('/invoice',function(req,res){
+    res.render('kambucha/invoice')
   })
 
-  router.post('/invoice',isLoggedIn,function(req,res){
-    //console.log(req.body)
+  router.post('/invoice',function(req,res){
+    console.log(req.body)
     //res.render('kambucha/invoice')
-    var m = moment()
-    let number1
-    let subtotal
-    let arr16 = []
-    var invoiceNumber = req.user.invoiceNumber
-    var month = m.format('MMMM')
-    let dateValue = m.valueOf()
-    var year = m.format('YYYY')
-    var mformat = m.format('L')
-var company = req.body.company
-var address = req.body.address
-var clientName = req.body.clientName
-var salesPerson = req.user.fullname
-console.log(company,address,clientName,'print')
+
+
     ar1 = req.body['product[]']
     ar2 = req.body['quantity[]']
     ar3=req.body['price[]']
@@ -1741,18 +1624,10 @@ for(var i = 0; i<ar1.length;i++){
 var book = new InvoiceSubBatch();
   book.item = ar1[i]
 
-  book.itemId = invoiceNumber
-  book.clientCompany = company
-  book.address = address
-  book.clientName = clientName
-  book.salesPerson = salesPerson
+  book.itemId = 'cccc'
   book.qty = 0
   book.price = 0
   book.total = 0
-  book.month = month
-  book.year = year
-  book.date = mformat
-  book.invoiceNumber = invoiceNumber
 
   book.status = 'not saved'
 
@@ -1775,102 +1650,43 @@ console.log(pId,"idd")
 let size = title.size
 
 console.log(size,'size')
-let qty1 = ar2[size]
-let price1 = ar3[size]
+let qty = ar2[size]
+let price = ar3[size]
 
-let reg = /\d+\.*\d*/g;
-let resultQty = qty1.match(reg)
-let qty = Number(resultQty)
-
-
-let resultPrice = price1.match(reg)
-let price = Number(resultPrice)
-
-console.log(qty,price,'blow minds')
 let total = qty * price
-subtotal = subtotal + total
+subtotal += total
 InvoiceSubBatch.findByIdAndUpdate(pId,{$set:{qty:qty,price:price,total:total,subtotal:subtotal}},function(err,ocs){
       
       })
-
-     
-
           })
-
-         
 }
-res.redirect('/subtotalUpdateX')
   })
-
-router.get('/subtotalUpdateX',function(req,res){
-
-  res.redirect('/subtotalUpdateXX')
-})
-  
-router.get('/subtotalUpdateXX',isLoggedIn,function(req,res){
-  var invoiceNumber = req.user.invoiceNumber
-  console.log(invoiceNumber,'invoooo')
-  let number1
-  let subtotal
-  let arr16 = []
-  InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,hods){
-  console.log(hods,'hods')
-    for(var i = 0;i<hods.length; i++){
-        console.log(hods[i].total,'serima')
-      arr16.push(hods[i].total)
-        }
-        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
-       console.log(arr16,'arr16')
-  
-   //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
-    number1=0;
-    for(var z in arr16) { number1 += arr16[z]; }
-  for(var i = 0;i <hods.length;i++){
-    let id =  hods[i]._id
-    console.log(number1,'number1')
-    InvoiceSubBatch.findByIdAndUpdate(id,{$set:{subtotal:number1}},function(err,focs){
-  
-    })
-  }
-  //})
-  
-  //aggVouchers
-  
-  //res.redirect('/invoiceSubFile')
-  res.redirect('/subtotalUpdate')
-       
-  })
-  
-  })  
 
 
   
 router.get('/subtotalUpdate',isLoggedIn,function(req,res){
-  var invoiceNumber = req.user.invoiceNumber
-  console.log(invoiceNumber,'invoooo')
-  let number1
+  var invoiceId = req.user.invoiceId
+  console.log(invoiceId)
   let subtotal
   let arr16 = []
-  InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,hods){
-  console.log(hods,'hods')
-    for(var i = 0;i<hods.length; i++){
-        console.log(hods[i].total,'serima')
-      arr16.push(hods[i].total)
+  InvoiceSubBatch.find({invoiceCode:invoiceId},function(err,hods){
+  
+    for(var q = 0;q<hods.length; q++){
+        
+      arr16.push(hods[q].total)
         }
         //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
-       console.log(arr16,'arr16')
+         number1=0;
+        for(var z in arr16) { number1 += arr16[z]; }
   
-   //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
-    number1=0;
-    for(var z in arr16) { number1 += arr16[z]; }
-  for(var i = 0;i <hods.length;i++){
-    let id =  hods[i]._id
-    console.log(number1,'number1')
+   InvoiceSubBatch.find({invoiceCode:invoiceId},function(err,docs){
+  for(var i = 0;i <docs.length;i++){
+    let id =  docs[i]._id
     InvoiceSubBatch.findByIdAndUpdate(id,{$set:{subtotal:number1}},function(err,focs){
   
     })
   }
-  //})
+  })
   
   //aggVouchers
   
@@ -1878,96 +1694,7 @@ router.get('/subtotalUpdate',isLoggedIn,function(req,res){
        
   })
   
-  }) 
-
-
-
-  router.get('/invoiceSubFile',isLoggedIn,function(req,res){
- let invoiceNumber = req.user.invoiceNumber
-  InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
-  console.log(docs,'docv')
-    for(var i = 0; i<docs.length;i++){
-      let item = docs[i].item
-      let code = docs[i].itemId
-      let qty = docs[i].qty
-      let price = docs[i].price
-      let total = docs[i].total
-      let clientCompany = docs[i].clientCompany
-      let clientAddress = docs[i].clientAddress
-      let clientName = docs[i].clientName
-      let date = docs[i].date
-      let month = docs[i].month
-      let year = docs[i].year
-      let salesPerson = docs[i].salesPerson
-      /*let month = docs[i].month
-      let year = docs[i].year
-      let date = docs[i].date*/
-      let subtotal = docs[i].subtotal
-  
-     
-
-  
-          var invo = new InvoiceSubFile();
-       
-          invo.invoiceNumber = invoiceNumber
-          invo.item =item
-          invo.code = code
-          invo.qty = qty
-          invo.price = price
-          invo.total = total
-          invo.clientCompany = clientCompany
-          invo.clientAddress = clientAddress
-          invo.clientName = clientName
-          invo.date = date
-          invo.month = month
-          invo.year = year
-          invo.salesPerson = salesPerson
-          /*invo.month = month
-          invo.year = year
-          invo.date = date*/
-      
-          invo.subtotal = subtotal
-          
-          invo.save()
-    .then(user =>{
-     
-     
-   
-  
-      })
-  
-    }
-   // res.redirect('/arrInvoiceSubUpdate')
-   res.redirect('/viewInvo')
-  })
-  
-  
-  })
-
-
-
-
-
-  router.get('/viewInvo',isLoggedIn,function(req,res){
-    var invoiceNumber = req.user.invoiceNumber
-    InvoiceSubFile.find({invoiceNumber:invoiceNumber},function(err,docs){
-
-      console.log(docs,'ok')
-      res.render('kambucha/pdf',{listX:docs})
-
-    })
- 
-  })
-
-
-
-
-
-
-
-
-
-
+  })  
   
 
 
@@ -3093,7 +2820,6 @@ var repo = new RepoFiles();
 
 repo.filename = filename;
 repo.fileId = "null";
-repo.status = 'receive'
 repo.year = year;
 repo.month = month
 
@@ -3225,27 +2951,11 @@ res.redirect('/openStatementName/'+id)
   
    
   
-    router.get('/selectMonth/',isLoggedIn,function(req,res){
-      var pro = req.user
-      var id = req.params.id
-      var uid = req.user._id
-      var arr = []
-      var year = 2024
-      User.findByIdAndUpdate(uid,{$set:{year:year}},function(err,locs){
-    
-      })
-    
-      Month.find({}).sort({num:1}).then(docs=>{
-         
-              res.render('kambucha/itemFilesMonthly',{pro:pro,listX:docs,id:id})
-    
-      })
-      
-    })
+
 
     
   
-  router.get('/folderFiles/:id',isLoggedIn,function(req,res){
+  router.get('/folderFiles/',isLoggedIn,function(req,res){
     var arr = []
     
     var errorMsg = req.flash('danger')[0];
@@ -3255,10 +2965,10 @@ res.redirect('/openStatementName/'+id)
      var pro = req.user
      
      var year = m.format('YYYY')
-     var month = req.params.id
+     var month = m.format('MMMM')
   
      var date = req.user.invoCode
-   RepoFiles.find({year:year,month:month,status:'receive'},function(err,docs){
+   RepoFiles.find({year:year,month:month},function(err,docs){
        if(docs){
    
      console.log(docs,'docs')
@@ -3274,59 +2984,6 @@ res.redirect('/openStatementName/'+id)
    })
       
    })
-
-   /*8888*/
-   
-   router.get('/selectMonthDispatch/',isLoggedIn,function(req,res){
-    var pro = req.user
-    var id = req.params.id
-    var uid = req.user._id
-    var arr = []
-    var year = 2024
-    User.findByIdAndUpdate(uid,{$set:{year:year}},function(err,locs){
-  
-    })
-  
-    Month.find({}).sort({num:1}).then(docs=>{
-       
-            res.render('kambucha/itemFilesMonthlyDispatch',{pro:pro,listX:docs,id:id})
-  
-    })
-    
-  })
-
-  
-
-router.get('/folderFilesDispatch/:id',isLoggedIn,function(req,res){
-  var arr = []
-  
-  var errorMsg = req.flash('danger')[0];
-  var successMsg = req.flash('success')[0];
-   var term = req.user.term
-   var m = moment()
-   var pro = req.user
-   
-   var year = m.format('YYYY')
-   var month = req.params.id
-
-   var date = req.user.invoCode
- RepoFiles.find({year:year,month:month,status:'dispatch'},function(err,docs){
-     if(docs){
- 
-   console.log(docs,'docs')
-      let arr=[]
-      for(var i = docs.length - 1; i>=0; i--){
-  
-        arr.push(docs[i])
-      }
- 
- 
- res.render('kambucha/itemFilesDispatch',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
- }
- })
-    
- })
- 
    
   
 router.get('/updateStockV',function(req,res){
@@ -3429,8 +3086,9 @@ router.get('/updateRepo',function(req,res){
 
 
 
-/*router.get('/eodRepoDispatch/',isLoggedIn,function(req,res){
- 
+router.get('/eodRepoDispatch/',isLoggedIn,function(req,res){
+  //var code = req.user.invoNumber
+  //var code = "Tiana Madzima"
   let date  = req.user.date
 var id = req.params.id
 RefNo.find({date:date,type:'dispatch'},function(err,docs){
@@ -3440,12 +3098,14 @@ arrStatement[refNumber]=[]
  }   
   res.redirect('/arrRefsProcessDispatch/')
 })
-  })*/
+  })
 
-  
-  router.get('/eodRepoDispatch/',isLoggedIn,function(req,res){
-    //console.log(arrStatementR,'arrRefs')
-    arrStatementR=[]
+
+
+
+
+  router.get('/arrRefsProcessDispatch',isLoggedIn,function(req,res){
+    console.log(arrStatement,'arrRefs')
       //var code = "Tiana Madzima"
   
 let date = req.user.date
@@ -3460,60 +3120,11 @@ let date = req.user.date
       
       for(var x = 0;x<vocs.length;x++){
       let size = vocs.length - 1
-
-      let code = vocs[x].refNumber
-     /* if( arrStatement[code].length > 0 && arrStatement[code].find(value => value.refNumber == code) ){
-        //arrStatement[code].find(value => value.refNumber == code).casesReceived++;
-        //arrStatement[code].find(value => value.uid == uid).size++;
-        //arrStatement[code].push(vocs[x])
-      
-          }*/
-          
-          arrStatementR.push(vocs[x])
-          
-          
-         /* else{
-            arrStatement[code].push(vocs[x])
-            //arrStatement[code].find(value => value.refNumber == code).typeBalance = studentBalance;
-            } */
-      
-      
-       
-      
-           
-      
-      }
-     
-          })
-          
-         // res.redirect('/arrRefsProcessDispatch/')
-         res.redirect('/statementGenDispatch/')
-        
-      
-      /*})*/
-      
-      })
-      
-
-
-
-
-
-  /*router.get('/arrRefsProcessDispatch',isLoggedIn,function(req,res){
-    console.log(arrStatement,'arrRefs')
-      
-  
-let date = req.user.date
-     
-      BatchD.find({date:date}).lean().sort({date:1}).then(vocs=>{
-      console.log(vocs.length,'vocs')
-      
-      for(var x = 0;x<vocs.length;x++){
-      let size = vocs.length - 1
       let code = vocs[x].refNumber
       if( arrStatement[code].length > 0 && arrStatement[code].find(value => value.refNumber == code) ){
         arrStatement[code].find(value => value.refNumber == code).casesReceived++;
-       
+        //arrStatement[code].find(value => value.uid == uid).size++;
+        //arrStatement[code].push(vocs[x])
       
           }
           
@@ -3522,7 +3133,7 @@ let date = req.user.date
           
           else{
             arrStatement[code].push(vocs[x])
-          
+            //arrStatement[code].find(value => value.refNumber == code).typeBalance = studentBalance;
             } 
       
       
@@ -3537,14 +3148,14 @@ let date = req.user.date
           res.redirect('/statementGenDispatch/')
         
       
-
+      /*})*/
       
-      })*/
+      })
       
   
   
 router.get('/statementGenDispatch/',isLoggedIn,function(req,res){
-console.log(arrStatementR,'arrSingleUpdate')
+console.log(arrStatement,'arrSingleUpdate')
 var m = moment()
 var mformat = m.format('L')
 var month = m.format('MMMM')
@@ -3566,12 +3177,12 @@ RefNoSeqDisp.find(function(err,doc){
 
 
 
-const compile = async function (templateName, arrStatementR){
+const compile = async function (templateName, arrStatement){
 const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
 
 const html = await fs.readFile(filePath, 'utf8')
 
-return hbs.compile(html)(arrStatementR)
+return hbs.compile(html)(arrStatement)
 
 };
 
@@ -3601,7 +3212,7 @@ const page = await browser.newPage()
 
 
 //const content = await compile('report3',arr[uid])
-const content = await compile('statement3',arrStatementR)
+const content = await compile('statement3',arrStatement)
 
 //const content = await compile('index',arr[code])
 
@@ -3614,10 +3225,10 @@ await page.evaluate(() => matchMedia('screen').matches);
 await page.setContent(content, { waitUntil: 'networkidle0'});
 //console.log(await page.pdf(),'7777')
  
-let filename = 'statementD'+seqNum+'.pdf'
+let filename = 'statementD'+seqNum+'_'+date+'.pdf'
 await page.pdf({
 //path:('../gitzoid2/reports/'+year+'/'+month+'/'+uid+'.pdf'),
-path:(`./public/statements/${year}/${month}/statementD${seqNum}`+'.pdf'),
+path:(`./public/statements/${year}/${month}/statementD${seqNum}_${date}`+'.pdf'),
 format:"A4",
 width:'30cm',
 height:'21cm',
@@ -3631,9 +3242,8 @@ var repo = new RepoFiles();
 
 repo.filename = filename;
 repo.fileId = "null";
-repo.status = 'dispatch'
 repo.year = year;
-
+repo.type = 'dispatch'
 repo.month = month
 
 
@@ -3653,7 +3263,7 @@ repo.save().then(poll =>{
 
 /*process.exit()*/
 
-const file = await fs.readFile(`./public/statements/${year}/${month}/statementD${seqNum}`+'.pdf');
+const file = await fs.readFile(`./public/statements/${year}/${month}/statementD${seqNum}_${date}`+'.pdf');
 const form = new FormData();
 form.append("file", file,filename);
 //const headers = form.getHeaders();
@@ -3757,31 +3367,6 @@ router.get('/openStatementNameDispatch/:id',(req,res)=>{
     })
 
 
-    
-router.get('/downloadReport/:id',(req,res)=>{
-  var fileId = req.params.id
-  
-
-
-//const bucket = new GridFsStorage(db, { bucketName: 'uploads' });
-const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
-gfs.files.find({_id: mongodb.ObjectId(fileId)}).toArray((err, files) => {
-
-  console.log(files[0].filename,'files9')
-let filename = files[0].filename
-let contentType = files[0].contentType
-
-
-    res.set('Content-disposition', `attachment; filename="${filename}"`);
-    res.set('Content-Type', contentType);
-    bucket.openDownloadStreamByName(filename).pipe(res);
-  })
- //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
-})
-
-
-
-
     router.get('/deleteBucket',(req,res)=>{
      
       const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
@@ -3801,268 +3386,6 @@ let contentType = files[0].contentType
     router.get('/printPaid',function(req,res){
       res.render('kambucha/paid')
     })
-
-
-
-    router.get('/importMonth',isLoggedIn, function(req,res){
-      var pro = req.user
-    
-     
-      var errorMsg = req.flash('danger')[0];
-      var successMsg = req.flash('success')[0];
-    
-    
-       title = "Import Month"
-    
-      
-    
-      
-     res.render('imports/month',{pro:pro,title:title,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
-    
-       })
-    
-    
-    
-      
-     router.post('/importMonth',isLoggedIn, uploadX.single('file'),function(req,res){
-       var term = req.user.term;
-       var m = moment()
-       var year = m.format('YYYY')
-       var id =   req.user._id
-       var idNumber = req.user.idNumber
-       var pro = req.user
-    
-    
-     
-       
-     /*  if(!req.file){
-           req.session.message = {
-             type:'errors',
-             message:'Select File!'
-           }     
-             res.render('imports/students', {message:req.session.message,pro:pro}) */
-             if (!req.file || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
-               req.session.message = {
-                   type:'errors',
-                   message:'Upload Excel File'
-                 }     
-                   res.render('imports/month', {message:req.session.message,pro:pro
-                        
-                    }) 
-     
-     
-     
-           }
-             
-           else{
-    
-           
-               const file = req.file.filename;
-       
-               
-                    var wb =  xlsx.readFile(`./public/uploads/` + file)
-            
-                    var sheets = wb.Sheets;
-                    var sheetNames = wb.SheetNames;
-        
-                    var sheetName = wb.SheetNames[0];
-        var sheet = wb.Sheets[sheetName ];
-        
-           for (var i = 0; i < wb.SheetNames.length; ++i) {
-            var sheet = wb.Sheets[wb.SheetNames[i]];
-        
-            console.log(wb.SheetNames.length)
-            var data =xlsx.utils.sheet_to_json(sheet)
-                
-            var newData = data.map(async function (record){
-        
-           
-            
-         
-             
-          
-          
-         
-               let month = record.month;
-            
-               let num = record.num;
-    
-    
-    
-    
-              req.body.month = record.month 
-              req.body.num = record.num   
-    
-    
-           req.check('month','Enter Month').notEmpty();
-    
-       
-    
-    var errors = req.validationErrors();
-     
-    if (errors) {
-     
-     req.session.errors = errors;
-     req.session.success = false;
-     console.log( req.session.errors[0].msg)
-     req.flash('danger', req.session.errors[0].msg);
-          
-           
-     res.redirect('/importMonth');
-    
-    }
-    
-    else
-    
-    
-               {
-                 Month.findOne({'month':month})
-                 .then(user =>{
-                     if(user){ 
-                   // req.session.errors = errors
-                     //req.success.user = false;
-               
-               
-               
-                     req.flash('danger', 'Room already in the system');
-    
-                     res.redirect('/importMonth') 
-     
-                     //res.redirect('/records/import')
-                   
-               }
-               else
-    
-    
-    
-    
-    
-               var user = new Month();
-               user.month = month
-               user.num = num
-              
-              
-              
-               user.save()
-                 .then(user =>{
-                  
-                 
-                     
-                 /*  req.session.message = {
-                     type:'success',
-                     message:'Account Registered'
-                   }  
-                   res.render('imports/teacherX',{message:req.session.message});*/
-                 })
-    
-               })
-             }
-                      
-                       // .catch(err => console.log(err))
-                     
-                   
-                       
-                     
-                     
-            
-                     
-                     
-                     
-                       
-                       
-           
-                      
-           
-                      
-                
-                   })
-                   
-                   req.flash('success', 'File Imported Successfully!');
-     
-                   res.redirect('/importMonth') 
-         
-           }
-         }
-     
-     })
-    
-    
-    
-router.get('/batchList',function(req,res){
-BatchR.find(function(err,docs){
-
-  let arr=[]
-  for(var i = docs.length - 1; i>=0; i--){
-
-    arr.push(docs[i])
-  }
-
-  res.render('kambucha/batchList',{listX:arr})
-
-})
-
-
-
-})
-
-
-
-
-    
-router.get('/receivedCases/:id',function(req,res){
-  let refNumber = req.params.id
-  StockV.find({refNumber:refNumber},function(err,docs){
-  
-   
-  
-    res.render('kambucha/rcvdCases',{listX:docs})
-  
-  })
-  
-  
-  
-  })
-
-
-
-  router.get('/dispatchedCases/:id',function(req,res){
-    let refNumber = req.params.id
-    StockV.find({refNumber:refNumber,status:'dispatched'},function(err,docs){
-    
-     
-    
-      res.render('kambucha/dispatchedCases',{listX:docs})
-    
-    })
-    
-    
-    
-    })
-
-
-
-
-    router.get('/remainingCases/:id',function(req,res){
-      let refNumber = req.params.id
-      StockV.find({refNumber:refNumber,status:'received'},function(err,docs){
-      
-       
-      
-        res.render('kambucha/remainingCases',{listX:docs})
-      
-      })
-      
-      
-      
-      })
-
-
-
-
-
-  
-
-
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  
   };
