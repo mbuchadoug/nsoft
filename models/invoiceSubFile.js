@@ -21,7 +21,8 @@ date:{type:String, },
 
 invoiceNumber:{type:Number },
 subtotal:{type:Number },
-
+salesPerson:{type:String},
+salesPersonId:{type:String},
 clientCompany:{type:String},
 clientAddress:{type:String},
 clientName:{type:String},

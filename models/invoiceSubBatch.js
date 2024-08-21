@@ -26,6 +26,8 @@ var invoiceSubBatchSchema = new Schema({
     invoiceId: {type: Number,},
     type: {type: String,},
     item:{type:String},
+    salesPerson:{type:String},
+    salesPersonId:{type:String},
     subtotal: {type: Number },
     invoiceCodeText: {type: String},
     discount: {type: Number },

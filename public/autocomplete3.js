@@ -30,16 +30,16 @@ $.ajax({
   dataType: 'json',
 
   type: 'GET',
-  url: "/proAuto",
+  url: "/salesStockAuto",
 
 
     success: function(data) {
-      console.log(data,'shit')
+      console.log(data,'shitStock')
       arr2 = data
 
 for(var i = 0; i<arr2.length;i++){
 
-availableKeywords2.push(arr2[i].name)
+availableKeywords2.push(arr2[i].product)
 }    
 
 
@@ -74,16 +74,16 @@ function display(result2){
   const content2 = result2.map((list)=>{
     console.log(list,'listtttt')
 for(var i = 0;i<arr2.length;i++){
-if(arr2[i].name == list){
+if(arr2[i].product == list){
 
 
-let name = arr2[i].name
-let usd = arr2[i].usd
-let stock = arr2[i].cases
+let name = arr2[i].product
+let usd = arr2[i].price
+let stock = arr2[i].qty
 
       return `
       <li onclick=selectInput2(this) class="ac-item-details dropdown-item ac-option ">
-      <a tabindex="-1">
+      <a tabindex="-1" >
         <div class="autocomplete-option" title="${name}">
           <div class="ac-name-rate-sku">
        <div class="ac-name" id="nameList">${name}</div> 
@@ -91,7 +91,7 @@ let stock = arr2[i].cases
        <span class="ac-rate">Rate: USD ${usd}.00</span></div></div> 
        <div class="ac-stock">
          <div>Stock on Hand</div>
-          <div class="stock-available">${stock}:cases</div></div></div>
+          <div class="stock-available">${stock}:units</div></div></div>
           </a>
            <div class="border-line"></div></li>
                            
@@ -134,7 +134,7 @@ $.ajax({
   dataType: 'json',
 
   type: 'GET',
-  url: "/proAuto",
+  url: "/salesStockAuto",
 
 
     success: function(data) {
@@ -143,7 +143,7 @@ $.ajax({
 
 for(var i = 0; i<arr2.length;i++){
 
-availableKeywords2.push(arr2[i].name)
+availableKeywords2.push(arr2[i].product)
 }    
 
 
@@ -178,9 +178,9 @@ for(var i = 0;i<arr2.length;i++){
 if(arr2[i].name == list1){
 
 
-let name = arr2[i].name
-let usd = arr2[i].usd
-let stock = arr2[i].cases
+let name = arr2[i].product
+let usd = arr2[i].price
+let stock = arr2[i].qty
 
       return `
       <li onclick=selectInput1(this) class="ac-item-details dropdown-item ac-option ">
@@ -257,7 +257,7 @@ console.log(title,'title')
      dataType: 'json',
   
      type: 'POST',
-     url: "/proAuto2",
+     url: "/salesStockAuto2",
      data:{code:code},
    
  
@@ -265,8 +265,8 @@ console.log(title,'title')
          console.log(data,'data')
          console.log(f2[nSize],'fff')
          f2[nSize].value = ''
-         f2[nSize].value = data.name
-         document.getElementById(`price${trSize}`).value = data.usd
+         f2[nSize].value = data.product
+         document.getElementById(`price${trSize}`).value = data.price
          resultBox12.style.display="none"
          
        
@@ -315,7 +315,7 @@ function selectInput1(list1){
      dataType: 'json',
   
      type: 'POST',
-     url: "/proAuto2",
+     url: "/salesStockAuto2",
      data:{code:code},
    
  
@@ -323,10 +323,10 @@ function selectInput1(list1){
          console.log(data,'data1')
          console.log(f2[nSize],'fff')
          f2[nSize].value = ''
-         f2[nSize].value = data.name
+         f2[nSize].value = data.product
          autoPro1.style.display="none"
          autoProBox1.style.display="none"
-         document.getElementById(`price${trSize}`).value = data.usd
+         document.getElementById(`price${trSize}`).value = data.price
       
          
        
@@ -359,7 +359,7 @@ $.ajax({
   dataType: 'json',
 
   type: 'GET',
-  url: "/proAuto",
+  url: "/salesStockAuto",
 
 
     success: function(data) {
@@ -368,7 +368,7 @@ $.ajax({
 
 for(var i = 0; i<arr2.length;i++){
 
-availableKeywords2.push(arr2[i].name)
+availableKeywords2.push(arr2[i].product)
 }    
 
 
@@ -403,16 +403,16 @@ for(var i = 0;i<arr2.length;i++){
 if(arr2[i].name == list1){
 
 
-let name = arr2[i].name
-let usd = arr2[i].usd
-let stock = arr2[i].cases
+let name = arr2[i].product
+let usd = arr2[i].price
+let stock = arr2[i].qty
 
       return `
       <li onclick=selectInput3(this) class="ac-item-details dropdown-item ac-option ">
-      <a tabindex="-1">
+      <a tabindex="-1" >
         <div class="autocomplete-option" title="${name}">
           <div class="ac-name-rate-sku">
-       <div class="ac-name" id="nameList">${name}</div> 
+       <div class="ac-name" id="nameList" >${name}</div> 
        <div class="grey-text"><div></div>
        <span class="ac-rate">Rate: USD ${usd}.00</span></div></div> 
        <div class="ac-stock">
@@ -471,7 +471,7 @@ function selectInput3(list1){
      dataType: 'json',
   
      type: 'POST',
-     url: "/proAuto2",
+     url: "/salesStockAuto2",
      data:{code:code},
    
  
@@ -479,10 +479,10 @@ function selectInput3(list1){
          console.log(data,'data1')
          console.log(f2[nSize],'fff')
          f2[nSize].value = ''
-         f2[nSize].value = data.name
+         f2[nSize].value = data.product
          autoPro3.style.display="none"
          autoProBox3.style.display="none"
-         document.getElementById(`price${trSize}`).value = data.usd
+         document.getElementById(`price${trSize}`).value = data.price
       
          
        

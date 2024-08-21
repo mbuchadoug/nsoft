@@ -28,11 +28,11 @@
 
 
 table {
-    width: 100%;
+    /*width: 120%;
     min-width: max-content;
-        table-layout:fixed;
-
-
+    table-layout:fixed;*/
+    margin-right: 10px;
+    width: 102%;
   }
 .row {
   margin-left:-5px;
@@ -177,9 +177,11 @@ body {
 
 
 
+</div>
+</div>
 
-<div class="row">
-<table border="1" class="column-bordered-table td thead"  style="border-bottom:1px solid black; margin-bottom:60px;" >
+
+<table  border="1" class="column-bordered-table td thead"  style="border-bottom:1px solid black; margin-bottom:60px;" >
 
    
     <thead>
@@ -203,8 +205,20 @@ body {
              
                </th>
 
+               
                    <th  style="text-align:center">
-             Cases
+             Opening Stock
+             
+               </th>
+
+                   <th  style="text-align:center">
+             Cases Dispatched
+             
+               </th>
+
+
+                 <th  style="text-align:center">
+             Closing Stock
              
                </th>
            
@@ -249,8 +263,17 @@ body {
              {{this.truck}}
             </td>
 
+             <td style="text-align: right; ">
+             {{this.openingStock}}
+            </td>
+
             <td style="text-align: right; ">
              {{this.cases}}
+            </td>
+
+
+             <td style="text-align: right; ">
+             {{this.closingStock}}
             </td>
 
       <td style="text-align: right; ">
@@ -295,7 +318,7 @@ body {
 </table>
 
 
-</div>
+
 
     
    
@@ -303,8 +326,6 @@ body {
 
     
 
-</div>
-</div>
 
 
 

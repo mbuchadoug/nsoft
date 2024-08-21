@@ -4,15 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Receive Stock | Kambucha Inventory</title>
 
-    <!-- To check whether the browser is modern/legacy to help determine which bundle to load
-
-    Modern browsers that support ES6 features like promises, arrow functions, ES6 classes
-    support `type="module"` attribute for scripts. They also support a `nomodule` attribute
-    that allows us to define scripts that will not run in browsers that support `type="module"`
-
-    In legacy browsers where this attribute is not supported, the browsers will just execute this
-    script and set the window.legacyBrowser property to true. It will be undefined in modern
-    browsers because this script won't run at all. -->
+    
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
       <link rel="stylesheet" href="bootstrap-5.3.3/dist/css/bootstrap.min.css">
      <link href="sidebars.css" rel="stylesheet">
@@ -614,13 +606,18 @@ link.classList.add('text-end','pe-0')*/
          <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
          <div class="row form-group">
         <div class="col-lg-2"><label class="col-form-label required">Date</label> 
-         <input placeholder="dd MMM yyyy" id="ember329" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="date" value="{{date}}"></div>
+         <input placeholder="dd MMM yyyy" id="ember329" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{date}}" readonly></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Shift</label> <div id="ember330" class="ember-view"><div class="ac-box "><input  id="shift" class="ember-text-field ember-view form-control" type="text" value="{{shift}}"></div> </div></div>
+         <div class="col-lg-2"><label class="col-form-label required">Shift</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="shift" class="ember-text-field ember-view form-control" type="text" value="{{shift}}" readonly></div> </div></div>
 
-                                    <div class="col-lg-2"><label class="col-form-label required">Warehouse</label> <div id="ember330" class="ember-view"><div class="ac-box ">
+                                    <div class="col-lg-2"><label class="col-form-label required">Warehouse</label>
+                                     <div id="ember330" class="ember-view">
+                                       <div class="ac-box ">
 
-      <input  id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}">
+      <input  id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}" readonly>
                        <!-- <select class="form-select form-select-solid" name="warehouse" id="warehouse"   >
 													<option></option>
 									<option value="warehouse1" >Warehouse 1</option>
@@ -633,10 +630,10 @@ link.classList.add('text-end','pe-0')*/
      <i class="zf-ac-toggler"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.98 227.51"><path d="M187.46 227.51c-10.23 0-20.46-3.9-28.27-11.71L11.73 68.45C-3.9 52.83-3.91 27.51 11.71 11.88c15.62-15.63 40.94-15.64 56.57-.02l119.18 119.09L306.69 11.72c15.62-15.62 40.95-15.62 56.57 0 15.62 15.62 15.62 40.95 0 56.57L215.75 215.8c-7.81 7.81-18.05 11.72-28.28 11.72z" id="Layer_1-2"></path></svg></i></div></span></div> </div></div>--> 
      
       <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
-    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}"></div>
+    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}" readonly></div>
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref.No</label> 
-    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}"></div>
+    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
     
     
     </div> 

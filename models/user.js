@@ -13,6 +13,7 @@ var userSchema = new mongoose.Schema({
     truck:{type:String},
     destination:{type:String},
     invoiceNumber:{type:Number},
+    rtnsNumber:{type:Number},
     quoteCode:{type:String},
     num:{type:Number},
     cases:{type:Number},
