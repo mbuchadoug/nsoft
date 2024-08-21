@@ -4748,7 +4748,7 @@ let date = req.user.date
 
     router.get('/statementGenView',function(req,res){
 
-res.render('kambucha/statement2',{listX:arrStatementR})
+res.render('kambucha/statement22',{listX:arrStatementR})
 
 
     })
