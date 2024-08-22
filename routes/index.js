@@ -2181,7 +2181,7 @@ let qty = docs[0].qty
 
   router.get('/batch',isLoggedIn,function(req,res){
     var pro = req.user
-    res.render('kambucha/load',{pro:pro})
+    res.render('kambucha/batch',{pro:pro})
   })
 
 
