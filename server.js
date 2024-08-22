@@ -36,7 +36,7 @@ var indexRoute= require('./routes/index')
 
 
 var app = express();
-const mongoURI =process.env.MONGO_URL|| 'mongodb://0.0.0.0:27017/smsDB'
+const mongoURI =process.env.MONGO_URL|| 'mongodb://0.0.0.0:27017/kambuchaDB'
 const conn = mongoose.createConnection(mongoURI);
 
 // Init gfs

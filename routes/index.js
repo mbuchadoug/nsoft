@@ -164,8 +164,8 @@ console.log(vocs.length,'size9')
       let id = vocs[0]._id
       StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
         let cases = nocs.length
-  
-      Warehouse.findByIdAndUpdate(id,{$set:{cases:cases}},function(err,tocs){
+        let quantity = nocs.length * 12
+      Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:quantity}},function(err,tocs){
 
       })
 
@@ -1727,6 +1727,11 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
   router.get('/summary',function(req,res){
     res.render('kambucha/stockSummary')
   })
+
+  router.get('/summaryTable',function(req,res){
+    res.render('kambucha/stockSummaryT2')
+  })
+
 
 
   router.get('/invoiceNumberUpdate',isLoggedIn,function(req,res){
@@ -4748,7 +4753,7 @@ let date = req.user.date
 
     router.get('/statementGenView',function(req,res){
 
-res.render('kambucha/statement22',{listX:arrStatementR})
+res.render('kambucha/stockSummaryT2',{listX:arrStatementR})
 
 
     })
