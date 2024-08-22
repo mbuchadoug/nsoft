@@ -1,35 +1,5 @@
 @charset "UTF-8";
-@font-face {
-    font-family: "ZohoPuvi";
-    src: url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Regular.woff2) format("woff2"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Regular.woff) format("woff"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Regular.ttf) format("truetype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-}
 
-@font-face {
-    font-family: "ZohoPuvi";
-    src: url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Medium.woff2) format("woff2"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Medium.woff) format("woff"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Medium.ttf) format("truetype");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap
-}
-
-@font-face {
-    font-family: "ZohoPuvi";
-    src: url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Semibold.woff2) format("woff2"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Semibold.woff) format("woff"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Semibold.ttf) format("truetype");
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap
-}
-
-@font-face {
-    font-family: "ZohoPuvi";
-    src: url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Bold.woff2) format("woff2"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Bold.woff) format("woff"), url(https://static.zohocdn.com/zohofonts/zohopuvi/4.0/Zoho_Puvi_Bold.ttf) format("truetype");
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap
-}
 
 .text-failure,
 .status-overdue {
