@@ -105,8 +105,8 @@ let port;
 
 function connect() {
     port.connect().then(() => {
-     document.getElementById('editor').value = "connected to: " + port.device_.productName;
-       document.getElementById('editor').value += " VID: " + port.device_.vendorId;
+     document.getElementById('mass').value = "connected to: " + port.device_.productName;
+       document.getElementById('mass').value += " VID: " + port.device_.vendorId;
  //document.getElementById('editor').value += " Mass: " + port.onReceive ;
   
       document.getElementById('editor').value += " PID: " + port.device_.productId;
