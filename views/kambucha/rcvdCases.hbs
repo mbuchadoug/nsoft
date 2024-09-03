@@ -356,8 +356,9 @@ ul.no-bullets {
 												<!--begin::Table row-->
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 													        <th class="min-w-100px">Barcode Number</th>
+															<th class="min-w-100px">Batch Number</th>
 												         	<th class="text-end min-w-75px">Product</th>
-															
+															<th class="text-end min-w-75px">Pallet</th>
 															<th class="text-end min-w-75px">Status</th>
 															<th class="text-end min-w-75px">Receiver</th>
 													
@@ -379,9 +380,10 @@ ul.no-bullets {
 													<!--begin::Date=-->
 													<td>{{this.barcodeNumber}}</td>
 													<!--end::Date=-->
+												   <td class="text-end pe-0">{{this.refNumber}}</td>
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.name}}</td>
-
+                                                    <td class="text-end pe-0">{{this.pallet}}</td>
 													<td class="text-end pe-0">{{this.status}}</td>
 													<td class="text-end pe-0">{{this.receiver}}</td>
 										

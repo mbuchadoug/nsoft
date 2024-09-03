@@ -330,7 +330,7 @@ ul.no-bullets {
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 													        <th class="min-w-100px">Ref Number</th>
 												         	<th class="text-end min-w-75px">Product</th>
-															<th class="text-end min-w-75px">Pallets</th>
+															<th class="text-end min-w-75px">Pallet</th>
 															<th class="text-end min-w-75px">Cases Received</th>
 															<th class="text-end min-w-75px">Cases Dispatched</th>
 															<th class="text-end min-w-75px">Remaining Cases</th>
@@ -353,11 +353,11 @@ ul.no-bullets {
 													<td>{{this.refNumber}}</td>
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
-													<td class="text-end pe-0">{{this.product}}</td>
+													<td class="text-end pe-0">{{this.name}}</td>
                                                     <td class="text-end pe-0">{{this.pallet}}</td>  
-													<td class="text-end pe-0">{{this.cases}}</td>
-													<td class="text-end pe-0">{{this.statsCasesDispatched}}</td>
-													<td class="text-end pe-0">{{this.statsRemainingCases}}</td>
+													<td class="text-end pe-0">{{this.casesReceived}}</td>
+													<td class="text-end pe-0">{{this.casesDispatched}}</td>
+													<td class="text-end pe-0">{{this.casesRemaining}}</td>
 													<td class="text-end pe-0">{{this.mformat}}</td>
 													<!--<td class="text-end pe-0">{{this.year}}</td>-->
 													
@@ -374,22 +374,20 @@ ul.no-bullets {
 														<!--begin::Menu-->
 														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 															<!--begin::Menu item-->
-															<div class="menu-item px-3">
-																<a href="/pallets/{{this.refNumber}}" class="menu-link px-3">Pallets</a>
-															</div>
+															
 
 
 															<div class="menu-item px-3">
-																<a href="/receivedCases/{{this.refNumber}}" class="menu-link px-3">Received</a>
+																<a href="/receivedCasesPallet/{{this.refNumber}}/{{pallet}}" class="menu-link px-3">Received</a>
 															</div>
 															<!--end::Menu item-->
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
-																<a href="/dispatchedCases/{{this.refNumber}}" class="menu-link px-3">Dispatched</a>
+																<a href="/dispatchedCasesPallet/{{this.refNumber}}/{{pallet}}" class="menu-link px-3">Dispatched</a>
 															</div>
 															<!--end::Menu item-->
 																<div class="menu-item px-3">
-																<a href="/remainingCases/{{this.refNumber}}" class="menu-link px-3">Remaining</a>
+																<a href="/remainingCasesPallet/{{this.refNumber}}/{{pallet}}" class="menu-link px-3">Remaining</a>
 															   </div>
 															<!--end::Menu item-->
 														</div>

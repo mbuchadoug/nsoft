@@ -19,6 +19,7 @@ var batchSchemaV = new Schema({
     refNumber:{type:String, required:true},
     mformat: {type: String },
     dateValue: {type: Number },
+    pallet: {type: Number },
     expiryDateValue: {type: Number },
     expiryMformat: {type: String },
     status: {type: String },

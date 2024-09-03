@@ -290,14 +290,6 @@
                                                                     
     </select>  </div></div>
 
-      <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Stock On Hand</label> 
-<div class="col-lg-4">
-<input type="number" name="stock" id="stock" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly >
-
-</div>
-</div>
-
-
 
   <!--<div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Select Batch</label> 
 <div class="col-lg-4">
@@ -308,7 +300,14 @@
                                                                      {{/each}}
     </select>  </div></div>-->
 
-    
+    <div class="form-group row" >
+    <label for="aefdd00cb" class="col-lg-2 col-form-label">Select Batch</label> 
+<div class="col-lg-4">
+   <select class="form-select form-select-solid {{readF2}}"  name="refNumber" id="refNumber" onchange="changeBatch(this.value)" value="">
+
+                      
+    </select>  </div></div>
+
 
 
       
@@ -422,7 +421,7 @@
      dataType: 'json',
   
      type: 'POST',
-     url: "/batchAutoStock",
+     url: "/batchAuto",
      data:{code:product},
      
  
@@ -430,18 +429,17 @@
          console.log(data,'batch')
 
          
-document.getElementById('stock').value ='';
-document.getElementById('stock').value = data[0].cases
-
-
-/*for (var i = 0; i < data.length; i++) {
+var select = document.getElementById('refNumber');
+select.innerHTML = ''
+for (var i = 0; i < data.length; i++) {
   var optco = data[i];
   var opt = document.createElement('option');
   opt.textContent = optco.refNumber +'|'+'Cases:'+''+optco.statsRemainingCases+'| '+optco.warehouse;
   opt.value = optco.refNumber;
   select.appendChild(opt);
 
-}*/
+  // loop for grabbing each country name and displaying it in the drop-down
+}
 
  
        }

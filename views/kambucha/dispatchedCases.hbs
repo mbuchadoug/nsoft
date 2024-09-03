@@ -4,15 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Items | Kambucha App</title>
 
-    <!-- To check whether the browser is modern/legacy to help determine which bundle to load
-
-    Modern browsers that support ES6 features like promises, arrow functions, ES6 classes
-    support `type="module"` attribute for scripts. They also support a `nomodule` attribute
-    that allows us to define scripts that will not run in browsers that support `type="module"`
-
-    In legacy browsers where this attribute is not supported, the browsers will just execute this
-    script and set the window.legacyBrowser property to true. It will be undefined in modern
-    browsers because this script won't run at all. -->
+    
   
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
       <link rel="stylesheet" href="bootstrap-5.3.3/dist/css/bootstrap.min.css">
@@ -356,8 +348,9 @@ ul.no-bullets {
 												<!--begin::Table row-->
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 													        <th class="min-w-100px">Barcode Number</th>
+															<th class="min-w-100px">Batch Number</th>
 												         	<th class="text-end min-w-75px">Product</th>
-															
+															<th class="text-end min-w-75px">Pallet</th>
 															<th class="text-end min-w-75px">Status</th>
 															<th class="text-end min-w-75px">Receiver</th>
 													
@@ -379,9 +372,10 @@ ul.no-bullets {
 													<!--begin::Date=-->
 													<td>{{this.barcodeNumber}}</td>
 													<!--end::Date=-->
+													<td class="text-end pe-0">{{this.refNumber}}</td>
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.name}}</td>
-
+                                                     <td class="text-end pe-0">{{this.pallet}}</td>
 													<td class="text-end pe-0">{{this.status}}</td>
 													<td class="text-end pe-0">{{this.receiver}}</td>
 										

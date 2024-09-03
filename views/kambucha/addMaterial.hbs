@@ -39,7 +39,7 @@
 
 <link href="addStock/d31g2a6snus4ly.cloudfront.net/zbooks/assets/zb-685ec3ad94.css" rel="stylesheet">
     <link rel="stylesheet" href="addStock/css.zohocdn.com/ichat/css/Jun_01_2024_8452405_wmsbar.css">
-    
+    	<script src="/serial.js"></script>
 
     <!-- Overwritten styles that need not to be inversed in RTL layout -->
 
@@ -603,27 +603,27 @@ link.classList.add('text-end','pe-0')*/
              <div class="form-check cursor-pointer mb-2">  
          <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
          <div class="row form-group">
-        <div class="col-lg-2"><label class="col-form-label required">Date</label> 
-         <input placeholder="dd MMM yyyy" id="ember329" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{date}}" readonly></div>
+        <div class="col-lg-2"><label class="col-form-label required">Supplier</label> 
+         <input  id="supplier" name="supplier" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{supplier}}" readonly></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Shift</label>
+         <div class="col-lg-2"><label class="col-form-label required">Item</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
-             <input  id="shift" class="ember-text-field ember-view form-control" type="text" value="{{shift}}" readonly></div> </div></div>
+             <input  id="item" name="item" class="ember-text-field ember-view form-control" type="text" value="{{item}}" readonly></div> </div></div>
 
-                                    <div class="col-lg-2"><label class="col-form-label required">Warehouse</label>
+                                    <div class="col-lg-2"><label class="col-form-label required">Date</label>
                                      <div id="ember330" class="ember-view">
                                        <div class="ac-box ">
 
-      <input  id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}" readonly>
+      <input  id="date" name="date" class="ember-text-field ember-view form-control" type="text" value="{{date}}" readonly>
             </div> </div></div>
        
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
-    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}" readonly></div>
+      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Driver</label> 
+    <input  id="driver" name="driver" class="ember-text-field ember-view form-control" type="text"  value="{{driver}}" readonly></div>
 
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref.No</label> 
-    <input  id="refNumber" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
+     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Vehicle Reg#</label> 
+    <input  id="regNumber" name="regNumber" class="ember-text-field ember-view form-control" type="text"  value="{{regNumber}}" readonly></div>
     
     
     </div> 
@@ -632,13 +632,14 @@ link.classList.add('text-end','pe-0')*/
         <tbody><tr>
           <td>
     <span class="float-end">
-      <input autofocus="" autocomplete="off"  id="barcodeNumber" class="ember-text-field text-end ember-view form-control" type="text" name="barcodeNumber"> 
-   </span> <label class="col-form-label">Barcode Number</label> </td>
+      <input autofocus="" autocomplete="off"  id="mass" class="ember-text-field text-end ember-view form-control" type="text" name="mass"> 
+   </span> <label class="col-form-label">Mass</label> </td>
     
      <td>
+       <input type="hidden" name="" id="output">
     <span class="float-end">
-      <input  id="availableCases" class="ember-text-field text-end ember-view form-control" type="number" name="availableCases"> 
- </span> <label class="col-form-label">Available Cases</label></td>
+      <input  id="totalMass" class="ember-text-field text-end ember-view form-control" type="number" name="totalMass"> 
+ </span> <label class="col-form-label">Total Mass</label></td>
     </tr> 
     
     
@@ -653,13 +654,13 @@ link.classList.add('text-end','pe-0')*/
       <table class="table table-bordered" id="kt_ecommerce_report_sales_table">
 <thead>
 <tr>
-  <th>BarcodeNumber</th>
-	<th>Opening Balance</th>
+  <th>Weight</th>
+	<th>Opening Mass</th>
 	<!--<th>Cases Received</th>-->
-	<th>Closing Balance</th>
-  <th>Date</th>
-   <th>Warehouse</th>
-   <th>Shift</th>
+	<th>New Mass</th>
+  <th>Closing Mass</th>
+   <th>Ref Number</th>
+
 
                               </tr>
 </thead>
@@ -683,8 +684,11 @@ link.classList.add('text-end','pe-0')*/
      <hr> <div class="btn-toolbar">
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
 
-     <a onclick="return confirm('Are you sure you want to Close this batch ?');" href="/closeBatch/{{refNumber}}" id="ember334" class="btn btn-primary ember-view" id="ember334" >Close Batch</a>
+     <a onclick="return confirm('Are you sure you want to Close this batch ?');" href="/closeRMBatch/{{refNumber}}" id="ember334" class="btn btn-primary ember-view" id="ember334" >Close Batch</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>-->
+    
+<button class="btn btn-secondary" id="connect">Connect Scale</button>
+<button class="btn btn-secondary" id="disconnect">disConnect Scale</button>
       <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/eodRepo">Run Report</button></div>
       </form></div>
       </div> <!----> <!---->
@@ -721,4 +725,13 @@ link.classList.add('text-end','pe-0')*/
                                 <div id="zgs20_gsbannertiptext" class="zgs19_gsbannertiptext zgs19_gsfl"></div>
                                 </div>
                             </div><div id="zgs20_gstootltip" class="zgs19_gstootltip zgs19_gsTipBoxShadow zgs19_gsBorderBox zgs19_gsDisplayNone"><div id="zgs20_gstoolarrow" class="zgs19_gsBorderBox"></div></div></div></div></body></html>
+
+
+
+
+                        
+
+<label for="editor">TX</label><textarea id="editor"></textarea>
+<!--<button id="submit">Send</button>-->
+<label for="output">Mass</label><textarea id="output"></textarea>
 

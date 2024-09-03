@@ -267,6 +267,7 @@ console.log(title,'title')
          f2[nSize].value = ''
          f2[nSize].value = data.product
          document.getElementById(`price${trSize}`).value = data.price
+         document.getElementById(`stock${trSize}`).value = data.qty
          resultBox12.style.display="none"
          
        
