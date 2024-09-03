@@ -5863,6 +5863,8 @@ router.post('/batchRM',isLoggedIn,function(req,res){
 
   
   let dateValue = moment().valueOf()
+  let date6 = moment().format('l');
+   let date7 =  date6.replace(/\//g, "");
  
 
 //let shift = req.user.shift
@@ -5870,12 +5872,12 @@ router.post('/batchRM',isLoggedIn,function(req,res){
 
   RefNo.find({date:date},function(err,docs){
     let size = docs.length + 1
-   refNo = date7+code+'B'+size+'RM'
+   refNo = date7+'B'+size+'RM'
     console.log(refNo,'refNo')
 
     var truck = new BatchRR()
     truck.date = date
-    truck.mformat = date
+    truck.mformat = date6
     truck.dateValue = dateValue
     truck.regNumber = regNumber
     truck.item = item
@@ -5922,9 +5924,11 @@ router.post('/batchRM',isLoggedIn,function(req,res){
 router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
 
   var refNumber = req.user.refNumber
+  console.log(refNumber,'refNumber')
   var pro = req.user
   var id = req.params.id
   BatchRR.find({refNumber:refNumber},function(err,docs){
+    console.log(docs,'docs')
     let supplier = docs[0].supplier
     let item = docs[0].item
     let date = docs[0].date
