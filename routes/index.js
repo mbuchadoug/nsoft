@@ -21,6 +21,7 @@ var RepoFiles = require('../models/repoFiles');
 var StockV = require('../models/stockV');
 var StockD = require('../models/stockD');
 var StockR = require('../models/stockR');
+var StockRM = require('../models/stockRM');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
 var SalesList = require('../models/salesList');
@@ -5849,6 +5850,10 @@ router.get('/batchRM',isLoggedIn,function(req,res){
 router.post('/batchRM',isLoggedIn,function(req,res){
 
   //var refNumber = req.body.referenceNumber
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
   var date = req.body.date
   var address = req.body.address
   var regNumber = req.body.regNumber
@@ -5878,14 +5883,17 @@ router.post('/batchRM',isLoggedIn,function(req,res){
     var truck = new BatchRR()
     truck.date = date
     truck.mformat = date6
+    truck.address = address
     truck.dateValue = dateValue
     truck.regNumber = regNumber
     truck.item = item
     truck.supplier = supplier
     truck.driver = driver
-    truck.idNum = idNum
+    truck.idNumber = idNum
     truck.trailer = trailer
     truck.refNumber = refNo
+    truck.month = month
+    truck.year = year
     
    
 
@@ -5909,7 +5917,7 @@ router.post('/batchRM',isLoggedIn,function(req,res){
   .then(pro =>{
 
     console.log('success')
-    res.redirect('/receiveMaterial/'+refNo)
+    res.redirect('/receiveMaterialV/'+refNo)
 
   })
 })
@@ -5919,7 +5927,11 @@ router.post('/batchRM',isLoggedIn,function(req,res){
     
 })
 
+router.get('/receiveMaterialV/:id',function(req,res){
+  var id = req.params.id
 
+  res.redirect('/receiveMaterial/'+id)
+})
 
 router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
 
@@ -5928,20 +5940,116 @@ router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
   var pro = req.user
   var id = req.params.id
   BatchRR.find({refNumber:refNumber},function(err,docs){
-    console.log(docs,'docs')
+         if(docs){
     let supplier = docs[0].supplier
     let item = docs[0].item
     let date = docs[0].date
     let driver = docs[0].driver
     let regNumber = docs[0].regNumber
+  
    res.render('kambucha/addMaterial',{date:date,supplier:supplier,
   item:item,refNumber:refNumber,driver:driver,pro:pro,id:id,regNumber:regNumber})
+   }
   })
 
  })
 
 
+router.post('/receiveMass',function(req,res){
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  let dateValue = moment().valueOf()
+  let arrV = []
+  let number1
+ 
+  let mass = req.body.code
+  let refNumber = req.body.refNumber
+  BatchRR.find({refNumber:refNumber},function(err,docs){
+    //console.log(docs,'docs')
+    let supplier = docs[0].supplier
+    let item = docs[0].item
+    let date = docs[0].date
+    let driver = docs[0].driver
+    let regNumber = docs[0].regNumber
+    let trailer = docs[0].trailer
+    let address = docs[0].address
+    let idNumber = docs[0].idNumber
+  let newMassNum = 0
 
+
+StockRM.find({refNumber:refNumber},function(err,docs){
+
+  for(var i = 0;i<docs.length; i++){
+   // console.log(docs[i].newMass,'serima')
+  arrV.push(docs[i].newMass)
+    }
+    //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+   //console.log(arrV,'arrV')
+
+//InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+number1=0;
+for(var z in arrV) { number1 += arrV[z]; }
+let reg = /\d+\.*\d*/g;
+let resultQty = mass.match(reg)
+let massNum = Number(resultQty)
+
+
+
+
+  let size = docs.length + 1
+  let weight = 'weight'+size
+   
+  var stock = new StockRM();
+  stock.weight = weight
+  stock.address = address
+  stock.regNumber = regNumber
+  stock.item = item
+  stock.supplier = supplier
+  stock.driver = driver
+  stock.idNumber = idNumber
+  stock.trailer = trailer
+  stock.refNumber = refNumber
+  stock.month = month
+  stock.year = year
+  stock.openingMass = number1
+  stock.newMass = mass
+  stock.closingMass = massNum + number1
+  stock.size = size
+  stock.dateValue = dateValue
+
+  stock.save()
+  .then(pro =>{
+
+    res.send(pro)
+
+  })
+
+
+
+})
+
+  })
+})
+
+
+
+
+router.post('/addMaterial3/:id',isLoggedIn, (req, res) => {
+  var pro = req.user
+  var m = moment()
+  var code = req.params.id
+  var mformat = m.format("L")
+
+
+  StockRM.find({refNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
+  
+ 
+    res.send(docs)
+            })
+
+  }); 
 
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  

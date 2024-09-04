@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var batchSchemaRR = new Schema({
+var stockSchemaRM = new Schema({
 
     date: {type: String },
     address: {type: String },
@@ -14,11 +14,15 @@ var batchSchemaRR = new Schema({
     refNumber: {type: String },
     month: {type: String },
     year: {type: Number },
+    openingMass: {type: Number },
+    newMass: {type: Number },
+    closingMass: {type: Number },
     dateValue: {type: Number },
-    
+    size: {type: Number },
+    weight: {type: String },
     
    
    
 });
 
-module.exports = mongoose.model('BatchRR', batchSchemaRR);
+module.exports = mongoose.model('StockRM', stockSchemaRM);
