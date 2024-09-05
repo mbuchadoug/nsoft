@@ -5994,13 +5994,14 @@ StockRM.find({refNumber:refNumber},function(err,docs){
 //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
 number1=0;
 for(var z in arrV) { number1 += arrV[z]; }
+number1.toFixed(2)
 let reg = /\d+\.*\d*/g;
 let resultQty = mass.match(reg)
 let massNum = Number(resultQty)
 
 
 
-
+massNum.toFixed(2)
   let size = docs.length + 1
   let weight = 'weight'+size
    
@@ -6065,6 +6066,7 @@ router.post('/addMaterial3/:id',isLoggedIn, (req, res) => {
       let size = docs.length - 1
       let mass = docs[size].closingMass
       let subtotal = mass / 50
+      subtotal.toFixed(2)
     for(var i = 0; i<docs.length;i++){
       let id = docs[i]._id
       StockRM.findByIdAndUpdate(id,{$set:{subtotal:subtotal}},function(err,locs){
