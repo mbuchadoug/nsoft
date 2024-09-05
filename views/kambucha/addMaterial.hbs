@@ -286,7 +286,7 @@ $.ajax({
     url: "/addMaterial3/"+refNumber,
     success: function(data) {
     console.log(data)
-    console.log(data.length,'wwww')
+   
 
     
    for(var i = 0;i<data.length;i++){
@@ -681,6 +681,7 @@ link.classList.add('text-end','pe-0')*/
           <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 <button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>
+      <a  class="btn btn-primary ember-view" href="/closeBatchRM/{{refNumber}}"> Close Batch </a>
        </div>
       </div>
       

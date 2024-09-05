@@ -9,6 +9,7 @@ var batchSchemaRR = new Schema({
     item:{type:String},
     supplier:{type:String},
     driver: {type: String },
+    mobile: {type: String },
     idNumber: {type: String },
     trailer: {type: Number },
     refNumber: {type: String },

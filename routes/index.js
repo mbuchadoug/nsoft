@@ -5859,6 +5859,7 @@ router.post('/batchRM',isLoggedIn,function(req,res){
   var regNumber = req.body.regNumber
   var item = req.body.item
   var supplier = req.body.supplier
+  var mobile = req.body.mobile
   let driver = req.body.driver
   let idNum = req.body.idNum
   let trailer = req.body.trailer
@@ -5889,6 +5890,7 @@ router.post('/batchRM',isLoggedIn,function(req,res){
     truck.item = item
     truck.supplier = supplier
     truck.driver = driver
+    truck.mobile = mobile
     truck.idNumber = idNum
     truck.trailer = trailer
     truck.refNumber = refNo
@@ -5973,6 +5975,7 @@ router.post('/receiveMass',function(req,res){
     let date = docs[0].date
     let driver = docs[0].driver
     let regNumber = docs[0].regNumber
+    let mobile = docs[0].mobile
     let trailer = docs[0].trailer
     let address = docs[0].address
     let idNumber = docs[0].idNumber
@@ -6011,6 +6014,7 @@ let massNum = Number(resultQty)
   stock.idNumber = idNumber
   stock.trailer = trailer
   stock.refNumber = refNumber
+  stock.mobile = mobile
   stock.month = month
   stock.year = year
   stock.openingMass = number1
@@ -6050,6 +6054,227 @@ router.post('/addMaterial3/:id',isLoggedIn, (req, res) => {
             })
 
   }); 
+
+
+
+  router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
+
+    let refNumber = req.params.id
+    StockRM.find({refNumber:refNumber},function(err,docs){
+ 
+      let size = docs.length - 1
+      let mass = docs[size].closingMass
+      let subtotal = mass / 50
+    for(var i = 0; i<docs.length;i++){
+      let id = docs[i]._id
+      StockRM.findByIdAndUpdate(id,{$set:{subtotal:subtotal}},function(err,locs){
+
+        
+      })
+    }
+
+    res.redirect('/grvFileV/'+refNumber)
+
+    })
+  })
+
+
+router.get('/grvFileV/:id',function(req,res){
+  var id = req.params.id
+  res.redirect('/grvFile/'+id)
+})
+
+
+
+  router.get('/grvFile/:id',isLoggedIn,function(req,res){
+
+    var m = moment()
+    var mformat = m.format('L')
+    var month = m.format('MMMM')
+    var year = m.format('YYYY')
+    var date = req.user.date
+    var refNumber = req.params.id
+
+    StockRM.find({refNumber:refNumber}).lean().then(docs=>{
+ 
+ 
+    let size = docs.length - 1
+
+  var arrG = []
+  arrG.push(docs[size])
+    
+    console.log(arrG,'arrG')
+    
+    const compile = async function (templateName,arrG ){
+    const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+    
+    const html = await fs.readFile(filePath, 'utf8')
+    
+    return hbs.compile(html)(arrG)
+    
+    };
+    
+    
+    
+    
+    (async function(){
+    
+    try{
+
+    const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+    "--disable-setuid-sandbox",
+    "--no-sandbox",
+    "--single-process",
+    "--no-zygote",
+    ],
+    executablePath:
+    process.env.NODE_ENV === "production"
+      ? process.env.PUPPETEER_EXECUTABLE_PATH
+      : puppeteer.executablePath(),
+    });
+    
+    const page = await browser.newPage()
+    
+    
+    
+    //const content = await compile('report3',arr[uid])
+    const content = await compile('grv',arrG)
+    
+  
+    
+    await page.setContent(content, { waitUntil: 'networkidle2'});
+
+    await page.emulateMediaType('screen')
+    let height = await page.evaluate(() => document.documentElement.offsetHeight);
+    await page.evaluate(() => matchMedia('screen').matches);
+    await page.setContent(content, { waitUntil: 'networkidle0'});
+   
+     
+    let filename = 'grv'+refNumber+'.pdf'
+    await page.pdf({
+   
+    path:(`./public/grv/${year}/${month}/grv${refNumber}`+'.pdf'),
+    format:"A4",
+  
+    height: height + 'px',
+    printBackground:true
+    
+    })
+    
+    
+    var repo = new RepoFiles();
+    
+    repo.filename = filename;
+    repo.fileId = "null";
+    repo.status = 'grv'
+    repo.year = year;
+    
+    repo.month = month
+    
+    
+    console.log('done')
+    
+    repo.save().then(poll =>{
+    
+    })
+    
+    
+    
+
+    
+    
+    
+   
+    
+    const file = await fs.readFile(`./public/grv/${year}/${month}/grv${refNumber}`+'.pdf');
+    const form = new FormData();
+    form.append("file", file,filename);
+    
+    await Axios({
+      method: "POST",
+     //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+       //url: 'https://niyonsoft.org/uploadStatementDispatch',
+       url:'http://localhost:8000/uploadGrv',
+      headers: {
+        "Content-Type": "multipart/form-data"  
+      },
+      data: form
+    });
+    
+    
+    res.redirect('/fileIdGrv/'+filename);
+    
+    
+    }catch(e) {
+    
+    console.log(e)
+    
+    
+    }
+    
+    
+    }) ()
+    
+    
+  })
+    
+
+    
+    })
+
+
+
+    router.post('/uploadGRV',upload.single('file'),(req,res,nxt)=>{
+      var fileId = req.file.id
+      console.log(fileId,'fileId')
+      var filename = req.file.filename
+      console.log(filename,'filename')
+    RepoFiles.find({filename:filename},function(err,docs){
+    if(docs.length>0){
+    
+    
+    //console.log(docs,'docs')
+    let id = docs[0]._id
+    RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+    
+    })
+    
+    }
+    res.redirect('/fileIdGrv/'+filename)
+    })
+    
+    })
+
+    router.get('/fileIdGrv/:id',function(req,res){
+      console.log(req.params.id)
+      var id = req.params.id
+      
+      res.redirect('/openGrv/'+id)
+      
+      })
+
+
+    router.get('/openGrv/:id',(req,res)=>{
+      var filename = req.params.id
+      console.log(filename,'fileId')
+        const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+        gfs.files.find({filename: filename}).toArray((err, files) => {
+        console.log(files[0])
+      
+          const readStream = bucket.openDownloadStream(files[0]._id);
+              readStream.pipe(res);
+      
+        })
+       //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+      })
+
+
+
+      
+
+  
 
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  

@@ -12,6 +12,7 @@ var stockSchemaRM = new Schema({
     idNumber: {type: String },
     trailer: {type: Number },
     refNumber: {type: String },
+    mobile: {type: String },
     month: {type: String },
     year: {type: Number },
     openingMass: {type: Number },
@@ -19,6 +20,8 @@ var stockSchemaRM = new Schema({
     closingMass: {type: Number },
     dateValue: {type: Number },
     size: {type: Number },
+    price: {type: Number },
+    subtotal: {type: Number },
     weight: {type: String },
     
    
