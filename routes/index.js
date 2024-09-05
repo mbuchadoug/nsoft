@@ -6292,11 +6292,23 @@ router.get('/grvFileV/:id',function(req,res){
       
            }) 
           }
-          res.redirect('/batchRM')
+          //res.redirect('/batchRM')
+          res.redirect('/updateRepoF')
         })
       })
       
+      router.get('/updateRepoF',function(req,res){
+        RepoFiles.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           RepoFiles.findByIdAndRemove(id,(err,doc)=>{
       
+           }) 
+          }
+          //res.redirect('/batchRM')
+          res.redirect('/batchRM')
+        })
+      })
       
 
   
