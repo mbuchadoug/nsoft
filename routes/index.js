@@ -6272,6 +6272,31 @@ router.get('/grvFileV/:id',function(req,res){
 
 
 
+      router.get('/updateBatchRR',function(req,res){
+        BatchRR.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchRR.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/updateStockRM')
+        })
+      })
+
+      router.get('/updateStockRM',function(req,res){
+        StockRM.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           StockRM.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/batchRM')
+        })
+      })
+      
+      
       
 
   
