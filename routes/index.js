@@ -6196,7 +6196,7 @@ router.get('/grvFileV/:id',function(req,res){
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
        //url: 'https://niyonsoft.org/uploadStatementDispatch',
-       url:'http:///niyonsoft.org/uploadGrv',
+       url:'https://niyonsoft.org/uploadGrv',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
