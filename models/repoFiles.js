@@ -7,6 +7,7 @@ var repoSchema = new Schema({
     fileId: {type: String, required: true},
     month: {type: String},
     status: {type: String},
+    date: {type: String},
     year: {type: Number, required: true},
     refNumber: {type: String}
    

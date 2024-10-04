@@ -1,0 +1,951 @@
+<html lang="en" light-mode="true" style="--primary-color: #408dfb; --primary-color-rgb: 64,141,251;"><head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Repository | Kambucha App</title>
+
+
+  
+
+
+    <link title="zf-font-src" href="items/webfonts.zoho.com/css?display=swap&amp;family=Inter:400,500,600,700/Source+Sans+Pro:400/Open+Sans:400,600,700" rel="stylesheet" type="text/css">
+
+    
+
+<link href="items/d31g2a6snus4ly.cloudfront.net/zbooks/assets/vendor-fac69530bc.css" rel="stylesheet">
+    
+
+<link href="items/d31g2a6snus4ly.cloudfront.net/zbooks/assets/zb-c9a7bdf689.css" rel="stylesheet">
+
+
+
+
+   
+
+	<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+		
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Page Vendor Stylesheets-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+<style type="text/css">
+ul {
+  list-style-type: none;
+}
+
+
+ul.no-bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+.sidebar li .submenu{ 
+
+  list-style-type: none;
+
+	list-style: none;
+	margin: 0; 
+	padding: 0; 
+	padding-left: 1rem; 
+	padding-right: 1rem;
+}
+.sidebar .nav-link {
+    font-weight: 500;
+    color: var(--bs-dark);
+}
+.sidebar .nav-link:hover {
+    color: var(--bs-primary);
+}
+
+</style>
+    
+    
+
+    <!-- Overwritten styles that need not to be inversed in RTL layout -->
+    <style type="text/css">
+      .ignore-rtl {
+        direction: ltr;
+      }
+      .daterangepicker.opensleft:before {
+        right: 9px;
+        left: auto;
+      }
+      .daterangepicker.opensleft:after {
+        right: 10px;
+        left: auto;
+      }
+      .daterangepicker.opensright:before {
+        left: 9px;
+        right: auto;
+      }
+      .daterangepicker.opensright:after {
+        left: 10px;
+        right: auto;
+      }
+      html[dir="rtl"] .pagination .action {
+        display: inline-block;
+        transform: rotate(180deg);
+      }
+    </style>
+
+
+
+    
+      
+
+      
+
+      
+      
+  
+
+
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+<div class="zread_strip" id="annmsgstrip" style="z-index: 999;">
+  <div class="zread_olymn" id="wmsannmsg" style="display: none; z-index: 999;"><span id="annmsg"></span><div id="hideinfo" class="zchdr_arw">
+
+  </div>
+  <a id="clearannmsg" style="text-decoration:underline; float:right; font-size: 11px; margin: 2px 25px 0px 0px">Don't show again</a>
+  </div>
+  </div>
+  <style type="text/css">
+  #wmstoolbar *::-webkit-scrollbar, #zchhis *::-webkit-scrollbar, #wms_fork_container *::-webkit-scrollbar{ height:8px; width:8px }
+   #wmstoolbar *::-webkit-scrollbar-thumb, #zchhis *::-webkit-scrollbar-thumb, #wms_fork_container *::-webkit-scrollbar-thumb{ background-color: #dcdcdc }</style>
+ <div class="ember-view  finance-app"><div id="tooltip-popover-wrapper"></div> <!----><div class="product    "><!----><!----><div><ul id="ember3" class="dropdown ember-view nav skip-to"><button id="ember4" class="dropdown-toggle ember-view dropdown-toggle btn">Navigate To <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs"><path d="M2.157 159.57c0 13.773 5.401 27.542 16.195 38.02l198.975 192.867c21.411 20.725 55.94 20.725 77.34 0L493.63 197.59c21.508-20.846 21.637-54.778.269-75.773-21.35-20.994-56.104-21.098-77.612-.26L256.004 276.93 95.721 121.562c-21.528-20.833-56.268-20.734-77.637.26C7.472 132.261 2.157 145.923 2.157 159.57z"></path></svg></button> <div class="dropdown-menu   skip-to-dropdown-menu"><button class="dropdown-item skip-to-dropdown">Main Content</button> <button class="dropdown-item skip-to-dropdown">Left Sidebar</button> <button class="dropdown-item skip-to-dropdown">Top Bar</button></div></ul></div> <header class="top-band unified-top-band d-print-none" id="top-band"><div class=" logo-container  "><div class="logo-collapse d-flex align-items-center cursor-pointer "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xlg app-logo"><path d="M361 502.5H24.5c-8 0-14.4-6.5-14.4-14.4V365.8c0-26.7 17-50.5 42.2-59.2l373-128c29-10 48.6-37.3 48.6-68 0-39.6-32.3-71.9-71.9-71.9H39v238.1c0 8-6.5 14.4-14.4 14.4S10 284.9 10 276.9V24.3c0-8 6.5-14.4 14.4-14.4h377.5c55.6 0 100.8 45.2 100.8 100.8 0 43-27.3 81.3-68.1 95.3l-373 128a33.72 33.72 0 00-22.7 31.9v107.8H361c30.1 0 58.5-11.7 79.8-33a112 112 0 0033-79.8c0-21.3-6-42.1-17.4-60.1a113.42 113.42 0 00-46.1-41.3 14.41 14.41 0 01-6.7-19.3c3.5-7.2 12.1-10.2 19.3-6.7 23.8 11.5 43.8 29.5 58 51.9 14.3 22.6 21.8 48.8 21.8 75.6 0 37.8-14.7 73.4-41.5 100.2A141.24 141.24 0 01361 502.5z"></path><path d="M172.4 211.9c-31.8 0-57.7-25.9-57.7-57.7s25.9-57.7 57.7-57.7 57.7 25.9 57.7 57.7-25.9 57.7-57.7 57.7zm0-86.6c-15.9 0-28.9 13-28.9 28.9s13 28.9 28.9 28.9 28.9-13 28.9-28.9-13-28.9-28.9-28.9zm144.7 290.4c-31.8 0-57.7-25.9-57.7-57.7s25.9-57.7 57.7-57.7 57.7 25.9 57.7 57.7-25.8 57.7-57.7 57.7zm0-86.6c-15.9 0-28.9 13-28.9 28.9s13 28.9 28.9 28.9 28.9-13 28.9-28.9-12.9-28.9-28.9-28.9z"></path></svg> <span class="top-item font-xlarge lh-100 app-logo-title text-white">Books</span></div></div> <div id="left-topband" class="d-flex align-items-center flex-grow-1 top-item"><div id="ember5" class="float-start dropdown recent-activities top-item-icon-spaced ember-view"><div id="ember6" class="dropdown ember-view rounded"><div id="ember7" class="dropdown-toggle no-caret ember-view cursor-pointer"><span id="recent-activities"><div id="e0a7e0a1-76da-46f4-98cb-3b8a1ac0ee26" tabindex="0" aria-describedby="e17c2aea-6117-496e-801a-1aaa33125589"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-middle unified-icon-fill"><path d="M15.1.2c-.3 0-.5.2-.5.5v2.5C13.2 1.2 10.9.1 8.4 0c-2.1 0-4 .8-5.5 2.2C1.4 3.7.5 5.6.5 7.7c-.1 4.3 3.4 7.9 7.7 8h.1c2.9 0 5.6-1.6 7-4.2.1-.2 0-.5-.2-.7-.2-.1-.5 0-.7.2-1.2 2.3-3.6 3.8-6.2 3.7-3.8-.1-6.8-3.2-6.7-6.9 0-1.8.8-3.5 2.1-4.8 1.3-1.3 3-2 4.9-1.9 2.3 0 4.4 1.2 5.7 3.2l.6.9c.1.2.3.3.6.2.2-.1.4-.3.4-.5V.7c-.2-.3-.4-.5-.7-.5z"></path><path d="M7.8 4.7c-.3 0-.5.2-.5.5V9c0 .2.1.3.2.4l1.9 1.3c.1.1.2.1.3.1.2 0 .3-.1.4-.2.2-.2.1-.5-.1-.7L8.3 8.8V5.2c0-.3-.3-.5-.5-.5z"></path></svg></div> <!----></span></div> <div class="dropdown-menu   mt-4"><div class="m-4 px-3"><div class="text-center"><span class="font-xs text-muted text-uppercase letter-space-1">Recent Activities</span> <img src="items/d31g2a6snus4ly.cloudfront.net/zbooks/assets/images/empty-recent-activities-f1db317262.png" class="img-fluid p-4"> Your activities in Zoho Books will show up here!</div> <hr class="bdr-light"> <p class="text-muted font-small">Create your first transaction to get started with Zoho Books.</p> <div class="mb-3"><a id="ember8" class="ember-view" href="#/invoices/new"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 417.4 512" class="icon icon-sm align-middle"><g id="Layer_1-2"><path d="M161.4 330.1h-47.1c-11 0-20 9-20 20s9 20 20 20h47.1c11 0 20-9 20-20s-9-20-20-20z"></path><path d="M394.2 129.9L287.5 23.3C272.5 8.2 252.6 0 231.4 0H100C44.9 0 0 44.9 0 100v312c0 55.1 44.9 100 100 100h217.4c55.1 0 100-44.9 100-100V186c0-21.2-8.3-41.1-23.2-56.1zm-28.3 28.3c2.3 2.3 4.3 4.9 6 7.6H305c-25.6 0-46.4-20.8-46.4-46.4V51l.6.6 106.7 106.6zm-48.5 313.9H100c-33.1 0-60-26.9-60-60V100c0-33.1 26.9-60 60-60h118.6v79.4c0 47.6 38.7 86.4 86.4 86.4h72.4V412c0 33.1-26.9 60-60 60z"></path></g></svg> &nbsp;Create Invoice</a></div><div class="mb-3"><a id="ember9" class="ember-view" href="#/bills/new"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 386.7 463.7" class="icon icon-sm align-middle"><path d="M249 204.3H137.7a21 21 0 110-42H249a21 21 0 110 42zm-38.8 96.2h-33.7a21 21 0 110-42h33.7a21 21 0 110 42z"></path><path d="M371.1 6.8a31 31 0 00-31 0l-56 32.6a9 9 0 01-9.1 0L219 6.9a51.2 51.2 0 00-51.3 0l-56 32.5a9 9 0 01-9 0L46.4 6.8A31 31 0 000 33.6v396.5a31 31 0 0046.5 26.8l56.1-32.5a9 9 0 019 0l56.1 32.5a51 51 0 0051.2 0l56-32.6a9 9 0 019.1 0l56.1 32.6a31.1 31.1 0 0046.6-26.8V33.6c0-11-6-21.3-15.6-26.8zM344.7 411L305 388a51.1 51.1 0 00-51.2 0l-56 32.5a9 9 0 01-9.1 0l-56-32.5a51.1 51.1 0 00-51.2 0L42 411V52.8l39.6 23a51.1 51.1 0 0051.2 0l56-32.6a9 9 0 019 0l56 32.5a51.1 51.1 0 0051.3 0l39.6-23V411z"></path></svg> &nbsp;Create Bill</a></div><div class="mb-3"><a id="ember10" class="ember-view" href="#/expenses/new"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 423.7 512" class="icon icon-sm align-middle"><g id="Layer_1-2"><path d="M323.7 0H100C44.9 0 0 44.9 0 100v378c0 11.1 6 21.4 15.6 26.9s21.5 5.5 31.1 0l62.5-36.3c4.2-2.4 9.3-2.4 13.5 0l62.4 36.2c8.3 4.8 17.5 7.2 26.8 7.2s18.5-2.4 26.8-7.2l62.4-36.2c4.2-2.4 9.3-2.4 13.5 0l62.5 36.3c9.6 5.6 21.5 5.6 31.1 0 9.6-5.5 15.6-15.9 15.6-26.9V100c0-55.1-44.9-100-100-100zm60 462.5L334.6 434c-16.5-9.6-37.1-9.6-53.6 0l-62.4 36.2c-4.2 2.4-9.3 2.4-13.5 0L142.7 434c-8.3-4.8-17.5-7.2-26.8-7.2s-18.5 2.4-26.8 7.2L40 462.5V100c0-33.1 26.9-60 60-60h223.7c33.1 0 60 26.9 60 60v362.5z"></path><path d="M262.8 145.3H161c-11 0-20 9-20 20s9 20 20 20h101.8c11 0 20-9 20-20s-9-20-20-20zM235.5 255.6h-47.3c-11 0-20 9-20 20s9 20 20 20h47.3c11 0 20-9 20-20s-9-20-20-20z"></path></g></svg> &nbsp;Create Expense</a></div></div></div></div></div> <div id="ember11" class="search-field global-search top-item-spaced ember-view"><div id="quick-search"><div id="ember12" class="dropdown show ac-dropdown ember-view"><div class="input-group btn-group"><div id="ember13" class="dropdown ember-view input-group-prepend w-100"><span id="ember14" class="dropdown-toggle ember-view input-group-text cursor-pointer"><svg id="Search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-bottom search-icon"><path d="M15.85 15.14l-4.59-4.59a6.365 6.365 0 001.54-4.16C12.8 2.87 9.93 0 6.4 0S0 2.87 0 6.4s2.87 6.4 6.4 6.4c1.59 0 3.04-.58 4.16-1.54l4.59 4.59a.485.485 0 00.7 0c.2-.2.2-.51 0-.71zM1 6.4C1 3.42 3.42 1 6.4 1s5.4 2.42 5.4 5.4-2.42 5.4-5.4 5.4S1 9.38 1 6.4z"></path></svg> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon icon-xxs align-middle arrow-down fill-theme-blue"><path d="M15.6 3.9c-.4-.4-1-.4-1.4 0L8 10 1.9 3.9c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l6.9 6.9c.2.2.4.3.7.3s.5-.1.7-.3l6.9-6.9c.3-.4.3-1-.1-1.4z"></path></svg></span> <div class="auto-select ac-selected w-100 d-flex" tabindex="-1"><input aria-label="Search in Items ( / )" placeholder="Search in Items ( / )" id="app-quick-search-field" class="ember-text-field ember-view form-control" type="text"> <!----></div> <!----> <div class="dropdown-menu   scrollmenu"><div><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-17="17">Customers <!----></button><button class="dropdown-item pe-7 selected-option" type="button" data-ember-action="" data-ember-action-19="19">Items <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.93 274.82" class="icon icon-ok icon-xs"><path d="M130.88 274.82c-10.23 0-20.46-3.9-28.26-11.7l-90.88-90.75c-15.63-15.61-15.65-40.94-.04-56.57 15.61-15.63 40.94-15.65 56.57-.04l62.61 62.53L297.67 11.7c15.63-15.61 40.96-15.6 56.57.03 15.61 15.63 15.6 40.96-.03 56.57L159.15 263.12c-7.81 7.8-18.04 11.7-28.27 11.7z" id="Layer_1-2"></path></svg></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-21="21">Price Lists <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-23="23">Inventory Adjustments <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-25="25">Banking <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-27="27">Quotes <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-29="29">Sales Orders <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-31="31">Invoices <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-33="33">Credit Notes <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-35="35">Vendors <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-37="37">Expenses <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-39="39">Purchase Orders <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-41="41">Bills <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-43="43">Vendor Credits <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-45="45">Projects <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-47="47">Timesheet <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-49="49">Chart of Accounts <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-51="51">Documents <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-53="53">Tasks <!----></button></div> <div class="position-sticky bottom-0 bg-white"><li class="adv-search dropdown-item d-flex align-items-center m-0 rounded-0 border-top" data-ember-action="" data-ember-action-54="54"><span class="text-black cursor-pointer flex-grow-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon fill-theme-blue align-text-bottom"><path d="M455.2 419.8L385.3 350c25.6-33.5 39.1-74.4 38.2-117.1-1-48.5-20.4-94.1-54.7-128.4-35.3-35.3-82.2-54.7-132.2-54.7h-.2c-50 0-97 19.6-132.3 55-72.5 72.8-72.5 191.2.1 264 24.8 24.8 55.9 42.1 90 50 33.1 7.7 67.6 6.2 99.9-4.2 13.1-4.2 20.3-18.3 16.1-31.5-4.2-13.1-18.3-20.3-31.5-16.1-49.3 15.9-102.6 3.1-139.1-33.5-53.2-53.3-53.3-140-.1-193.4 25.9-25.9 60.3-40.3 96.9-40.3h.1c36.6 0 71 14.2 96.8 40.1 25.1 25.1 39.4 58.5 40.1 94.1.7 35.4-12.1 69.3-36 95.3l-.1.1c-11.6 12.8-11.2 32.3 1 44.5l81.4 81.4c4.9 4.9 11.3 7.3 17.7 7.3 6.4 0 12.8-2.4 17.7-7.3 9.8-9.9 9.8-25.7.1-35.5z"></path></svg>&nbsp;Advanced Search</span>  <em class="px-2 py-1 rounded-md fst-normal">Alt&nbsp;+&nbsp;/</em></li> <li class="zia-search dropdown-item d-flex align-items-center m-0 rounded-0 border-top" data-ember-action="" data-ember-action-55="55"><span class="text-black cursor-pointer flex-grow-1"><img src="items/d31g2a6snus4ly.cloudfront.net/zbooks/assets/images/ziasearch-4d77ef63db.png" width="14" height="14" class="mt-n2 ms-1">&nbsp;Search across Zoho</span> <em class="px-2 py-1 rounded-md fst-normal">Ctrl&nbsp;+&nbsp;/</em></li></div></div></div></div></div></div> <!----></div></div> <!----> <div class="dropdown top-item-icon-spaced pt-3 cursor-pointer"><span id="fd3928f3-8d3d-4cf5-8b25-fc5bd613403a" class="d-block over-flow top-item-upgrade-msg top-item font-xs " tabindex="0" aria-describedby="e8fce912-7471-4b35-9254-026dbacb5cd3">Trial expires in 12 days.</span> <!----></div><span class="top-upgrade-button-item top-item-spaced mt-1 mx-0 font-xs text-blue cursor-pointer">Subscribe</span> <div id="right-topband" class="d-flex align-items-center"><div class="dropdown orglist-topband orglist-title top-item-fixed-width"><div class="cursor-pointer d-flex align-items-center" data-ember-action="" data-ember-action-56="56"><span class="org-name-section font-normal over-flow" title="Demo Account 1 "><!----> Demo Account 1 </span> &nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon icon-xxs align-top "><path d="M15.6 3.9c-.4-.4-1-.4-1.4 0L8 10 1.9 3.9c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l6.9 6.9c.2.2.4.3.7.3s.5-.1.7-.3l6.9-6.9c.3-.4.3-1-.1-1.4z"></path></svg></div> <!----></div> <div><div id="ember57" class="dropdown ember-view top-item-spaced quik-add multi-col-dropdown rounded ms-0"><button id="ember58" class="dropdown-toggle no-caret ember-view btn p-0 no-box-shadow"><span id="quick-create"><span id="efd1b3d4-6b95-4f38-b822-5562096392be" class="quick-add-icon" tabindex="0" aria-describedby="c5260f35-6feb-4866-88d0-375c77730b49"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="icon align-middle unified-icon-fill"><rect width="32" height="32" rx="4" ry="4"></rect><path fill="#fff" d="M23.53 15.53h-7.06V8.47a.47.47 0 10-.94 0v7.06H8.47a.47.47 0 100 .94h7.06v7.06a.47.47 0 10.94 0v-7.06h7.06a.47.47 0 100-.94z"></path></svg></span> <!----></span></button> <div class="dropdown-menu   mt-2 dropdown-menu-center"><!----></div></div></div> <div id="ember59" class="dropdown top-item-icon-spaced ember-view cursor-pointer"><span class="cursor-pointer"><span id="ea10c853-7f80-4529-93f6-c4ec610532ca" tabindex="0" aria-describedby="c09cfa03-15e6-40fa-85ea-645eff41fc5c"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-top unified-icon-fill"><path d="M6 7c1.5 0 2.7-1.2 2.7-2.7S7.5 1.5 6 1.5 3.2 2.8 3.2 4.3 4.5 7 6 7zm0-4.5c1 0 1.7.8 1.7 1.7S6.9 6 6 6c-1 0-1.8-.8-1.8-1.7S5 2.5 6 2.5zm5.8 5c1.1 0 1.9-.9 1.9-1.9s-.9-1.9-1.9-1.9c-1.1 0-1.9.9-1.9 1.9s.8 1.9 1.9 1.9zm0-2.9c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9zm.8 4H4C2 8.6.4 10.2.4 12.2v1.4c0 .3.2.5.5.5s.5-.2.5-.5v-1.4c0-1.4 1.2-2.6 2.6-2.6h4c1.4 0 2.6 1.2 2.6 2.6v1.4c0 .3.2.5.5.5s.5-.2.5-.5v-1.4c0-1-.4-2-1.1-2.6h2.1c1.2 0 2.2 1 2.2 2.2V13c0 .3.2.5.5.5s.5-.2.5-.5v-1.2c0-1.8-1.5-3.2-3.2-3.2z"></path></svg></span> <!----></span> <!----></div> <!----> <div id="ember60" class="dropdown top-item-icon-spaced user-notification ember-view cursor-pointer"><span class="cursor-pointer float-end" id="notification-bar"><div id="c0aac650-d313-4823-b0eb-40660d499a3e" class="position-relative" tabindex="0" aria-describedby="f8b27667-2c29-46d3-aeef-9f1c478819e6"><!----> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-top unified-icon-fill "><path d="M14.44 8.73l-1.29-1.29a.51.51 0 01-.15-.35V5c0-2.76-2.24-5-5-5S3 2.24 3 5v2.09c0 .13-.05.26-.15.35L1.56 8.73c-.36.36-.56.84-.56 1.35v.41c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-.41c0-.51-.2-.99-.56-1.35zM14 10.5c0 .28-.22.5-.5.5h-11c-.28 0-.5-.22-.5-.5v-.41c0-.25.09-.47.27-.65l1.29-1.29c.28-.28.44-.67.44-1.06V5c0-2.21 1.79-4 4-4s4 1.79 4 4v2.09c0 .39.16.78.44 1.06l1.29 1.29c.17.17.27.4.27.65v.41zM10 13c-.28 0-.5.22-.5.5 0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5c0-.28-.22-.5-.5-.5s-.5.22-.5.5a2.5 2.5 0 005 0c0-.28-.22-.5-.5-.5z"></path></svg></div> <!----></span><!----> <!----></div> <div id="ember61" class="dropdown top-item-icon-spaced ember-view cursor-pointer "><span id="settings-dropdown"><span id="d9f51258-26ea-4b83-9247-6ae1d6d3a7b4" tabindex="0" aria-describedby="e9862e74-7799-4acd-987d-884804076d87"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon cursor-pointer align-text-top unified-icon-fill"><path d="M8 5C6.35 5 5 6.35 5 8s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3zm0 5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path><path d="M13.99 8.28v-.56l1.15-1.3c.43-.48.5-1.18.18-1.75l-.78-1.35c-.32-.56-.96-.85-1.6-.72l-1.7.35c-.16-.1-.32-.19-.49-.28l-.55-1.65C10 .41 9.43 0 8.78 0H7.22C6.57 0 6 .41 5.8 1.03l-.55 1.65c-.17.09-.33.18-.49.28l-1.7-.35c-.63-.13-1.28.16-1.6.72L.68 4.68c-.32.56-.25 1.26.18 1.75l1.15 1.3v.56L.86 9.59c-.43.48-.5 1.19-.18 1.75l.78 1.35c.32.56.97.85 1.6.72l1.7-.35c.16.1.32.19.49.28l.55 1.65c.21.61.78 1.02 1.42 1.02h1.56c.65 0 1.22-.41 1.42-1.03l.55-1.65c.17-.09.33-.18.49-.28l1.7.35c.63.13 1.27-.16 1.6-.72l.78-1.35c.32-.56.25-1.26-.18-1.75l-1.15-1.3zm.46 2.54l-.78 1.35c-.11.19-.32.28-.53.24l-1.9-.39c-.13-.03-.27 0-.39.08-.22.15-.46.29-.72.41-.12.06-.22.16-.26.29l-.62 1.85c-.07.21-.26.34-.47.34H7.22c-.22 0-.41-.14-.47-.34l-.62-1.85a.469.469 0 00-.26-.29c-.26-.12-.5-.26-.72-.41a.476.476 0 00-.29-.09h-.1l-1.9.39a.484.484 0 01-.53-.24l-.78-1.35a.497.497 0 01.06-.58L2.9 8.77c.09-.1.13-.24.12-.37-.01-.14-.02-.28-.02-.42s0-.28.02-.42a.49.49 0 00-.12-.37L1.61 5.74a.499.499 0 01-.06-.58l.78-1.35c.11-.19.32-.28.53-.24l1.9.39c.13.03.27 0 .39-.08.22-.15.46-.29.72-.41.12-.06.22-.16.26-.29l.62-1.85c.07-.2.26-.34.47-.34h1.56c.22 0 .41.14.47.34l.62 1.85c.04.13.14.24.26.29.26.12.5.26.72.41.11.08.25.11.39.08l1.9-.39c.21-.04.42.05.53.24l.78 1.35c.11.19.08.42-.06.58L13.1 7.2c-.09.1-.14.24-.12.37s.02.28.02.42 0 .28-.02.41.03.27.12.37l1.29 1.46c.14.16.17.4.06.58z"></path></svg></span> <!----></span> <!----></div></div> <div class="d-flex align-items-center"><div class="top-item-fixed-width position-relative" id="profile-section"><span class="cursor-pointer" data-ember-action="" data-ember-action-62="62"><img class="float-start rounded-circle" alt="inhari" src="items/contacts.zoho.com/file?t=user&amp;ID=772539688&amp;fs=thumb"></span> <!----></div></div> <div class="products-menu-addon-container"><div class="text-center cursor-pointer zohoapps position-relative "><div class="zohoapps__candybox"><div class="zohoapps__candybox__dots"><span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span></div> <div class="zohoapps__candybox__z-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 100 100"><path class="zohoapps__candybox__z-icon__path1" d="M50 50l1.8-4.5 3.5-8.6c1.3-3.3-1.1-6.9-4.6-6.9H9c-3.6 0-6-3.7-4.6-6.9l6.8-16C12 5.2 13.8 4 15.8 4h51.9c14.1 0 23.7 14.2 18.6 27.2l-8.7 22.3"></path><path class="zohoapps__candybox__z-icon__path2" d="M22.4 46.4l-8.7 22.3C8.6 81.8 18.2 96 32.3 96h51.9c2 0 3.8-1.2 4.6-3.1l6.8-16c1.4-3.3-1-6.9-4.6-6.9H49.4c-3.5 0-6-3.6-4.6-6.9l3.7-9.3L50 50"></path></svg></div></div> <!----></div> <!----></div></header><!----><!----> <!----> <div id="flyout-with-topbar" class="d-print-none"><div class=" slide-sidebar slide-sidebar-right"><!----><!----></div></div> 
+   <div class="product-wrapper">
+     
+     
+     <nav id="main-nav-tab" class="noscroll-x tab-column main-tab-column d-print-none scrollbar-thin ember-view  "><!---->
+
+
+
+     
+   <ul class="nav nav-pills fill nav-bottom-spacing flex-column"><!---->
+   
+  
+
+
+   
+   
+   <li id="ember346" class="ember-view nav-item">
+
+
+
+      <a id="ember347" class="ember-view nav-link" href="#/home">
+<!---->          
+              <span id="c03f6b63-f181-4ba4-bdfd-4deb71007487" class="position-relative" tabindex="0" aria-describedby="c852d0b2-2a66-44e7-b23c-aff0c1d27162">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 514 458.5" class="icon lpanel"><path d="M507 185.7L315.7 20.9C283.6-6.7 236.8-7 204.3 20.2L7.2 185.5c-8.5 7.1-9.6 19.7-2.5 28.2 4 4.7 9.6 7.2 15.3 7.2s9.1-1.5 12.8-4.7l25.6-21.4v165.4c.9 54.4 45.4 98.4 100 98.4h197.2c54.6 0 99.1-44 100-98.4V194.3l25.4 21.8c8.4 7.2 21 6.3 28.2-2.1 7.2-8.4 6.3-21-2.1-28.2zM298.7 418.5h-83.5v-65.7c0-23 18.7-41.8 41.8-41.8s41.8 18.7 41.8 41.8v65.7zm116.8-60c0 33.1-26.9 60-60 60h-16.8v-65.7c0-45.1-36.7-81.8-81.8-81.8s-81.8 36.7-81.8 81.8v65.7h-16.8c-33.1 0-60-26.9-60-60V161.2L230 50.9c17.4-14.6 42.4-14.4 59.6.4l126 108.5v198.7z" id="Layer_1-2"></path></svg>
+              </span>
+             <!---->
+        Home
+              <span class="badge text-semibold font-xxs float-end inbox-count">
+                2
+              </span>
+<!---->      </a>
+    </li>
+
+
+
+
+ <ul class="nav flex-column" id="nav_accordion">
+
+  <li class="divider"></li>	<li class="nav-item">
+		<a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item1" href="#">
+      
+        <span id="c03f6b63-f181-4ba4-bdfd-4deb71007487" class="position-relative" tabindex="0" aria-describedby="c852d0b2-2a66-44e7-b23c-aff0c1d27162">
+<!---->              
+ <span id="c4a21d07-3c88-4696-add5-3c6b96d4c4b4" tabindex="0" aria-describedby="ef21c203-7e14-4fb6-b95e-6811bad344da"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508.8 495.2" class="icon lpanel"><g id="Layer_1-2"><path d="M506.2 285.7l-36.8-159.4c-6-26-21.8-48.2-44.4-62.3-22.7-14.2-49.5-18.6-75.5-12.6L190.1 88.2c-21.9 5.1-40.5 17-53.9 33.1l-14-60.8c-4.9-21.1-20.8-37.9-41.6-43.9L25.5.8C14.9-2.3 3.8 3.9.8 14.5s3.1 21.7 13.7 24.7l55 15.8c6.8 2 12.1 7.5 13.7 14.4l42.3 183.2v.1l21.6 93.6c-6.2 5.4-11.6 11.8-16 18.9-12 19.2-15.8 42-10.7 64.1 5.1 22.1 18.5 40.9 37.8 52.9 13.7 8.5 29.1 12.9 44.9 12.9 6.4 0 12.9-.7 19.3-2.2 22.1-5.1 40.9-18.5 52.9-37.8 3.1-4.9 5.6-10 7.6-15.3l148.5-34.3c26-6 48.2-21.8 62.3-44.4 14.2-22.7 18.6-49.5 12.6-75.5zM213.2 454c-11.7 2.7-23.8.7-33.9-5.7-10.2-6.4-17.3-16.3-20-28-5.6-24.2 9.5-48.4 33.7-53.9 3.4-.8 6.8-1.2 10.1-1.2 20.5 0 39 14.1 43.8 34.9 1.4 6.3 1.5 12.6.3 18.7 0 .2 0 .4-.1.6-1.1 5.1-3 10.1-5.9 14.6-6.4 10.2-16.3 17.3-28 20zm246.4-114c-8.5 13.6-21.8 23.1-37.4 26.7l-135.1 31.2c-.3-2.2-.7-4.5-1.3-6.7-10.5-45.6-56.2-74.2-101.9-63.7h-.2L154 198.9c-7.3-32.1 12.9-64.3 45-71.7l159.4-36.8c15.6-3.6 31.7-.9 45.3 7.6 13.6 8.5 23.1 21.8 26.7 37.4l36.8 159.4c3.6 15.6.9 31.7-7.6 45.3z"></path><path d="M314.7 164.8l-47.8 11c-10.8 2.5-17.5 13.2-15 24 2.1 9.2 10.4 15.5 19.5 15.5s3-.2 4.5-.5l47.8-11c10.8-2.5 17.5-13.2 15-24s-13.2-17.5-24-15z"></path></g></svg></span>
+              </span> Inventory <i class="bi small bi-caret-right-fill float-end" ></i> </a>
+		<ul id="menu_item1" class="submenu collapse " data-bs-parent="#nav_accordion" >
+			   <li id="ember78" class="ember-view nav-item align-middle  ">
+          
+<a id="ember79" class="ember-view nav-link align-middle" href="#/inventory/pricelists"><span class="d-inline-block " style=" margin-left: 20px" > Items</span> 
+
+       <!--<span class="d-inline-block btn "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon float-end"><path d="M255.8 40.8c-118.9 0-215.4 96.5-215.4 215.4s96.5 215.4 215.4 215.4 215.4-96.4 215.4-215.4S374.7 40.8 255.8 40.8zm94.5 237h-72.9v72.9c-.3 11.9-10.1 21.4-22.1 21.2-11.6-.2-20.9-9.6-21.2-21.2v-72.9h-72.9c-11.9 0-21.6-9.7-21.6-21.6s9.7-21.6 21.6-21.6h72.9v-72.9c.3-11.9 10.1-21.4 22.1-21.2 11.6.2 20.9 9.6 21.2 21.2v72.9h72.9c11.9 0 21.6 9.7 21.6 21.6 0 12-9.7 21.6-21.6 21.6z"></path></svg>  </span>-->
+              </a>
+
+              <a id="ember79" class="ember-view nav-link" href="#/inventory/pricelists" ><span class="d-inline-block " style=" margin-left: 20px; " > Item Group</span> 
+
+              </a>
+
+                 <a id="ember79" class="ember-view nav-link" href="#/inventory/pricelists" ><span class="d-inline-block " style=" margin-left: 20px; " > Price List</span> 
+
+              </a>
+            
+              
+
+    </li>
+		</ul>
+
+	</li>
+
+
+   <li class="divider"></li> <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/batch">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon lpanel"><path d="M412 0H100C44.9 0 0 44.9 0 100v312c0 55.1 44.9 100 100 100h312c55.1 0 100-44.9 100-100V100C512 44.9 467.1 0 412 0zm-70.8 209.7c11.6 0 21 9.4 21 21V241c0 53.6-43.6 97.2-97.2 97.2h-5.5c-1.2-.2-2.3-.3-3.5-.3s-2.4.1-3.5.3H247c-53.6 0-97.2-43.6-97.2-97.2v-10.3c0-11.6 9.4-21 21-21h170.5zM472 412c0 33.1-26.9 60-60 60H276v-94.2c70.6-5.6 126.3-64.8 126.3-136.8v-10.3c0-33.7-27.4-61-61-61h-6.4v-55.3c0-11-9-20-20-20s-20 9-20 20v55.3h-77.6v-55.3c0-11-9-20-20-20s-20 9-20 20v55.3h-6.5c-33.7 0-61 27.4-61 61V241c0 72 55.7 131.2 126.3 136.8V472H100c-33.1 0-60-26.9-60-60V100c0-33.1 26.9-60 60-60h312c33.1 0 60 26.9 60 60v312z" id="Layer_1-2"></path></svg>
+              </span>
+             <!---->
+        Receive Stock
+<!----><!---->      </a>
+    </li>
+
+
+       <li class="divider"></li> <li id="ember426" class="ember-view nav-item">
+      <a id="ember427" class="ember-view nav-link" href="#/documents/inbox">
+<!---->          
+              <span id="f8acc720-241a-4e63-a91d-d33bc5de12c8" class="position-relative" tabindex="0" aria-describedby="fb8b764d-b3bb-4de1-b13d-5afa94b364a3">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 490" class="icon lpanel"><path d="M492.4 192.6c-5.4-6.5-11.7-11.7-18.5-15.6v-29.9c0-43.4-35.3-78.7-78.7-78.7H270.3c-3.5 0-6.9-1.5-9.3-4.2l-40.8-45.6C209.7 6.8 194.4 0 178.5 0h-62C73.1 0 37.8 35.3 37.8 78.7v98.5c-6.7 3.8-12.8 9-18.2 15.4-16.1 19.1-22.8 46.5-18.1 73.2l26.1 147.8c3.7 20.9 13.1 39.9 26.5 53.6C68.5 481.9 86.9 490 106 490h299.9c19 0 37.4-8.1 51.8-22.8 13.6-13.9 22.8-32.4 26.6-53.5l26.3-147.8c4.7-26.7-2-54.1-18.1-73.3zM116.5 40h62c4.6 0 8.9 2 12 5.3l40.8 45.6c10 11.1 24.2 17.5 39.1 17.5h124.9c21.3 0 38.7 17.3 38.7 38.7v22.2H77.8V78.6c0-21.3 17.3-38.7 38.7-38.7zm354.6 218.9l-26.3 147.8c-4.5 25.1-20.9 43.3-39 43.3H106c-18.2 0-34.6-18.2-39-43.3L40.9 258.9c-2.6-14.9 1-30.5 9.4-40.5 3.4-4.1 9.1-8.9 16.7-8.9h378.1c7.6 0 13.3 4.9 16.7 8.9 8.4 10.1 12 25.6 9.4 40.6z" id="Layer_1-2"></path></svg>
+              </span>
+             <!---->
+     Stock Received
+<!----><!---->      </a>
+    </li>
+
+
+    <li class="divider"></li><li id="ember423" class="ember-view nav-item">
+      <a id="ember424" class="ember-view nav-link" href="#/reports">
+<!---->          
+              <span id="f066bef6-f584-4831-a8aa-56d389ac4131" class="position-relative" tabindex="0" aria-describedby="f1ef2acb-44ce-487f-93ca-9cb5f294694e">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 459.1 512" class="icon lpanel"><g id="Layer_1-2"><path d="M382.4 412.6c11 0 20-9 20-20V20c0-11-9-20-20-20s-20 9-20 20v372.6c0 11 9 20 20 20zM77.7 412.6c11 0 20-9 20-20V256c0-11-9-20-20-20s-20 9-20 20v136.6c0 11 9 20 20 20zM229.1 412.6c11 0 20-9 20-20V133.9c0-11-9-20-20-20s-20 9-20 20v258.6c0 11 9 20 20 20zM439.1 472H20c-11 0-20 9-20 20s9 20 20 20h419.1c11 0 20-9 20-20s-9-20-20-20z"></path></g></svg>
+              </span>
+             <!---->
+        Reports
+<!----><!---->      </a>
+    </li>
+  </ul><!----></nav>
+                     <!----> <!----><!---->
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+						<!--begin::Toolbar-->
+					
+						<!--end::Toolbar-->
+						<!--begin::Post-->
+						<div class="post d-flex flex-column-fluid" id="kt_post" >
+							<!--begin::Container-->
+							<div id="kt_content_container" class="container-xxl">
+								<!--begin::Card-->
+								
+								<!--end::Card-->
+								<!--begin::Card-->
+								<div class="card card-flush">
+									<!--begin::Card header-->
+									<div class="card-header pt-8">
+										<div class="card-title">
+											<!--begin::Search-->
+											<div class="d-flex align-items-center position-relative my-1">
+												<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+												<span class="svg-icon svg-icon-1 position-absolute ms-6">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+														<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+												<input type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Files &amp; Folders" />
+											</div>
+											<!--end::Search-->
+										</div>
+										<!--begin::Card toolbar-->
+										<div class="card-toolbar">
+											<!--begin::Toolbar-->
+											<div class="d-flex justify-content-end" data-kt-filemanager-table-toolbar="base">
+												<!--begin::Export-->
+												<button type="button" class="btn btn-light-primary me-3" id="kt_file_manager_new_folder" hidden>
+												<!--begin::Svg Icon | path: icons/duotune/files/fil013.svg-->
+												<span class="svg-icon svg-icon-2">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="black" />
+														<path d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.2C9.7 3 10.2 3.20001 10.4 3.60001ZM16 12H13V9C13 8.4 12.6 8 12 8C11.4 8 11 8.4 11 9V12H8C7.4 12 7 12.4 7 13C7 13.6 7.4 14 8 14H11V17C11 17.6 11.4 18 12 18C12.6 18 13 17.6 13 17V14H16C16.6 14 17 13.6 17 13C17 12.4 16.6 12 16 12Z" fill="black" />
+														<path opacity="0.3" d="M11 14H8C7.4 14 7 13.6 7 13C7 12.4 7.4 12 8 12H11V14ZM16 12H13V14H16C16.6 14 17 13.6 17 13C17 12.4 16.6 12 16 12Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->New Folder</button>
+												<!--end::Export-->
+												<!--begin::Add customer-->
+												<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_upload" hidden>
+												<!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
+												<span class="svg-icon svg-icon-2">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="black" />
+														<path d="M10.4 3.60001L12 6H21C21.6 6 22 6.4 22 7V19C22 19.6 21.6 20 21 20H3C2.4 20 2 19.6 2 19V4C2 3.4 2.4 3 3 3H9.20001C9.70001 3 10.2 3.20001 10.4 3.60001ZM16 11.6L12.7 8.29999C12.3 7.89999 11.7 7.89999 11.3 8.29999L8 11.6H11V17C11 17.6 11.4 18 12 18C12.6 18 13 17.6 13 17V11.6H16Z" fill="black" />
+														<path opacity="0.3" d="M11 11.6V17C11 17.6 11.4 18 12 18C12.6 18 13 17.6 13 17V11.6H11Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->Upload Files</button>
+												<!--end::Add customer-->
+											</div>
+											<!--end::Toolbar-->
+											<!--begin::Group actions-->
+											<div class="d-flex justify-content-end align-items-center d-none" data-kt-filemanager-table-toolbar="selected">
+												<div class="fw-bolder me-5">
+												<span class="me-2" data-kt-filemanager-table-select="selected_count"></span>Selected</div>
+												<button type="button" class="btn btn-danger" data-kt-filemanager-table-select="delete_selected">Delete Selected</button>
+											</div>
+											<!--end::Group actions-->
+										</div>
+										<!--end::Card toolbar-->
+									</div>
+									<!--end::Card header-->
+									<!--begin::Card body-->
+								<div class="card-body">
+										<!--begin::Table header-->
+										<div class="d-flex flex-stack">
+											<!--begin::Folder path-->
+											<div class="badge badge-lg badge-light-primary">
+												<div class="d-flex align-items-center flex-wrap">
+												<!--begin::Svg Icon | path: icons/duotune/abstract/abs039.svg-->
+												<span class="svg-icon svg-icon-2 svg-icon-primary me-3">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M14.1 15.013C14.6 16.313 14.5 17.813 13.7 19.113C12.3 21.513 9.29999 22.313 6.89999 20.913C5.29999 20.013 4.39999 18.313 4.39999 16.613C5.09999 17.013 5.99999 17.313 6.89999 17.313C8.39999 17.313 9.69998 16.613 10.7 15.613C11.1 15.713 11.5 15.813 11.9 15.813C12.7 15.813 13.5 15.513 14.1 15.013ZM8.5 12.913C8.5 12.713 8.39999 12.513 8.39999 12.313C8.39999 11.213 8.89998 10.213 9.69998 9.613C9.19998 8.313 9.30001 6.813 10.1 5.513C10.6 4.713 11.2 4.11299 11.9 3.71299C10.4 2.81299 8.49999 2.71299 6.89999 3.71299C4.49999 5.11299 3.70001 8.113 5.10001 10.513C5.80001 11.813 7.1 12.613 8.5 12.913ZM16.9 7.313C15.4 7.313 14.1 8.013 13.1 9.013C14.3 9.413 15.1 10.513 15.3 11.713C16.7 12.013 17.9 12.813 18.7 14.113C19.2 14.913 19.3 15.713 19.3 16.613C20.8 15.713 21.8 14.113 21.8 12.313C21.9 9.513 19.7 7.313 16.9 7.313Z" fill="black" />
+														<path d="M9.69998 9.61307C9.19998 8.31307 9.30001 6.81306 10.1 5.51306C11.5 3.11306 14.5 2.31306 16.9 3.71306C18.5 4.61306 19.4 6.31306 19.4 8.01306C18.7 7.61306 17.8 7.31306 16.9 7.31306C15.4 7.31306 14.1 8.01306 13.1 9.01306C12.7 8.91306 12.3 8.81306 11.9 8.81306C11.1 8.81306 10.3 9.11307 9.69998 9.61307ZM8.5 12.9131C7.1 12.6131 5.90001 11.8131 5.10001 10.5131C4.60001 9.71306 4.5 8.91306 4.5 8.01306C3 8.91306 2 10.5131 2 12.3131C2 15.1131 4.2 17.3131 7 17.3131C8.5 17.3131 9.79999 16.6131 10.8 15.6131C9.49999 15.1131 8.7 14.1131 8.5 12.9131ZM18.7 14.1131C17.9 12.8131 16.7 12.0131 15.3 11.7131C15.3 11.9131 15.4 12.1131 15.4 12.3131C15.4 13.4131 14.9 14.4131 14.1 15.0131C14.6 16.3131 14.5 17.8131 13.7 19.1131C13.2 19.9131 12.6 20.5131 11.9 20.9131C13.4 21.8131 15.3 21.9131 16.9 20.9131C19.3 19.6131 20.1 16.5131 18.7 14.1131Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+											<a href="/folderReg">Select</a>		<!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
+												
+											
+	</div>
+											</div>
+											<!--end::Folder path-->
+											<!--begin::Folder Stats-->
+											
+											<!--end::Folder Stats-->
+										</div>
+										<!--end::Table header-->
+										<!--begin::Table-->
+										<table id="kt_file_manager_list" data-kt-filemanager-table="folders" class="table align-middle table-row-dashed fs-6 gy-5">
+											<!--begin::Table head-->
+											<thead>
+												<!--begin::Table row-->
+												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+													<th class="w-10px pe-2">
+														<div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+															<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_file_manager_list .form-check-input" value="1" />
+														</div>
+													</th>
+													<th class="min-w-250px">Name</th>
+													<th class="min-w-10px">Size</th>
+													<th class="min-w-125px">Last Modified</th>
+													<th class="w-125px"></th>
+												</tr>
+												<!--end::Table row-->
+											</thead>
+											<!--end::Table head-->
+											<!--begin::Table body-->
+											<tbody class="fw-bold text-gray-600">
+												
+												<tr>
+													<!--begin::Checkbox-->
+													<td>
+														<div class="form-check form-check-sm form-check-custom form-check-solid">
+															<input class="form-check-input" type="checkbox" value="1" />
+														</div>
+													</td>
+													<!--end::Checkbox-->
+													<!--begin::Name=-->
+													<td data-order="account">
+														<div class="d-flex align-items-center">
+															<!--begin::Svg Icon | path: icons/duotune/files/fil012.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-primary me-4">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="black" />
+																	<path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="black" />
+																</svg>
+															</span>
+															<!--end::Svg Icon
+															<a href="/teacher/typeFolderClassMonthlyRegFiles/" class="text-gray-800 text-hover-primary">Monthly</a>-->
+															<a href="/selectMonth/" class="text-gray-800 text-hover-primary">Receiving</a>
+														</div>
+													</td>
+													<!--end::Name=-->
+													<!--begin::Size-->
+													<td>-</td>
+													<!--end::Size-->
+													<!--begin::Last modified-->
+													<td>-</td>
+													<!--end::Last modified-->
+													<!--begin::Actions-->
+													<td class="text-end" data-kt-filemanager-table="action_dropdown">
+														<div class="d-flex justify-content-end">
+															<!--begin::Share link-->
+															<div class="ms-2" data-kt-filemanger-table="copy_link">
+																<button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+																	<!--begin::Svg Icon | path: icons/duotune/coding/cod007.svg-->
+																	<span class="svg-icon svg-icon-5 m-0">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																			<path opacity="0.3" d="M18.4 5.59998C18.7766 5.9772 18.9881 6.48846 18.9881 7.02148C18.9881 7.55451 18.7766 8.06577 18.4 8.44299L14.843 12C14.466 12.377 13.9547 12.5887 13.4215 12.5887C12.8883 12.5887 12.377 12.377 12 12C11.623 11.623 11.4112 11.1117 11.4112 10.5785C11.4112 10.0453 11.623 9.53399 12 9.15698L15.553 5.604C15.9302 5.22741 16.4415 5.01587 16.9745 5.01587C17.5075 5.01587 18.0188 5.22741 18.396 5.604L18.4 5.59998ZM20.528 3.47205C20.0614 3.00535 19.5074 2.63503 18.8977 2.38245C18.288 2.12987 17.6344 1.99988 16.9745 1.99988C16.3145 1.99988 15.661 2.12987 15.0513 2.38245C14.4416 2.63503 13.8876 3.00535 13.421 3.47205L9.86801 7.02502C9.40136 7.49168 9.03118 8.04568 8.77863 8.6554C8.52608 9.26511 8.39609 9.91855 8.39609 10.5785C8.39609 11.2384 8.52608 11.8919 8.77863 12.5016C9.03118 13.1113 9.40136 13.6653 9.86801 14.132C10.3347 14.5986 10.8886 14.9688 11.4984 15.2213C12.1081 15.4739 12.7616 15.6039 13.4215 15.6039C14.0815 15.6039 14.7349 15.4739 15.3446 15.2213C15.9543 14.9688 16.5084 14.5986 16.975 14.132L20.528 10.579C20.9947 10.1124 21.3649 9.55844 21.6175 8.94873C21.8701 8.33902 22.0001 7.68547 22.0001 7.02551C22.0001 6.36555 21.8701 5.71201 21.6175 5.10229C21.3649 4.49258 20.9947 3.93867 20.528 3.47205Z" fill="black" />
+																			<path d="M14.132 9.86804C13.6421 9.37931 13.0561 8.99749 12.411 8.74695L12 9.15698C11.6234 9.53421 11.4119 10.0455 11.4119 10.5785C11.4119 11.1115 11.6234 11.6228 12 12C12.3766 12.3772 12.5881 12.8885 12.5881 13.4215C12.5881 13.9545 12.3766 14.4658 12 14.843L8.44699 18.396C8.06999 18.773 7.55868 18.9849 7.02551 18.9849C6.49235 18.9849 5.98101 18.773 5.604 18.396C5.227 18.019 5.0152 17.5077 5.0152 16.9745C5.0152 16.4413 5.227 15.93 5.604 15.553L8.74701 12.411C8.28705 11.233 8.28705 9.92498 8.74701 8.74695C8.10159 8.99737 7.5152 9.37919 7.02499 9.86804L3.47198 13.421C2.52954 14.3635 2.00009 15.6417 2.00009 16.9745C2.00009 18.3073 2.52957 19.5855 3.47202 20.528C4.41446 21.4704 5.69269 21.9999 7.02551 21.9999C8.35833 21.9999 9.63656 21.4704 10.579 20.528L14.132 16.975C14.5987 16.5084 14.9689 15.9544 15.2215 15.3447C15.4741 14.735 15.6041 14.0815 15.6041 13.4215C15.6041 12.7615 15.4741 12.108 15.2215 11.4983C14.9689 10.8886 14.5987 10.3347 14.132 9.86804Z" fill="black" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</button>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-300px" data-kt-menu="true">
+																	<!--begin::Card-->
+																	<div class="card card-flush">
+																		<div class="card-body p-5">
+																			<!--begin::Loader-->
+																			<div class="d-flex" data-kt-filemanger-table="copy_link_generator">
+																				<!--begin::Spinner-->
+																				<div class="me-5" data-kt-indicator="on">
+																					<span class="indicator-progress">
+																						<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+																					</span>
+																				</div>
+																				<!--end::Spinner-->
+																				<!--begin::Label-->
+																				<div class="fs-6 text-dark">Generating Share Link...</div>
+																				<!--end::Label-->
+																			</div>
+																			<!--end::Loader-->
+																			<!--begin::Link-->
+																			<div class="d-flex flex-column text-start d-none" data-kt-filemanger-table="copy_link_result">
+																				<div class="d-flex mb-3">
+																					<!--begin::Svg Icon | path: icons/duotune/arrows/arr085.svg-->
+																					<span class="svg-icon svg-icon-2 svg-icon-success me-3">
+																						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																							<path d="M9.89557 13.4982L7.79487 11.2651C7.26967 10.7068 6.38251 10.7068 5.85731 11.2651C5.37559 11.7772 5.37559 12.5757 5.85731 13.0878L9.74989 17.2257C10.1448 17.6455 10.8118 17.6455 11.2066 17.2257L18.1427 9.85252C18.6244 9.34044 18.6244 8.54191 18.1427 8.02984C17.6175 7.47154 16.7303 7.47154 16.2051 8.02984L11.061 13.4982C10.7451 13.834 10.2115 13.834 9.89557 13.4982Z" fill="black" />
+																						</svg>
+																					</span>
+																					<!--end::Svg Icon-->
+																					<div class="fs-6 text-dark">Share Link Generated</div>
+																				</div>
+																				<input type="text" class="form-control form-control-sm" value="https://path/to/file/or/folder/" />
+																				<div class="text-muted fw-normal mt-2 fs-8 px-3">Read only.
+																				<a href="../../demo1/dist/apps/file-manager/settings/.html" class="ms-2">Change permissions</a></div>
+																			</div>
+																			<!--end::Link-->
+																		</div>
+																	</div>
+																	<!--end::Card-->
+																</div>
+																<!--end::Menu-->
+																<!--end::Share link-->
+															</div>
+															<!--begin::More-->
+															<div class="ms-2">
+																<button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+																	<!--begin::Svg Icon | path: icons/duotune/general/gen052.svg-->
+																	<span class="svg-icon svg-icon-5 m-0">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																			<rect x="10" y="10" width="4" height="4" rx="2" fill="black" />
+																			<rect x="17" y="10" width="4" height="4" rx="2" fill="black" />
+																			<rect x="3" y="10" width="4" height="4" rx="2" fill="black" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</button>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4" data-kt-menu="true">
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="../../demo1/dist/apps/file-manager/files.html" class="menu-link px-3">View</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link px-3" data-kt-filemanager-table="rename">Rename</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link px-3">Download Folder</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link px-3" data-kt-filemanager-table-filter="move_row" data-bs-toggle="modal" data-bs-target="#kt_modal_move_to_folder">Move to folder</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link text-danger px-3" data-kt-filemanager-table-filter="delete_row">Delete</a>
+																	</div>
+																	<!--end::Menu item-->
+																</div>
+																<!--end::Menu-->
+																<!--end::More-->
+															</div>
+														</div>
+													</td>
+													<!--end::Actions-->
+												</tr>
+										
+													<tr>
+													<!--begin::Checkbox-->
+													<td>
+														<div class="form-check form-check-sm form-check-custom form-check-solid">
+															<input class="form-check-input" type="checkbox" value="1" />
+														</div>
+													</td>
+													<!--end::Checkbox-->
+													<!--begin::Name=-->
+													<td data-order="account">
+														<div class="d-flex align-items-center">
+															<!--begin::Svg Icon | path: icons/duotune/files/fil012.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-primary me-4">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="black" />
+																	<path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="black" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<a href="/selectMonthDispatch/" class="text-gray-800 text-hover-primary">Dispatch</a>
+														</div>
+													</td>
+													<!--end::Name=-->
+													<!--begin::Size-->
+													<td>-</td>
+													<!--end::Size-->
+													<!--begin::Last modified-->
+													<td>-</td>
+													<!--end::Last modified-->
+													<!--begin::Actions-->
+													<td class="text-end" data-kt-filemanager-table="action_dropdown">
+														<div class="d-flex justify-content-end">
+															<!--begin::Share link-->
+															<div class="ms-2" data-kt-filemanger-table="copy_link">
+																<button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+																	<!--begin::Svg Icon | path: icons/duotune/coding/cod007.svg-->
+																	<span class="svg-icon svg-icon-5 m-0">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																			<path opacity="0.3" d="M18.4 5.59998C18.7766 5.9772 18.9881 6.48846 18.9881 7.02148C18.9881 7.55451 18.7766 8.06577 18.4 8.44299L14.843 12C14.466 12.377 13.9547 12.5887 13.4215 12.5887C12.8883 12.5887 12.377 12.377 12 12C11.623 11.623 11.4112 11.1117 11.4112 10.5785C11.4112 10.0453 11.623 9.53399 12 9.15698L15.553 5.604C15.9302 5.22741 16.4415 5.01587 16.9745 5.01587C17.5075 5.01587 18.0188 5.22741 18.396 5.604L18.4 5.59998ZM20.528 3.47205C20.0614 3.00535 19.5074 2.63503 18.8977 2.38245C18.288 2.12987 17.6344 1.99988 16.9745 1.99988C16.3145 1.99988 15.661 2.12987 15.0513 2.38245C14.4416 2.63503 13.8876 3.00535 13.421 3.47205L9.86801 7.02502C9.40136 7.49168 9.03118 8.04568 8.77863 8.6554C8.52608 9.26511 8.39609 9.91855 8.39609 10.5785C8.39609 11.2384 8.52608 11.8919 8.77863 12.5016C9.03118 13.1113 9.40136 13.6653 9.86801 14.132C10.3347 14.5986 10.8886 14.9688 11.4984 15.2213C12.1081 15.4739 12.7616 15.6039 13.4215 15.6039C14.0815 15.6039 14.7349 15.4739 15.3446 15.2213C15.9543 14.9688 16.5084 14.5986 16.975 14.132L20.528 10.579C20.9947 10.1124 21.3649 9.55844 21.6175 8.94873C21.8701 8.33902 22.0001 7.68547 22.0001 7.02551C22.0001 6.36555 21.8701 5.71201 21.6175 5.10229C21.3649 4.49258 20.9947 3.93867 20.528 3.47205Z" fill="black" />
+																			<path d="M14.132 9.86804C13.6421 9.37931 13.0561 8.99749 12.411 8.74695L12 9.15698C11.6234 9.53421 11.4119 10.0455 11.4119 10.5785C11.4119 11.1115 11.6234 11.6228 12 12C12.3766 12.3772 12.5881 12.8885 12.5881 13.4215C12.5881 13.9545 12.3766 14.4658 12 14.843L8.44699 18.396C8.06999 18.773 7.55868 18.9849 7.02551 18.9849C6.49235 18.9849 5.98101 18.773 5.604 18.396C5.227 18.019 5.0152 17.5077 5.0152 16.9745C5.0152 16.4413 5.227 15.93 5.604 15.553L8.74701 12.411C8.28705 11.233 8.28705 9.92498 8.74701 8.74695C8.10159 8.99737 7.5152 9.37919 7.02499 9.86804L3.47198 13.421C2.52954 14.3635 2.00009 15.6417 2.00009 16.9745C2.00009 18.3073 2.52957 19.5855 3.47202 20.528C4.41446 21.4704 5.69269 21.9999 7.02551 21.9999C8.35833 21.9999 9.63656 21.4704 10.579 20.528L14.132 16.975C14.5987 16.5084 14.9689 15.9544 15.2215 15.3447C15.4741 14.735 15.6041 14.0815 15.6041 13.4215C15.6041 12.7615 15.4741 12.108 15.2215 11.4983C14.9689 10.8886 14.5987 10.3347 14.132 9.86804Z" fill="black" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</button>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-300px" data-kt-menu="true">
+																	<!--begin::Card-->
+																	<div class="card card-flush">
+																		<div class="card-body p-5">
+																			<!--begin::Loader-->
+																			<div class="d-flex" data-kt-filemanger-table="copy_link_generator">
+																				<!--begin::Spinner-->
+																				<div class="me-5" data-kt-indicator="on">
+																					<span class="indicator-progress">
+																						<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+																					</span>
+																				</div>
+																				<!--end::Spinner-->
+																				<!--begin::Label-->
+																				<div class="fs-6 text-dark">Generating Share Link...</div>
+																				<!--end::Label-->
+																			</div>
+																			<!--end::Loader-->
+																			<!--begin::Link-->
+																			<div class="d-flex flex-column text-start d-none" data-kt-filemanger-table="copy_link_result">
+																				<div class="d-flex mb-3">
+																					<!--begin::Svg Icon | path: icons/duotune/arrows/arr085.svg-->
+																					<span class="svg-icon svg-icon-2 svg-icon-success me-3">
+																						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																							<path d="M9.89557 13.4982L7.79487 11.2651C7.26967 10.7068 6.38251 10.7068 5.85731 11.2651C5.37559 11.7772 5.37559 12.5757 5.85731 13.0878L9.74989 17.2257C10.1448 17.6455 10.8118 17.6455 11.2066 17.2257L18.1427 9.85252C18.6244 9.34044 18.6244 8.54191 18.1427 8.02984C17.6175 7.47154 16.7303 7.47154 16.2051 8.02984L11.061 13.4982C10.7451 13.834 10.2115 13.834 9.89557 13.4982Z" fill="black" />
+																						</svg>
+																					</span>
+																					<!--end::Svg Icon-->
+																					<div class="fs-6 text-dark">Share Link Generated</div>
+																				</div>
+																				<input type="text" class="form-control form-control-sm" value="https://path/to/file/or/folder/" />
+																				<div class="text-muted fw-normal mt-2 fs-8 px-3">Read only.
+																				<a href="../../demo1/dist/apps/file-manager/settings/.html" class="ms-2">Change permissions</a></div>
+																			</div>
+																			<!--end::Link-->
+																		</div>
+																	</div>
+																	<!--end::Card-->
+																</div>
+																<!--end::Menu-->
+																<!--end::Share link-->
+															</div>
+															<!--begin::More-->
+															<div class="ms-2">
+																<button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary me-2" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+																	<!--begin::Svg Icon | path: icons/duotune/general/gen052.svg-->
+																	<span class="svg-icon svg-icon-5 m-0">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																			<rect x="10" y="10" width="4" height="4" rx="2" fill="black" />
+																			<rect x="17" y="10" width="4" height="4" rx="2" fill="black" />
+																			<rect x="3" y="10" width="4" height="4" rx="2" fill="black" />
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																</button>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4" data-kt-menu="true">
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="../../demo1/dist/apps/file-manager/files.html" class="menu-link px-3">View</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link px-3" data-kt-filemanager-table="rename">Rename</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link px-3">Download Folder</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link px-3" data-kt-filemanager-table-filter="move_row" data-bs-toggle="modal" data-bs-target="#kt_modal_move_to_folder">Move to folder</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="#" class="menu-link text-danger px-3" data-kt-filemanager-table-filter="delete_row">Delete</a>
+																	</div>
+																	<!--end::Menu item-->
+																</div>
+																<!--end::Menu-->
+																<!--end::More-->
+															</div>
+														</div>
+													</td>
+													<!--end::Actions-->
+												</tr>
+													<!--end::Actions-->
+													
+													<!--end::Actions-->
+													
+											</tbody>
+											<!--end::Table body-->
+										</table>
+										<!--end::Table-->
+									</div>
+									<!--end::Card body-->
+								</div>
+								<!--end::Card-->
+								<!--begin::Upload template-->
+								<table class="d-none">
+									<tr id="kt_file_manager_new_folder_row" data-kt-filemanager-template="upload">
+										<td></td>
+										<td id="kt_file_manager_add_folder_form" class="fv-row">
+											<div class="d-flex align-items-center">
+												<!--begin::Folder icon-->
+												<!--begin::Svg Icon | path: icons/duotune/files/fil012.svg-->
+												<span class="svg-icon svg-icon-2x svg-icon-primary me-4">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M10 4H21C21.6 4 22 4.4 22 5V7H10V4Z" fill="black" />
+														<path d="M9.2 3H3C2.4 3 2 3.4 2 4V19C2 19.6 2.4 20 3 20H21C21.6 20 22 19.6 22 19V7C22 6.4 21.6 6 21 6H12L10.4 3.60001C10.2 3.20001 9.7 3 9.2 3Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+												<!--end::Folder icon-->
+												<!--begin:Input-->
+												<input type="text" name="new_folder_name" placeholder="Enter the folder name" class="form-control mw-250px me-3" />
+												<!--end:Input-->
+												<!--begin:Submit button-->
+												<button class="btn btn-icon btn-light-primary me-3" id="kt_file_manager_add_folder">
+													<span class="indicator-label">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr085.svg-->
+														<span class="svg-icon svg-icon-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<path d="M9.89557 13.4982L7.79487 11.2651C7.26967 10.7068 6.38251 10.7068 5.85731 11.2651C5.37559 11.7772 5.37559 12.5757 5.85731 13.0878L9.74989 17.2257C10.1448 17.6455 10.8118 17.6455 11.2066 17.2257L18.1427 9.85252C18.6244 9.34044 18.6244 8.54191 18.1427 8.02984C17.6175 7.47154 16.7303 7.47154 16.2051 8.02984L11.061 13.4982C10.7451 13.834 10.2115 13.834 9.89557 13.4982Z" fill="black" />
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</span>
+													<span class="indicator-progress">
+														<span class="spinner-border spinner-border-sm align-middle"></span>
+													</span>
+												</button>
+												<!--end:Submit button-->
+												<!--begin:Cancel button-->
+												<button class="btn btn-icon btn-light-danger" id="kt_file_manager_cancel_folder">
+													<span class="indicator-label">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
+														<span class="svg-icon svg-icon-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="black" />
+																<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="black" />
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</span>
+													<span class="indicator-progress">
+														<span class="spinner-border spinner-border-sm align-middle"></span>
+													</span>
+												</button>
+												<!--end:Cancel button-->
+											</div>
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</table>
+								<!--end::Upload template-->
+								<!--begin::Rename template-->
+								<div class="d-none" data-kt-filemanager-template="rename">
+									<div class="fv-row">
+										<div class="d-flex align-items-center">
+											<span id="kt_file_manager_rename_folder_icon"></span>
+											<input type="text" id="kt_file_manager_rename_input" name="rename_folder_name" placeholder="Enter the new folder name" class="form-control mw-250px me-3" value="" />
+											<button class="btn btn-icon btn-light-primary me-3" id="kt_file_manager_rename_folder">
+												<!--begin::Svg Icon | path: icons/duotune/arrows/arr085.svg-->
+												<span class="svg-icon svg-icon-1">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path d="M9.89557 13.4982L7.79487 11.2651C7.26967 10.7068 6.38251 10.7068 5.85731 11.2651C5.37559 11.7772 5.37559 12.5757 5.85731 13.0878L9.74989 17.2257C10.1448 17.6455 10.8118 17.6455 11.2066 17.2257L18.1427 9.85252C18.6244 9.34044 18.6244 8.54191 18.1427 8.02984C17.6175 7.47154 16.7303 7.47154 16.2051 8.02984L11.061 13.4982C10.7451 13.834 10.2115 13.834 9.89557 13.4982Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+											</button>
+											<button class="btn btn-icon btn-light-danger" id="kt_file_manager_rename_folder_cancel">
+												<span class="indicator-label">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
+													<span class="svg-icon svg-icon-1">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="black" />
+															<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="black" />
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+												</span>
+												<span class="indicator-progress">
+													<span class="spinner-border spinner-border-sm align-middle"></span>
+												</span>
+											</button>
+										</div>
+									</div>
+								</div>
+								<!--end::Rename template-->
+								<!--begin::Action template-->
+								<div class="d-none" data-kt-filemanager-template="action">
+									<div class="d-flex justify-content-end">
+										<!--begin::Share link-->
+										<div class="ms-2" data-kt-filemanger-table="copy_link">
+											<button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+												<!--begin::Svg Icon | path: icons/duotune/coding/cod007.svg-->
+												<span class="svg-icon svg-icon-5 m-0">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M18.4 5.59998C18.7766 5.9772 18.9881 6.48846 18.9881 7.02148C18.9881 7.55451 18.7766 8.06577 18.4 8.44299L14.843 12C14.466 12.377 13.9547 12.5887 13.4215 12.5887C12.8883 12.5887 12.377 12.377 12 12C11.623 11.623 11.4112 11.1117 11.4112 10.5785C11.4112 10.0453 11.623 9.53399 12 9.15698L15.553 5.604C15.9302 5.22741 16.4415 5.01587 16.9745 5.01587C17.5075 5.01587 18.0188 5.22741 18.396 5.604L18.4 5.59998ZM20.528 3.47205C20.0614 3.00535 19.5074 2.63503 18.8977 2.38245C18.288 2.12987 17.6344 1.99988 16.9745 1.99988C16.3145 1.99988 15.661 2.12987 15.0513 2.38245C14.4416 2.63503 13.8876 3.00535 13.421 3.47205L9.86801 7.02502C9.40136 7.49168 9.03118 8.04568 8.77863 8.6554C8.52608 9.26511 8.39609 9.91855 8.39609 10.5785C8.39609 11.2384 8.52608 11.8919 8.77863 12.5016C9.03118 13.1113 9.40136 13.6653 9.86801 14.132C10.3347 14.5986 10.8886 14.9688 11.4984 15.2213C12.1081 15.4739 12.7616 15.6039 13.4215 15.6039C14.0815 15.6039 14.7349 15.4739 15.3446 15.2213C15.9543 14.9688 16.5084 14.5986 16.975 14.132L20.528 10.579C20.9947 10.1124 21.3649 9.55844 21.6175 8.94873C21.8701 8.33902 22.0001 7.68547 22.0001 7.02551C22.0001 6.36555 21.8701 5.71201 21.6175 5.10229C21.3649 4.49258 20.9947 3.93867 20.528 3.47205Z" fill="black" />
+														<path d="M14.132 9.86804C13.6421 9.37931 13.0561 8.99749 12.411 8.74695L12 9.15698C11.6234 9.53421 11.4119 10.0455 11.4119 10.5785C11.4119 11.1115 11.6234 11.6228 12 12C12.3766 12.3772 12.5881 12.8885 12.5881 13.4215C12.5881 13.9545 12.3766 14.4658 12 14.843L8.44699 18.396C8.06999 18.773 7.55868 18.9849 7.02551 18.9849C6.49235 18.9849 5.98101 18.773 5.604 18.396C5.227 18.019 5.0152 17.5077 5.0152 16.9745C5.0152 16.4413 5.227 15.93 5.604 15.553L8.74701 12.411C8.28705 11.233 8.28705 9.92498 8.74701 8.74695C8.10159 8.99737 7.5152 9.37919 7.02499 9.86804L3.47198 13.421C2.52954 14.3635 2.00009 15.6417 2.00009 16.9745C2.00009 18.3073 2.52957 19.5855 3.47202 20.528C4.41446 21.4704 5.69269 21.9999 7.02551 21.9999C8.35833 21.9999 9.63656 21.4704 10.579 20.528L14.132 16.975C14.5987 16.5084 14.9689 15.9544 15.2215 15.3447C15.4741 14.735 15.6041 14.0815 15.6041 13.4215C15.6041 12.7615 15.4741 12.108 15.2215 11.4983C14.9689 10.8886 14.5987 10.3347 14.132 9.86804Z" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+											</button>
+											<!--begin::Menu-->
+											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-300px" data-kt-menu="true">
+												<!--begin::Card-->
+												<div class="card card-flush">
+													<div class="card-body p-5">
+														<!--begin::Loader-->
+														<div class="d-flex" data-kt-filemanger-table="copy_link_generator">
+															<!--begin::Spinner-->
+															<div class="me-5" data-kt-indicator="on">
+																<span class="indicator-progress">
+																	<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+																</span>
+															</div>
+															<!--end::Spinner-->
+															<!--begin::Label-->
+															<div class="fs-6 text-dark">Generating Share Link...</div>
+															<!--end::Label-->
+														</div>
+														<!--end::Loader-->
+														<!--begin::Link-->
+														<div class="d-flex flex-column text-start d-none" data-kt-filemanger-table="copy_link_result">
+															<div class="d-flex mb-3">
+																<!--begin::Svg Icon | path: icons/duotune/arrows/arr085.svg-->
+																<span class="svg-icon svg-icon-2 svg-icon-success me-3">
+																	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																		<path d="M9.89557 13.4982L7.79487 11.2651C7.26967 10.7068 6.38251 10.7068 5.85731 11.2651C5.37559 11.7772 5.37559 12.5757 5.85731 13.0878L9.74989 17.2257C10.1448 17.6455 10.8118 17.6455 11.2066 17.2257L18.1427 9.85252C18.6244 9.34044 18.6244 8.54191 18.1427 8.02984C17.6175 7.47154 16.7303 7.47154 16.2051 8.02984L11.061 13.4982C10.7451 13.834 10.2115 13.834 9.89557 13.4982Z" fill="black" />
+																	</svg>
+																</span>
+																<!--end::Svg Icon-->
+																<div class="fs-6 text-dark">Share Link Generated</div>
+															</div>
+															<input type="text" class="form-control form-control-sm" value="https://path/to/file/or/folder/" />
+															<div class="text-muted fw-normal mt-2 fs-8 px-3">Read only.
+															<a href="../../demo1/dist/apps/file-manager/settings/.html" class="ms-2">Change permissions</a></div>
+														</div>
+														<!--end::Link-->
+													</div>
+												</div>
+												<!--end::Card-->
+											</div>
+											<!--end::Menu-->
+										</div>
+										<!--end::Share link-->
+										<!--begin::More-->
+										<div class="ms-2">
+											<button type="button" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+												<!--begin::Svg Icon | path: icons/duotune/general/gen052.svg-->
+												<span class="svg-icon svg-icon-5 m-0">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<rect x="10" y="10" width="4" height="4" rx="2" fill="black" />
+														<rect x="17" y="10" width="4" height="4" rx="2" fill="black" />
+														<rect x="3" y="10" width="4" height="4" rx="2" fill="black" />
+													</svg>
+												</span>
+												<!--end::Svg Icon-->
+											</button>
+											<!--begin::Menu-->
+											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-150px py-4" data-kt-menu="true">
+												<!--begin::Menu item-->
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link px-3">Download File</a>
+												</div>
+												<!--end::Menu item-->
+												<!--begin::Menu item-->
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link px-3" data-kt-filemanager-table="rename">Rename</a>
+												</div>
+												<!--end::Menu item-->
+												<!--begin::Menu item-->
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link px-3" data-kt-filemanager-table-filter="move_row" data-bs-toggle="modal" data-bs-target="#kt_modal_move_to_folder">Move to folder</a>
+												</div>
+												<!--end::Menu item-->
+												<!--begin::Menu item-->
+												<div class="menu-item px-3">
+													<a href="#" class="menu-link text-danger px-3" data-kt-filemanager-table-filter="delete_row">Delete</a>
+												</div>
+												<!--end::Menu item-->
+											</div>
+											<!--end::Menu-->
+										</div>
+										<!--end::More-->
+									</div>
+								</div>
+								<!--end::Action template-->
+								<!--begin::Checkbox template-->
+								<div class="d-none" data-kt-filemanager-template="checkbox">
+									<div class="form-check form-check-sm form-check-custom form-check-solid">
+										<input class="form-check-input" type="checkbox" value="1" />
+									</div>
+								</div>
+								<!--end::Checkbox template-->
+								<!--begin::Modals-->
+								<!--begin::Modal - Upload File-->
+								<div class="modal fade" id="kt_modal_upload" tabindex="-1" aria-hidden="true">
+									<!--begin::Modal dialog-->
+									<div class="modal-dialog modal-dialog-centered mw-650px">
+										<!--begin::Modal content-->
+										<div class="modal-content">
+											<!--begin::Form-->
+											<form class="form" action="none" id="kt_modal_upload_form">
+												<!--begin::Modal header-->
+												<div class="modal-header">
+													<!--begin::Modal title-->
+													<h2 class="fw-bolder">Upload files</h2>
+													<!--end::Modal title-->
+													<!--begin::Close-->
+													<div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+														<span class="svg-icon svg-icon-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black" />
+																<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black" />
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</div>
+													<!--end::Close-->
+												</div>
+												<!--end::Modal header-->
+												<!--begin::Modal body-->
+												<div class="modal-body pt-10 pb-15 px-lg-17">
+													<!--begin::Input group-->
+													<div class="form-group">
+														<!--begin::Dropzone-->
+														<div class="dropzone dropzone-queue mb-2" id="kt_modal_upload_dropzone">
+															<!--begin::Controls-->
+															<div class="dropzone-panel mb-4">
+																<a class="dropzone-select btn btn-sm btn-primary me-2">Attach files</a>
+																<a class="dropzone-upload btn btn-sm btn-light-primary me-2">Upload All</a>
+																<a class="dropzone-remove-all btn btn-sm btn-light-primary">Remove All</a>
+															</div>
+															<!--end::Controls-->
+															<!--begin::Items-->
+															<div class="dropzone-items wm-200px">
+																<div class="dropzone-item p-5" style="display:none">
+																	<!--begin::File-->
+																	<div class="dropzone-file">
+																		<div class="dropzone-filename text-dark" title="some_image_file_name.jpg">
+																			<span data-dz-name="">some_image_file_name.jpg</span>
+																			<strong>(
+																			<span data-dz-size="">340kb</span>)</strong>
+																		</div>
+																		<div class="dropzone-error mt-0" data-dz-errormessage=""></div>
+																	</div>
+																	<!--end::File-->
+																	<!--begin::Progress-->
+																	<div class="dropzone-progress">
+																		<div class="progress bg-light-primary">
+																			<div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress=""></div>
+																		</div>
+																	</div>
+																	<!--end::Progress-->
+																	<!--begin::Toolbar-->
+																	<div class="dropzone-toolbar">
+																		<span class="dropzone-start">
+																			<i class="bi bi-play-fill fs-3"></i>
+																		</span>
+																		<span class="dropzone-cancel" data-dz-remove="" style="display: none;">
+																			<i class="bi bi-x fs-3"></i>
+																		</span>
+																		<span class="dropzone-delete" data-dz-remove="">
+																			<i class="bi bi-x fs-1"></i>
+																		</span>
+																	</div>
+																	<!--end::Toolbar-->
+																</div>
+															</div>
+															<!--end::Items-->
+														</div>
+														<!--end::Dropzone-->
+														<!--begin::Hint-->
+														<span class="form-text fs-6 text-muted">Max file size is 1MB per file.</span>
+														<!--end::Hint-->
+													</div>
+													<!--end::Input group-->
+												</div>
+												<!--end::Modal body-->
+											</form>
+											<!--end::Form-->
+										</div>
+									</div>
+								</div>
+								<!--end::Modal - Upload File-->
+								<!--begin::Modal - New Product-->
+							
+					<!--end::Content-->
+					<!--begin::Footer-->
+				
+		<!--end::Root-->
+		<!--begin::Drawers-->
+		
+		<!--end::Modal - Invite Friend-->
+		<!--end::Modals-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "assets/";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Page Vendors Javascript(used by this page)-->
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<!--end::Page Vendors Javascript-->
+		<!--begin::Page Custom Javascript(used by this page)-->
+		<script src="assets/js/custom/apps/file-manager/list.js"></script>
+		<script src="assets/js/widgets.bundle.js"></script>
+		<script src="assets/js/custom/widgets.js"></script>
+		
+		<!--end::Page Custom Javascript-->
+		<!--end::Javascript-->
+	</body>
+	<!--end::Body-->
+</html>

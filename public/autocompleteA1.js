@@ -203,7 +203,7 @@ $('#deleteRow').on('click',function()
 
 
 function modalV(){
-    let sbox = document.getElementById("ember556")
+let sbox = document.getElementById("ember556")
 var modal = document.getElementById("ember648");
 
 // Get the button that opens the modal

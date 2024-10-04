@@ -17,6 +17,8 @@ const area2 = document.getElementById("area2");
 
 $('body').on('click','#ember408', function (e) {
   console.log('yeah')
+  let salesPerson=document.getElementById('salesPerson').value
+  console.log(salesPerson,'salesPerson')
 let p =  document.getElementById('autoPro');
 if(p.style.display == "none"){
 
@@ -29,7 +31,8 @@ document.getElementById("autoPro").style.display = "";
 $.ajax({
   dataType: 'json',
 
-  type: 'GET',
+  type: 'POST',
+  data:{code:salesPerson},
   url: "/proAuto",
 
 
@@ -39,7 +42,7 @@ $.ajax({
 
 for(var i = 0; i<arr2.length;i++){
 
-availableKeywords2.push(arr2[i].name)
+availableKeywords2.push(arr2[i].product)
 }    
 
 
@@ -74,12 +77,12 @@ function display(result2){
   const content2 = result2.map((list)=>{
     console.log(list,'listtttt')
 for(var i = 0;i<arr2.length;i++){
-if(arr2[i].name == list){
+if(arr2[i].product == list){
 
 
-let name = arr2[i].name
-let usd = arr2[i].usd
-let stock = arr2[i].cases
+let name = arr2[i].product
+//let usd = arr2[i].usd
+let stock = arr2[i].qty
 
       return `
       <li onclick=selectInput2(this) class="ac-item-details dropdown-item ac-option ">
@@ -88,7 +91,7 @@ let stock = arr2[i].cases
           <div class="ac-name-rate-sku">
        <div class="ac-name" id="nameList">${name}</div> 
        <div class="grey-text"><div></div>
-       <span class="ac-rate">Rate: USD ${usd}.00</span></div></div> 
+    </div></div> 
        <div class="ac-stock">
          <div>Stock on Hand</div>
           <div class="stock-available">${stock}:cases</div></div></div>

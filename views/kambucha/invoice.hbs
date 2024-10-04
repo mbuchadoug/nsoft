@@ -549,7 +549,19 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xs align-middle">
         <path fill="#fe4242" d="M318.9 243.3L457 105.2c13.7-13.7 13.7-36 0-49.7l-.5-.5c-13.7-13.7-36-13.7-49.7 0L268.7 193.1c-6.9 6.9-18.2 6.9-25.1 0L105.2 55c-13.7-13.7-36-13.7-49.7 0l-.5.5c-13.7 13.7-13.7 36 0 49.7l138.1 138.1c6.9 6.9 6.9 18.2 0 25.1L55 406.8c-13.7 13.7-13.7 36 0 49.7l.5.5c13.7 13.7 36 13.7 49.7 0l138.1-138.1c6.9-6.9 18.2-6.9 25.1 0L406.5 457c13.7 13.7 36 13.7 49.7 0l.5-.5c13.7-13.7 13.7-36 0-49.7L318.6 268.7c-6.6-7.4-6.6-18.3.3-25.4z"></path></svg></span></div>
          <form>
-         
+         			<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" style="display: none;">
+          
+     
+        </div>
+    </div>
+						
+		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="danger" class="alert alert-danger" style="display: none;">
+          
+     
+        </div>
+    </div>									
 						
 	
            <div class="modal-body contact-create pt-0">
@@ -581,9 +593,9 @@
                                                  <div class="auto-select ac-selected" tabindex="-1">
                                                    <input autocomplete="off" spellcheck="false" placeholder="Salutation" autocorrect="off" autocapitalize="off" id="salutation" name="salutation" class="ember-text-field form-control ac-search-txt ember-view" type="text"> <i class="zf-ac-toggler"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.98 227.51"><path d="M187.46 227.51c-10.23 0-20.46-3.9-28.27-11.71L11.73 68.45C-3.9 52.83-3.91 27.51 11.71 11.88c15.62-15.63 40.94-15.64 56.57-.02l119.18 119.09L306.69 11.72c15.62-15.62 40.95-15.62 56.57 0 15.62 15.62 15.62 40.95 0 56.57L215.75 215.8c-7.81 7.81-18.05 11.72-28.28 11.72z" id="Layer_1-2"></path></svg></i></div> <!----></div></div></div>
                                                   <div class="col-lg-4">
-                                                    <input aria-label="First Name" name="firstName"  placeholder="First Name" autofocus="" id="salutation" name="salutation" class="ember-text-field ember-view form-control" type="text"></div>
+                                                    <input aria-label="First Name" name="firstName"  placeholder="First Name" autofocus="" id="firstName" name="firstName" class="ember-text-field ember-view form-control" type="text"></div>
                                                      <div class="col-lg-4">
-                                                       <input aria-label="Last Name" name="lastName" placeholder="Last Name" id="ember656" class="ember-text-field ember-view form-control" type="text"></div></div> <!----></div></div></div> <!---->
+                                                       <input aria-label="Last Name" name="lastName" placeholder="Last Name" id="lastName" class="ember-text-field ember-view form-control" type="text"></div></div> <!----></div></div></div> <!---->
                                                         <div class="form-group">
                                                           <div class="row"><label for="a09f5bb92" class="col-form-label col-lg-3">Company Name</label> 
                                                           <div class="col-lg-6"><input id="companyName" name="companyName" class="ember-text-field ember-view form-control" type="text"></div></div></div>
@@ -638,7 +650,7 @@
                                                        <span class="pe-1">Address</span> 
                                                      <span id="ce5155f1-105f-4ed5-8f26-37f9c84d9e05" tabindex="0" aria-labelledby="d44a99a4-c098-490e-9e1f-39731b9566bf "><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-xs text-muted align-middle"><path d="M256 172.3c-11.3 0-20.4 9.2-20.4 20.4v195.9c0 11.3 9.2 20.4 20.4 20.4s20.4-9 20.4-20.4V192.7c0-11.4-9.2-20.4-20.4-20.4z"></path><path d="M256 0C114.9 0 0 114.9 0 256s114.8 256 256 256c141.1 0 256-114.9 256-256S397.1 0 256 0zm0 471.3c-118.7 0-215.3-96.6-215.3-215.3S137.3 40.7 256 40.7 471.3 137.3 471.3 256 374.7 471.3 256 471.3z"></path><circle cx="256.4" cy="121.7" r="21.9"></circle></svg></span> <!----></label> 
                                                      <div class="col-lg-6">
-             <input id="address" name="address" class="ember-text-field ember-view form-control" type="text"></div></div></div> 
+             <input id="addressV" name="addressV" class="ember-text-field ember-view form-control" type="text"></div></div></div> 
 
 
 
@@ -749,15 +761,18 @@
         </div> </div></fieldset></div>  <div class="col-lg-12 row mt-5"><br> <div class="col-lg-12"><div class="highlight-border" style="border-width: 3px"><div><strong>Note: </strong></div> <ul><li>You can add and manage additional addresses from Customers and Vendors details section.</li> <li>View and edit the address format of your transactions under Settings &gt; Preferences &gt; Customers and Vendors.</li></ul></div></div></div></div></div></div></div> <!----> <!---->  <div class="tab-pane "><div class="zb-txn-form"><div class="row"><div class="col-lg-10"><div class="text-center text-muted intro-text">Start adding custom fields for your Customers and Vendors by going to <i>Settings <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm"><path d="M14.5 429.9h244c6.6 0 12 5.4 12 12V500c0 9.9 11.2 15.5 19.2 9.6L502.1 352c6.5-4.8 6.5-14.5 0-19.3L289.7 175.1c-7.9-5.9-19.2-.2-19.2 9.6v58.1c0 6.6-5.4 12-12 12h-244c-6.6 0-12 5.4-12 12v151c0 6.7 5.4 12.1 12 12.1z" id="Layer_2_1_"></path></svg> Preferences <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm"><path d="M14.5 429.9h244c6.6 0 12 5.4 12 12V500c0 9.9 11.2 15.5 19.2 9.6L502.1 352c6.5-4.8 6.5-14.5 0-19.3L289.7 175.1c-7.9-5.9-19.2-.2-19.2 9.6v58.1c0 6.6-5.4 12-12 12h-244c-6.6 0-12 5.4-12 12v151c0 6.7 5.4 12.1 12 12.1z" id="Layer_2_1_"></path></svg> Customers and Vendors</i>. You can also refine the address format of your Customers and Vendors from there.</div></div></div></div></div> <div class="tab-pane "><div class="zb-txn-form"><div class="row"><div class="col-lg-10"><div class="text-center text-muted intro-text">You've not created any Reporting Tags.<br> Start creating reporting tags by going to <i>More Settings <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm"><path d="M14.5 429.9h244c6.6 0 12 5.4 12 12V500c0 9.9 11.2 15.5 19.2 9.6L502.1 352c6.5-4.8 6.5-14.5 0-19.3L289.7 175.1c-7.9-5.9-19.2-.2-19.2 9.6v58.1c0 6.6-5.4 12-12 12h-244c-6.6 0-12 5.4-12 12v151c0 6.7 5.4 12.1 12 12.1z" id="Layer_2_1_"></path></svg> Reporting Tags</i></div></div></div></div></div> <div class="tab-pane "> <div class="details-table attachment-card" id="attachment-list"><div class="card"><div class="card-header"><span class="font-small text-semibold">Attachments <span class="badge badge-pill badge-grey-gradient font-xxs text-semibold ms-1 py-1 px-2 align-text-bottom min-w-16">0</span></span> <!----></div> <div class="card-body"><table class="table-hover"><tr><td colspan="5" class="text-center py-8 addon-container"><div class="cp-pic position-center attachment-empty-container"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 385.81 385.93" class="icon icon-xs"><path d="M129.94 385.93c-34.72 0-67.37-13.52-91.92-38.08-50.69-50.69-50.69-133.16 0-183.85l37.07-37.07c29.45-29.45 77.36-29.45 106.81 0 29.45 29.45 29.45 77.36 0 106.81l-38.17 38.17c-8.2 8.2-21.5 8.2-29.7 0s-8.2-21.5 0-29.7l38.17-38.17c13.07-13.07 13.07-34.34 0-47.42-13.07-13.07-34.34-13.07-47.42 0l-37.07 37.07c-34.31 34.31-34.31 90.14 0 124.45 16.62 16.62 38.72 25.77 62.23 25.77s45.6-9.15 62.23-25.77L318.1 192.21c34.31-34.31 34.31-90.14 0-124.45-16.62-16.62-38.72-25.77-62.23-25.77s-45.6 9.15-62.23 25.77l-2.09 2.09c-8.2 8.2-21.5 8.2-29.7 0s-8.2-21.5 0-29.7l2.09-2.09C188.5 13.52 221.14 0 255.87 0s67.37 13.52 91.92 38.08c50.69 50.69 50.69 133.16 0 183.85L221.86 347.86c-24.55 24.55-57.2 38.08-91.92 38.08z" id="Layer_1-2"></path></svg></div> <h5 class="text-muted mb-2"><!----> <span>No Attachments Found</span></h5> <p class="form-control-plaintext "><!----> <div><div class="file-upload-container btn-upload-container "><button class="btn file-upload upload-btn-sm" type="button"><input id="ember712" title="" multiple="" accept="image/gif,image/jpeg,image/png,image/bmp,application/pdf,application/doc, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/csv, .xml" class="upload ember-view" type="file"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.981 397.925" class="icon align-text-top action-icons me-2"><path d="M337.871 89.11L255.661 6.9c-4.6-4.6-10.64-6.9-16.67-6.9s-12.07 2.3-16.67 6.9l-82.21 82.21c-9.2 9.21-9.2 24.13 0 33.34 9.21 9.21 24.14 9.21 33.35 0l41.95-41.95v168.85c0 13.03 10.56 23.58 23.58 23.58s23.58-10.55 23.58-23.58V80.5l41.95 41.95c9.21 9.21 24.14 9.21 33.35 0 9.2-9.21 9.2-24.13 0-33.34z"></path><path d="M393.786 397.925H84.195C37.769 397.925 0 357.129 0 306.984V216.81c0-13.021 10.556-23.577 23.577-23.577s23.577 10.556 23.577 23.577v90.174c0 24.144 16.616 43.787 37.041 43.787h309.591c20.425 0 37.041-19.643 37.041-43.787v-91.272c0-13.021 10.556-23.577 23.577-23.577s23.577 10.556 23.577 23.577v91.272c0 50.145-37.77 90.941-84.195 90.941z"></path></svg> Upload File</button> <span id="ember713" class="dropdown ember-view"><button id="ember714" class="dropdown-toggle no-caret ember-view btn ps-2 pb-1 no-box-shadow" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.98 227.51" class="icon icon-xsmall align-baseline"><path d="M187.46 227.51c-10.23 0-20.46-3.9-28.27-11.71L11.73 68.45C-3.9 52.83-3.91 27.51 11.71 11.88c15.62-15.63 40.94-15.64 56.57-.02l119.18 119.09L306.69 11.72c15.62-15.62 40.95-15.62 56.57 0 15.62 15.62 15.62 40.95 0 56.57L215.75 215.8c-7.81 7.81-18.05 11.72-28.28 11.72z" id="Layer_1-2"></path></svg></button> <div class="dropdown-menu  "><button class="file-upload dropdown-item" type="button"><input id="ember715" title="" multiple="" accept="image/gif,image/jpeg,image/png,image/bmp,application/pdf,application/doc, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/csv, .xml" class="upload ember-view" type="file"> Attach From Desktop</button> <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-716="716">Attach From Documents</button><div class="cloud-upload-section"><button class="dropdown-item" disabled="" type="button">Attach From Cloud</button> <div class="d-flex justify-content-around pt-2 cursor-pointer"> <button class="icon-button" type="button" data-ember-action="" data-ember-action-717="717"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="icon" aria-hidden="true"><path fill="#226db4" d="M905 942H300a30 30 0 110-60h605c32 0 59-27 59-59V301c0-32-27-59-59-59H524c-26 0-51-8-72-24l-86-64c-10-8-23-12-36-12H119c-32 0-59 27-59 59v622c0 32 27 59 59 59h60a30 30 0 110 60h-60C54 942 0 889 0 823V201C0 136 54 82 119 82h211c26 0 51 8 72 24l86 64c10 8 23 12 36 12h381c65 0 119 54 119 119v522c0 66-53 119-119 119z" opacity=".9"></path><g fill="#226db4" opacity=".9"><path d="M300 942c-17 0-30-13-30-30v-68a150 150 0 01100-143l105-39a30 30 0 0121 56l-106 40a93 93 0 00-60 86v68c0 17-14 30-30 30z"></path><path d="M464 724a90 90 0 111-180 90 90 0 01-1 180zm0-120c-16 0-30 14-30 30s14 30 30 30 30-13 30-30-13-30-30-30z"></path></g><g fill="#226db4" opacity=".9"><path d="M506 942c-16 0-30-13-30-30V769a151 151 0 01100-143l96-36a30 30 0 0121 57l-96 35a93 93 0 00-61 87v143c0 17-13 30-30 30z"></path><path d="M661 652a95 95 0 110-190 95 95 0 010 190zm0-130a35 35 0 100 70 35 35 0 000-70z"></path></g><g fill="#226db4" opacity=".9"><path d="M711 942c-17 0-30-13-30-30V687a141 141 0 0193-134l104-39a30 30 0 0121 57l-104 38a83 83 0 00-54 78v225c0 17-14 30-30 30z"></path><path d="M866 576a98 98 0 110-196 98 98 0 010 196zm0-136a38 38 0 100 76 38 38 0 000-76z"></path></g></svg></button>  <button class="icon-button" type="button" data-ember-action="" data-ember-action-718="718"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105 122.9" class="icon" aria-hidden="true"><path d="M33 28l-1 4-5 2H4c0 1 0 0 0 0L34 4l-1 3v21zm28 91c-4-2-6-5-6-7l-2-6c0-8 7-15 16-15a5 5 0 012 9h-2l-3 1-2 4 2 4c2 2 4 3 7 3 7 0 12-6 12-13 0-6-4-11-9-14l-4-1h-3c-4-1-15-4-15-14 0 0-4 14-10 18a11 11 0 01-4 1c-11 1-22-2-29-10 0 0-5-4-8-16L1 50l-1-4c0-5 3-8 7-9h21l7-2 2-7V7c0-4 4-7 9-7h5l3 1c6 1 8 8 8 8l17 3c6 1 20 2 22 16 7 33 3 65 3 65-5 31-31 30-31 30-5 0-10-2-12-4zm23-67c-3 0-6 1-7 4v2l6 1h7v-1c0-3-3-5-6-6z" fill="#00a82d"></path></svg></button>  <button class="icon-button" type="button" data-ember-action="" data-ember-action-719="719"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.3 78" class="icon" aria-hidden="true"><path fill="#0066da" d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3L27.5 53H0c0 1.55.4 3.1 1.2 4.5z"></path><path fill="#00ac47" d="M43.65 25L29.9 1.2c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44A9.06 9.06 0 000 53h27.5z"></path><path fill="#ea4335" d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75L86.1 57.5c.8-1.4 1.2-2.95 1.2-4.5H59.798l5.852 11.5z"></path><path fill="#00832d" d="M43.65 25L57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z"></path><path fill="#2684fc" d="M59.8 53H27.5L13.75 76.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z"></path><path fill="#ffba00" d="M73.4 26.5l-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25 59.8 53h27.45c0-1.55-.4-3.1-1.2-4.5z"></path></svg></button>  <button class="icon-button" type="button" data-ember-action="" data-ember-action-720="720"><svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2500" preserveAspectRatio="xMidYMid" viewBox="0 0 256 256" class="icon" aria-hidden="true"><path fill="#00AEEF" d="M214 256H42c-23 0-42-19-42-42V42C0 19 19 0 42 0h172c23 0 42 19 42 42v172c0 23-19 42-42 42"></path><path fill="#FFF" d="M131 108c-13 0-25 7-31 18-6-11-17-18-30-18a35 35 0 00-21 7V85a7 7 0 00-7-6c-4 0-7 3-7 6v58a35 35 0 0065 16 35 35 0 1031-51m-61 55a21 21 0 110-41 21 21 0 010 41m61 0a21 21 0 110-41 21 21 0 010 41"></path>
         <path fill="#FFF" d="M220 166l-19-23 19-24c2-3 2-7-2-9-3-3-8-2-10 1l-17 20-16-20c-2-3-7-4-10-1-4 2-4 6-2 9l19 24-19 23c-2 3-2 7 2 9s8 2 10-1l16-20 17 20c2 3 7 4 10 1 4-2 4-6 2-9"></path></svg></button> 
          <button class="icon-button" type="button" data-ember-action="" data-ember-action-721="721"><svg xmlns="http://www.w3.org/2000/svg" id="svg126" width="1200" height="800" version="1.1" viewBox="-35.3 -50 306.1 300" class="icon" aria-hidden="true"><path id="polygon116" d="M59 75l59-37L59 0 0 38z" fill="#0061ff"></path><path id="polygon118" d="M177 75l58-37-58-38-59 38z" fill="#0061ff"></path><path id="polygon120" d="M118 113L59 75 0 113l59 37z" fill="#0061ff"></path><path id="polygon122" d="M177 150l58-37-58-38-59 38z" fill="#0061ff"></path><path id="polygon124" d="M177 163l-59-38-59 38 59 37z" fill="#0061ff"></path></svg></button>  <button class="icon-button" type="button" data-ember-action="" data-ember-action-722="722"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 5.5 32 20.5" class="icon" aria-hidden="true"><path fill="#0364b8" d="M12 11l7 4 4-1a6 6 0 013-1 10 10 0 00-18-3 8 8 0 014 1z"></path><path fill="#0078d4" d="M12 11a8 8 0 00-4-1 8 8 0 00-7 13l6-3 3-1 6-2 3-2z"></path><path fill="#1490df" d="M26 13a6 6 0 00-3 1l-4 1 1 1 4 2 2 1 5 4a7 7 0 00-5-10z"></path><path fill="#28a8ea" d="M26 19l-2-1-4-2-1-1-3 2-6 2-3 1-6 3a8 8 0 007 3h18a6 6 0 005-3z"></path></svg></button></div></div></div></span></div><!----> <div class="mt-1"><!----><div><small class="text-muted">You can upload a maximum of 10 files, 10MB each</small></div></div></div></p> <!----></td></tr></table></div></div></div></div>  <div class="tab-pane "><div class="zb-txn-form"><div class="row"><div class="col-lg-10"><label class="col-form-label pt-0">Remarks <span class="text-muted">(For Internal Use)</span></label> <textarea rows="3" aria-label="Remarks" autofocus="" id="ember723" class="ember-text-area ember-view form-control"></textarea></div></div></div></div></div></div> <!----></div> <div class="modal-footer">
-           <button onclick="myFunction()" class="btn btn-primary ember-view" > Save</button>
+           
             <button class="btn btn-secondary" data-ember-action="" data-ember-action-725="725">Cancel</button></div></form>
-            
+
+            <div class="modal-footer">
+            <button onclick="myFunction()" class="btn btn-primary ember-view" > Save</button>
+            </div>
             
             
 <script>
 function myFunction(){
 
-  console.log('yes')
+  console.log('yesV')
     
 let salutation = document.getElementById('salutation').value
 let firstName = document.getElementById('firstName').value	
@@ -767,10 +782,82 @@ let customer = document.getElementById('customer').value
 let email = document.getElementById('email').value	
 let mobile = document.getElementById('mobile').value
 let mobile2 = document.getElementById('mobile2').value
-let address = document.getElementById('address').value	
+let address = document.getElementById('addressV').value	
 let town = document.getElementById('town').value
 let city = document.getElementById('city').value
 let country = document.getElementById('country').value	
+
+if(salutation==''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Salutaion'
+}else if(firstName == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter First Name'
+}
+else if(lastName == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Last Name'
+}
+
+else if(companyName == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Company Name'
+}
+
+else if(customer == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Customer'
+}
+
+else if(email == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Customer Email'
+}
+
+else if(mobile == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Phone Number'
+}
+
+
+else if(mobile2 == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter 2nd Phone Number'
+}
+
+
+else if(address == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Customer Address'
+}
+
+
+
+else if(town == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Customer Town'
+}
+
+
+
+else if(country == ''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Customer Country'
+}
+
+else{
+
 console.log(salutation,firstName,lastName,companyName,'pkp')							
 $.ajax({
     dataType: 'json',
@@ -782,13 +869,24 @@ $.ajax({
   
   
       success: function(data) {
-   console.log(data,'bho')
+   console.log(data.length,'bho')
+
+   if(data!=''){
+document.getElementById('success').style.display ='none'
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Customer Exists'
+   }else{
+document.getElementById('success').innerHTML = ''
+document.getElementById('success').style.display = ''
+document.getElementById('success').textContent = 'Customer Added Successfully'
+   }
 
       }
 
     })
 
-
+}
     }
 
     </script>

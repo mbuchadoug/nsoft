@@ -505,7 +505,7 @@ this.firstElementChild.select();
             });
 
             function handleBarcode(scanned_barcode) {
-                
+                let batchId = document.getElementById('batchNo').value
             $.ajax({
                 dataType: 'json',
                 data: {
@@ -645,6 +645,7 @@ document.getElementById("closeBtn").style.display = "";
 }
 else{
 document.getElementById("closePallet").style.display = "";
+document.getElementById('closePallet').setAttribute('href',`/closePallet/${batchId}`)
 }
                     }
                
@@ -704,6 +705,7 @@ document.getElementById("closePallet").style.display = "";
               <form class="zb-txn-form"  name="sample">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
                   <input type="hidden" name="refNumDispatch" id="refNumDispatch" value="{{refNumDispatch}}">
+                  <input type="hidden" name="batchNo" id="batchNo" value="{{batchId}}">
           <!--<fieldset role="radiogroup" class="form-group">
               <div class="form-check cursor-pointer mb-2">  
               <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>

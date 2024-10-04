@@ -13,7 +13,7 @@ const cloneBtn = document.getElementById("cloneBtn");
     dataType: 'json',
  
     type: 'GET',
-    url: "/custAuto",
+    url: "/sales/custAuto",
 	
 
       success: function(data) {
@@ -87,7 +87,7 @@ function selectInput(list){
       dataType: 'json',
    
       type: 'POST',
-      url: "/custAuto2",
+      url: "/sales/custAuto2",
       data:{code:code},
     
   
@@ -176,17 +176,21 @@ cloneBtn.onclick = function(){
  n[2].id = 'stock'+trSize
  n[0].data = 'quantity'+trSize
  n[1].data = 'price'+trSize
- n[1].data = 'stock'+trSize
+ n[2].data = 'stock'+trSize
 
  var n2 = document.getElementsByName('cross')
  n2[trSize-1].id = 'autoPro'+trSize
+ console.log(trSize,'trSizeClone')
 
- 
+ console.log(document.getElementById(`autoPro${trSize}`),'666')
  var n3 = document.getElementsByName('cross2')
  n3[trSize-1].id = 'autoProBox'+trSize
 
  var amount = document.getElementsByName('amount')
  amount[trSize-1].id = 'amount'+trSize
+ document.getElementById('xxx').setAttribute("onclick","selectInput1(this)")
+
+ console.log(document.getElementById('xxx'),'6756')
 }
 
 

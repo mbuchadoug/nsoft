@@ -5,15 +5,7 @@
     <title>Returns Inwards| Kambucha App</title>
 
     
-    <script type="text/javascript" id="zsiqscript" defer="" src="https://salesiq.zoho.com/widget"></script><script nomodule="">
-      window.legacyBrowser = true;
-    </script>
-
-    <!-- Tracking Load Time -->
-    <script>
-      window.zbZiStartTime = new Date().valueOf();
-      window._zbZiStartTime = window.zbZiStartTime;
-    </script>
+   
     <!-- Tracking Load Time - End -->
 
     <link href="/favicon.ico?1723031466080" rel="shortcut icon">
@@ -170,7 +162,24 @@
                  <div id="ember369" class="ember-view"><span class="cursor-default dropdown-item-text"><span>'Minimalist'</span> &nbsp; <span class="action-icons cursor-pointer text-blue" data-ember-action="" data-ember-action-370="370">Change</span></span><!----></div></div></div></div></span>
                    <button class="icon-button ms-4 close-details p-0" type="button" data-ember-action="" data-ember-action-371="371"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-s align-text-top" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button></span> <!----> <div class="d-flex align-center"><h3 class="pe-3"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 417.4 512" class="icon icon-xxlg align-text-bottom"><g id="Layer_1-2"><path d="M161.4 330.1h-47.1c-11 0-20 9-20 20s9 20 20 20h47.1c11 0 20-9 20-20s-9-20-20-20z"></path><path d="M394.2 129.9L287.5 23.3C272.5 8.2 252.6 0 231.4 0H100C44.9 0 0 44.9 0 100v312c0 55.1 44.9 100 100 100h217.4c55.1 0 100-44.9 100-100V186c0-21.2-8.3-41.1-23.2-56.1zm-28.3 28.3c2.3 2.3 4.3 4.9 6 7.6H305c-25.6 0-46.4-20.8-46.4-46.4V51l.6.6 106.7 106.6zm-48.5 313.9H100c-33.1 0-60-26.9-60-60V100c0-33.1 26.9-60 60-60h118.6v79.4c0 47.6 38.7 86.4 86.4 86.4h72.4V412c0 33.1-26.9 60-60 60z"></path></g></svg>&nbsp; Returns Form <!----></h3> <!----></div></div> 
                    <div id="ember372" class="ember-view"><div id="ember373" class="ember-view"></div></div> <!----> <div class="fill-container row header-separator"></div> 
-        <form data-integrity-form="invoices/invoice-data" method="POST" action="/rtnsInwards"><!----><!----> <div tabindex="-1" id="ember374" class="no-outline ember-view"><!----></div> <!----> <div><!---->
+        <form data-integrity-form="invoices/invoice-data" method="POST" action="/rtnsInwards"><!----><!----> 
+        
+        	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" {{#if noMessages}}hidden{{/if}}>
+            {{ successMsg }}
+     
+        </div>
+    </div>
+						
+		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="danger" class="alert alert-danger" {{#if noMessages2}}hidden{{/if}}>
+            {{ errorMsg }}
+     
+        </div>
+    </div>									
+        
+        
+        <div tabindex="-1" id="ember374" class="no-outline ember-view"><!----></div> <!----> <div><!---->
     <div class="primary-info">
       <input type="hidden" name="salesPerson" id="salesPerson">
       <input type="hidden" name="address" id="address">

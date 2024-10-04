@@ -1,5 +1,6 @@
 let availableKeywords2 =[]
 let arr2 = []
+let arrPro = []
 const resultBox12 = document.getElementById("autoPro")
 const resultBox2 = document.getElementById("autoProBox")
 const inputBox2 = document.getElementById("ember408");
@@ -30,7 +31,7 @@ $.ajax({
   dataType: 'json',
 
   type: 'GET',
-  url: "/salesStockAuto",
+  url: "/sales/salesStockAuto",
 
 
     success: function(data) {
@@ -73,6 +74,7 @@ inputBox2.onkeyup = function(){
 function display(result2){
   const content2 = result2.map((list)=>{
     console.log(list,'listtttt')
+    let V = 'xxx';
 for(var i = 0;i<arr2.length;i++){
 if(arr2[i].product == list){
 
@@ -80,9 +82,10 @@ if(arr2[i].product == list){
 let name = arr2[i].product
 let usd = arr2[i].price
 let stock = arr2[i].qty
+arrPro.push(name)
 
       return `
-      <li onclick=selectInput2(this) class="ac-item-details dropdown-item ac-option ">
+      <li  id="${V}" onclick=selectInput2(this) class="ac-item-details dropdown-item ac-option ">
       <a tabindex="-1" >
         <div class="autocomplete-option" title="${name}">
           <div class="ac-name-rate-sku">
@@ -118,9 +121,72 @@ let stock = arr2[i].qty
 
 
 
+function selectInput2(list){
+  // inputBox.value = list.innerText
+   //resultBox1.innerHTML=''
+   console.log(list,'list')
+   let diiv =list.getElementsByClassName('autocomplete-option')
+   console.log(diiv,'div')
+   let title = diiv[0].title
+console.log(title,'title')
+   let code = title // document.getElementById("nameList").textContent
+   console.log(code,'codeV')
+   var table = document.getElementById("lineitems-section"); // find table to append to
+   let tr = table.getElementsByTagName('tr')
+   let trSize = tr.length - 1
+   console.log(trSize,'trSize')
+   //console.log(clone.getElementsByTagName('button'))
+   // add new row to end of table
+  
+   var f2 = table.getElementsByTagName('textarea')
+   let nSize = f2.length -1
+ 
+ 
+ 
+   $.ajax({
+     dataType: 'json',
+  
+     type: 'POST',
+     url: "/sales/salesStockAuto2",
+     data:{code:code},
+   
+ 
+       success: function(data) {
+         console.log(data,'data')
+         
+         f2[nSize].value = ''
+         f2[nSize].value = data.product
+        
+      
+         console.log(f2[nSize],'fff')
+         console.log(f2[nSize].value,'value')
+        
+         document.getElementById(`price${trSize}`).value = data.price
+         document.getElementById(`stock${trSize}`).value = data.qty
+         document.getElementById('ember408').value = data.product
+
+         console.log(document.getElementById('ember408').value,'444')
+         resultBox12.style.display="none"
+     
+         document.getElementById('xxx').setAttribute("onclick","selectInput1(this)")
+
+         console.log(document.getElementById('xxx'),'6756')
+       
+         
+         //let product = data.product
+  
+       }
+       })
+ 
+      
+ }
+ 
+
+
+
 
 $('body').on('click','#area1', function (e) {
-  console.log('yeah')
+  console.log('yeahV')
 let p =  document.getElementById('autoPro2');
 if(p.style.display == "none"){
 
@@ -134,7 +200,7 @@ $.ajax({
   dataType: 'json',
 
   type: 'GET',
-  url: "/salesStockAuto",
+  url: "/sales/salesStockAuto",
 
 
     success: function(data) {
@@ -175,12 +241,13 @@ availableKeywords2.push(arr2[i].product)
 function display1(result1){
   const content1 = result1.map((list1)=>{
 for(var i = 0;i<arr2.length;i++){
-if(arr2[i].name == list1){
+if(arr2[i].product == list1){
 
 
 let name = arr2[i].product
 let usd = arr2[i].price
 let stock = arr2[i].qty
+arrPro.push(name)
 
       return `
       <li onclick=selectInput1(this) class="ac-item-details dropdown-item ac-option ">
@@ -231,58 +298,6 @@ let stock = arr2[i].qty
 
 
 
-function selectInput2(list){
-  // inputBox.value = list.innerText
-   //resultBox1.innerHTML=''
-   console.log(list,'list')
-   let diiv =list.getElementsByClassName('autocomplete-option')
-   console.log(diiv,'div')
-   let title = diiv[0].title
-console.log(title,'title')
-   let code = title // document.getElementById("nameList").textContent
-   console.log(code,'codeV')
-   var table = document.getElementById("lineitems-section"); // find table to append to
-   let tr = table.getElementsByTagName('tr')
-   let trSize = tr.length - 1
-   console.log(trSize,'trSize')
-   //console.log(clone.getElementsByTagName('button'))
-   // add new row to end of table
-  
-   var f2 = table.getElementsByTagName('textarea')
-   let nSize = f2.length -1
- 
- 
- 
-   $.ajax({
-     dataType: 'json',
-  
-     type: 'POST',
-     url: "/salesStockAuto2",
-     data:{code:code},
-   
- 
-       success: function(data) {
-         console.log(data,'data')
-         console.log(f2[nSize],'fff')
-         f2[nSize].value = ''
-         f2[nSize].value = data.product
-         document.getElementById(`price${trSize}`).value = data.price
-         document.getElementById(`stock${trSize}`).value = data.qty
-         resultBox12.style.display="none"
-         
-       
-         
-         //let product = data.product
-  
-       }
-       })
- 
-      
- }
- 
-
-
-
 /*$('table#lineitems-section').on('click', '#remove', function() {
   const tr = this.parentElement
   tr.remove();
@@ -291,7 +306,7 @@ console.log(title,'title')
 
 
 
-function selectInput1(list1){
+function selectInput1(list){
   // inputBox.value = list.innerText
    //resultBox1.innerHTML=''
    console.log(list,'list')
@@ -303,12 +318,13 @@ function selectInput1(list1){
    var table = document.getElementById("lineitems-section"); // find table to append to
    let tr = table.getElementsByTagName('tr')
    let trSize = tr.length - 1
-   console.log(trSize,'trSize')
+   console.log(trSize,'trSize111')
    //console.log(clone.getElementsByTagName('button'))
    // add new row to end of table
   
    var f2 = table.getElementsByTagName('textarea')
    let nSize = f2.length -1
+   console.log(nSize,'nSize111')
  
  
  
@@ -316,7 +332,7 @@ function selectInput1(list1){
      dataType: 'json',
   
      type: 'POST',
-     url: "/salesStockAuto2",
+     url: "/sales/salesStockAuto2",
      data:{code:code},
    
  
@@ -325,11 +341,13 @@ function selectInput1(list1){
          console.log(f2[nSize],'fff')
          f2[nSize].value = ''
          f2[nSize].value = data.product
-         autoPro1.style.display="none"
-         autoProBox1.style.display="none"
+   
+         console.log(f2[nSize],'vvv')
+       
          document.getElementById(`price${trSize}`).value = data.price
-      
-         
+         document.getElementById(`stock${trSize}`).value = data.qty
+         document.getElementById('stock1').value = data.qty
+         console.log(arrPro,'array2')
        
          
          //let product = data.product
@@ -360,7 +378,7 @@ $.ajax({
   dataType: 'json',
 
   type: 'GET',
-  url: "/salesStockAuto",
+  url: "/sales/salesStockAuto",
 
 
     success: function(data) {
@@ -401,12 +419,13 @@ availableKeywords2.push(arr2[i].product)
 function display2(result1){
   const content1 = result1.map((list1)=>{
 for(var i = 0;i<arr2.length;i++){
-if(arr2[i].name == list1){
+if(arr2[i].product == list1){
 
 
 let name = arr2[i].product
 let usd = arr2[i].price
 let stock = arr2[i].qty
+arrPro.push(name)
 
       return `
       <li onclick=selectInput3(this) class="ac-item-details dropdown-item ac-option ">
@@ -472,7 +491,7 @@ function selectInput3(list1){
      dataType: 'json',
   
      type: 'POST',
-     url: "/salesStockAuto2",
+     url: "/sales/salesStockAuto2",
      data:{code:code},
    
  
@@ -481,11 +500,16 @@ function selectInput3(list1){
          console.log(f2[nSize],'fff')
          f2[nSize].value = ''
          f2[nSize].value = data.product
+         f2[nSize].innerHTML = data.product
+         f2[nSize].push(data.product)
+        
+       
          autoPro3.style.display="none"
          autoProBox3.style.display="none"
          document.getElementById(`price${trSize}`).value = data.price
+         document.getElementById(`stock${trSize}`).value = data.qty
       
-         
+         console.log(arrPro,'array3')
        
          
          //let product = data.product

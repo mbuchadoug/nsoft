@@ -200,8 +200,14 @@ body {
          
         </tr>
         <tr>
-           <td  style="text-align:center"> Ref No </td>
+           <td  style="text-align:center"> Order No </td>
            <td  style="text-align:center"> {{this.0.refNumber}} </td>
+         
+       </tr>
+
+           <tr>
+           <td  style="text-align:center"> GRV No </td>
+           <td  style="text-align:center"> 9272024GRV245 </td>
          
        </tr>
        
@@ -226,16 +232,11 @@ body {
             </th>
 
          
-            <th  style="text-align:center">
-              Rate <br>
-              ($)
-               </th>
+        
 
              
 
-               <th  style="text-align:center">
-                Amount <br> ($)
-                </th>
+            
         
         </tr>
        
@@ -246,19 +247,15 @@ body {
         <tr style="border: 0; ">
        
             <td style="text-align:center">
-               {{this.closingMass}}kg(s)
+               {{this.closingMassTonne}}tonne(s)
             </td>
            
             <td style="text-align:center">
             {{this.item}}
             </td>
           
-            <td style="text-align:center; width:40%;" >
-/50kg
-            </td>
-            <td style="text-align: center; ">
-             {{this.subtotal}}
-            </td>
+         
+          
 
             
         </tr>
@@ -277,9 +274,7 @@ body {
                             
                         <td></td>
                          <td></td>
-                          <td></td>
-                            <td></td>
-                             
+                         
                                     
                                 </tr>
 
@@ -301,28 +296,6 @@ body {
 </table>
 
 
-
-    
-      <table  style=" margin-bottom:20px;width:27%; margin-left:540px;   border: 1px solid black;
-  border-collapse: collapse;break-inside: avoid
-  ;">
-        <tr style="border-bottom:1px solid black" >
-            <td  >SUB TOTAL</td>
-            <td  style="text-align: end;"> ${{this.0.subtotal}}</td>
-         
-        </tr>
-        <tr style="border-bottom:1px solid black">
-           <td> VAT </td>
-           <td  style="text-align: end;">0 </td>
-         
-       </tr>
-       
-        <tr style="border-bottom:1px solid black">
-           <td><b> TOTAL</b> </td>
-           <td style="text-align: end;"> ${{this.0.subtotal}} </td>
-         
-       </tr>
-       </table>
 
    <!-- </div>-->
     

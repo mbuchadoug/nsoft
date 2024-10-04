@@ -7,6 +7,7 @@ var schemaV = new Schema({
     batchId: {type: String },
     dispatchStatus: {type: String },
     date: {type: String },
+    aggCases: {type: Number },
     pallet: {type: Number },
     name: {type: String, required:true },
     casesReceived: {type: Number, required: true},
@@ -44,15 +45,20 @@ var schemaV = new Schema({
     salesPerson: {type: String },
     dispatcher: {type: String },
     casesBatch: {type: Number },
-    dateValueDispatch: {type: Number},
+    palletCasesBatch:{type:Number},
+    casesBatchNumber: {type: Number },
     refNumDispatch: {type: String },
     size: {type: Number },
     position:{type:String},
+    itemPos:{type:String},
+    replacedBarcode:{type:String},
+    returnsType:{type:String},
     dispatchValue: {type: Number },
     fifoPosition: {type: Number },
     palletDispatched: {type: Number },
     palletRcvd: {type: Number },
     palletRemaining: {type: Number },
+    replacementCase: {type: Number }
  
    
    

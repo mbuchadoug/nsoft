@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
+var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
 var Warehouse = require('../models/warehouse');
@@ -19,9 +20,12 @@ var RefNoSeq = require('../models/refNoSeq');
 var RefNoSeqDisp = require('../models/refNoSeqDisp');
 var RepoFiles = require('../models/repoFiles');
 var StockV = require('../models/stockV');
+var StockVoucher = require('../models/stockVoucher');
 var StockD = require('../models/stockD');
 var StockR = require('../models/stockR');
 var StockRM = require('../models/stockRM');
+var RawMat = require('../models/rawMaterials');
+var StockRMFile = require('../models/stockRMFile');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
 var SalesList = require('../models/salesList');
@@ -169,6 +173,7 @@ console.log(vocs.length,'size9')
       StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
         let cases = nocs.length
         let quantity = nocs.length * 12
+        quantity.toFixed(2)
       Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:quantity}},function(err,tocs){
 
       })
@@ -410,6 +415,98 @@ var date = m.format('L')
 
 
 
+//////////add RM
+
+router.get('/addRM',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addRM',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/addRM', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addRM');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new RawMat();
+                  user.item = name;
+                  user.mass = 0;
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'RM added Successfully');
+         
+          
+              res.redirect('/addRM');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
 
 
 
@@ -438,11 +535,21 @@ router.post('/', passport.authenticate('local.signin', {
   failureFlash: true
 }), function (req, res, next) {
   if(req.user.role == "receiver"){
-    res.redirect("/batch");
+    res.redirect("/receiver/batch");
   }else if(req.user.role == "dispatcher"){
-    res.redirect('/batchDispatch')
+    res.redirect('/dispatch/fifoUpdate')
   }else if(req.user.role == "sales"){
-    res.redirect('/invoice')
+    res.redirect('/sales/invoice')
+  }else if(req.user.role == "accountant1"){
+    res.redirect('/accounts1/stockRequisitions')
+  }else if(req.user.role == "accountant2"){
+    res.redirect('/accounts2/stockRequisitions')
+  }else if(req.user.role == "md"){
+    res.redirect('/accounts3/stockRequisitions')
+  }else if(req.user.role == "ceo"){
+    res.redirect('/accounts4/stockRequisitions')
+  }else if(req.user.role == "production-supervisor"){
+    res.redirect('/rm/stockRequisition')
   }
 
 
@@ -479,14 +586,14 @@ router.post('/dashChartStockXI',isLoggedIn,function(req,res){
   
  
  
-  Product.find({},function(err,docs) {
+  Warehouse.find({},function(err,docs) {
    // console.log(docs,'docs')
     for(var i = 0;i<docs.length;i++){
  
  
-       if(arr.length > 0 && arr.find(value => value.name == docs[i].name)){
+       if(arr.length > 0 && arr.find(value => value.product == docs[i].product)){
               console.log('true')
-             arr.find(value => value.name == docs[i].name).cases += docs[i].cases;
+             arr.find(value => value.product == docs[i].product).cases += docs[i].cases;
         }else{
  arr.push(docs[i])
         }
@@ -503,6 +610,40 @@ router.post('/dashChartStockXI',isLoggedIn,function(req,res){
 
 
 
+
+
+ router.post('/dashChartStockRM',isLoggedIn,function(req,res){
+
+  
+
+  var date = req.body.date
+  var arr = []
+  var id = req.user._id
+  let num = req.user.num
+  num++
+  
+ 
+ 
+  RawMat.find({},function(err,docs) {
+   // console.log(docs,'docs')
+    for(var i = 0;i<docs.length;i++){
+ 
+ 
+       if(arr.length > 0 && arr.find(value => value.item == docs[i].item)){
+              console.log('true')
+             arr.find(value => value.item == docs[i].item).massTonnes += docs[i].massTonnes;
+        }else{
+ arr.push(docs[i])
+        }
+ 
+      
+    }
+   // console.log(arr,'arr')
+   res.send(arr)
+  })
+ 
+ })
+ 
 
 
 
@@ -602,7 +743,7 @@ router.post('/dashChartStockSales',isLoggedIn,function(req,res){
 
       if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson  && value.product == docs[i].product )){
              console.log('true')
-            arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases;
+            arr.find(value => value.product == docs[i].product).holdingCases.toFixed(2) += docs[i].holdingCases.toFixed(2);
        }else{
 arr.push(docs[i])
        }
@@ -617,6 +758,9 @@ arr.push(docs[i])
 })
 
 
+
+
+/////////////////RawMaterials
 
 
 
@@ -654,6 +798,47 @@ arr.push(docs[i])
 
 
 })
+
+
+
+
+
+
+
+router.post('/dashChartStockWRtns',isLoggedIn,function(req,res){
+
+  var reason = req.body.reason
+
+ var arr = []
+ var id = req.user._id
+ let num = req.user.num
+ num++
+ 
+
+
+ StockV.find({status:reason},function(err,docs) {
+  // console.log(docs,'docs')
+   for(var i = 0;i<docs.length;i++){
+ 
+  console.log(docs,'docsWR')
+
+      if(arr.length > 0 && arr.find(value => value.name == docs[i].name  )){
+             console.log('true')
+  arr.find(value => value.name == docs[i].name).casesReceived
+  += docs[i].casesReceived
+  ;
+       }else{
+arr.push(docs[i])
+       }
+
+     
+   }
+  console.log(arr,'arrWR')
+  res.send(arr)
+ })
+
+})
+
 
 
 
@@ -1808,9 +1993,18 @@ console.log(goods,service,name,upc,usd,req.file.filename,'var')
   
 
 
-      router.get('/proAuto',function(req,res){
+      /*router.get('/proAuto',function(req,res){
         console.log('product day')
        Product.find(function(err,docs){
+          res.send(docs)
+        })
+      })*/
+
+      router.post('/proAuto',function(req,res){
+        console.log('product day')
+        let salesPerson = req.body.code
+       SaleStock.find({salesPerson:salesPerson},function(err,docs){
+         console.log(docs,'docsPro')
           res.send(docs)
         })
       })
@@ -2723,10 +2917,10 @@ console.log(arr,'doc7')
 
 router.get('/closeBatch/:id',function(req,res){
   let id = req.params.id
-  console.log(id,'id')
+  console.log(id,'idBatch')
 
   StockV.find({refNumber:id},function(err,docs){
-    console.log(docs,'docs')
+  //  console.log(docs,'docs')
     var productChunks = [];
     var chunkSize = 10;
     for (var i = 0; i < docs.length; i += chunkSize) {
@@ -2775,9 +2969,74 @@ router.get('/closeBatch/:id',function(req,res){
 
 
 
+router.get('/replace',function(req,res){
+  res.render('kambucha/batchReplace')
+})
 
 
+router.post('/replace',function(req,res){
+  var barcodeNumber = req.body.code
+  var barcodeNumber1 = req.body.code1
+  var reason = req.body.reason
+  console.log(reason,'reason5')
+  var arr3 = ['1','2','3']
+  var arr4 =['1','2','3','4']
+  var arr5 =['1','2','3','4','5']
+  var arr6 =['1','2','3','4','5','6']
+  var arr7 =['1','2','3','4','5','6','7']
+  var arr0 =[]
+  let id
+  var arr1 =['1']
+  StockV.find({barcodeNumber:barcodeNumber},function(err,docs){
+if(docs.length > 0){
+  //console.log(docs,'docs')
+  let status = docs[0].status
+  if(status == 'dispatched' || status == 'received' ){
+    id = docs[0]._id
+      
+    let refNumber = docs[0].refNumber
+    let pallet = docs[0].pallet
+  
 
+    StockV.find({barcodeNumber:barcodeNumber1},function(err,locs){
+      if(locs.length > 0){
+let status2 = locs[0].status
+if(status2 == 'received'){
+
+  let id2 = locs[0]._id
+ console.log(id,'stooge')
+  StockV.findByIdAndUpdate(id,{$set:{status:reason,replacementCase:barcodeNumber1,returnsType:'warehouse',type:'replaced'}},function(err,vocs){
+
+  })
+  StockV.findByIdAndUpdate(id2,{$set:{pallet:pallet,refNumber:refNumber,status:'dispatched',type:'replacement',replacedBarcode:barcodeNumber}},function(err,vocs){ 
+    if(!err){
+      res.send(arr1)
+    }
+
+  })
+}else{
+  res.send(arr3)
+}
+      }else{
+        res.send(arr4)
+      }
+    })
+    
+
+  }
+}else{
+  res.send(arr0)
+}
+  })
+})
+
+
+router.get('/warehouseRtns',function(req,res){
+  StockV.find({returnsType:"warehouse"},function(err,docs){
+
+    res.render('kambucha/warehouseRtns',{listX:docs})
+  })
+})
   router.get('/batchDispatch',isLoggedIn,function(req,res){
     /*var errorMsg = req.flash('danger')[0];
   var successMsg = req.flash('success')[0];*/
@@ -3284,6 +3543,7 @@ let uid = req.user._id
 let currentCases = req.user.currentCases
 let id = req.params.id
   BatchD.findById(id,function(err,doc){
+    if(doc){
     let refNumber = doc.refNumber
     let cases = doc.cases
     let scannedCases = currentCases 
@@ -3341,6 +3601,7 @@ res.redirect('/batchDispatch2')
        
 
     }
+  }
   })
 })
 
@@ -5482,8 +5743,10 @@ router.get('/receivedCasesPallet/:id/:otherId',function(req,res){
 
 
 router.get('/rtnsInwards',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
   var invoiceNumber = req.user.rtnsNumber
-  res.render('kambucha/inwards',{rtnsNumber:invoiceNumber})
+  res.render('kambucha/inwards',{rtnsNumber:invoiceNumber,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
 })
   
 router.post('/rtnsInwards',isLoggedIn,function(req,res){
@@ -5503,19 +5766,42 @@ router.post('/rtnsInwards',isLoggedIn,function(req,res){
   var year = m.format('YYYY')
   var mformat = m.format('L')
   var salesPerson = req.body.salesPerson
+
+
+
+  req.check('salesPerson','Enter Salesperson').notEmpty();
+               
+  
+  var errors = req.validationErrors();
+  
+  if (errors) {
+    
+    req.session.errors = errors;
+    req.session.success = false;
+    req.flash('danger', req.session.errors[0].msg);
+  
+  
+    res.redirect('/rtnsInwards');
+  
+  }
+  else{
+
+  
+ 
+
   ar1.push(req.body['product[]'])
   ar2.push(req.body['quantity[]'])
   ar3.push(req.body['price[]'])
   ar4.push(req.body['reason[]'])
 
-console.log(ar1.length,'ha')
+console.log(ar1[0].length,'ha')
 
   
-if(ar1.length >1){
-ar1 = ar1.filter(v=>v!='')
-ar2 = ar2.filter(v=>v!='')
-ar3 = ar3.filter(v=>v!='')
-ar4 = ar4.filter(v=>v!='')
+if(ar1[0].length >1){
+ar1 = ar1[0].filter(v=>v!='')
+ar2 = ar2[0].filter(v=>v!='')
+ar3 = ar3[0].filter(v=>v!='')
+ar4 = ar4[0].filter(v=>v!='')
 }
 
 console.log(ar1,'iwee1')
@@ -5523,12 +5809,14 @@ console.log(ar2,'iwee2')
 console.log(ar3,'iwee3')
 console.log(ar4,'iwee4')
 for(var i = 0; i<ar1.length;i++){
+  console.log(i,'ss')
+  console.log(ar1.length,'unai')
 console.log(ar1[i])
 let code = ar1[i]
 
 let qty1 = ar2[i]
 let price1 = ar3[i]
-
+let reason = ar4[i]
 let reg = /\d+\.*\d*/g;
 let resultQty = qty1.match(reg)
 let qty = Number(resultQty)
@@ -5545,10 +5833,10 @@ book.item = ar1[i]
 book.rtnsNumber = rtnsNumber
 
 book.salesPerson = salesPerson
-book.qty = ar2[i]
-book.price = ar3[i]
+book.qty = qty
+book.price = price
 book.total = total
-book.reason = ar4[i]
+book.reason = reason
 book.month = month
 book.year = year
 book.date = mformat
@@ -5576,7 +5864,9 @@ book.subtotal = 0
 
        
 }
+  
 res.redirect('/updateStockSale')
+  }
 })
 
 
@@ -5599,59 +5889,289 @@ console.log(docs.length)
   for(var z in arrV) { number1 += arrV[z]; }
 
 
+  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
+    for(var i = 0;i <docs.length;i++){
+      let id =  docs[i]._id
+      RtnsSubBatch.findByIdAndUpdate(id,{$set:{subtotal:number1}},function(err,focs){
+    
+      })
+    }
+    })
   console.log(number1,'number2')
 
- 
+  res.redirect('/updateStockSale0')
 
   })
-  res.redirect('/updateStockSale2')
+
 
 })
 
 
 
+router.get('/updateStockSale0',isLoggedIn,function(req,res){
+  let arrV = []
+  var rtnsNumber = req.user.rtnsNumber
+  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
+
+console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].qty)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+
+ //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+  number1=0;
+  for(var z in arrV) { number1 += arrV[z]; }
+
+
+  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
+    for(var i = 0;i <docs.length;i++){
+      let id =  docs[i]._id
+      RtnsSubBatch.findByIdAndUpdate(id,{$set:{subtotal:number1}},function(err,focs){
+    
+      })
+    }
+    })
+  console.log(number1,'number2')
+
+  res.redirect('/updateStockSale1')
+
+  })
+ 
+
+})
 
 
 
+router.get('/updateStockSale1',isLoggedIn,function(req,res){
+  var rtnsNumber = req.user.rtnsNumber
+  console.log(rtnsNumber,'returnsNumber33')
 
 
+    
+        RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,ocs){
+          console.log(ocs,'ocbgs')
+  //res.redirect('/updateStockSale2')
+
+  res.redirect('/rtnsSubFile')
+
+        })
+})
+
+///////////////////
+
+router.get('/rtnsSubFile',isLoggedIn,function(req,res){
+  let rtnsNumber = req.user.rtnsNumber
+  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
+   //console.log(docs,'docv')
+   if(docs.length > 0){
+     for(var i = 0; i<1;i++){
+       let item = docs[i].item
+       let rtnsNumber = docs[i].rtnsNumber
+       let qty = docs[i].qty
+       
+       let total = docs[i].subtotal
+       
+      
+       let date = docs[i].date
+       let month = docs[i].month
+       let year = docs[i].year
+       let salesPerson = docs[i].salesPerson
+
+       /*let month = docs[i].month
+       let year = docs[i].year
+       let date = docs[i].date*/
+       let subtotal = docs[i].subtotal
+   
+      
+ 
+   
+           var invo = new ReturnsSubFile();
+        
+           invo.rtnsNumber = rtnsNumber
+           invo.item =item
+      
+           invo.qty = qty
+        
+           invo.total = subtotal
+          
+           invo.date = date
+           invo.month = month
+           invo.year = year
+           invo.salesPerson = salesPerson
+        
+           /*invo.month = month
+           invo.year = year
+           invo.date = date*/
+       
+           invo.subtotal = subtotal
+           
+           invo.save()
+     .then(user =>{
+      
+      
+    
+   
+       })
+   
+     }
+    // res.redirect('/arrInvoiceSubUpdate')
+    res.redirect('/updateStockSale2')
+
+   }
+   })
+   
+   
+   })
+ 
+ 
 
 router.get('/updateStockSale2',isLoggedIn,function(req,res){
   let arrV = []
   var rtnsNumber = req.user.rtnsNumber
-  console.log(rtnsNumber)
-  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
+  console.log(rtnsNumber,'returnsNumber33')
+
+    //let qty1 = docs[0].qty
+   /* let qtyV = docs[i].qty / 12
+    let qty = docs[i].qty*/
+
 
 
     
-  for(var i = 0;i<docs.length;i++){
+       Product.find(function(err,ocs){
+           //console.log(ocs,'ocs')
 
+           for(var i = 0;i<ocs.length;i++){
+         let product = ocs[i].name
+         console.log(product,'product')
+            RtnsSubBatch.find({rtnsNumber:rtnsNumber,item:product},function(err,pocs){
+              if(pocs.length > 0){
+                let salesPerson = pocs[0].salesPerson
+              for(var i = 0;i<pocs.length; i++){
+                console.log(pocs[i].qty,'serima')
+              arrV.push(pocs[i].qty)
+                }
+                //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+               console.log(arrV,'arrV')
+         
+           //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+            number1=0;
+            for(var z in arrV) { number1 += arrV[z]; }
+           /* let cases3 = ocs[i].qty / 12
+            let qty = ocs[i].qty
+            let salesPerson = ocs[i].salesPerson
+            let product = ocs[i].item*/
+            let cases3 = number1 / 12
+
+            SaleStock.find({salesPerson:salesPerson,product:product}, function(err,yocs){
+            let id = yocs[0]._id
+            console.log(i,'i')
+            let cases = yocs[0].holdingCases - cases3
+            let qty2 = yocs[0].qty - number1
+            console.log(yocs[0].qty,'salesStock',number1,'rtnsStock')
+            console.log(qty2,'qty2')
+
+            SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,qty:qty2}},function(err,vocs){
+
+              if(!err){
+                //console.log(vocs,'roadmap')
+              }
+      
+            })
+            })
+        
+          
+
+
+
+          
+        
+
+
+          /*req.flash('success', 'Stock Returned Successfully!');
   
+          res.redirect('/rtnsInwards')*/  
+          }
+
+        })
+
+      }
+
+
+     // req.flash('success', 'Stock Returned Successfully!');
   
-    let salesPerson = docs[i].salesPerson
-    let product = docs[i].item
-    //let qty1 = docs[0].qty
-    let qtyV = docs[i].qty / 12
-    let qty = docs[i].qty
-
-
-    SaleStock.find({salesPerson:salesPerson,product:product},function(err,locs){
-
-      let cases = locs[0].holdingCases - qtyV
-      let qty2 = locs[0].qty - qty
-      let id = locs[0]._id
-
-      SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,qty:qty2}},function(err,vocs){
-
-      })
-
+          res.redirect('/viewRtns2')
     })
-  }
+        
+
+    
+   
+  
+
+})
 
 
+
+
+router.get('/viewRtns2',isLoggedIn,function(req,res){
+  var rtnsNumber = req.user.rtnsNumber
+  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,ocs){
+
+   // console.log(docs,'ok')
+    //res.render('kambucha/pdf',{listX:docs})
+
+    res.redirect('/viewRtns3/')
   })
 
 })
+
+router.get('/viewRtns3',isLoggedIn,function(req,res){
+  var rtnsNumber = req.user.rtnsNumber
+  RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,ocs){
+
+   // console.log(docs,'ok')
+    //res.render('kambucha/pdf',{listX:docs})
+
+    res.redirect('/viewRtns/'+rtnsNumber)
+  })
+
+})
+
+
+
+
+router.get('/viewRtns/:id',isLoggedIn,function(req,res){
+  var rtnsNumber = req.params.id
+
+  ReturnsSubFile.find(function(err,docs){
+
+    RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,locs){
+
+   // console.log(docs,'ok')
+    res.render('kambucha/pdfR',{listX:locs,listX2:docs})
+  })
+  })
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5826,108 +6346,151 @@ let address = req.body.address
 let town = req.body.town
 let city = req.body.city
 let country = req.body.country
+var arrX=[]
+let companyName = req.body.companyName
 
 
 console.log(salutation,firstName,lastName,customer,email,mobile,mobile2,address, town,city,country,'data bho')
+
+Customer.findOne({'companyName':companyName})
+.then(user =>{
+  if(user){ 
+
+    res.send(user)
+
+  }else{
+      var book = new Customer();
+          book.salutation = salutation
+          book.firstName= firstName
+          book.lastName = lastName
+          book.companyName = companyName
+          book.email = email
+          book.mobile = mobile
+          book.mobile2 = mobile2
+          book.address = address
+          book.town= town
+          book.city = city
+          book.country=country
+        
+              
+               
+                book.save()
+                  .then(pro =>{
+        
+                 
+                    res.send(arrX)
+                 
+                  
+                
+                })
+
+  }
+})
 
     })
 
 
 
+///view approved requisitions, for receiving stock
+    router.get('/approvedRequisitions',isLoggedIn,function(req,res){
+      BatchRR.find({status:'pending'},function(err,docs){
+    
+        res.render('kambucha/vouchers',{listX:docs})
+      })
+    })
+      
+    
+    router.get('/grvList',isLoggedIn,function(req,res){
+      BatchRR.find({status:"complete"},function(err,docs){
+        res.render('kambucha/grvList',{listX:docs})
+      })
+    })
+    
 
 
 
 
 //////////////////
 
-router.get('/batchRM',isLoggedIn,function(req,res){
+router.get('/batchRM/:id',isLoggedIn,function(req,res){
   var pro = req.user
-  res.render('kambucha/rcvBatch',{pro:pro})
+  var id = req.params.id
+  BatchRR.findById(id,function(err,doc){
+    let voucherNo = doc.voucherNo
+    let refNumber = doc.refNumber
+    let item = doc.item
+    let openingWeightTonnes = doc.openingWeightTonne
+    let requestedMassTonnes = doc.requestedMassTonnes
+  res.render('kambucha/rcvBatch',{pro:pro,id:id,refNumber:refNumber,item:item,
+  openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,voucherNo:voucherNo})
+
+})
 })
 
 
 
-router.post('/batchRM',isLoggedIn,function(req,res){
+router.post('/batchRM/:id',isLoggedIn,function(req,res){
 
   //var refNumber = req.body.referenceNumber
   var m = moment()
   var mformat = m.format('L')
   var month = m.format('MMMM')
   var year = m.format('YYYY')
+  var id = req.params.id
   var date = req.body.date
   var address = req.body.address
   var regNumber = req.body.regNumber
   var item = req.body.item
   var supplier = req.body.supplier
   var mobile = req.body.mobile
+
   let driver = req.body.driver
   let idNum = req.body.idNum
   let trailer = req.body.trailer
-  let refNo
+  let refNo = req.body.refNo
  // var lotNumber = req.body.lotNumber
   //var location = req.body.location
 
-  
-  let dateValue = moment().valueOf()
-  let date6 = moment().format('l');
-   let date7 =  date6.replace(/\//g, "");
- 
-
-//let shift = req.user.shift
+BatchRR.findByIdAndUpdate(id,{$set:{supplier:supplier,mobile:mobile,
+driver:driver,address:address,regNumber:regNumber,trailer:trailer}},function(err,docs){
 
 
-  RefNo.find({date:date},function(err,docs){
-    let size = docs.length + 1
-   refNo = date7+'B'+size+'RM'
-    console.log(refNo,'refNo')
 
-    var truck = new BatchRR()
-    truck.date = date
-    truck.mformat = date6
-    truck.address = address
-    truck.dateValue = dateValue
-    truck.regNumber = regNumber
-    truck.item = item
-    truck.supplier = supplier
-    truck.driver = driver
-    truck.mobile = mobile
-    truck.idNumber = idNum
-    truck.trailer = trailer
-    truck.refNumber = refNo
-    truck.month = month
-    truck.year = year
+
+let uid = req.user._id
+  User.findByIdAndUpdate(uid,{$set:{refNumber:refNo,batchId:id }},function(err,docs){
+
+  })
+
     
+
+
+res.redirect('/receiveMaterialV/'+id)
+
+})
+
+
+})
+
+
+
+
+
+router.post('/batchAutoStockRM',function(req,res){
+  var item = req.body.code
+  var arr = []
+  console.log(item,'pro7')
+  RawMat.find({item:item},function(err,docs){
    
-
-    truck.save()
-        .then(pro =>{
-
-
-
-    var id = req.user._id
-    User.findByIdAndUpdate(id,{$set:{refNumber:refNo }},function(err,docs){
-
-    })
-
-
-
-    var book = new RefNo();
-  book.refNumber = refNo
-  book.date = date
-  book.type = 'receiving material'
-  book.save()
-  .then(pro =>{
-
-    console.log('success')
-    res.redirect('/receiveMaterialV/'+refNo)
-
+   //console.log(arr,'arr')
+  
+    res.send(docs)
   })
 })
 
-  })
 
-    
-})
+
+
 
 router.get('/receiveMaterialV/:id',function(req,res){
   var id = req.params.id
@@ -5937,17 +6500,17 @@ router.get('/receiveMaterialV/:id',function(req,res){
 
 router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
 
-  var refNumber = req.user.refNumber
-  console.log(refNumber,'refNumber')
+
   var pro = req.user
   var id = req.params.id
-  BatchRR.find({refNumber:refNumber},function(err,docs){
+  BatchRR.findById(id,function(err,docs){
          if(docs){
-    let supplier = docs[0].supplier
-    let item = docs[0].item
-    let date = docs[0].date
-    let driver = docs[0].driver
-    let regNumber = docs[0].regNumber
+    let supplier = docs.supplier
+    let item = docs.item
+    let date = docs.date
+    let driver = docs.driver
+    let regNumber = docs.regNumber
+    let refNumber = docs.refNumber
   
    res.render('kambucha/addMaterial',{date:date,supplier:supplier,
   item:item,refNumber:refNumber,driver:driver,pro:pro,id:id,regNumber:regNumber})
@@ -5967,6 +6530,7 @@ router.post('/receiveMass',function(req,res){
   let number1
  
   let mass = req.body.code
+  let massTonne
   let refNumber = req.body.refNumber
   BatchRR.find({refNumber:refNumber},function(err,docs){
     //console.log(docs,'docs')
@@ -5979,7 +6543,12 @@ router.post('/receiveMass',function(req,res){
     let trailer = docs[0].trailer
     let address = docs[0].address
     let idNumber = docs[0].idNumber
+    let dateValue = docs[0].dateValue
+    let openingWeightKg = docs[0].openingWeightKg
+    let openingWeightTonne = docs[0].openingWeightTonne
+    let batchId = docs[0]._id
   let newMassNum = 0
+
 
 
 StockRM.find({refNumber:refNumber},function(err,docs){
@@ -5999,7 +6568,7 @@ let reg = /\d+\.*\d*/g;
 let resultQty = mass.match(reg)
 let massNum = Number(resultQty)
 
-
+let total5 = massNum + number1
 
 massNum.toFixed(2)
   let size = docs.length + 1
@@ -6007,6 +6576,7 @@ massNum.toFixed(2)
    
   var stock = new StockRM();
   stock.weight = weight
+  stock.date = date
   stock.address = address
   stock.regNumber = regNumber
   stock.item = item
@@ -6018,9 +6588,16 @@ massNum.toFixed(2)
   stock.mobile = mobile
   stock.month = month
   stock.year = year
+  stock.batchId = batchId
+  stock.openingWeightKg = openingWeightKg
+  stock.openingWeightTonne = openingWeightTonne
   stock.openingMass = number1
   stock.newMass = mass
   stock.closingMass = massNum + number1
+
+  stock.openingMassTonne = number1 / 1000
+  stock.newMassTonne = mass /1000
+  stock.closingMassTonne = total5 / 1000
   stock.size = size
   stock.dateValue = dateValue
 
@@ -6075,11 +6652,121 @@ router.post('/addMaterial3/:id',isLoggedIn, (req, res) => {
       })
     }
 
-    res.redirect('/grvFileV/'+refNumber)
+    res.redirect('/stockRMFile/'+refNumber)
 
     })
   })
 
+
+  router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
+    var uid = req.user._id
+    var id = req.params.id
+
+    StockRM.find({refNumber:id},function(err,docs){
+      if(docs.length > 0){
+    let size = docs.length - 1
+
+    let supplier = docs[size].supplier
+    let item = docs[size].item
+    let date = docs[size].date
+    let driver = docs[size].driver
+    let regNumber = docs[size].regNumber
+    let mobile = docs[size].mobile
+    let trailer = docs[size].trailer
+    let address = docs[size].address
+    let idNumber = docs[size].idNumber
+    let month = docs[size].month
+    let year = docs[size].year
+    let batchId = docs[size].batchId
+    let openingWeight = docs[size].openingWeight
+    let openingWeightTonne = docs[size].openingWeightTonne
+    console.log(openingWeightTonne,'openingWeightTonne')
+    let weight = docs[size].closingMass
+    let weightTonne = docs[size].closingMass / 1000
+    let dateValue = docs[size].dateValue
+    let closingWeight = docs[size].openingWeightKg + docs[size].closingMass
+    let closingWeightTonne = closingWeight / 1000
+    console.log(closingWeightTonne,'closingWeightTonne')
+
+
+User.findByIdAndUpdate(uid,{$set:{batchId:batchId}},function(err,locs){
+
+
+})
+
+    BatchRR.findByIdAndUpdate(batchId,{$set:{receivedKgs:weight,
+    receivedTonnes:weightTonne,receivedKgs:weight, closingWeightTonne:closingWeightTonne,
+  closingWeightKg:closingWeight}},function(err,vocs){
+
+  })
+
+  /*var stock = new StockRMFile();
+  stock.weight = weight
+  stock.weightTonne = weightTonne
+  stock.date = date
+  stock.address = address
+  stock.regNumber = regNumber
+  stock.item = item
+  stock.supplier = supplier
+  stock.driver = driver
+  stock.idNumber = idNumber
+  stock.trailer = trailer
+  stock.refNumber = id
+  stock.mobile = mobile
+  stock.month = month
+  stock.year = year
+  stock.openingWeight = openingWeight
+  stock.openingWeightTonne = openingWeightTonne
+  stock.closingWeight = closingWeight
+  stock.closingWeightTonne = closingWeightTonne
+  stock.dateValue = dateValue
+
+  stock.save()
+  .then(pro =>{
+
+
+ 
+   // res.redirect('/viewGRV/'+id)
+
+  })*/
+
+  res.redirect('/grvFileV/'+id)
+
+      }
+    })
+  })
+
+
+
+
+  /*router.get('/viewGRV/:id',isLoggedIn,function(req,res){
+    var refNumber = req.params.id
+  
+    StockRMFile.find(function(err,docs){
+  
+     StockRMFile.find({refNumber:refNumber},function(err,locs){
+  
+
+      res.render('kambucha/grv2',{listX:locs,listX2:docs})
+    })
+    })
+  
+  })*/
+  
+
+  router.get('/viewGRV/:id',isLoggedIn,function(req,res){
+    var id = req.params.id
+  
+    BatchRR.find(function(err,docs){
+  
+     BatchRR.find({_id:id},function(err,locs){
+       console.log(locs,'locs')
+
+      res.render('kambucha/grv2',{listX:locs,listX2:docs})
+    })
+    })
+  
+  })
 
 router.get('/grvFileV/:id',function(req,res){
   var id = req.params.id
@@ -6096,6 +6783,7 @@ router.get('/grvFileV/:id',function(req,res){
     var year = m.format('YYYY')
     var date = req.user.date
     var refNumber = req.params.id
+    let batchId = req.user.batchId
 
     StockRM.find({refNumber:refNumber}).lean().then(docs=>{
  
@@ -6165,31 +6853,16 @@ router.get('/grvFileV/:id',function(req,res){
     
     })
     
+   
     
-    var repo = new RepoFiles();
-    
-    repo.filename = filename;
-    repo.fileId = "null";
-    repo.status = 'grv'
-    repo.year = year;
-    
-    repo.month = month
-    
-    
-    console.log('done')
-    
-    repo.save().then(poll =>{
-    
-    })
-    
-    
-    
+  
+
 
     
     
     
    
-    
+  /*  
     const file = await fs.readFile(`./public/grv/${year}/${month}/grv${refNumber}`+'.pdf');
     const form = new FormData();
     form.append("file", file,filename);
@@ -6198,7 +6871,8 @@ router.get('/grvFileV/:id',function(req,res){
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
        //url: 'https://niyonsoft.org/uploadStatementDispatch',
-       url:'https://niyonsoft.org/uploadGrv',
+       //url:'https://niyonsoft.org/uploadGrv',
+       url:'localhost:8000/uploadGrv',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
@@ -6206,7 +6880,7 @@ router.get('/grvFileV/:id',function(req,res){
     });
     
     
-    res.redirect('/fileIdGrv/'+filename);
+    res.redirect('/fileIdGrv/'+filename);*/
     
     
     }catch(e) {
@@ -6217,6 +6891,8 @@ router.get('/grvFileV/:id',function(req,res){
     }
     
     
+    res.redirect('/viewGRV/'+batchId)
+    
     }) ()
     
     
@@ -6226,7 +6902,24 @@ router.get('/grvFileV/:id',function(req,res){
     
     })
 
+router.get('/openFile/:id',isLoggedIn,function(req,res){
+  var refNumber = req.params.id
+  
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  const path =`./public/grv/${year}/${month}/grv${refNumber}.pdf`
+  if (fs.existsSync(path)) {
+      res.contentType("application/pdf");
+      fs.createReadStream(path).pipe(res)
+  } else {
+      res.status(500)
+      console.log('File not found')
+      res.send('File not found')
+  }
 
+})
 
     router.post('/uploadGRV',upload.single('file'),(req,res,nxt)=>{
       var fileId = req.file.id
@@ -6313,7 +7006,125 @@ router.get('/grvFileV/:id',function(req,res){
       })
       
 
+router.get('/stockRequisition',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+res.render('kambucha/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+})
+      
+router.post('/stockRequisition',isLoggedIn,function(req,res){
+  var item =req.body.rawMaterial
+  var stockWeight = req.body.stock
+  var stockTonne = req.body.stockT
+  var requestedMass = req.body.qty
+  var name = req.user.fullname
+  var userId  = req.user._id
+  var dept = req.user.dept
+  var description = req.body.description
+  var unit = req.body.unit
+  let requestedMassTonnes,requestedMassKgs
+
+  if(unit == 'kgs'){
+    requestedMassTonnes = requestedMass / 1000
+    requestedMassKgs = requestedMass
+  }
+  else if(unit == 'tonnes'){
+    requestedMassKgs = requestedMass * 1000
+    requestedMassTonnes = requestedMass 
+
+  }
+
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  let dateValue = moment().valueOf()
+  let voucherNumber = 333
+
+  req.check('rawMaterial','Enter Raw Material').notEmpty();
+  req.check('stock','Enter Stock on hand').notEmpty();
+  req.check('qty','Enter Mass').notEmpty();
+  req.check('unit','Enter Unit').notEmpty();
+         
+                
+             
+               
   
+        
+     
+  var errors = req.validationErrors();
+      if (errors) {
+  
+      
+        req.session.errors = errors;
+        req.session.success = false;
+        req.flash('danger', req.session.errors[0].msg);
+
+
+    res.redirect('/stockRequisition');
+        
+      
+    }
+
+    else{
+      var user = new StockVoucher();
+      user.name = name;
+      user.description = description
+      user.userId = userId;
+      user.dept = dept
+      user.item = item
+      user.status = "pending";
+      user.date = mformat
+      user.approver1 = "pending";
+      user.date1 = "null";
+      user.status1 = "null"
+      user.approver2 = "null";
+      user.date2 = "null";
+      user.status2 = "null";
+      user.approver3 = "null";
+      user.date3 = "null";
+      user.status3 = "null";
+      user.approver4 = "null";
+      user.date4 = "null";
+      user.status4 = "null";
+      user.month = month
+      user.unit = unit
+      user.year = year
+      user.dateValue = dateValue
+      user.currentMassTonnes = stockTonne
+      user.currentMassKgs = stockWeight
+      user.requestedMass = requestedMass
+      user.voucherNumber = voucherNumber
+      user.requestedMassTonnes = requestedMassTonnes
+      user.requestedMassKgs = requestedMassKgs
+     
+
+      
+      
+     
+      
+       
+  
+       
+
+      user.save()
+        .then(user =>{
+
+          req.flash('success', 'Request Sent');
+
+
+          res.redirect('/stockRequisition');
+          
+    })
+
+
+
+
+    }
+
+})
+
 
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  

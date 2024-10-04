@@ -21,6 +21,16 @@ const methodOverride = require('method-override');
 
 
 var indexRoute= require('./routes/index')
+var indexRoute1= require('./routes/account1')
+var indexRoute2= require('./routes/account2')
+var indexRoute3= require('./routes/account3')
+var indexRoute4= require('./routes/account4')
+
+var indexRoute5= require('./routes/receiver')
+var indexRoute6= require('./routes/dispatch')
+var indexRoute7= require('./routes/rm')
+var indexRoute8= require('./routes/admin')
+var indexRoute9= require('./routes/sales')
 
 /* var recordsRoute = require('./routes/records')
  var studentRoute= require('./routes/student')
@@ -90,6 +100,15 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRoute);
+app.use('/accounts1', indexRoute1);
+app.use('/accounts2', indexRoute2);
+app.use('/accounts3', indexRoute3);
+app.use('/accounts4', indexRoute4);
+app.use('/receiver', indexRoute5);
+app.use('/dispatch', indexRoute6);
+app.use('/rm', indexRoute7);
+app.use('/admin', indexRoute8);
+app.use('/sales', indexRoute9);
 
 
 
