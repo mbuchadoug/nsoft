@@ -530,7 +530,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "./receiveScan",
+                url: "/receiver/receiveScan",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -692,7 +692,7 @@ link.classList.add('text-end','pe-0')*/
 
      <a onclick="return confirm('Are you sure you want to Close this batch ?');" href="/receiver/closeBatch/{{refNumber}}" id="ember334" class="btn btn-primary ember-view" id="ember334" >Close Batch</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>-->
-      <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/receiver/eodRepo">Run Report</button></div>
+     <!-- <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/receiver/eodRepo">Run Report</button></div>-->
       </form></div>
       </div> <!----> <!---->
        <div class="column content-column d-none"></div>

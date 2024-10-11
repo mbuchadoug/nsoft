@@ -9,6 +9,7 @@ invoCode:{type:String},
 invoiceCode:{type:String},
 
 code:{type:String},
+filename:{type:String},
 
 item:{type:String, required:true},
 qty:{type:Number, required:true},

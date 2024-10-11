@@ -2463,6 +2463,10 @@ let qty = docs[0].qty
   })
 
 
+  router.get('/salesPdf',function(req,res){
+    res.render('kambucha/salesInvoice')
+  })
+
 
 
 

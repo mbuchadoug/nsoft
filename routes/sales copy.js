@@ -522,7 +522,7 @@ router.get('/customer',function(req,res){
               ar2 = ar2.filter(v=>v!='')
               ar3 = ar3.filter(v=>v!='')
               ar4 = ar4.filter(v=>v!='')
-             
+              }
             console.log(ar1,'iwee1')
             console.log(ar2,'iwee2')
             console.log(ar3,'iwee3')
@@ -626,104 +626,7 @@ router.get('/customer',function(req,res){
                     }  
                           
             }
-           }else{
-           console.log(ar1,'ar1else')
-              let code = ar1
-              
-            
-              console.log(ar3,ar4,'qty')
-
-
-              if(typeof(ar2)=== "string"){
-                let reg = /\d+\.*\d*/g;
-                let resultQty = ar2.match(reg)
-                 qtyV = Number(resultQty)
-
-                let stockQty = ar4.match(reg)
-                 stockV = Number(stockQty)
-           
-              }
-              console.log(qtyV,stockV,'fctwente')
-            if(qtyV>stockV){
-              console.log(ar2,ar4,'end')
-              
-              console.log('not enough stock')
-            
-              req.flash('danger', 'You dont have enough stock');
-            
-            
-              res.redirect('/sales/invoice');
-            
-            
-            }else{
-            
-            
-            
-            
-            
-            var book = new InvoiceSubBatch();
-              book.item = ar1
-              book.itemId = invoiceNumber
-              book.clientCompany = company
-              book.address = address
-              book.clientName = clientName
-              book.salesPerson = salesPerson
-              book.salesPersonId = salesPersonId
-              book.qty = 0
-              book.price = 0
-              book.total = 0
-              book.month = month
-              book.year = year
-              book.date = mformat
-              book.invoiceNumber = invoiceNumber
-            
-              book.status = 'not saved'
-            
-              book.type = "Invoice"
-            
-              book.size = 1
-              book.subtotal = 0
-             
-            
-            
-                  
-                   
-                    book.save()
-                      .then(title =>{
-            //let client = title.clientName
-            let subtotal = 0
-            let pId = title._id
-            console.log(pId,"idd")
-            
-            let size = title.size
-            
-            console.log(size,'size')
-            let qty1 = ar2
-            let price1 = ar3
           
-            let reg = /\d+\.*\d*/g;
-            let resultQty = qty1.match(reg)
-            let qty = Number(resultQty)
-            
-            
-            let resultPrice = price1.match(reg)
-            let price = Number(resultPrice)
-            
-            console.log(qty,price,'blow minds')
-            let total = qty * price
-            subtotal = subtotal + total
-            InvoiceSubBatch.findByIdAndUpdate(pId,{$set:{qty:qty,price:price,total:total,subtotal:subtotal}},function(err,ocs){
-                  
-                  })
-            
-                 
-            
-                      })
-            
-                    }  
-                          
-            }
-           
             
            
             }
@@ -932,16 +835,12 @@ router.get('/customer',function(req,res){
                // res.redirect('/arrInvoiceSubUpdate')
                //res.redirect('/sales/viewInvo2')
 
-               res.redirect('/sales/invoiceGen3')
+               res.redirect('/sales/invoiceGen')
               })
               
               
               })
             
-
-              router.get('/invoiceGen3',isLoggedIn,function(req,res){
-                res.redirect('/sales/invoiceGen')
-              })
             
                
     
@@ -958,17 +857,17 @@ router.get('/invoiceGen/',isLoggedIn,function(req,res){
 
   var invoiceNumber = req.user.invoiceNumber
 
-  RepoFiles.findOne({'invoiceNumber':invoiceNumber})
-  .then(user =>{
-      if(!user){ 
-  console.log(invoiceNumber,'invoiceNumber666')
+  //var studentName = 'Tiana Madzima'
+ 
+  /*console.log(arr,'iiii')*/
 
+  //console.log(docs,'docs')
 
   InvoiceSubFile.find({invoiceNumber:invoiceNumber}).lean().then(docs=>{
 
     console.log(docs,'eastwind')
   
-  const compile = async function (templateName, docs){
+  const compile = async function (templateName, arrStatementR){
   const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
   
   const html = await fs.readFile(filePath, 'utf8')
@@ -1033,10 +932,8 @@ let filename = 'invoice'+invoiceNumber+'.pdf'
 var repo = new RepoFiles();
 
 repo.filename = filename;
-repo.invoiceNumber = invoiceNumber
 repo.fileId = "null";
 repo.status = 'invoice'
-repo.status2 = 'unpaid'
 repo.year = year;
 repo.month = month
 
@@ -1078,7 +975,6 @@ await Axios({
   res.redirect('/sales/viewInvo2');
   
   
-  
   }catch(e) {
   
   console.log(e)
@@ -1088,15 +984,11 @@ await Axios({
   
   
   }) ()
-  
 
 })
-}else{
   
-  res.redirect('/sales/viewInvo2');
-}
 
-}) 
+  
   
   //res.redirect('/hostel/discList')
   
@@ -1122,7 +1014,6 @@ await Axios({
   
   }
   res.redirect('/sales/viewInvo2');
-  //res.redirect('/sales/statementGen')
   })
   
   })
@@ -1131,14 +1022,8 @@ await Axios({
             
               router.get('/viewInvo2',isLoggedIn,function(req,res){
                 var invoiceNumber = req.user.invoiceNumber
-                let filename = 'invoice'+invoiceNumber+'.pdf'
                 InvoiceSubFile.find({invoiceNumber:invoiceNumber},function(err,docs){
-                for(var i = 0;i<docs.length;i++){
-                  let id = docs[i]._id
-                  InvoiceSubFile.findByIdAndUpdate(id,{$set:{filename:filename}},function(err,locs){
-
-                  })
-                }
+            
                  // console.log(docs,'ok')
                   //res.render('kambucha/pdf',{listX:docs})
             
@@ -1152,34 +1037,17 @@ await Axios({
               router.get('/viewInvoice/:id',isLoggedIn,function(req,res){
                 var invoiceNumber = req.params.id
                 var salesPersonId = req.user.username
-                let filename = 'invoice'+invoiceNumber+'.pdf'
                 InvoiceSubFile.find({salesPersonId:salesPersonId},function(err,locs){
             
                 InvoiceSubFile.find({invoiceNumber:invoiceNumber},function(err,docs){
             
                  // console.log(docs,'ok')
-                  res.render('sales/pdf',{listX:docs,listX2:locs,filename:filename})
+                  res.render('sales/pdf',{listX:docs,listX2:locs})
                 })
                 })
              
               })
-
-      
-              
-  router.get('/openInvoice/:id',(req,res)=>{
-    var filename = req.params.id
-    console.log(filename,'fileId')
-      const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
-      gfs.files.find({filename: filename}).toArray((err, files) => {
-      console.log(files[0])
-    
-        const readStream = bucket.openDownloadStream(files[0]._id);
-            readStream.pipe(res);
-    
-      })
-     
-    })
-    
+            
             
     router.get('/statementGenView',function(req,res){
 

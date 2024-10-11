@@ -85,19 +85,35 @@ let stock = arr2[i].qty
 arrPro.push(name)
 
       return `
+
+      <style>
+#nameList:hover{
+  color:white;
+}
+
+           #autoProBox:hover #nameList #rate #inventory  {
+             color: white;
+           },
+           #autoPro:hover #nameList #rate #inventory  {
+            color: white;
+          }
+     
+           </style>
+    
       <li  id="${V}" onclick=selectInput2(this) class="ac-item-details dropdown-item ac-option ">
       <a tabindex="-1" >
-        <div class="autocomplete-option" title="${name}">
+        <div class="autocomplete-option" id="title" title="${name}">
           <div class="ac-name-rate-sku">
        <div class="ac-name" id="nameList">${name}</div> 
        <div class="grey-text"><div></div>
-       <span class="ac-rate">Rate: USD ${usd}.00</span></div></div> 
+       <span class="ac-rate" id="rate">Rate: USD ${usd}.00</span></div></div> 
        <div class="ac-stock">
          <div>Stock on Hand</div>
-          <div class="stock-available">${stock}:units</div></div></div>
+          <div class="stock-available" id="inventory">${stock}:units</div></div></div>
           </a>
            <div class="border-line"></div></li>
                            
+           
                            `
       //resultBox.appendChild(list)
       //resultBox2.innerHTML = `<ul class="ac-dropdown-results dropdown-menu input-block-level left-align-options ">`+content2.join('') + `</ul>`
@@ -114,6 +130,10 @@ arrPro.push(name)
 
 
 
+}
+
+else{
+  document.getElementById("autoPro1").style.display = "none";
 }
 })
 
@@ -167,6 +187,7 @@ console.log(title,'title')
 
          console.log(document.getElementById('ember408').value,'444')
          resultBox12.style.display="none"
+
      
          document.getElementById('xxx').setAttribute("onclick","selectInput1(this)")
 
@@ -321,7 +342,7 @@ function selectInput1(list){
    console.log(trSize,'trSize111')
    //console.log(clone.getElementsByTagName('button'))
    // add new row to end of table
-  
+  document.getElementById("autoPro2").style.display = "none";
    var f2 = table.getElementsByTagName('textarea')
    let nSize = f2.length -1
    console.log(nSize,'nSize111')
@@ -343,6 +364,7 @@ function selectInput1(list){
          f2[nSize].value = data.product
    
          console.log(f2[nSize],'vvv')
+         resultBox1.style.display="none"
        
          document.getElementById(`price${trSize}`).value = data.price
          document.getElementById(`stock${trSize}`).value = data.qty
@@ -522,8 +544,29 @@ function selectInput3(list1){
  
 
 
+ /*$(document).on('click','body *',function(){
+ 
+  console.log('onbody')
+  let p =  document.getElementById('autoPro');
+  let p3 =  document.getElementById('autoPro3');
+  
+  if(p.style.display == ""){
+console.log('incase')
+
+    document.getElementById("autoPro").style.display = "none";
+  }
+
+ else if(p.style.display == "none"){
+  console.log('incase3')
+
+    document.getElementById("autoPro").style.display = "";
+  }
 
 
+
+  
+});
+*/
 
 
 

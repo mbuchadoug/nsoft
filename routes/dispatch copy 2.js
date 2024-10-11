@@ -2958,27 +2958,27 @@ res.redirect('/dispatch/rtnsInwards');
 else{
   console.log(req.body['product[]'],'flag')
 
-/*
+
 
 ar1.push(req.body['product[]'])
 ar2.push(req.body['quantity[]'])
 ar3.push(req.body['price[]'])
-ar4.push(req.body['reason[]'])*/
+ar4.push(req.body['reason[]'])
 
-//console.log(ar1[0].length,'ha')
+console.log(ar1[0].length,'ha')
 
-if(typeof(ar1) === 'object' ){
-  console.log('true')
-   ar1 = ar1.filter(v=>v!='')
-   ar2 = ar2.filter(v=>v!='')
-   ar3 = ar3.filter(v=>v!='')
-   ar4 = ar4.filter(v=>v!='')
-  
- console.log(ar1,'iwee1')
- console.log(ar2,'iwee2')
- console.log(ar3,'iwee3')
- console.log(ar4,'iwee4')
 
+if(ar1[0].length >1){
+ar1 = ar1[0].filter(v=>v!='')
+ar2 = ar2[0].filter(v=>v!='')
+ar3 = ar3[0].filter(v=>v!='')
+ar4 = ar4[0].filter(v=>v!='')
+}
+
+console.log(ar1,'iwee1')
+console.log(ar2,'iwee2')
+console.log(ar3,'iwee3')
+console.log(ar4,'iwee4')
 for(var i = 0; i<ar1.length;i++){
 console.log(i,'ss')
 console.log(ar1.length,'unai')
@@ -3036,78 +3036,6 @@ book.subtotal = 0
    
 }
 
-}else{
-  console.log(ar1,'ar1else')
-  let code = ar1
-  
-
-  console.log(ar3,ar4,'qty')
-
-
-  if(typeof(ar2)=== "string"){
-    let reg = /\d+\.*\d*/g;
-    let resultQty = ar2.match(reg)
-     qtyV = Number(resultQty)
-
-  console.log('ehezzve')
-
-  }
-  //else{
-console.log('else2')
-
-    let qty1 = ar2
-    let price1 = ar3
-    let reason = ar4
-    let reg = /\d+\.*\d*/g;
-    let resultQty = qty1.match(reg)
-    let qty = Number(resultQty)
-    
-    
-    let resultPrice = price1.match(reg)
-    let price = Number(resultPrice)
-    
-    let total = qty * price
-    
-    var book = new RtnsSubBatch();
-    book.item = ar1
-    
-    book.rtnsNumber = rtnsNumber
-    
-    book.salesPerson = salesPerson
-    book.qty = qty
-    book.price = price
-    book.total = total
-    book.reason = reason
-    book.month = month
-    book.year = year
-    book.date = mformat
-    //book.invoiceNumber = invoiceNumber
-    
-    book.status = 'not saved'
-    
-    book.type = "Rtns Inwards"
-    
-    book.size = 1
-    book.subtotal = 0
-    
-    
-    
-    
-     
-      book.save()
-        .then(title =>{
-    
-    
-      
-    
-    
-        })
-    
-       
-
-  //}
- 
-}
 res.redirect('/dispatch/updateStockSale')
 }
 })
