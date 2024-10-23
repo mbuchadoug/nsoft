@@ -462,7 +462,7 @@ this.firstElementChild.select();
   <script>
 
             function add() {
-       let releasedBy = document.getElementById('releasedBhy').value 
+       let releasedBy = document.getElementById('releasedBy').value 
        let refNumber = document.getElementById('refNumber').value
        let receivedBy = document.getElementById('receivedBy').value
        let tanks = document.getElementById('tanks').value
@@ -484,7 +484,7 @@ this.firstElementChild.select();
                
                  
                  alert('Error')
-                   $("#batchNumber").val("")
+                   $("#refNumber").val("")
                  
                  
                  
@@ -507,17 +507,17 @@ this.firstElementChild.select();
     td5.id = data._id
 
 
-    td1.innerHTML = data.weight;
-    td2.innerHTML = data.openingMass;
+    td1.innerHTML = data.date;
+    td2.innerHTML = data.tanks;
    // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data.newMass ;
-    td5.innerHTML = data.closingMass
-    td6.innerHTML = data.batchNumber
+    td4.innerHTML=  data.refNumber ;
+    td5.innerHTML = data.releasedBy
+    td6.innerHTML = data.receivedBy
     
     
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
     $("#totalMass").val(data.closingMass)
-     $("#mass").val('')
+     $("#refNumber").val('')
   
 
                     }
@@ -551,7 +551,7 @@ this.firstElementChild.select();
               <div id="ember330" class="ember-view">
           <div class="ac-box ">
 
-      <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="" >
+      <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text" value="{{id}}" readonly >
             </div> </div></div>
 
 
@@ -559,13 +559,19 @@ this.firstElementChild.select();
               <div id="ember330" class="ember-view">
           <div class="ac-box ">
 
-      <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text" value="" readonly >
+      <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text" value="{{product}}" readonly >
             </div> </div></div>
-         <div class="col-lg-2"><label class="col-form-label required">Number of Tanks</label>
+         <div class="col-lg-2"><label class="col-form-label required"> Tanks Drained</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
              <input  id="tanks" name="tanks" class="ember-text-field ember-view form-control" type="number" value="" ></div> </div></div>
 
+
+
+<div class="col-lg-2"><label class="col-form-label required">Total Tanks</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="availableTanks" name="availableTanks" class="ember-text-field ember-view form-control" type="number" value="{{availableTanks}}" readonly ></div> </div></div>
 
 
  <div class="col-lg-2"><label class="col-form-label required">Released By</label>
@@ -666,7 +672,7 @@ this.firstElementChild.select();
           <button onclick="add()" class="btn btn-primary ember-view" > Add </button>
        <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <!--<a  class="btn btn-primary ember-view" href="/rm/closeBatchOutCrush/{{batchId}}"> Close Batch </a>-->
+      <a  class="btn btn-primary ember-view" href="/rm/closeDraining/{{refNumber}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -727,7 +733,7 @@ this.firstElementChild.select();
 
  <script>
       $(function(){
-    $('#batchNumber').autocomplete({
+    $('#refNumber').autocomplete({
     source: function(req,res){
 
       $.ajax({
@@ -761,7 +767,7 @@ this.firstElementChild.select();
                
                 
 
-                   $('#batchNumber').val(data.refNumber);
+                   $('#refNumber').val(data.refNumber);
                     $('#product').val(data.product);
                
     

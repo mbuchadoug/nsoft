@@ -2208,7 +2208,9 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
     stock.water = water
     stock.endDate = endDate
     stock.product = product
+    stock.tanksDrained = 0
     stock.quantity = 0
+    stock.status ='null'
     stock.refNumber=refNo
     stock.month = month
     stock.year = year
@@ -2447,9 +2449,11 @@ router.get('/draining',isLoggedIn,function(req,res){
 
 
 
- router.get('/draining/:id',isLoggedIn,function(req,res){
-
-  res.render('rStock/drain')
+ router.get('/draining/:id/:id2/:id3',isLoggedIn,function(req,res){
+var id = req.params.id
+var product = req.params.id2
+var availableTanks = req.params.id3
+  res.render('rStock/drain',{id:id,product:product,availableTanks:availableTanks})
  })
         
 
@@ -2458,8 +2462,8 @@ router.get('/draining',isLoggedIn,function(req,res){
 
 
 router.post('/draining/',isLoggedIn,function(req,res){
-  var releasedBy = req.body.releasedBy
-      var batchNumber = req.body.batchNumber
+     var releasedBy = req.body.releasedBy
+      //var batchNumber = req.body.batchNumber
       var receivedBy = req.body.receivedBy
       var date = req.body.date
       var refNumber = req.body.refNumber
@@ -2469,7 +2473,7 @@ router.post('/draining/',isLoggedIn,function(req,res){
     
     var cook = new DrainedTanks()
     cook.releasedBy = releasedBy
-    cook.batchNumber = batchNumber
+    //cook.refNumber = refNumber
     cook.receivedBy = receivedBy
     cook.date = date
     cook.product = product
@@ -2480,6 +2484,22 @@ router.post('/draining/',isLoggedIn,function(req,res){
     cook.save()
           .then(pro =>{
           
+BatchFermentation.find({refNumber:refNumber},function(err,docs){
+let avTanks = docs[0].tanksDrained + pro.tanks
+
+let id2 = docs[0]._id
+
+
+BatchFermentation.findByIdAndUpdate(id2,{$set:{tanksDrained:avTanks}},function(err,vocs){
+
+
+})
+
+})
+
+
+
+            
             res.send(pro)
           
           })
@@ -2562,6 +2582,9 @@ router.post('/draining/',isLoggedIn,function(req,res){
       
       })
  
+
+
+
 
 
 module.exports = router;

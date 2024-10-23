@@ -10,6 +10,7 @@ var batchSchemaFermentation = new Schema({
     status:{type:String},
     days:{type:Number},
     tanks:{type:Number},
+    tanksDrained:{type:Number},
     water: {type: Number },
     operator: {type: String },
     checkedBy: {type: String },
