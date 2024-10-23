@@ -13,6 +13,10 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
    
 
+
+   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- Tracking Load Time -->
 
           
@@ -256,7 +260,7 @@ $.ajax({
     dataType: 'json',
     type: 'POST',
 	
-    url: "/addMaterial3/"+refNumber,
+    url: "/rm/fermentationPreload/"+refNumber,
     success: function(data) {
     console.log(data)
    
@@ -267,11 +271,10 @@ $.ajax({
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
+	 var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    
+   
    
     td1.id =data[i]._id
     td4.id = data[i]._id
@@ -287,12 +290,12 @@ link.className = "text-end";*/
 td5.appendChild(link);*/
 
 
-td1.innerHTML = data[i].weight;
-    td2.innerHTML = data[i].openingMass;
-   // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data[i].newMass ;
-    td5.innerHTML = data[i].closingMass
-    td6.innerHTML = data[i].refNumber
+td1.innerHTML = data[i].date;
+    td2.innerHTML = data[i].batchNumber;
+    td3.innerHTML = data[i].ingredient;
+    td4.innerHTML=  data[i].quantity ;
+    td5.innerHTML = data[i].product
+   
 
     /*let link2 = "/rec/delete/"+data[i]._id
 
@@ -457,22 +460,29 @@ this.firstElementChild.select();
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Receive Stock </h3></div>
+<h3 class="over-flow">Fermentation </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
             function add() {
-       let mass = document.getElementById('mass').value 
-       let refNumber = document.getElementById('refNumber').value      
+       let mass = document.getElementById('quantity').value 
+       let refNumber = document.getElementById('refNumber').value
+       let ingredient =   document.getElementById('ingredient').value         
+       let operator =  document.getElementById('operator').value  
+       let date =  document.getElementById('date').value 
+       let batchNumber = document.getElementById('batchNumber').value
+       let product = document.getElementById('product').value
+       console.log(mass,refNumber,ingredient,operator,date,batchNumber,'beggin')
+      
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,
-                    refNumber:refNumber,
+                    code: mass,batchNumber:batchNumber,product:product,
+                    refNumber:refNumber,ingredient:ingredient,operator:operator,date:date
                     
                 },
                 type: 'POST',
-                url: "./receiveMass",
+                url: '/rm/fermentationMat/',
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -480,7 +490,7 @@ this.firstElementChild.select();
                
                  
                  alert('Enter Mass')
-                   $("#mass").val("")
+                   $("#quantity").val("")
                  
                  
                  
@@ -493,14 +503,14 @@ this.firstElementChild.select();
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
+var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
+    /*var td6 = tr.appendChild(document.createElement('td'));*/
   
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
-    td5.id = data._id
+    //td5.id = data._id
 /*td2.classList.add('text-end', 'pe-0')
 td3.classList.add('text-end', 'pe-0')
 td4.classList.add('text-end', 'pe-1')
@@ -511,12 +521,13 @@ link.classList.add('text-end','pe-0')*/
 
 
 
-    td1.innerHTML = data.weight;
-    td2.innerHTML = data.openingMass;
-   // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data.newMass ;
-    td5.innerHTML = data.closingMass
-    td6.innerHTML = data.refNumber
+    td1.innerHTML = data.date;
+    td2.innerHTML = data.batchNumber;
+    td3.innerHTML = data.ingredient;
+    td4.innerHTML=  data.quantity ;
+    td5.innerHTML=  data.product ;
+    /*td5.innerHTML = data.time
+    td6.innerHTML = data.finishTime*/
     
     //let link2 = "/rec/delete/"+data._id
 
@@ -542,24 +553,79 @@ link.classList.add('text-end','pe-0')*/
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
+
 			
         </script>
 
+        <script>
+
+          
+            function closeBatch(){
+              let tanks = document.getElementById('tanks').value
+              let id = document.getElementById('id').value
+console.log(tanks,id,'tanks555')
+
+              
+if(tanks==''){
+document.getElementById('danger').innerHTML = ''
+document.getElementById('danger').style.display = ''
+document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
+}else{
+
+
+
+
+  $.ajax({
+                dataType: 'json',
+                data: {
+                    code: tanks,
+                    
+                    
+                },
+                type: 'POST',
+                url: "/rm/closeFermentationBatch/"+id,
+                success: function(data) {
+
+                 window.location='http://localhost:8000/rm/batchFermentation'
+                }
+
+                })
+
+}
+            }
+        </script>
+	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" style="display: none;">
+          
+     
+        </div>
+    </div>
+						
+		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="danger" class="alert alert-danger" style="display: none;">
+          
+     
+        </div>
+    </div>								
               <form class="zb-txn-form"  name="sample">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
-          <!--<fieldset role="radiogroup" class="form-group">
-              <div class="form-check cursor-pointer mb-2">  
-              <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>
-             <div class="form-check cursor-pointer mb-2">  
-         <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
+         <input type="hidden" id="id" name="id" value="{{id}}">
          <div class="row form-group">
-        <div class="col-lg-2"><label class="col-form-label required">Supplier</label> 
-         <input  id="supplier" name="supplier" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{supplier}}" readonly></div>
+        <div class="col-lg-2"><label class="col-form-label required">Ingredient</label> 
+         <input  id="ingredient" name="ingredient" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" ></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Item</label>
+         <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
-             <input  id="item" name="item" class="ember-text-field ember-view form-control" type="text" value="{{item}}" readonly></div> </div></div>
+             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="" readonly></div> </div></div>
+
+
+ <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Quantity (kgs)</label> 
+    <input  id="quantity" name="quantity" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
+
+
+<div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Tanks Mixed</label> 
+    <input  id="tanks" name="tanks" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
 
           <div class="col-lg-2"><label class="col-form-label required">Date</label>
               <div id="ember330" class="ember-view">
@@ -567,18 +633,25 @@ link.classList.add('text-end','pe-0')*/
 
       <input  id="date" name="date" class="ember-text-field ember-view form-control" type="text" value="{{date}}" readonly>
             </div> </div></div>
-       <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
+  
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Driver</label> 
-    <input  id="driver" name="driver" class="ember-text-field ember-view form-control" type="text"  value="{{driver}}" readonly></div>
+      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
+    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
 
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Vehicle Reg#</label> 
-    <input  id="regNumber" name="regNumber" class="ember-text-field ember-view form-control" type="text"  value="{{regNumber}}" readonly></div>
-         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Batch Number</label> 
-    <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text"  value="{{batchNumber}}" readonly></div>
+    
+         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Operator</label> 
+    <input  id="operator" name="operator" class="ember-text-field ember-view form-control" type="text"  value="{{operator}}" readonly></div>
 
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Requested Mass (kgs)</label> 
-    <input  id="reqMass" name="reqMass" class="ember-text-field ember-view form-control" type="text"  value="{{mass}}" readonly></div>
+ <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Water (Litres)</label> 
+    <input  id="water" name="water" class="ember-text-field ember-view form-control" type="text"  value="{{water}}" readonly></div>
+
+
+     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
+    <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}" readonly></div>
+
+    
+
+
     
     
     
@@ -593,7 +666,7 @@ link.classList.add('text-end','pe-0')*/
 
 
     
-    <div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
+    <!--<div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
     <table class="table table-bordered">
         <tbody><tr>
           <td>
@@ -613,7 +686,7 @@ link.classList.add('text-end','pe-0')*/
     </tbody>
     </table>
     </div>
-    </div> 
+    </div> -->
 
      
 
@@ -623,12 +696,12 @@ link.classList.add('text-end','pe-0')*/
       <table class="table table-bordered" id="kt_ecommerce_report_sales_table">
 <thead>
 <tr>
-  <th>Weight</th>
-	<th>Opening Mass</th>
-	<!--<th>Cases Received</th>-->
-	<th>New Mass</th>
-  <th>Closing Mass</th>
-   <th>Ref Number</th>
+  <th>Date</th>
+	<th>Ingredient Batch #</th>
+	<th>Ingredients</th>
+	<th>Quantity</th>
+  <th>Product</th>
+
 
 
                               </tr>
@@ -659,12 +732,14 @@ link.classList.add('text-end','pe-0')*/
    
       <!--<a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/eodRepo">Run Report</button>-->
       </div>
+
       </form>
+
         <div class="btn-toolbar">
           <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
-      <a  class="btn btn-primary ember-view" href="/rm/closeBatchRM/{{refNumber}}"> Close Batch </a>
+      <a onclick="closeBatch()" class="btn btn-primary ember-view"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -717,4 +792,103 @@ link.classList.add('text-end','pe-0')*/
 <label for="editor">TX</label><textarea id="editor"></textarea>
 <!--<button id="submit">Send</button>-->
 <label for="output">Mass</label><textarea id="output"></textarea>
+
+
+
+
+
+ <script>
+      $(function(){
+    $('#ingredient').autocomplete({
+    source: function(req,res){
+
+      $.ajax({
+        url:"/rm/autocompleteFerment/",
+        dataType:"jsonp",
+        type:"GET",
+        data:req,
+        success: function(data){
+          res(data)
+        
+
+        },
+        error: function(err){
+          console.log(err.status);
+        }
+      });
+    },
+
+    minLength:1,
+    select: function(event,ui){
+
+  $.ajax({
+                dataType: 'json',
+                data: {
+                    code: ui.item.label,
+                    
+                },
+                type: 'POST',
+                url: "/rm/autoFerment",
+                success: function(data) {
+               
+                
+
+                   $('#ingredient').val(data.ingredient);
+                    $('#batchNumber').val(data.refNumber);
+               
+    
+          
+                
+            
+                }
+               
+            });
+ 
+
+
+  
+    }
+
+
+
+    });
+
+      });
+      </script> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+ <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+
+
+
+
+
+
+
+
 

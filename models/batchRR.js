@@ -31,6 +31,7 @@ var batchSchemaRR = new Schema({
     idNumber: {type: String },
     trailer: {type: Number },
     refNumber: {type: String },
+    batchNumber: {type: String },
     month: {type: String },
     year: {type: Number },
     dateValue: {type: Number },

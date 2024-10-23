@@ -21,6 +21,7 @@ var stockVoucher = new Schema({
     date3:{type:String},
     month: {type: String },
     year: {type: Number },
+    purchaseOrderNum: {type: String },
     dateValue: {type: Number },
     currentMassTonnes:{type:Number},
     currentMassKgs:{type:Number},

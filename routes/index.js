@@ -4,6 +4,8 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
+var FermentationProduct = require('../models/fermentationProduct');
+var Ingredients = require('../models/ingredients');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
@@ -13,6 +15,7 @@ var RtnsSubBatch= require('../models/rtnsSubBatch');
 var SaleStock = require('../models/salesStock');
 var BatchD = require('../models/batchD');
 var InvoNum = require('../models/invoNum');
+var VoucherNum = require('../models/vouNum');
 var RefNo = require('../models/refNo');
 const USB = require("webusb").USB;
 var RefNoDisp = require('../models/refNoDisp');
@@ -415,6 +418,103 @@ var date = m.format('L')
 
 
 
+
+
+
+
+
+router.get('/addFP',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addFP',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/addFP', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addFP');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new FermentationProduct();
+                  user.product = name;
+                  user.tanks = 0
+                  user.litres = 0
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'User added Successfully');
+         
+          
+              res.redirect('/addFP');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
 //////////add RM
 
 router.get('/addRM',function(req,res){
@@ -512,6 +612,100 @@ var date = m.format('L')
 
 
 
+//add ingredients
+
+
+router.get('/addIngredient',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addIngredient',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/addIngredient', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addIngredient');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new Ingredients();
+                  user.item = name;
+                  user.massKgs = 0;
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'Ingredient added Successfully');
+         
+          
+              res.redirect('/addIngredient');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
 
 
 
@@ -549,7 +743,7 @@ router.post('/', passport.authenticate('local.signin', {
   }else if(req.user.role == "ceo"){
     res.redirect('/accounts4/stockRequisitions')
   }else if(req.user.role == "production-supervisor"){
-    res.redirect('/rm/stockRequisition')
+    res.redirect('/rm/voucherNumberUpdate')
   }
 
 
@@ -1427,6 +1621,84 @@ router.post('/addRefNum2',function(req,res){
     
     
 })
+
+
+
+
+
+
+router.get('/addVouNum',function(req,res){
+  
+  res.render('kambucha/invoNum3')
+})
+
+router.post('/addVouNum',function(req,res){
+
+  var voucherNumber = req.body.voucherNumber;
+  //var idNumber = req.body.idNumber;
+  
+ 
+      req.check('voucherNumber','Enter Voucher Number').notEmpty().isNumeric();
+      //req.check('idNumber','Enter ID Number').notEmpty().isNumeric();
+
+    
+      
+      var errors = req.validationErrors();
+           
+      if (errors) {
+      
+        req.session.errors = errors;
+        req.session.success = false;
+        res.render('kambucha/invoNum3',{ errors:req.session.errors,})
+      
+    }
+    else{
+      
+      VoucherNum.findOne({'num':voucherNumber})
+        .then(dept =>{
+            if(dept){ 
+  
+           req.session.message = {
+            type:'errors',
+             message:'Number already exists'
+           }     
+              res.render('kambucha/invoNum3', {
+                 message:req.session.message ,
+              })
+            }else{
+
+          
+    
+      var num = new VoucherNum();
+    
+      num.num = voucherNumber;
+     
+     
+   
+    
+    
+      num.save()
+        .then(dep =>{
+         
+          req.session.message = {
+            type:'success',
+            message:'Number added'
+          }  
+          res.render('kambucha/invoNum3',{message:req.session.message,});
+      
+    
+      })
+    
+     }
+      
+      
+      })
+    }
+    
+    
+})
+
+
 
 
 
