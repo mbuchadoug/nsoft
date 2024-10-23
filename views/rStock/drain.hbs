@@ -464,15 +464,15 @@ this.firstElementChild.select();
             function add() {
        let releasedBy = document.getElementById('releasedBhy').value 
        let refNumber = document.getElementById('refNumber').value
-       let batchId = document.getElementById('batchId').value
-       let availableMass = {{{availableMass}}}
-       let batchNumber = document.getElementById('batchNumber').value      
+       let receivedBy = document.getElementById('receivedBy').value
+       let tanks = document.getElementById('tanks').value
+       let product = document.getElementById('product').value      
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,
-                    batchNumber:batchNumber,
-                    batchId:batchId,refNumber:refNumber,availableMass:availableMass
+                    releasedBy: releasedBy,
+                    receivedBy:receivedBy,
+                    tanks:tanks,refNumber:refNumber,product:product
                     
                 },
                 type: 'POST',
@@ -483,8 +483,8 @@ this.firstElementChild.select();
                
                
                  
-                 alert('Enter Mass')
-                   $("#mass").val("")
+                 alert('Error')
+                   $("#batchNumber").val("")
                  
                  
                  
