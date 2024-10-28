@@ -466,12 +466,13 @@ this.firstElementChild.select();
        let refNumber = document.getElementById('refNumber').value
        let receivedBy = document.getElementById('receivedBy').value
        let tanks = document.getElementById('tanks').value
+       let blendingTank = document.getElementById('blendingTank').value
        let product = document.getElementById('product').value      
             $.ajax({
                 dataType: 'json',
                 data: {
                     releasedBy: releasedBy,
-                    receivedBy:receivedBy,
+                    receivedBy:receivedBy,blendingTank:blendingTank,
                     tanks:tanks,refNumber:refNumber,product:product
                     
                 },
@@ -567,8 +568,23 @@ this.firstElementChild.select();
              <input  id="tanks" name="tanks" class="ember-text-field ember-view form-control" type="number" value="" ></div> </div></div>
 
 
+ <div class="col-lg-2"><label class="col-form-label required"> Blending Tank #</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="blendingTank" name="blendingTank" class="ember-text-field ember-view form-control" type="text" value="" ></div> </div></div>
 
-<div class="col-lg-2"><label class="col-form-label required">Total Tanks</label>
+
+
+<div class="col-lg-2"><label class="col-form-label required"> Available Litres #</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="availableLitres" name="availableLitres" class="ember-text-field ember-view form-control" type="text" value="" readonly></div> </div></div>
+
+
+
+
+
+<div class="col-lg-2"><label class="col-form-label required">Total FM Tanks</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
              <input  id="availableTanks" name="availableTanks" class="ember-text-field ember-view form-control" type="number" value="{{availableTanks}}" readonly ></div> </div></div>
@@ -672,7 +688,7 @@ this.firstElementChild.select();
           <button onclick="add()" class="btn btn-primary ember-view" > Add </button>
        <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a  class="btn btn-primary ember-view" href="/rm/closeDraining/{{refNumber}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" href="/rm/closeDraining/{{id}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -733,11 +749,11 @@ this.firstElementChild.select();
 
  <script>
       $(function(){
-    $('#refNumber').autocomplete({
+    $('#blendingTank').autocomplete({
     source: function(req,res){
 
       $.ajax({
-        url:"/rm/autocompleteDrain/",
+        url:"/rm/autocompleteTank/",
         dataType:"jsonp",
         type:"GET",
         data:req,
@@ -762,13 +778,13 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "/rm/autoDrain",
+                url: "/rm/autoTank",
                 success: function(data) {
                
-                
+                console.log(data.litres,'skinny')
 
-                   $('#refNumber').val(data.refNumber);
-                    $('#product').val(data.product);
+                   $('#blendingTank').val(data.tankNumber);
+                    $('#availableLitres').val(data.litres);
                
     
           

@@ -3,9 +3,6 @@ var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
-var BlendingTanks = require('../models/blendingTanks');
-var BlendingDays = require('../models/blendingDays');
-var FinalProductEvaluation = require('../models/finalProductEvaluation');
 var Ware = require('../models/ware');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
@@ -2484,54 +2481,26 @@ var availableTanks = req.params.id3
 router.post('/draining/',isLoggedIn,function(req,res){
      var releasedBy = req.body.releasedBy
       //var batchNumber = req.body.batchNumber
-    var m = moment()
-    var month = m.format('MMMM')
       var receivedBy = req.body.receivedBy
       var date = req.body.date
       var refNumber = req.body.refNumber
-      var blendingTank = req.body.blendingTank
       var tanks= req.body.tanks
       var product = req.body.product
       //var water = req.body.wat
     
-      var m = moment(date)
-   
-      var year = m.format('YYYY')
-    
-      var date = m.toString()
-      var numDate = m.valueOf()
-    var cook = new BlendedItems()
+    var cook = new DrainedTanks()
     cook.releasedBy = releasedBy
     //cook.refNumber = refNumber
     cook.receivedBy = receivedBy
     cook.date = date
-    cook.month = month
-    cook.blendingTank = blendingTank
-    cook.year = year
     cook.product = product
     cook.tanks= tanks
-    cook.litres = tanks * 1000
-    cook.status = 'null'
     cook.refNumber = refNumber
     //cook.operator = operator
     
     cook.save()
           .then(pro =>{
-            console.log(pro,'pro')
-BlendingTanks.find({tankNumber:blendingTank},function(err,toc){
-  if(toc){
-  
-  let litresDrained = tanks * 1000
-  let opLitres = toc[0].litres + litresDrained
-  let maseId = toc[0]._id
-  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:refNumber}},function(err,focs){
-
-
-  })
-
-}
-
-         
+          
 BatchFermentation.find({refNumber:refNumber},function(err,docs){
 let avTanks = docs[0].tanksDrained + pro.tanks
 let remainingTanks = docs[0].tanks - avTanks
@@ -2562,7 +2531,6 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 })
 
 })
-}) 
 
 
             
@@ -2571,82 +2539,6 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
           })
       
 })
-
-
- //Autocomplete for Crush
- router.get('/autocompleteTank/',isLoggedIn, function(req, res, next) {
-  var id = req.user._id
-  var customer = req.user.autoCustomer
-
-    var regex= new RegExp(req.query["term"],'i');
-   
-    var itemFilter =BlendingTanks.find({ tankNumber:regex},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
-  
-    
-    itemFilter.exec(function(err,data){
-   
- 
-  console.log('data',data)
-  
-  var result=[];
-  
-  if(!err){
-     if(data && data.length && data.length>0){
-       data.forEach(shop=>{
- 
-
- 
-     
-  
-          
-         let obj={
-           id:shop._id,
-           label: shop.tankNumber
-
-       
-     
-       
-         
-          
-  
-           
-         };
-        
-         result.push(obj);
-      
-        })
-    
-  
-     }
-   
-     res.jsonp(result);
-
-    }
-  
-  })
- 
-  });
-
-
-//this route shop
-  router.post('/autoTank',isLoggedIn,function(req,res){
-      var code = req.body.code
-
-
-  
-      
-     
-      BlendingTanks.find({tankNumber:code},function(err,docs){
-     if(docs == undefined){
-       res.redirect('/')
-     }else
-
-        res.send(docs[0])
-      })
-    
-    
-    })
-
 
 
 router.get('/closeDraining/:id',isLoggedIn,function(req,res){
@@ -2729,15 +2621,6 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
       })
  
-
-
-      router.get('/blendingTanks',isLoggedIn,function(req,res){
-        BlendingTanks.find(function(err,docs){
-             res.render('rStock/blendingTanks',{listX:docs})
-      
-            })
-       })
-      
 
 
 

@@ -4,7 +4,9 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
+var BlendingTanks = require('../models/blendingTanks');
 var FermentationProduct = require('../models/fermentationProduct');
+var DrainedProduct = require('../models/drainedProducts');
 var Ingredients = require('../models/ingredients');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
@@ -513,8 +515,99 @@ var date = m.format('L')
                   
 })
 
+////
+
+router.get('/addDP',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addDP',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
 
 
+
+})
+
+
+
+router.post('/addDP', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addDP');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new DrainedProduct();
+                  user.product = name;
+                  user.tanks = 0
+                  user.litres = 0
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'User added Successfully');
+         
+          
+              res.redirect('/addDP');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
 //////////add RM
 
 router.get('/addRM',function(req,res){
@@ -7400,6 +7493,194 @@ router.post('/stockRequisition',isLoggedIn,function(req,res){
     }
 
 })
+
+
+
+
+
+
+router.get('/importTanks',isLoggedIn,function(req,res){
+  var pro = req.user
+
+ 
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+
+
+   title = "Import Tanks"
+
+  
+
+  
+ res.render('imports/tanks',{pro:pro,title:title,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+
+   })
+
+
+
+  
+ router.post('/importTanks',isLoggedIn, uploadX.single('file'),function(req,res){
+   var term = req.user.term;
+   var m = moment()
+   var year = m.format('YYYY')
+   var id =   req.user._id
+   var idNumber = req.user.idNumber
+   var pro = req.user
+
+
+ 
+   
+ /*  if(!req.file){
+       req.session.message = {
+         type:'errors',
+         message:'Select File!'
+       }     
+         res.render('imports/students', {message:req.session.message,pro:pro}) */
+         if (!req.file || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+           req.session.message = {
+               type:'errors',
+               message:'Upload Excel File'
+             }     
+               res.render('imports/tanks', {message:req.session.message,pro:pro
+                    
+                }) 
+ 
+ 
+ 
+       }
+         
+       else{
+
+       
+           const file = req.file.filename;
+   
+           
+                var wb =  xlsx.readFile(`./public/uploads/` + file)
+        
+                var sheets = wb.Sheets;
+                var sheetNames = wb.SheetNames;
+    
+                var sheetName = wb.SheetNames[0];
+    var sheet = wb.Sheets[sheetName ];
+    
+       for (var i = 0; i < wb.SheetNames.length; ++i) {
+        var sheet = wb.Sheets[wb.SheetNames[i]];
+    
+        console.log(wb.SheetNames.length)
+        var data =xlsx.utils.sheet_to_json(sheet)
+            
+        var newData = data.map(async function (record){
+    
+       
+        
+     
+         
+      
+      
+     
+           let tankNumber = record.tankNumber;
+        
+           req.body.tankNumber=record.tankNumber
+
+
+       req.check('tankNumber','Enter Tank Month').notEmpty();
+
+   
+
+var errors = req.validationErrors();
+ 
+if (errors) {
+ 
+ req.session.errors = errors;
+ req.session.success = false;
+ console.log( req.session.errors[0].msg)
+ req.flash('danger', req.session.errors[0].msg);
+      
+       
+ res.redirect('/importTanks');
+
+}
+
+else
+
+
+           {
+             BlendingTanks.findOne({'tankNumber':tankNumber})
+             .then(user =>{
+                 if(user){ 
+               // req.session.errors = errors
+                 //req.success.user = false;
+           
+           
+           
+                 req.flash('danger', 'Tank already in the system');
+
+                 res.redirect('/importTanks') 
+ 
+                 //res.redirect('/records/import')
+               
+           }
+           else
+
+
+
+
+
+           var user = new BlendingTanks();
+           user.tankNumber = tankNumber
+           user.litres = 0
+           user.product = 'null'
+           user.refNumber = 'null'
+
+          
+          
+          
+           user.save()
+             .then(user =>{
+              
+             
+                 
+             /*  req.session.message = {
+                 type:'success',
+                 message:'Account Registered'
+               }  
+               res.render('imports/teacherX',{message:req.session.message});*/
+             })
+
+           })
+         }
+                  
+                   // .catch(err => console.log(err))
+                 
+               
+                   
+                 
+                 
+        
+                 
+                 
+                 
+                   
+                   
+       
+                  
+       
+                  
+            
+               })
+               
+               req.flash('success', 'File Imported Successfully!');
+ 
+               res.redirect('/importTanks') 
+     
+       }
+     }
+ 
+ })
+
+
+
+
 
 
 function encryptPassword(password) {
