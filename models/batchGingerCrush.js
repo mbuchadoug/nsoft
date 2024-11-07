@@ -10,6 +10,7 @@ var batchSchemaGW = new Schema({
     qtyInMass: {type: Number },
     qtyOutMass: {type: Number },
     status: {type: String },
+    status2: {type: String },
     refNumber: {type: String },
     refNumber2: {type: String },
     batchNumber: {type: String },

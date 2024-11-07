@@ -7,6 +7,7 @@ var batchSchemaBD = new Schema({
     odour:{type:String},
     date:{type:String},
     day:{type:Number},
+    pos:{type:Number},
     mouthfeel:{type:String},
     taste:{type:String},
     tankNumber:{type:Number},

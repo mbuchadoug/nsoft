@@ -7,6 +7,7 @@ var BlendingTanks = require('../models/blendingTanks');
 var BlendingDays = require('../models/blendingDays');
 var FinalProductEvaluation = require('../models/finalProductEvaluation');
 var Ware = require('../models/ware');
+var CrushedItems = require('../models/crushedItems');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
@@ -464,7 +465,7 @@ BatchRR.find({refNumber:refNumber},function(err,docs){
   let address = docs[0].address
   let batchNumber = docs[0].batchNumber
   let idNumber = docs[0].idNumber
-  let voucherNumber = docs[0].voucherNumber
+  let voucherNumber = docs[0].voucherNo
   let dateValue = docs[0].dateValue
   let openingWeightKg = docs[0].openingWeightKg
   let openingWeightTonne = docs[0].openingWeightTonne
@@ -562,14 +563,93 @@ StockRM.find({refNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
 router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
 
   let refNumber = req.params.id
+  
 
- StockRM.find({refNumber:refNumber},function(err,docs){
+ StockRM.find({refNumber:refNumber},function(err,nocs){
 
-  let batchId = docs[0].batchId
+  let batchId = nocs[0].batchId
 
   BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete"}},function(err,vocs){
 
-  })
+    let batchNumber= vocs.batchNumber
+    let item = vocs.item
+    let month = vocs.month
+    let year = vocs.year
+ 
+    let supplier = vocs.supplier
+    let availableMass = vocs.closingWeightKg
+    let refNumber = vocs.refNumber
+    console.log(availableMass,'availableMass333')
+    RawMat.find({item:item},function(err,docs){
+      console.log(docs,'letu')
+      if(docs.status != 'wash'){
+        console.log('true')
+        let date =  moment().format('l');
+  let date6 =  moment().format('l');
+  let dateValue = moment().valueOf()
+
+  let date7 =  date6.replace(/\//g, "");
+  
+
+     // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+
+     // })
+      
+
+
+
+      RefNo.find({type:item},function(err,docs){
+        let size = docs.length + 1
+       refNo = date7+'B'+size+item+'crush'
+        console.log(refNo,'refNo')
+    
+        var truck = new BatchGingerWash()
+        truck.date = date
+        truck.mformat = date6
+        truck.dateValue = dateValue
+        truck.item = item
+        truck.refNumber = refNo
+        truck.refNumber2 = refNumber
+        truck.batchNumber = batchNumber
+        truck.month = month
+        truck.qtyInMass = availableMass
+        truck.qtyOutMass= availableMass
+        truck.month = month
+        truck.type = 'null'
+        truck.status = 'null'
+        truck.status2 = 'null'
+        truck.year = year
+        truck.status = 'qtyOut'
+       
+        
+       
+    
+        truck.save()
+            .then(pro =>{
+    
+            //  User.findByIdAndUpdate(id,{$set:{refNumber:refNo,batchId:pro._id}},function(err,vocs){
+
+              //})
+              var book = new RefNo();
+              book.refNumber = refNo
+              book.date = date
+              book.type = item
+              book.save()
+              .then(prod =>{
+          
+               
+              })
+            })
+            })
+
+          
+      }
+          })
+    
+        })
+      
+    
+  
 
 
 
@@ -616,6 +696,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
 router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   var uid = req.user._id
   var id = req.params.id
+  console.log(id,'refNumber')
 
   StockRM.find({refNumber:id},function(err,docs){
     if(docs.length > 0){
@@ -656,14 +737,77 @@ closingWeightKg:closingWeight}},function(err,vocs){
 })
 
 RawMat.find({item:item},function(err,hocs){
+  //if(hocs[0].status == 'wash'){
+
+  
   let massKgs = hocs[0].massKgs + weight
   let massTonnes = hocs[0].massTonnes + weightTonne
   let idRaw = hocs[0]._id
+  if(hocs[0].status == 'null'){
+BatchGingerWash.find({refNumber2:id},function(err,nocs){
+
+  if(nocs.length > 0){
+    let idG = nocs[0]._id
+BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
+
+})
+  }
+})
+  }
 
   RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes}},function(err,nocs){
 
   })
+  /*}else{
+    
+  let date6 =  moment().format('l');
+  let dateValue = moment().valueOf()
 
+  let date7 =  date6.replace(/\//g, "");
+  
+    RefNo.find({date:date,type:"crush"},function(err,docs){
+      let size = docs.length + 1
+     refNo = date7+'B'+size+item+'crush'
+      console.log(refNo,'refNo')
+  
+      var truck = new BatchGingerCrush()
+      truck.date = date
+      truck.mformat = date6
+      truck.dateValue = dateValue
+      truck.item = item
+      truck.refNumber = refNo
+      truck.refNumber2 = id
+      truck.batchNumber = id
+      truck.month = month
+      truck.qtyInMass = 0
+      truck.qtyOutMass= 0
+      truck.month = month
+      truck.status = 'null'
+      truck.year = year
+     
+      
+     
+  
+      truck.save()
+          .then(pro =>{
+  
+          
+            var book = new RefNo();
+            book.refNumber = refNo
+            book.date = date
+            book.type = 'crush'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
+
+          })
+
+        })
+
+  }*/
   
 })
 
@@ -796,7 +940,7 @@ arrG.push(docs[size])
   })
   
  
-  res.redirect('/rm/viewGRV/'+batchId)
+  res.redirect('/rm/openFile/'+batchNumber)
 
 
 
@@ -822,7 +966,8 @@ arrG.push(docs[size])
   });
   
   
-  res.redirect('/rm/fileIdGrv/'+filename);
+  //res.redirect('/rm/fileIdGrv/'+filename);
+ // res.redirect('/rm/openFile/'+batchNumber)
   
   
   }catch(e) {
@@ -1002,6 +1147,7 @@ else{
         truck.mformat = date6
         truck.dateValue = dateValue
         truck.item = item
+        truck.status2 = "null"
         truck.refNumber = refNo
         truck.refNumber2 = refNumber
         truck.batchNumber = batchNumber
@@ -1191,7 +1337,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
           BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyInMass:number1,status:'qtyIn'}},function(err,vocs){
 
           })
-          res.redirect('/rm/batch')
+          res.redirect('/rm/batchList')
         })
       
        
@@ -1395,7 +1541,7 @@ router.get('/batchList',function(req,res){
       var readonly = 'hidden'
       var read =''
     
-      BatchGingerWash.find({status:'qtyOut'}).lean().then(docs=>{
+      BatchGingerWash.find({status:'qtyOut',status2:"null"}).lean().then(docs=>{
       var arr = docs
     
       res.render('rStock/batchCrushing',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
@@ -1455,9 +1601,9 @@ else{
 
 
 
-      RefNo.find({date:date,type:"gingerCrush"},function(err,docs){
+      RefNo.find({date:date,type:"crush"},function(err,docs){
         let size = docs.length + 1
-       refNo = date7+'B'+size+'GC'
+       refNo = date7+'B'+size+item+'crush'
         console.log(refNo,'refNo')
     
         var truck = new BatchGingerCrush()
@@ -1481,13 +1627,13 @@ else{
         truck.save()
             .then(pro =>{
     
-              User.findByIdAndUpdate(id,{$set:{refNumber:refNo,batchId:pro._id}},function(err,vocs){
+              User.findByIdAndUpdate(id,{$set:{batchNumber:batchNumber,refNumber:refNo,batchId:pro._id}},function(err,vocs){
 
               })
               var book = new RefNo();
               book.refNumber = refNo
               book.date = date
-              book.type = 'gingerCrush'
+              book.type = 'crush'
               book.save()
               .then(prod =>{
           
@@ -1546,6 +1692,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       let mass = req.body.code
       let massTonne
       let batchNumber = req.body.batchNumber
+      console.log(batchNumber,'batchNumber666')
       BatchGingerWash.find({batchNumber:batchNumber},function(err,docs){
         //console.log(docs,'docs')
       
@@ -1637,10 +1784,21 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
           number1=0;
           for(var z in arrV) { number1 += arrV[z]; }
 
-          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyInMass:number1,status:'qtyIn'}},function(err,vocs){
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyInMass:number1,status:'qtyIn'}},function(err,doc){
+          let item = doc.item
+
+          CrushedItems.find({item:item},function(err,docs){
+            let id = docs[0]._id
+          CrushedItems.findByIdAndUpdate(id,{$set:{massKgs:number1}},function(err,tocs){
 
           })
-          res.redirect('/rm/crushBatch')
+          })
+
+            
+
+
+          })
+          res.redirect('/rm/batchListCrush')
         })
       
        
@@ -1831,12 +1989,12 @@ router.get('/batchListCrush',function(req,res){
           BatchGingerCrush.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
             variance = number1 - qtyInMass
-          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance}},function(err,vocs){
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed'}},function(err,vocs){
 
           })
 
         })
-          res.redirect('/rm/crushBatch')
+        res.redirect('/rm/batchListCrush')
         })
       
        
@@ -2077,6 +2235,7 @@ var m = moment()
 var month = m.format('MMMM')
 var year = m.format('YYYY')
 var mformat = m.format('L')
+let total
 
 BatchCooking.findById(id,function(err,doc){
   let refNumber = doc.refNumber
@@ -2094,11 +2253,10 @@ Cooking.find({refNumber:refNumber},function(err,docs){
     //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
     number1=0;
     for(var z in arrV) { number1 += arrV[z]; }
-
+    total = number1
     BatchCooking.findByIdAndUpdate(id,{$set:{qauntity:number1}},function(err,locs){
 
     })
-
 
 if(docs.length > 1){
   if(docs[0].ingredient == "ginger" && docs[1].ingredient == "tea leaves" ||  docs[0].ingredient == "tea leaves" && docs[1].ingredient == "ginger" ){
@@ -2106,7 +2264,12 @@ if(docs.length > 1){
   }
   else if(docs[0].ingredient == "sugar" && docs[1].ingredient == "tea leaves" ||  docs[0].ingredient == "tea leaves" && docs[1].ingredient == "sugar"){
     finalProduct = 'colour'
-  }else{
+  }
+  else if(docs[0].ingredient == "ginger" && docs[1].ingredient == "garlic" ||  docs[0].ingredient == "garlic" && docs[1].ingredient == "ginger"){
+    finalProduct = 'gingerGarlic'
+  }
+  
+  else{
     finalProduct = docs[0].ingredient
   }
 }else if(docs.length == 1){
@@ -2119,7 +2282,7 @@ if(docs[0].ingredient == 'sugar'){
 }
 }
 
-    BatchCooking.findByIdAndUpdate(id,{$set:{status:"complete",finalProduct:finalProduct}},function(err,locs){
+    BatchCooking.findByIdAndUpdate(id,{$set:{status:"complete",finalProduct:finalProduct,quantity:number1}},function(err,locs){
 
       Ingredients.find({item:finalProduct},function(err,toc){
         let openingBal = toc[0].massKgs + number1
@@ -2130,6 +2293,7 @@ if(docs[0].ingredient == 'sugar'){
       })
 
       })
+  
 
       var final = new FinalProduct()
       final.refNumber = refNumber
@@ -2146,16 +2310,39 @@ if(docs[0].ingredient == 'sugar'){
       })
   
 
-
+    
     })
 
 })
 
-
+res.redirect('/rm/batchListIngredients')
 
 
 })
       })
+
+
+      
+      
+ 
+router.get('/batchListIngredients',function(req,res){
+  Ingredients.find(function(err,docs){
+  
+    let arr=[]
+    for(var i = docs.length - 1; i>=0; i--){
+  
+      arr.push(docs[i])
+    }
+  
+    res.render('rStock/batchListIngredients',{listX:arr})
+  
+  })
+  
+  
+  
+  })
+
+
 
 
 
@@ -2473,7 +2660,8 @@ router.get('/draining',isLoggedIn,function(req,res){
 var id = req.params.id
 var product = req.params.id2
 var availableTanks = req.params.id3
-  res.render('rStock/drain',{id:id,product:product,availableTanks:availableTanks})
+var litres = availableTanks * 1000
+  res.render('rStock/drain',{id:id,product:product,availableTanks:availableTanks,litres:litres})
  })
         
 
@@ -2747,7 +2935,7 @@ router.get('/blendingDays/:id',isLoggedIn,function(req,res){
     var litres = doc.litres
     var refNumber = doc.refNumber
 BlendingDays.find({batchId:id},function(err,docs){
-  if(docs.length <= 2){
+  if(docs.length >= 2){
     res.render('rStock/blend3',{tankNumber:tankNumber,product:product,
       litres:litres,refNumber:refNumber,id:id})
   }else{
@@ -2765,6 +2953,8 @@ router.post('/blendingDays/',isLoggedIn,function(req,res){
  console.log('333333')
  var id = req.body.id
    //var batchNumber = req.body.batchNumber
+
+
  var m = moment()
  var month = m.format('MMMM')
    var color = req.body.color
@@ -2778,13 +2968,19 @@ router.post('/blendingDays/',isLoggedIn,function(req,res){
 
    var litres = req.body.litres
    var tankNumber = req.body.tankNumber
+
+   console.log(tankNumber,'tankNumber')
  
    var m = moment(date)
 
    var year = m.format('YYYY')
  
-   var date = m.toString()
+   var date = m.format('L')
    var numDate = m.valueOf()
+
+BlendingDays.find({batchId:id},function(err,docs){
+  let size = docs.length + 1
+
  var cook = new BlendingDays()
  cook.product = product
  cook.afterTaste = afterTaste
@@ -2798,6 +2994,7 @@ router.post('/blendingDays/',isLoggedIn,function(req,res){
  cook.mouthfeel = mouthfeel
  cook.taste= taste
  cook.batchId = id
+ cook.pos = size
  cook.litres = litres
  cook.status = 'normal'
  cook.refNumber = refNumber
@@ -2813,6 +3010,8 @@ router.post('/blendingDays/',isLoggedIn,function(req,res){
          res.send(pro)
        
        })
+
+      })
    
 })
 
@@ -2851,7 +3050,7 @@ router.post('/blendingExtraDays/',isLoggedIn,function(req,res){
  
     var year = m.format('YYYY')
   
-    var date = m.toString()
+    var date = m.format('L')
     var numDate = m.valueOf()
   var cook = new BlendingDays()
   cook.product = product
@@ -2892,6 +3091,249 @@ router.post('/blendingExtraDays/',isLoggedIn,function(req,res){
     res.send(docs)
   })
   })
+
+
+
+router.get('/closeBlending',isLoggedIn,function(req,res){
+  res.redirect('/rm/blendingTanks')
+})
+
+
+  router.get('/blendingFile/:id',isLoggedIn,function(req,res){
+
+    var m = moment()
+    var mformat = m.format('L')
+    var month = m.format('MMMM')
+    var year = m.format('YYYY')
+    var date = req.user.date
+    var refNumber = req.params.id
+    let id = req.params.id
+
+  
+    BlendingDays.find({batchId:id}).lean().then(docs=>{
+  
+  
+    let size = docs.length - 1
+  
+  var arrG = []
+
+  for(var i = 0;i<docs.length;i++){
+
+ 
+  arrG.push(docs[i])
+}
+    console.log(arrG,'arrG')
+    
+    const compile = async function (templateName,arrG ){
+    const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+    
+    const html = await fs.readFile(filePath, 'utf8')
+    
+    return hbs.compile(html)(arrG)
+    
+    };
+    
+    
+    
+    
+    (async function(){
+    
+    try{
+  
+    const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+    "--disable-setuid-sandbox",
+    "--no-sandbox",
+    "--single-process",
+    "--no-zygote",
+    ],
+    executablePath:
+    process.env.NODE_ENV === "production"
+      ? process.env.PUPPETEER_EXECUTABLE_PATH
+      : puppeteer.executablePath(),
+    });
+    
+    const page = await browser.newPage()
+    
+    
+    
+    //const content = await compile('report3',arr[uid])
+    const content = await compile('blendTracker',arrG)
+    
+  
+    
+    await page.setContent(content, { waitUntil: 'networkidle2'});
+  
+    await page.emulateMediaType('screen')
+    let height = await page.evaluate(() => document.documentElement.offsetHeight);
+    await page.evaluate(() => matchMedia('screen').matches);
+    await page.setContent(content, { waitUntil: 'networkidle0'});
+   
+     
+    let filename = 'blend'+id+'.pdf'
+    await page.pdf({
+   
+    path:(`./public/grv/${year}/${month}/blend${id}`+'.pdf'),
+    format:"A4",
+  
+    height: height + 'px',
+    printBackground:true
+    
+    })
+    
+   
+     res.redirect('/rm/openFileBlend/'+id)
+  
+  
+  
+    
+    
+    
+   
+   
+   /* const file = await fs.readFile(`./public/grv/${year}/${month}/blend${id}`+'.pdf');
+    const form = new FormData();
+    form.append("file", file,filename);
+    
+    await Axios({
+      method: "POST",
+     //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+       //url: 'https://niyonsoft.org/uploadStatementDispatch',
+       //url:'https://niyonsoft.org/uploadGrv',
+       url:'localhost:8000/rm/uploadBlending',
+      headers: {
+        "Content-Type": "multipart/form-data"  
+      },
+      data: form
+    });
+    
+    
+    res.redirect('/rm/fileIdBlending/'+filename);*/
+    
+    
+    }catch(e) {
+    
+    console.log(e)
+    
+    
+    }
+    
+  
+    
+    }) ()
+    
+    
+    
+  })
+    
+    
+  
+    
+    })
+  
+  router.get('/openFileBlend/:id',isLoggedIn,function(req,res){
+  var refNumber = req.params.id
+  var batchNumber = req.user.batchNumber
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  const path =`./public/grv/${year}/${month}/blend${refNumber}.pdf`
+  if (fs.existsSync(path)) {
+      res.contentType("application/pdf");
+      fs.createReadStream(path).pipe(res)
+  } else {
+      res.status(500)
+      console.log('File not found')
+      res.send('File not found')
+  }
+  
+  })
+  
+    router.post('/uploadBlending',upload.single('file'),(req,res,nxt)=>{
+      var fileId = req.file.id
+      console.log(fileId,'fileId')
+      var filename = req.file.filename
+      console.log(filename,'filename')
+    RepoFiles.find({filename:filename},function(err,docs){
+    if(docs.length>0){
+    
+    
+    //console.log(docs,'docs')
+    let id = docs[0]._id
+    RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+    
+    })
+    
+    }
+    res.redirect('/rm/fileIdBlending/'+filename)
+    })
+    
+    })
+  
+    router.get('/fileIdBlending/:id',function(req,res){
+      console.log(req.params.id)
+      var id = req.params.id
+      
+      res.redirect('/rm/openBlending/'+id)
+      
+      })
+  
+  
+    router.get('/openBlending/:id',(req,res)=>{
+      var filename = req.params.id
+      console.log(filename,'fileId')
+        const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+        gfs.files.find({filename: filename}).toArray((err, files) => {
+        console.log(files[0])
+      
+          const readStream = bucket.openDownloadStream(files[0]._id);
+              readStream.pipe(res);
+      
+        })
+       //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+      })
+  
+  
+  
+    
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 module.exports = router;
   

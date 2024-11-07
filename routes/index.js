@@ -5,6 +5,7 @@ var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
 var BlendingTanks = require('../models/blendingTanks');
+var CrushedItems = require('../models/crushedItems');
 var FermentationProduct = require('../models/fermentationProduct');
 var DrainedProduct = require('../models/drainedProducts');
 var Ingredients = require('../models/ingredients');
@@ -608,6 +609,103 @@ var date = m.format('L')
 
                   
 })
+///add CrushedDB
+
+router.get('/addCB',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addCB',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+
+
+router.post('/addCB', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addCB');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new CrushedItems();
+                  user.item = name;
+                  user.massKgs = 0
+                  user.massTonnes = 0
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'Item added Successfully');
+         
+          
+              res.redirect('/addCB');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
+
 //////////add RM
 
 router.get('/addRM',function(req,res){
@@ -631,7 +729,7 @@ router.post('/addRM', function(req,res){
 var date = m.format('L')
                   
                 var name = req.body.name
-            
+                var stage = req.body.stage
               
                 
                 req.check('name','Enter Name').notEmpty();
@@ -663,7 +761,11 @@ var date = m.format('L')
                   
                   var user = new RawMat();
                   user.item = name;
-                  user.mass = 0;
+                  user.massKgs = 0;
+                  user.massTonnes = 0;
+                  user.type = name
+                  user.stage = stage
+
                
                  
 

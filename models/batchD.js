@@ -33,6 +33,7 @@ var batchSchemaD = new Schema({
     refNumDispatch:{type:String},
     refNumber:{type:String, required:true},
     position: {type: Number },
+    size: {type: Number },
     total: {type: Number },
     breakages: {type: Number },
 

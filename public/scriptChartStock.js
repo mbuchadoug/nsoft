@@ -505,7 +505,7 @@ var button = document.getElementById('myChart5tab').addEventListener('click', fu
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-          labels3.push({"x":data[i].product,"y":data[i].holdingCases.toFixed(0)})
+          labels3.push({"x":data[i].salesPerson,"y":data[i].holdingCases.toFixed(0)})
           // labels3.push(data[i].qty)
            }
       
@@ -1081,7 +1081,7 @@ var button7 = document.getElementById('myChart7tab').addEventListener('click', f
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].name,"y":data[i].holdingCases})
+        labels3.push({"x":data[i].salesPerson,"y":data[i].holdingCases})
         // labels3.push(data[i].qty)
          }
     

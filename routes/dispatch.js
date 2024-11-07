@@ -486,7 +486,7 @@ router.get('/replace',function(req,res){
   })
                  
   
-  BatchR.find({fifoPosition:0},function(err,loc){
+  BatchR.find({fifoPosition:0,status:"received"},function(err,loc){
     let batchId = loc[0]._id
     let product = loc[0].product
     let warehouse = loc[0].warehouse
@@ -581,6 +581,9 @@ else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
         closingBal = cases
       }
      
+      BatchD.find(function(err,kocs){
+let nSize = kocs.length + 1
+    
       
       RefNoDisp.find({refNumber:refNumber},function(err,docs){
         let size = docs.length + 1
@@ -608,6 +611,7 @@ else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
                 book.dateValueDispatch = dateValue
                 book.dispatcher = dispatcher
                 book.year = year
+                book.size = nSize
                 book.month = month
           
                 book.save()   
@@ -710,13 +714,15 @@ else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
     //})
   //})
   
-  
+})
   }
+
   //})
     }
+  
     })
   
-  
+    
   
   
     /*}
@@ -1493,10 +1499,16 @@ res.redirect('/dispatch/statusUpdate')
     let url1 = req.user.url
     let refNo = req.user.refNo
     let url = url1+refNo
+    let size,rSize
     let number1
     var arr16=[]
     SaleStock.find({salesPerson:salesPerson,product:product},function(err,vocs){
-let op = vocs[0].holdingCases     
+//let op = vocs[0].holdingCases     
+let op = vocs[0].openingBal 
+let holdingCases = vocs[0].holdongCases
+BatchD.find(function(err,rocs){
+
+
 BatchD.find({refNumDispatch:refNumDispatch},function(err,docs){
 console.log(docs,'docsgg')
 for(var i = 0;i<docs.length;i++){
@@ -1518,10 +1530,170 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 
     })
 
-    let size = docs.length - 2
-    let rSize = docs.length - 1
+    if(docs.length == 1){
+     console.log(rocs.length,'rocs')
+     if(rocs.length >1){
+       rSize = rocs.length 
+       size = rocs.length -1
+
+       BatchD.find({size:size},function(err,jocs){
+
+
+      
+        openingBal = jocs[0].closingStock
+      
+        BatchD.find({size:rSize,refNumDispatch:refNumDispatch},function(err,yocs){
+          closingBal = openingBal + yocs[0].cases
+          let idV = yocs[0]._id
+        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal}},function(err,rocs){
+  
+        })
+        })
+  
+  
+        BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
+  
+          for(var q = 0;q<hocs.length; q++){
+        
+            arr16.push(hocs[q].cases)
+              }
+              //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+               number1=0;
+              for(var z in arr16) { number1 += arr16[z]; }
+  
+              SaleStock.find({salesPerson:salesPerson,product:product},function(err,ocs){
+    
+                if(ocs.length == 0)
+                {
+        
+                  var sale =SaleStock();
+                  sale.product = product
+                  sale.casesReceived = number1
+                  sale.openingBal = 0
+                  sale.holdingCases = number1
+                  sale.salesPerson = salesPerson
+                  sale.qty = number1 * 12
+                  sale.price = 1
+                  
+                  sale.save()
+                  .then(pas =>{
+        
+                 
+        
+                  })
+                }else{
+                  var  idX  = ocs[0]._id
+                    console.log(idX)
+                    let openingBal2 = ocs[0].holdingCases
+                    var closingBal2 = ocs[0].holdingCases + number1
+                 
+                    let qty = ocs[0].holdingCases + number1 * 12
+                    
+                    SaleStock.findByIdAndUpdate(idX,{$set:{casesReceived:number1,openingBal:openingBal2,holdingCases:closingBal2,qty:qty}},function(err,locs){
+        
+                    })
+                  
+                }
+              
+              })
+  
+  
+        })
+      })
+  
+     }
+     else{
+       size = rocs.length
+       rSize = rocs.length
+
+
+
+
+       BatchD.find({size:size},function(err,jocs){
+
+
+      
+        openingBal = holdingCases
+      
+        BatchD.find({size:rSize,refNumDispatch:refNumDispatch},function(err,yocs){
+          closingBal = openingBal + yocs[0].cases
+          let idV = yocs[0]._id
+        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal}},function(err,rocs){
+  
+        })
+        })
+  
+  
+        BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
+  
+          for(var q = 0;q<hocs.length; q++){
+        
+            arr16.push(hocs[q].cases)
+              }
+              //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+               number1=0;
+              for(var z in arr16) { number1 += arr16[z]; }
+  
+              SaleStock.find({salesPerson:salesPerson,product:product},function(err,ocs){
+    
+                if(ocs.length == 0)
+                {
+        
+                  var sale =SaleStock();
+                  sale.product = product
+                  sale.casesReceived = number1
+                  sale.openingBal = 0
+                  sale.holdingCases = number1
+                  sale.salesPerson = salesPerson
+                  sale.qty = number1 * 12
+                  sale.price = 1
+                  
+                  sale.save()
+                  .then(pas =>{
+        
+                 
+        
+                  })
+                }else{
+                  var  idX  = ocs[0]._id
+                    console.log(idX)
+                    let openingBal2 = ocs[0].holdingCases
+                    var closingBal2 = ocs[0].holdingCases + number1
+                 
+                    let qty = ocs[0].holdingCases + number1 * 12
+                    
+                    SaleStock.findByIdAndUpdate(idX,{$set:{casesReceived:number1,openingBal:openingBal2,holdingCases:closingBal2,qty:qty}},function(err,locs){
+        
+                    })
+                  
+                }
+              
+              })
+  
+  
+        })
+      })
+  
+     }
+
+
+
+    
+    }
+
+    if (docs.length == 2){
+
+    
+
+    size = docs.length - 2
+   rSize = docs.length - 1
+   
+
+    
     BatchD.find({position:size,refNumDispatch:refNumDispatch},function(err,jocs){
 
+
+      
       openingBal = jocs[0].closingStock
     
       BatchD.find({position:rSize,refNumDispatch:refNumDispatch},function(err,yocs){
@@ -1533,11 +1705,11 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
       })
 
 
-      BatchD.find({refNumDispatch:refNumDispatch},function(err,docs){
+      BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
 
-        for(var q = 0;q<docs.length; q++){
+        for(var q = 0;q<hocs.length; q++){
       
-          arr16.push(hods[q].cases)
+          arr16.push(hocs[q].cases)
             }
             //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
              number1=0;
@@ -1582,7 +1754,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 
       })
     })
-
+  }
     }
     else{
       let size = docs.length - 2
@@ -1658,6 +1830,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 })
 //res.redirect(url)
 res.redirect('/dispatch/statusUpdate')
+})
 })
   })
   

@@ -169,7 +169,7 @@ router.get('/defer/:id',isLoggedIn,function(req,res){
 
 
 
-router.get('/grvList',isLoggedIn,function(req,res){
+router.get('/grvListView',isLoggedIn,function(req,res){
   BatchRR.find({status:"complete"},function(err,docs){
     res.render('accounts1/grvList',{listX:docs})
   })
@@ -271,7 +271,7 @@ let id = vocs[0]._id
   
 
 
-  router.get('/grvListView',isLoggedIn,function(req,res){
+  router.get('/grvList',isLoggedIn,function(req,res){
     BatchRR.find({status:"complete"},function(err,docs){
       if(docs.length > 1){
 
