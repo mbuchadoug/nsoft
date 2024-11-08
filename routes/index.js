@@ -124,7 +124,9 @@ router.get('/search',function(req,res){
   res.render('kambucha/search')
 })
 
-
+router.get('/conversai',function(req,res){
+  res.render('receiver/index')
+})
 
 router.get('/warehouseUpdate',function(req,res){
 let arr16=[]
