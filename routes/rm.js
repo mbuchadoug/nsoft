@@ -598,12 +598,12 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
 
 
 
-      RefNo.find({type:item},function(err,docs){
+      /*RefNo.find({type:item},function(err,docs){
         let size = docs.length + 1
        refNo = date7+'B'+size+item+'crush'
-        console.log(refNo,'refNo')
+        console.log(refNo,'refNo')*/
     
-        var truck = new BatchGingerWash()
+        /*var truck = new BatchGingerWash()
         truck.date = date
         truck.mformat = date6
         truck.dateValue = dateValue
@@ -619,28 +619,18 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
         truck.status = 'null'
         truck.status2 = 'null'
         truck.year = year
-        truck.status = 'qtyOut'
+        truck.status = 'qtyOut'*/
        
-        
+      
        
     
-        truck.save()
+       /* truck.save()
             .then(pro =>{
     
-            //  User.findByIdAndUpdate(id,{$set:{refNumber:refNo,batchId:pro._id}},function(err,vocs){
-
-              //})
-              var book = new RefNo();
-              book.refNumber = refNo
-              book.date = date
-              book.type = item
-              book.save()
-              .then(prod =>{
-          
-               
-              })
+         
+             
             })
-            })
+            })*/
 
           
       }
@@ -736,14 +726,14 @@ closingWeightKg:closingWeight}},function(err,vocs){
 
 })
 
-RawMat.find({item:item},function(err,hocs){
+RawMat.find({item:item,stage:'raw'},function(err,hocs){
   //if(hocs[0].status == 'wash'){
 
   
   let massKgs = hocs[0].massKgs + weight
   let massTonnes = hocs[0].massTonnes + weightTonne
   let idRaw = hocs[0]._id
-  if(hocs[0].status == 'null'){
+  /*if(hocs[0].stage == 'raw'){
 BatchGingerWash.find({refNumber2:id},function(err,nocs){
 
   if(nocs.length > 0){
@@ -753,7 +743,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
 })
   }
 })
-  }
+  }*/
 
   RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes}},function(err,nocs){
 
@@ -1130,9 +1120,15 @@ else{
         let availableMass = docs[0].closingWeightKg
         let refNumber = docs[0].refNumber
 
-      User.findByIdAndUpdate(id,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+    RawMat.find({item:item,stage:'raw'},function(err,noc){
+
+    let avbMass = noc[0].massKgs
+
+      User.findByIdAndUpdate(id,{$set:{item:item,supplier:supplier,date:date,availableMass:avbMass,refNumber:refNumber}},function(err,vocs){
 
       })
+
+    })
       
 
 
@@ -1322,7 +1318,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
         let batchId = req.user.batchId
         console.log(id,batchId,'id')
         GingerWash.find({batchId:batchId,refNumber:refNumber,type:'qtyIn'},function(err,docs){
-
+        let item = docs[0].item
           for(var i = 0;i<docs.length; i++){
            
           arrV.push(docs[i].newMass)
@@ -1336,6 +1332,25 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
 
           BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyInMass:number1,status:'qtyIn'}},function(err,vocs){
 
+            RawMat.find({item:item,stage:'raw'},function(err,tocs){
+              let opBal = tocs[0].massKgs - number1
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })
+
+           /* RawMat.find({item:item,stage:'wash'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })*/
           })
           res.redirect('/rm/batchList')
         })
@@ -1508,7 +1523,7 @@ router.get('/batchList',function(req,res){
         let variance
         console.log(id,batchId,'id')
         GingerWash.find({batchId:batchId,refNumber:refNumber,type:'qtyOut'},function(err,docs){
-
+let item = docs[0].item
           for(var i = 0;i<docs.length; i++){
            
           arrV.push(docs[i].newMass)
@@ -1525,6 +1540,29 @@ router.get('/batchList',function(req,res){
             variance = number1 - qtyInMass
           BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance}},function(err,vocs){
 
+
+            /*RawMat.find({item:item,stage:'wash'},function(err,tocs){
+              let opBal = tocs[0].massKgs - number1
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })*/
+
+            RawMat.find({item:item,stage:'wash'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })
+
+
+            
           })
 
         })
@@ -1974,7 +2012,7 @@ router.get('/batchListCrush',function(req,res){
         let variance
         console.log(id,batchId,'id')
         GingerCrush.find({batchId:batchId,refNumber:refNumber,type:'qtyOut'},function(err,docs){
-
+let item = docs[0]._id
           for(var i = 0;i<docs.length; i++){
            
           arrV.push(docs[i].newMass)
@@ -1990,6 +2028,28 @@ router.get('/batchListCrush',function(req,res){
             let qtyInMass= doc.qtyInMass
             variance = number1 - qtyInMass
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed'}},function(err,vocs){
+ RawMat.find({item:item,stage:'wash'},function(err,tocs){
+              let opBal = tocs[0].massKgs - number1
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })
+
+            RawMat.find({item:item,stage:'crush'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })
+
+
+
 
           })
 

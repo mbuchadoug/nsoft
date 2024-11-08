@@ -730,6 +730,7 @@ var date = m.format('L')
                   
                 var name = req.body.name
                 var stage = req.body.stage
+                //var type = req.body.type
               
                 
                 req.check('name','Enter Name').notEmpty();
@@ -763,8 +764,9 @@ var date = m.format('L')
                   user.item = name;
                   user.massKgs = 0;
                   user.massTonnes = 0;
-                  user.type = name
-                  user.stage = stage
+                  user.type = 'ingredient'
+                  user.stage = 'cooking'
+                  
 
                
                  
