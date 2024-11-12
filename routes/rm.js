@@ -3,6 +3,7 @@ var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
+var BatchFermentationIngredients = require('../models/batchFermentationIngredients');
 var BlendingTanks = require('../models/blendingTanks');
 var BlendingDays = require('../models/blendingDays');
 var FinalProductEvaluation = require('../models/finalProductEvaluation');
@@ -134,6 +135,133 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+
+
+router.get('/warehouseStock',isLoggedIn,function(req,res){
+  var pro = req.user
+  //res.render('admin/dash6',{pro:pro})
+  Product.find({},function(err,docs){
+ Warehouse.find({},function(err,hocs){
+  res.render('rStock/dash7',{pro:pro,arr:docs,arr1:hocs})
+})
+  })
+})
+
+
+
+router.post('/dashChartStockSub',isLoggedIn,function(req,res){
+
+  
+  var stage = req.body.stage
+  console.log(stage,'stage')
+   var date = req.body.date
+   var arr = []
+   var id = req.user._id
+   let num = req.user.num
+   num++
+   
+  
+  
+   RawMat.find({stage:stage},function(err,docs) {
+    // console.log(docs,'docs')
+    /* for(var i = 0;i<docs.length;i++){
+
+    console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.item == docs[i].item )){
+               console.log('true')
+              arr.find(value => value.stage == docs[i].stage).massKgs += docs[i].massKgs;
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }*/
+    //console.log(arr,'arr')
+    console.log(docs,'555')
+    res.send(docs)
+   })
+  
+  
+  })
+  
+  
+  
+
+  router.post('/dashChartFermentation',isLoggedIn,function(req,res){
+
+  
+    var item = req.body.item
+    var status = req.body.status
+  //console.log(warehouse,'warehouse')
+ 
+   var date = req.body.date
+   var arr = []
+   var id = req.user._id
+   let num = req.user.num
+   num++
+   
+  
+  
+   BatchFermentation.find({product:item,status:status},function(err,docs) {
+    // console.log(docs,'docs')
+    /* for(var i = 0;i<docs.length;i++){
+
+    console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.item == docs[i].item )){
+               console.log('true')
+              arr.find(value => value.stage == docs[i].stage).massKgs += docs[i].massKgs;
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }*/
+    //console.log(arr,'arr')
+    console.log(docs,'888')
+    res.send(docs)
+   })
+  
+  })
+  
+
+  
+  router.post('/dashChartBlendingTanks',isLoggedIn,function(req,res){
+
+  
+    var product = req.body.product
+   
+   var arr = []
+   var id = req.user._id
+  
+   
+  
+  
+   BlendingTanks.find({product:product},function(err,docs) {
+    // console.log(docs,'docs')
+    /* for(var i = 0;i<docs.length;i++){
+
+    console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.item == docs[i].item )){
+               console.log('true')
+              arr.find(value => value.stage == docs[i].stage).massKgs += docs[i].massKgs;
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }*/
+    //console.log(arr,'arr')
+    console.log(docs,'888')
+    res.send(docs)
+   })
+  
+  })
+  
+  
+  
 
 
 
@@ -2012,7 +2140,7 @@ router.get('/batchListCrush',function(req,res){
         let variance
         console.log(id,batchId,'id')
         GingerCrush.find({batchId:batchId,refNumber:refNumber,type:'qtyOut'},function(err,docs){
-let item = docs[0]._id
+let item = docs[0].item
           for(var i = 0;i<docs.length; i++){
            
           arrV.push(docs[i].newMass)
@@ -2029,7 +2157,7 @@ let item = docs[0]._id
             variance = number1 - qtyInMass
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed'}},function(err,vocs){
  RawMat.find({item:item,stage:'wash'},function(err,tocs){
-              let opBal = tocs[0].massKgs - number1
+              let opBal = tocs[0].massKgs - qtyInMass
               let opBalTonnes = opBal / 1000
               let id4 = tocs[0]._id
             RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
@@ -2355,6 +2483,16 @@ if(docs[0].ingredient == 'sugar'){
       })
   
 
+      RawMat.find({item:finalProduct,type:'ingredient'},function(err,tocs){
+        let opBal = tocs[0].massKgs + number1
+        let opBalTonnes = opBal / 1000
+        let id4 = tocs[0]._id
+      RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+      })  
+
+      })
+
       var final = new FinalProduct()
       final.refNumber = refNumber
       final.quantity = number1
@@ -2368,6 +2506,26 @@ if(docs[0].ingredient == 'sugar'){
 
       
       })
+
+      Cooking.find({refNumber:refNumber},function(err,docs){
+
+        for(var i = 0;i<docs.length; i++){
+
+          let item = docs[i].ingredient
+          let quantity= docs[i].quantity
+
+          RawMat.find({item:item,stage:'crush'},function(err,tocs){
+            let opBal = tocs[0].massKgs - quantity
+            let opBalTonnes = opBal / 1000
+            let id4 = tocs[0]._id
+          RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+          })  
+
+          })
+        }
+
+        })
   
 
     
@@ -2524,7 +2682,7 @@ console.log(id,'fermentationPreload')
 
 
     router.post('/fermentationMat/',isLoggedIn,function(req,res){
-
+      var tanks = req.body.tanks
       var ingredient = req.body.ingredient
       var batchNumber = req.body.batchNumber
       var quantity = req.body.code
@@ -2550,6 +2708,57 @@ console.log(id,'fermentationPreload')
     
     cook.save()
           .then(pro =>{
+
+            BatchFermentationIngredients.find({refNumber:refNumber,batchNumber:batchNumber,ingredient:ingredient},function(err,docs){
+              if(docs.length == 0){
+                 var user = new BatchFermentationIngredients();
+                  user.ingredient = ingredient;
+                  user.quantity = quantity
+                  user.tanks = tanks;
+                  user.batchNumber = batchNumber
+                  user.refNumber = refNumber
+                  user.product = product
+                  user.status = 'null'
+              
+                  user.save()
+                    .then(user =>{
+                    })
+
+                  }else{
+            console.log(pro.quantity,'quantity555')
+            let idF = docs[0]._id
+            let opQ = docs[0].quantity + pro.quantity
+            BatchFermentationIngredients.findByIdAndUpdate(idF,{$set:{quantity:opQ}},function(err,pocs){
+
+            })
+                  }
+
+                  })
+
+                  
+                        RawMat.find({item:ingredient,type:'ingredient'},function(err,tocs){
+                          let opBal = tocs[0].massKgs - pro.quantity
+                          let opBalTonnes = opBal / 1000
+                          let id4 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+              
+                        })  
+              
+                        })
+        
+        
+                        RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                          let opBal2 = tocs[0].massKgs + pro.quantity
+                          let opBalTonnes2 = opBal2 / 1000
+                          let id5 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
+                  
+                        })  
+                  
+                        })
+        
+                    
+                  
           
             res.send(pro)
           
@@ -2672,7 +2881,7 @@ console.log(id,'fermentationPreload')
         else{   
         BatchFermentation.findById(id,function(err,doc){
           let product = doc.product
-
+          refNumber = doc.refNumber
           FermentationProduct.find({product:product},function(err,docs){
             let oTanks = docs[0].tanks + tanks
             let id2 = docs[0]._id
@@ -2682,7 +2891,10 @@ console.log(id,'fermentationPreload')
 
             })
 
-       
+            console.log(refNumber,'refNumber777')
+           
+
+           
 
 BatchFermentation.findByIdAndUpdate(id,{$set:{tanks:tanks}},function(err,gocs){
 
@@ -2779,7 +2991,38 @@ BlendingTanks.find({tankNumber:blendingTank},function(err,toc){
 
 }
 
-         
+BatchFermentationIngredients.find({refNumber:refNumber},function(err,nocs){
+  for(var i = 0;i<nocs.length;i++){
+    let quantity = nocs[i].quantity / nocs[i].tanks
+    let nQty =  quantity * tanks
+    let ingredient = nocs[i].ingredient
+  
+    RawMat.find({item:ingredient,stage:"fermentation"},function(err,tocs){
+  
+  
+     // RawMat.find({item:item,stage:'fermentation'},function(err,tocs){
+        let opBal1 = tocs[0].massKgs - nQty
+        let opBalTonnes1 = opBal1 / 1000
+        let id4 = tocs[0]._id
+      RawMat.findByIdAndUpdate(id4,{massKgs:opBal1,massTonnes:opBalTonnes1},function(err,locs){
+  
+      })  
+  
+      //})
+    })
+    //arrQ.push(nQty)
+    RawMat.find({item:ingredient,stage:'blending'},function(err,tocs){
+      let opBal2 = tocs[0].massKgs + nQty
+      let opBalTonnes2 = opBal2 / 1000
+      let id5 = tocs[0]._id
+    RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
+  
+    })  
+  
+    })
+  
+  }
+  })     
 BatchFermentation.find({refNumber:refNumber},function(err,docs){
 let avTanks = docs[0].tanksDrained + pro.tanks
 let remainingTanks = docs[0].tanks - avTanks
@@ -2790,6 +3033,16 @@ if(remainingTanks == 0){
 
 BatchFermentation.findByIdAndUpdate(id2,{$set:{tanksDrained:avTanks,remainingTanks:remainingTanks,status:"drained"}},function(err,vocs){
 
+
+})
+
+BatchFermentationIngredients.find({refNumber:refNumber},function(err,socs){
+for(var i = 0; i<socs.length;i++){
+  let sId = socs[i]._id
+  BatchFermentationIngredients.findByIdAndUpdate(sId,{$set:{status:'complete'}},function(err,fox){
+    
+  })
+}
 
 })
 }else{
@@ -2808,6 +3061,9 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
   
 })
 })
+
+
+
 
 })
 }) 

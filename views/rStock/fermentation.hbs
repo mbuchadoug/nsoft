@@ -529,12 +529,13 @@ this.firstElementChild.select();
        let date =  document.getElementById('date').value 
        let batchNumber = document.getElementById('batchNumber').value
        let product = document.getElementById('product').value
+       let tanks = document.getElementById('tanks').value
        console.log(mass,refNumber,ingredient,operator,date,batchNumber,'beggin')
       
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,batchNumber:batchNumber,product:product,
+                    code: mass,batchNumber:batchNumber,product:product,tanks:tanks,
                     refNumber:refNumber,ingredient:ingredient,operator:operator,date:date
                     
                 },

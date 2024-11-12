@@ -4,6 +4,7 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
+var BatchFermentationIngredients = require('../models/batchFermentationIngredients');
 var BlendingTanks = require('../models/blendingTanks');
 var CrushedItems = require('../models/crushedItems');
 var FermentationProduct = require('../models/fermentationProduct');
@@ -808,6 +809,108 @@ var date = m.format('L')
 
 
 
+//////////add Batch Fermentation Ingredients
+
+router.get('/addBatchFermentationIngredients',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addBFI',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/addBatchFermentationIngredients', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+                var stage = req.body.stage
+                //var type = req.body.type
+              
+                
+                req.check('name','Enter Name').notEmpty();
+               
+              
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addBatchFermentationIngredients');
+                      
+                    
+                  }
+                  else
+                
+                
+                           
+               
+
+                  
+                  var user = new BatchFermentationIngredients();
+                  user.ingredient = name;
+                  user.quantity = 0;
+                  user.tanks = 0;
+                  user.batchNumber = 'null'
+                  user.refNumber = 'null'
+                  user.product = 'null'
+                  user.status = 'null'
+                  
+
+               
+                 
+
+                  
+                  
+             
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                    
+              
+              req.flash('success', 'BFI added Successfully');
+         
+          
+              res.redirect('/addBatchFermentationIngredients');
+                    })
+                  
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
+
 
 
 
@@ -1081,7 +1184,7 @@ arr.push(docs[i])
 router.post('/dashChartStockSub',isLoggedIn,function(req,res){
 
   
-  var warehouse = req.body.warehouse
+var warehouse = req.body.warehouse
 console.log(warehouse,'warehouse')
  var date = req.body.date
  var arr = []
