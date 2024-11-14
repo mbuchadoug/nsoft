@@ -16,4 +16,4 @@ var rawListSchema = new Schema({
    
 });
 
-module.exports = mongoose.model('RM List', rawListSchema);
+module.exports = mongoose.model('RawMat', rawListSchema);
