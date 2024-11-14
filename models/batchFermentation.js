@@ -6,6 +6,7 @@ var batchSchemaFermentation = new Schema({
     date: {type: String },
     mformat: {type: String },
     product:{type:String},
+    nxtStage:{type:String},
     startDate:{type:String},
     status:{type:String},
     days:{type:Number},

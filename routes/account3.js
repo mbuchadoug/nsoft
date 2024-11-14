@@ -149,10 +149,11 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
                 let size = docs.length + 1
                refNo = date7+'B'+size+'RM'
                 console.log(refNo,'refNo')
-            
+            if(item == 'ginger'){
                 var truck = new BatchRR()
                 truck.date = date
                 truck.mformat = date6
+                truck.stage = 'wash'
                 truck.dateValue = dateValue
                 truck.item = item
                 truck.refNumber = refNo
@@ -194,6 +195,146 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             
               })
             })
+          }else if(item == 'tea'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'cooking'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/grvFileV/'+id)
+        
+        
+          })
+        })
+
+          }else if(item == 'sugar'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'cooking'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/grvFileV/'+id)
+        
+        
+          })
+        })
+          }else if(item == 'bananas'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'crush'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/grvFileV/'+id)
+        
+        
+          })
+        })
+          }
         })
         }
 

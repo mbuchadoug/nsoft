@@ -1197,7 +1197,7 @@ if (fs.existsSync(path)) {
   var readonly = 'hidden'
   var read =''
 
-  BatchRR.find({status:'complete'}).lean().then(docs=>{
+  BatchRR.find({status:'complete',stage:"wash"}).lean().then(docs=>{
   var arr = docs
 
   res.render('rStock/batch',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
@@ -1490,7 +1490,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
   
       
  
-router.get('/batchList',function(req,res){
+router.get('/batchList',isLoggedIn,function(req,res){
   BatchGingerWash.find(function(err,docs){
   
     let arr=[]
@@ -1666,7 +1666,7 @@ let item = docs[0].item
           BatchGingerWash.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
             variance = number1 - qtyInMass
-          BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance}},function(err,vocs){
+          BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,nxtStage:"crushing"}},function(err,vocs){
 
 
             /*RawMat.find({item:item,stage:'wash'},function(err,tocs){
@@ -1694,7 +1694,7 @@ let item = docs[0].item
           })
 
         })
-          res.redirect('/rm/batch')
+          res.redirect('/rm/batchList')
         })
       
        
@@ -1706,13 +1706,19 @@ let item = docs[0].item
       var pro = req.user
       var readonly = 'hidden'
       var read =''
-    
+      var arr = []
+      
+
+      BatchRR.find({status:'complete',stage:'crush'}).lean().then(ocs=>{
+      arr.push(ocs[0])
+        //arr =ocs
       BatchGingerWash.find({status:'qtyOut',status2:"null"}).lean().then(docs=>{
-      var arr = docs
-    
+    arr.push(docs[0])
+      //arr=docs
+    console.log(arr,'arr')
       res.render('rStock/batchCrushing',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
       })
-    
+      })
       })
       
 
@@ -1754,7 +1760,7 @@ else{
   let date7 =  date6.replace(/\//g, "");
   
     BatchGingerWash.find({batchNumber:batchNumber},function(err,docs){
-      if(docs){
+      if(docs.length > 0){
         let item = docs[0].item
      
         let availableMass = docs[0].qtyOutMass
@@ -1811,11 +1817,68 @@ else{
 
           })
 
+        }else{
+          BatchRR.find({batchNumber:batchNumber},function(err,docs){
+          let item = docs[0].item
+     
+          let availableMass = docs[0].closingWeightKg
+          let refNumber = docs[0].refNumber
+  
+        User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+  
+        })
+        
+  
+  
+  
+        RefNo.find({date:date,type:"crush"},function(err,docs){
+          let size = docs.length + 1
+         refNo = date7+'B'+size+item+'crush'
+          console.log(refNo,'refNo')
+      
+          var truck = new BatchGingerCrush()
+          truck.date = date
+          truck.mformat = date6
+          truck.dateValue = dateValue
+          truck.item = item
+          truck.refNumber = refNo
+          truck.refNumber2 = batchNumber
+          truck.batchNumber = batchNumber
+          truck.month = month
+          truck.qtyInMass = 0
+          truck.qtyOutMass= 0
+          truck.month = month
+          truck.status = 'null'
+          truck.year = year
+         
+          
+         
+      
+          truck.save()
+              .then(pro =>{
+      
+                User.findByIdAndUpdate(id,{$set:{batchNumber:batchNumber,refNumber:refNo,batchId:pro._id}},function(err,vocs){
+  
+                })
+                var book = new RefNo();
+                book.refNumber = refNo
+                book.date = date
+                book.type = 'crush'
+                book.save()
+                .then(prod =>{
+            
+                 
+            
+                })
+  
+              })
+            })
+            })    
         }
 
-      
+        res.redirect('/rm/crush2')
     })
-    res.redirect('/rm/crush2')
+  
   }
   })
 
@@ -1857,8 +1920,11 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       let batchId = req.user.batchId
       let mass = req.body.code
       let massTonne
+      var item = req.user.item
       let batchNumber = req.body.batchNumber
       console.log(batchNumber,'batchNumber666')
+
+      if(item == 'ginger'){
       BatchGingerWash.find({batchNumber:batchNumber},function(err,docs){
         //console.log(docs,'docs')
       
@@ -1927,6 +1993,83 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       })
       
       })
+    }else if(item == 'bananas'){
+
+      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+        //console.log(docs,'docs')
+      
+        let item = docs[0].item
+        let date = docs[0].date
+       // let refNo = docs[0].refNumber
+        let batchNumber = docs[0].batchNumber
+       
+        let dateValue = docs[0].dateValue
+        
+
+        
+        let openingMass= docs[0].closingWeightKg
+
+        let newMassNum = 0
+      
+      
+      
+      GingerCrush.find({batchNumber:batchNumber},function(err,docs){
+      
+      for(var i = 0;i<docs.length; i++){
+       // console.log(docs[i].newMass,'serima')
+      arrV.push(docs[i].newMass)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+       //console.log(arrV,'arrV')
+      
+      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+      number1=0;
+      for(var z in arrV) { number1 += arrV[z]; }
+      number1.toFixed(2)
+      let reg = /\d+\.*\d*/g;
+      let resultQty = mass.match(reg)
+      let massNum = Number(resultQty)
+      
+      let total5 = massNum + number1
+      
+      massNum.toFixed(2)
+      let size = docs.length + 1
+      let weight = 'weight'+size
+       console.log(batchId,'batchId')
+      var stock = new GingerCrush();
+      stock.weight = weight
+      stock.date =mformat
+      stock.item = item
+      stock.status = "ready"
+      stock.type = 'qtyIn'
+      stock.batchNumber = batchNumber
+      stock.refNumber = refNo
+      stock.month = month
+      stock.year = year
+      stock.batchId = batchId
+     
+      stock.openingMass = number1
+      stock.newMass = mass
+      stock.closingMass = massNum + number1
+      stock.size = size
+      stock.dateValue = dateValue
+      
+      stock.save()
+      .then(pro =>{
+      
+        res.send(pro)
+      
+      })
+      
+      
+      
+      })
+      
+      })
+
+
+
+    }
       })
       
 
@@ -2135,12 +2278,17 @@ router.get('/batchListCrush',function(req,res){
         let id = req.params.id
         let refNumber = req.user.refNumber
         let number1
+        var m = moment()
+        var mformat = m.format("L")
+        var month = m.format('MMMM')
+      var year = m.format('YYYY')
         let arrV=[]
         let batchId = req.user.batchId
         let variance
         console.log(id,batchId,'id')
         GingerCrush.find({batchId:batchId,refNumber:refNumber,type:'qtyOut'},function(err,docs){
 let item = docs[0].item
+if(item == 'ginger'){
           for(var i = 0;i<docs.length; i++){
            
           arrV.push(docs[i].newMass)
@@ -2155,7 +2303,7 @@ let item = docs[0].item
           BatchGingerCrush.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
             variance = number1 - qtyInMass
-          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed'}},function(err,vocs){
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'cooking'}},function(err,vocs){
  RawMat.find({item:item,stage:'wash'},function(err,tocs){
               let opBal = tocs[0].massKgs - qtyInMass
               let opBalTonnes = opBal / 1000
@@ -2183,6 +2331,63 @@ let item = docs[0].item
 
         })
         res.redirect('/rm/batchListCrush')
+
+      }else if(item == 'bananas'){
+        for(var i = 0;i<docs.length; i++){
+           
+          arrV.push(docs[i].newMass)
+            }
+            //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+           console.log(arrV,'arrV')
+          
+          //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+          number1=0;
+          for(var z in arrV) { number1 += arrV[z]; }
+
+          BatchGingerCrush.findById(batchId,function(err,doc){
+            let qtyInMass= doc.qtyInMass
+            variance = number1 - qtyInMass
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
+ RawMat.find({item:item,stage:'raw'},function(err,tocs){
+              let opBal = tocs[0].massKgs - qtyInMass
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })
+
+            RawMat.find({item:item,stage:'crush'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })
+
+            var final = new FinalProduct()
+            final.refNumber = refNumber
+            final.quantity = number1
+            final.date = mformat
+            final.ingredient = item
+            final.month = month
+            final.year = year
+            final.status = 'null'
+      
+            final.save().then(pro =>{
+      
+              res.redirect('/rm/batchListCrush')
+            })
+
+
+          })
+
+        })
+        
+      }
         })
       
        
@@ -2341,11 +2546,11 @@ cook.save()
   //Autocomplete for Crush
   router.get('/autocompleteCrush/',isLoggedIn, function(req, res, next) {
     var id = req.user._id
-    var customer = req.user.autoCustomer
+
 
       var regex= new RegExp(req.query["term"],'i');
      
-      var itemFilter =BatchGingerCrush.find({ item:regex},{'item':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+      var itemFilter =BatchGingerCrush.find({ item:regex,nxtStage:'cooking'},{'item':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
     
       
       itemFilter.exec(function(err,data){
@@ -2735,6 +2940,7 @@ console.log(id,'fermentationPreload')
 
                   })
 
+                     if(ingredient == 'ginger'){
                   
                         RawMat.find({item:ingredient,type:'ingredient'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
@@ -2757,7 +2963,29 @@ console.log(id,'fermentationPreload')
                   
                         })
         
-                    
+                      }else if(ingredient == 'bananas'){
+                        RawMat.find({item:ingredient,stage:'crush'},function(err,tocs){
+                          let opBal = tocs[0].massKgs - pro.quantity
+                          let opBalTonnes = opBal / 1000
+                          let id4 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+              
+                        })  
+              
+                        })
+        
+        
+                        RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                          let opBal2 = tocs[0].massKgs + pro.quantity
+                          let opBalTonnes2 = opBal2 / 1000
+                          let id5 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
+                  
+                        })  
+                  
+                        })
+        
+                      }
                   
           
             res.send(pro)
@@ -3243,6 +3471,98 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
        })
       
 
+
+       router.get('/trailFermentation/:id',isLoggedIn,function(req,res){
+         var id = req.params.id
+        Fermentation.find({refNumber:id},function(err,docs){
+             res.render('rStock/trackFermentation',{listX:docs})
+      
+            })
+       })
+      
+
+
+       router.get('/trailOther/:id/:id2',isLoggedIn,function(req,res){
+        var id = req.params.id
+        var ingredient = req.params.id2
+        if(ingredient == 'ginger'){
+          Cooking.find({ingredient:ingredient,refNumber:id},function(err,docs){
+            res.render('rStock/trackCooking',{listX:docs})
+     
+           })
+        }else if(ingredient == 'bananas'){
+          BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
+            res.render('rStock/trackCrushing',{listX:docs})
+     
+           })
+        }
+      
+      })
+     
+
+
+     /* router.get('/trailBatch2/:id/:id2',isLoggedIn,function(req,res){
+        var id = req.params.id
+        var item = req.params.id2
+        BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+          res.render('rStock/trackCrushing',{listX:docs})
+     
+           })
+      })*/
+
+
+      router.get('/trailBatch2/:id/:id2',isLoggedIn,function(req,res){
+        var id = req.params.id
+        var item = req.params.id2
+        if(item == 'ginger'){
+         
+        BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+          res.render('rStock/trackCrushing',{listX:docs})
+     
+           })
+        }else if(item == 'bananas'){
+          BatchRR.find({item:item,batchNumber:id},function(err,docs){
+            res.render('rStock/trackRaw',{listX:docs})
+     
+           })
+        }
+      
+      })
+     
+
+
+
+
+
+      router.get('/trailBatch3/:id/:id2',isLoggedIn,function(req,res){
+        var id = req.params.id
+        var item = req.params.id2
+        if(item == 'ginger'){
+        BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+          res.render('rStock/trackWashing',{listX:docs})
+     
+           })
+          }else if(item == 'bananas'){
+            BatchRR.find({item:item,batchNumber:id},function(err,docs){
+              res.render('rStock/trackRaw',{listX:docs})
+       
+             })
+          }
+      })
+
+
+      router.get('/trailBatch4/:id/:id2',isLoggedIn,function(req,res){
+        var id = req.params.id
+        var item = req.params.id2
+        BatchRR.find({item:item,batchNumber:id},function(err,docs){
+          res.render('rStock/trackRaw',{listX:docs})
+   
+         })
+      })
+
+
+
+
 router.get('/blendingDays/:id',isLoggedIn,function(req,res){
   var id = req.params.id
   BlendingTanks.findById(id,function(err,doc){
@@ -3613,31 +3933,231 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
   
   
   
-    
+
+      router.get('/updateStockBF',function(req,res){
+        BatchFermentation.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchFermentation.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateStockBFI')
+        })
+      })
+      
+      
+      
+      
+      
+      router.get('/updateStockBFI',function(req,res){
+        BatchFermentationIngredients.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchFermentationIngredients.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBBC')
+        })
+      })
+
+
+      router.get('/updateBBC',function(req,res){
+        BatchCooking.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchCooking.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBRR')
+        })
+      })
+      
+          
   
+      router.get('/updateBRR',function(req,res){
+        BatchRR.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchRR.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBGC')
+        })
+      })
+
+
+      router.get('/updateBGC',function(req,res){
+        BatchGingerCrush.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchGingerCrush.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBGW')
+        })
+      })
   
+      router.get('/updateBGW',function(req,res){
+        BatchGingerWash.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchGingerWash.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateGW')
+        })
+      })
   
-  
-  
+      router.get('/updateGW',function(req,res){
+        GingerWash.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           GingerWash.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateGC')
+        })
+      })
+
+
+      router.get('/updateGC',function(req,res){
+        GingerCrush.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           GingerCrush.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateC')
+        })
+      })
+
+
+
+      router.get('/updateC',function(req,res){
+        Cooking.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           Cooking.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateFP')
+        })
+      })
+
+      router.get('/updateFP',function(req,res){
+        FinalProduct.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           FinalProduct.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBI')
+        })
+      })
+
+
+
+      router.get('/updateBI',function(req,res){
+        BlendedItems.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BlendedItems.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateSV')
+        })
+      })
+
+
+      router.get('/updateSV',function(req,res){
+        StockVoucher.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           StockVoucher.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateSRM')
+        })
+      })
+
+
+      router.get('/updateSRM',function(req,res){
+       StockRM.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+          StockRM.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateRM')
+        })
+      })
+
+      router.get('/updateRM',function(req,res){
+        RawMat.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+          RawMat.findByIdAndUpdate(id,{$set:{massKgs:0,massTonnes:0}},function(err,tocs){
+
+          })
+          }
+          res.redirect('/rm/updateIngredients')
+        })
+      })
 
 
 
 
+      router.get('/updateIngredients',function(req,res){
+        Ingredients.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+          Ingredients.findByIdAndUpdate(id,{$set:{massKgs:0}},function(err,tocs){
+
+          })
+          }
+          res.redirect('/rm/updateCrushedItems')
+        })
+      })
+
+
+      router.get('/updateCrushedItems',function(req,res){
+        CrushedItems.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+          CrushedItems.findByIdAndUpdate(id,{$set:{massKgs:0}},function(err,tocs){
+
+          })
+          }
+          res.redirect('/rm/updateBT')
+        })
+      })
 
 
 
+      router.get('/updateBT',function(req,res){
+        BlendingTanks.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+          BlendingTanks.findByIdAndUpdate(id,{$set:{litres:0,product:"null",refNumber:"null"}},function(err,tocs){
 
-
-
-
-
-
-
-
-
-
-
-
+          })
+          }
+          res.redirect('/rm/warehouseStock')
+        })
+      })
 
 
 

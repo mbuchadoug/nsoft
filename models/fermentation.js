@@ -14,6 +14,10 @@ var batchSchemaF = new Schema({
     dateValue: {type: Number },
     size:{type:Number},
     water:{type:Number},
+    startDate: {type: String },
+    endDate: {type: String },
+    tanks: {type: Number },
+    approvedBy: {type: String },
        
    
 });
