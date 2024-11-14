@@ -4,6 +4,7 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
+var SaleStock = require('../models/salesStock');
 var BatchFermentationIngredients = require('../models/batchFermentationIngredients');
 var BlendingTanks = require('../models/blendingTanks');
 var CrushedItems = require('../models/crushedItems');
@@ -5478,9 +5479,80 @@ router.get('/updateRepo',function(req,res){
 
      }) 
     }
-    res.redirect('/batch')
+    res.redirect('/updateInvoiceSubBatch')
   })
 })
+
+
+router.get('/updateInvoiceSubBatch',function(req,res){
+  InvoiceSubBatch.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     InvoiceSubBatch.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateRtnsSubBatch')
+  })
+})
+
+
+
+
+
+router.get('/updateRtnsSubBatch',function(req,res){
+  RtnsSubBatch.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    RtnsSubBatch.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateInvoiceSubFile')
+  })
+})
+
+
+
+router.get('/updateInvoiceSubFile',function(req,res){
+  InvoiceSubFile.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    InvoiceSubFile.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateReturnsSubFile')
+  })
+})
+
+
+
+router.get('/updateReturnsSubFile',function(req,res){
+  ReturnsSubFile.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    ReturnsSubFile.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateSalesStockUpdate')
+  })
+})
+
+
+router.get('/updateSalesStockUpdate',function(req,res){
+  SaleStock.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+  SaleStock.findByIdAndUpdate(id,{$set:{casesReceived:0,openingBal:0,holdingCases:0,qty:0}},function(err,locs){
+
+  })
+    }
+    res.redirect('/warehouseStock')
+  })
+})
+
 
 
 

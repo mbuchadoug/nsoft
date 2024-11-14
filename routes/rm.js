@@ -10,6 +10,7 @@ var FinalProductEvaluation = require('../models/finalProductEvaluation');
 var Ware = require('../models/ware');
 var CrushedItems = require('../models/crushedItems');
 var Warehouse = require('../models/warehouse');
+var SaleStock = require('../models/salesStock');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
 var BatchRR = require('../models/batchRR');
