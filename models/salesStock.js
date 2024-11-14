@@ -22,4 +22,4 @@ var schema = new Schema({
     price: {type: Number},
 });
 
-module.exports = mongoose.model('Sales Stock', schema);
+module.exports = mongoose.model('SalesStock', schema);

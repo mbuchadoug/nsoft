@@ -19,4 +19,4 @@ var finalSchemaCK = new Schema({
    
 });
 
-module.exports = mongoose.model('Final Product', finalSchemaCK);
+module.exports = mongoose.model('FinalProduct', finalSchemaCK);

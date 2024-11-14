@@ -37,4 +37,4 @@ var stockVoucher = new Schema({
    
 });
 
-module.exports = mongoose.model('Stock Voucher', stockVoucher);
+module.exports = mongoose.model('StockVoucher', stockVoucher);

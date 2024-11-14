@@ -12,4 +12,4 @@ var salesListSchema = new Schema({
    
 });
 
-module.exports = mongoose.model('Sales List', salesListSchema);
+module.exports = mongoose.model('SalesList', salesListSchema);
