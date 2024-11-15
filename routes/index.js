@@ -7782,7 +7782,7 @@ router.post('/stockRequisition',isLoggedIn,function(req,res){
 
 
 
-router.get('/importTanks',isLoggedIn,function(req,res){
+router.get('/importTanks',function(req,res){
   var pro = req.user
 
  
