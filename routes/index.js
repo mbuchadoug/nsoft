@@ -147,8 +147,9 @@ for(var i = 0;i<locs.length;i++){
 console.log(vocs.length,'size9')
     if(vocs.length == 0){
 
-      StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
-      let cases = nocs.length
+     // StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
+      //let cases = nocs.length
+      let cases = 0
  
       var ware = new Warehouse()
 
@@ -176,19 +177,21 @@ console.log(vocs.length,'size9')
         
   })
 
-    })
+    //})
 
     }else{
       let id = vocs[0]._id
-      StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
+     /* StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
         let cases = nocs.length
         let quantity = nocs.length * 12
-        quantity.toFixed(2)
+        quantity.toFixed(2)*/
+        let cases = 0
+        let quantity = 0
       Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:quantity}},function(err,tocs){
 
       })
 
-          })
+          //})
     }
   })
 }
