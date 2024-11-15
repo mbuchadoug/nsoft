@@ -7802,13 +7802,8 @@ router.get('/importTanks',function(req,res){
 
 
   
- router.post('/importTanks',isLoggedIn, uploadX.single('file'),function(req,res){
-   var term = req.user.term;
-   var m = moment()
-   var year = m.format('YYYY')
-   var id =   req.user._id
-   var idNumber = req.user.idNumber
-   var pro = req.user
+ router.post('/importTanks', uploadX.single('file'),function(req,res){
+
 
 
  
