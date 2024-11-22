@@ -588,23 +588,35 @@ router.get('/replace',function(req,res){
     let dispatchedPalletsR
     let totalPallets = cases / 10
     let nextPallet
-   
+    let receivedPallets = hocs.length / 10
+let receivedPalletsR = hocs.length % 10
+   StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
+ receivedPallets = hocs.length / 10
+ receivedPalletsR = hocs.length % 10
+
     StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
       dispatchedPallets = mocs.length / 10
       dispatchedPalletsR = mocs.length % 10
 
 console.log(dispatchedPallets,dispatchedPalletsR,'WR')
-if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
+if(dispatchedPallets == 0 && dispatchedPalletsR == 0 && receivedPallets ==0 && receivedPalletsR == 0){
   nextPallet = 1
   console.log(0,'flint')
 }
 
-if(dispatchedPallets > 0 && dispatchedPalletsR == 0){
+
+if(dispatchedPallets > 0 && dispatchedPalletsR == 0 && receivedPallets > 0 && receivedPalletsR == 0){
+  
+  console.log(dispatchedPallets,'dispatchedPallet')
+  nextPallet = dispatchedPallets + 1
+  console.log(nextPallet,dispatchedPallets,'flintR')
+}
+/*if(dispatchedPallets > 0 && dispatchedPalletsR == 0  && receivedPallets > 0 && receivedPalletsR == 0 ){
   nextPallet = dispatchedPallets++
   console.log(dispatchedPallets,'myWorld')
-  nextPallet = dispatchedPallets++
+  //nextPallet = dispatchedPallets++
   console.log(nextPallet,'flint44')
-}
+}*/
 
 else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
   nextPallet = Math.trunc(dispatchedPallets) + 1
@@ -709,7 +721,7 @@ let nSize = kocs.length + 1
                    StockV.find({pallet:nextPallet,refNumber:refNumber,status:"received"},function(err,jocs){
                    
                      palletCasesBatch = jocs.length
-                  
+                     console.log(jocs.length,'jocs.length')
              console.log(dispatchedPallets,dispatchedPalletsR,'cgtttdtdtdt')    
         if(   dispatchedPallets >0 &&    dispatchedPallets < 1 &&    dispatchedPalletsR >0 ){
 
@@ -720,7 +732,19 @@ let nSize = kocs.length + 1
         
             })
             console.log('1U')
-        }else if(dispatchedPallets > 1 && dispatchedPalletsR > 0){
+        }
+        
+      else  if(   dispatchedPallets >0 &&      receivedPallets >0  && receivedPalletsR == 0 ){
+
+
+          User.findByIdAndUpdate(id,{$set:{date:date,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
+            product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,batchCount:count,currentCount:1,
+            casesBatch:cases,currentCases:0,pallets:1,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,palletCasesBatch:palletCasesBatch,aggCases:cases,product:product }},function(err,docs){
+        
+            })
+            console.log('balenciaga')
+        }
+        else if(dispatchedPallets > 1 && dispatchedPalletsR > 0){
 
 
         let pallet2 = Math.trunc(dispatchedPallets) + 1
@@ -796,12 +820,14 @@ let nSize = kocs.length + 1
       
     //})
   //})
+})
   
 })
   }
 
   //})
     }
+   
   
     })
   
@@ -5071,6 +5097,12 @@ let dispatchedPallets
 let dispatchedPalletsR
 let totalPallets = cases / 10
 let nextPallet
+let receivedPallets = hocs.length / 10
+let receivedPalletsR = hocs.length % 10
+StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
+receivedPallets = hocs.length / 10
+receivedPalletsR = hocs.length % 10
+
 
 StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
   dispatchedPallets = mocs.length / 10
@@ -5082,12 +5114,21 @@ nextPallet = 1
 console.log(0,'flint')
 }
 
-if(dispatchedPallets > 0 && dispatchedPalletsR == 0){
+
+if(dispatchedPallets > 0 && dispatchedPalletsR == 0 && receivedPallets > 0 && receivedPalletsR == 0){
+  
+  console.log(dispatchedPallets,'dispatchedPallet')
+  nextPallet = dispatchedPallets + 1
+  console.log(nextPallet,dispatchedPallets,'flintR')
+}
+
+
+/*if(dispatchedPallets > 0 && dispatchedPalletsR == 0){
 nextPallet = dispatchedPallets++
 console.log(dispatchedPallets,'myWorld')
 nextPallet = dispatchedPallets++
 console.log(nextPallet,'flint44')
-}
+}*/
 
 else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
 nextPallet = Math.trunc(dispatchedPallets) + 1
@@ -5209,7 +5250,21 @@ let nSize = kocs.length + 1
     
         })
         console.log('1U')
-    }else if(dispatchedPallets > 1 && dispatchedPalletsR > 0){
+    }
+    
+    else  if(   dispatchedPallets >0 &&      receivedPallets >0  && receivedPalletsR == 0 ){
+
+
+      User.findByIdAndUpdate(id,{$set:{date:date,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
+        product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,batchCount:count,currentCount:1,
+        casesBatch:cases,currentCases:0,pallets:1,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,palletCasesBatch:palletCasesBatch,aggCases:cases,product:product }},function(err,docs){
+    
+        })
+        console.log('balenciaga')
+    }
+    
+    
+    else if(dispatchedPallets > 1 && dispatchedPalletsR > 0){
 
 
     let pallet2 = Math.trunc(dispatchedPallets) + 1
@@ -5280,7 +5335,7 @@ console.log(refNumber,'refNumber555')
 })
 
 })
- 
+})
 
   
 //})
