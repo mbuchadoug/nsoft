@@ -1171,7 +1171,7 @@ router.post('/', passport.authenticate('local.signin', {
   if(req.user.role == "receiver"){
     res.redirect("/receiver/batch");
   }else if(req.user.role == "dispatcher"){
-    res.redirect('/dispatch/fifoUpdate')
+    res.redirect('/dispatch/batchDispatch')
   }else if(req.user.role == "sales"){
     res.redirect('/sales/invoice')
   }else if(req.user.role == "accountant1"){
