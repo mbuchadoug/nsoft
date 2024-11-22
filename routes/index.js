@@ -1170,8 +1170,8 @@ router.post('/', passport.authenticate('local.signin', {
 }), function (req, res, next) {
   if(req.user.role == "receiver"){
     res.redirect("/receiver/batch");
-  }else if(req.user.role == "dispatcher"){
-    res.redirect('/dispatch/batchDispatch')
+  }else if(req.user.role == "dispatch"){
+    res.redirect('/dispatch/fifoUpdate')
   }else if(req.user.role == "sales"){
     res.redirect('/sales/invoice')
   }else if(req.user.role == "accountant1"){
