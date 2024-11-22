@@ -145,6 +145,7 @@ ul.no-bullets {
     </li>
   
 
+
  <ul class="nav flex-column" id="nav_accordion">
 
   <li class="divider"></li>	
@@ -292,7 +293,7 @@ $.ajax({
     dataType: 'json',
     type: 'POST',
 	
-    url: "/dispStock3/"+refNumDispatch,
+    url: "/dispStock3Branch/"+refNumDispatch,
     success: function(data) {
     console.log(data)
     console.log(data.length,'wwww')
@@ -527,7 +528,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "./dispatch/dispatchScan",
+                url: "./dispatch/dispatchScanBranch",
                 success: function(data) {
              
 
@@ -600,7 +601,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
+                url: "./dispatch/dispatchPalletBranch/"+refNumber,
                 success: function(docs) {
 console.log(docs,'ocs')
 
@@ -646,13 +647,13 @@ document.getElementById("closeBtn").style.display = "";
 
 else if(docs[i].size ==  docs[i].casesBatch && docs[i].position != 'last' ){
 document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
+document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalletBranch/${batchId}`)
 }
 
 
 else if(docs[i].size !=  docs[i].casesBatch && docs[i].position != 'last' ){
 document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
+document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalletBranch/${batchId}`)
 }
 
 
@@ -878,8 +879,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
      <hr> <div class="btn-toolbar">
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
 
-     <a  id="closeBtn" class="btn btn-primary ember-view"  href="/dispatch/salesStockUpdate/{{batchId}}" style="display: none;" >Close Batch</a>
-      <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePallet/{{batchId}}" style="display: none;" >Close Pallet</a>
+     <a  id="closeBtn" class="btn btn-primary ember-view"  href="/dispatch/batchDispatchUpdate/{{batchId}}" style="display: none;" >Close Batch</a>
+      <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePalletBranch/{{batchId}}" style="display: none;" >Close Pallet</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>
       <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/dispatch/eodReport">Run Report</button></div>-->
       </form>

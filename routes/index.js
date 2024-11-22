@@ -37,6 +37,7 @@ var StockRMFile = require('../models/stockRMFile');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
 var SalesList = require('../models/salesList');
+var Drivers = require('../models/drivers');
 const keys = require('../config1/keys')
 const stripe = require('stripe')('sk_test_IbxDt5lsOreFtqzmDUFocXIp0051Hd5Jol');
 var xlsx = require('xlsx')
@@ -316,6 +317,140 @@ var date = m.format('L')
          
           
               res.redirect('/add');
+                    })
+                  }
+              
+                 
+                
+                    
+                    
+                
+                 
+                  
+
+                  
+})
+
+
+
+router.get('/addUserBranch',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addUserBranch',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+router.post('/addUserBranch', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                  
+                var name = req.body.name
+            
+              
+                var email = req.body.email
+                var password = req.body.password
+                var role = req.body.role
+                var username = req.body.username
+                var uid = req.body.username
+                var fullname = req.body.fullname
+                var branch = req.body.branch
+                req.check('fullname','Enter Name').notEmpty();
+               
+              
+                req.check('email','Enter email').notEmpty().isEmail();
+         
+                
+             
+               
+                req.check('password', 'Password do not match').isLength({min: 4}).equals(req.body.confirmPassword);
+                    
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addUserBranch');
+                      
+                    
+                  }
+                  else
+                
+                 {
+                    User.findOne({'email':email})
+                    .then(user =>{
+                        if(user){ 
+                      // req.session.errors = errors
+                        //req.success.user = false;
+                    
+                       req.session.message = {
+                         type:'errors',
+                         message:'user id already in use'
+                       }     
+                       
+                       req.flash('danger', req.session.errors[0].msg);
+         
+          
+                       res.redirect('/addUserBranch');
+                       
+                        
+                  }
+                  
+                                else  {   
+               
+
+                  
+                  var user = new User();
+                  user.fullname = fullname;
+                  user.email = email;
+                  user.uid = username
+                  user.username = username
+                  user.branch = branch
+                  user.mobile = "null";
+                  user.photo = 'propic.jpg';
+                  user.date = "null";
+                  user.shift = "null";
+                  user.warehouse = "null";
+                  user.product = "null";
+                  user.lot = 0;
+                  user.refNumber = "null";
+                  user.location = "null";
+                  user.role = role
+                 
+
+                  
+                  
+                  user.password = user.encryptPassword(password)
+
+                  
+                   
+              
+                   
+          
+                  user.save()
+                    .then(user =>{
+                      
+                })
+              }
+              req.flash('success', 'User added Successfully');
+         
+          
+              res.redirect('/addUserBranch');
                     })
                   }
               
@@ -1049,6 +1184,8 @@ router.post('/', passport.authenticate('local.signin', {
     res.redirect('/accounts4/stockRequisitions')
   }else if(req.user.role == "production-supervisor"){
     res.redirect('/rm/voucherNumberUpdate')
+  }else if(req.user.role == "sales-branch"){
+    res.redirect('/merch/refDispUpdate/')
   }
 
 
@@ -1426,10 +1563,12 @@ router.post('/importSales',isLoggedIn,uploadX.single('file'),  (req,res)=>{
          
           let salesPerson = record.salesPerson
           let driver = record.driver;
+          let type = record.type;
          
 
 req.body.salesPerson = record.salesPerson 
 req.body.driver = record.driver
+req.body.type = record.type
 
 
 //req.body.photo = record.photo          
@@ -1478,6 +1617,7 @@ else{
 var product = new SalesList();
 product.salesPerson = salesPerson;
 product.driver = driver;
+product.type = type
 
 product.save()
   .then(user =>{
@@ -1504,6 +1644,173 @@ product.save()
                   req.flash('success', 'File Successfully!');
 
                   res.redirect('/importSales')  
+       
+                }
+                
+                
+                  
+                  
+      
+                 
+      
+                  
+           
+              }
+    
+      
+
+
+})
+
+
+
+//import drivers
+
+router.get('/importDrivers',isLoggedIn,function(req,res){
+  var pro = req.user
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('imports/drivers',{pro:pro,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+})
+
+
+
+
+
+
+router.post('/importDrivers',isLoggedIn,uploadX.single('file'),  (req,res)=>{
+ 
+ 
+
+/*  if(!req.file){
+      req.session.message = {
+        type:'errors',
+        message:'Select File!'
+      }     
+        res.render('imports/students', {message:req.session.message,pro:pro}) */
+   if (!req.file || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+          req.session.message = {
+              type:'errors',
+              message:'Upload Excel File'
+            }     
+              res.render('imports/drivers', {message:req.session.message,pro:pro
+                   
+               }) 
+
+
+
+      }
+        
+      else{
+   
+
+      
+         const file = req.file.filename;
+  
+          
+              var wb =  xlsx.readFile('./public/uploads/' + file)
+
+           
+       
+               var sheets = wb.Sheets;
+               var sheetNames = wb.SheetNames;
+   
+               var sheetName = wb.SheetNames[0];
+   var sheet = wb.Sheets[sheetName ];
+   
+      for (var i = 0; i < wb.SheetNames.length; ++i) {
+       var sheet = wb.Sheets[wb.SheetNames[i]];
+   
+       console.log(wb.SheetNames.length)
+       var data =xlsx.utils.sheet_to_json(sheet)
+           
+       var newData = data.map(function (record){
+   
+      
+     
+    
+        
+       
+      
+         
+        
+          let driver = record.driver;
+         
+
+          req.body.driver = record.driver
+
+//req.body.photo = record.photo          
+
+          
+      
+          
+            req.check('driver','Enter Driver').notEmpty();
+            //req.check('name','Enter Name').notEmpty();
+        
+            
+            var errors = req.validationErrors();
+
+            if (errors) {
+              
+              req.session.errors = errors;
+              req.session.success = false;
+              req.flash('danger', req.session.errors[0].msg);
+     
+      
+              res.redirect('/importDrivers');
+            
+        }
+else
+
+
+{
+Drivers.findOne({'driver':driver})
+.then(user =>{
+    if(user){ 
+  // req.session.errors = errors
+    //req.success.user = false;
+
+
+
+    req.flash('danger', 'Item already in the system');
+
+    res.redirect('/importDrivers')
+}
+else{
+
+
+
+
+        
+var product = new Drivers();
+
+product.driver = driver;
+
+product.save()
+  .then(user =>{
+
+
+  })
+
+}
+
+})
+
+
+
+
+}     
+               
+                   
+ 
+                  // .catch(err => console.log(err))
+           
+               
+                  })
+                
+                  req.flash('success', 'File Successfully!');
+
+                  res.redirect('/importDrivers')  
        
                 }
                 
@@ -5551,11 +5858,23 @@ router.get('/updateSalesStockUpdate',function(req,res){
 
   })
     }
-    res.redirect('/warehouseStock')
+    res.redirect('/updateWarehouseQty')
   })
 })
 
 
+
+router.get('/updateWarehouseQty',function(req,res){
+  Warehouse.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+  Warehouse.findByIdAndUpdate(id,{$set:{quantity:0,openingQuantity:0,rcvdQuantity:0,cases:0}},function(err,locs){
+
+  })
+    }
+    res.redirect('/warehouseStock')
+  })
+})
 
 
 

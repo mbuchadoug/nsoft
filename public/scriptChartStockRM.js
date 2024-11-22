@@ -708,7 +708,7 @@ var button6 = document.getElementById('myChart6tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level1'
+      let product = 'kambucha No1'
       let status = document.getElementById('status').value
 
   
@@ -913,7 +913,7 @@ var button7 = document.getElementById('myChart7tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level2'
+      let product = 'kambucha No2'
       let status = document.getElementById('status').value
       
     
@@ -1117,7 +1117,7 @@ var button8 = document.getElementById('myChart8tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level2'
+      let product = 'kambucha No3'
       let status = document.getElementById('status').value
   
       const labels1= []
@@ -3310,7 +3310,7 @@ var buttonR6 = document.getElementById('myChart6Btab').addEventListener('click',
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level1'
+      let product = 'kambucha No1'
 
       console.log('returns')
 
@@ -3519,7 +3519,7 @@ var buttonR7 = document.getElementById('myChart7Btab').addEventListener('click',
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level1'
+      let product = 'kambucha No2'
 
       console.log('returns')
 
@@ -3723,7 +3723,7 @@ var buttonR8 = document.getElementById('myChart8Btab').addEventListener('click',
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level1'
+      let product = 'kambucha No3'
 
       console.log('returns')
 
@@ -3927,7 +3927,7 @@ var buttonR9 = document.getElementById('myChart9Btab').addEventListener('click',
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'kambucha level1'
+      let product = 'manyuchi'
 
       console.log('returns')
 

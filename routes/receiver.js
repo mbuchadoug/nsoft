@@ -404,6 +404,7 @@ router.post('/receiveStock',isLoggedIn, function(req,res){
 
           //let idV =locs[total]._id
           let pallets = locs[total].pallet
+          console.log(pallets,'pallets')
         BatchR.findByIdAndUpdate(id,{$set:{pallet:pallets}},function(err,hocs){
 
 
@@ -813,7 +814,7 @@ router.get('/closeBatch/:id',function(req,res){
       }
     }
   
-    res.redirect('/receiver/updatePallet')
+    res.redirect('/receiver/palletUpdate')
 
   })
 })
@@ -821,7 +822,7 @@ router.get('/closeBatch/:id',function(req,res){
 
 
 
-router.get('/updatePallet',function(req,res){
+/*router.get('/updatePallet',function(req,res){
     BatchR.find({},function(err,focs){
       let size = focs.length - 1
   
@@ -843,7 +844,7 @@ router.get('/updatePallet',function(req,res){
       res.redirect('/receiver/warehouseUpdate')
       })
     
-  })
+  })*/
   
   
   

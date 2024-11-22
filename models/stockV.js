@@ -24,6 +24,7 @@ var schemaV = new Schema({
     availableCases: {type: Number, required: true},
     dateValue: {type: Number, required: true},
     receiver: {type: String, required: true},
+    type: {type: String},
     month: {type: String, required: true},
     year: {type: String, required: true},
     category: { type: String, required:true },

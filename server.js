@@ -31,6 +31,7 @@ var indexRoute6= require('./routes/dispatch')
 var indexRoute7= require('./routes/rm')
 var indexRoute8= require('./routes/admin')
 var indexRoute9= require('./routes/sales')
+var indexRouteX= require('./routes/deliveries')
 
 /* var recordsRoute = require('./routes/records')
  var studentRoute= require('./routes/student')
@@ -109,6 +110,7 @@ app.use('/dispatch', indexRoute6);
 app.use('/rm', indexRoute7);
 app.use('/admin', indexRoute8);
 app.use('/sales', indexRoute9);
+app.use('/merch', indexRouteX);
 
 
 

@@ -5,7 +5,7 @@ var salesListSchema = new Schema({
   
    salesPerson: {type: String},
    driver: {type: String},
-   
+   type: {type: String},
 
     
 

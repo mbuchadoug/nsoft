@@ -7,7 +7,8 @@
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
       <link rel="stylesheet" href="bootstrap-5.3.3/dist/css/bootstrap.min.css">
      <link href="sidebars.css" rel="stylesheet">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script type="text/javascript" id="zsiqscript" defer="" src="https://salesiq.zoho.com/widget"></script><script nomodule="">
@@ -143,7 +144,7 @@ ul.no-bullets {
         Home
 <!----><!---->      </a>
     </li>
-  
+ 
 
  <ul class="nav flex-column" id="nav_accordion">
 
@@ -276,7 +277,7 @@ ul.no-bullets {
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Dispatch Stock | Pallet: {{currentPallet}} |  -> Batch:{{refNumber}} </h3></div>
+<h3 class="over-flow">Dispatch Stock || Pallet || {{pallet}} | Cases: {{remainderCases}} |  -> Batch:{{refNumber}} </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
 
 
@@ -292,7 +293,7 @@ $.ajax({
     dataType: 'json',
     type: 'POST',
 	
-    url: "/dispStock3/"+refNumDispatch,
+    url: "/dispStockCases3/"+refNumDispatch,
     success: function(data) {
     console.log(data)
     console.log(data.length,'wwww')
@@ -519,7 +520,7 @@ this.firstElementChild.select();
             });
 
             function handleBarcode(scanned_barcode) {
-            
+                
             $.ajax({
                 dataType: 'json',
                 data: {
@@ -527,19 +528,18 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "./dispatch/dispatchScan",
+                url: "/dispatch/dispatchScanBranch",
                 success: function(data) {
              
 
-    let batchId = document.getElementById('batchId').value
-    console.log(batchId,'batchIDfff')
+
 
 
                if(data.length === 0){
                
                
                  
-                 alert('case not received or does not belong to batch/pallet ')
+                 alert('case not received or does not belong to batch ')
                    $("#barcodeNumber").val("")
                  
                  
@@ -558,14 +558,9 @@ this.firstElementChild.select();
                  
                
                 }
-
-
-
-          
-
-       else if(data.size === 3){
-
-         console.log('yea',data.size)
+                
+else if( data.casesBatch < 10 || data.casesBatch > 10 ){
+  console.log('yea',data.size)
 
            var tr = document.createElement('tr');
 
@@ -592,6 +587,7 @@ this.firstElementChild.select();
     $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
      $("#barcodeNumber").val("")
 
+   let batchId = document.getElementById('batchId').value
            let refNumber = document.getElementById('refNumber').value
             $.ajax({
                 dataType: 'json',
@@ -600,7 +596,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
+                url: "./dispatch/dispatchPalletBranch/"+refNumber,
                 success: function(docs) {
 console.log(docs,'ocs')
 
@@ -640,25 +636,9 @@ console.log(docs,'ocs')
 
 console.log(docs[i].size, data.casesBatch,'marino1')
 
-if(docs[i].size ==  docs[i].casesBatch ){
+
+
 document.getElementById("closeBtn").style.display = "";
-}
-
-else if(docs[i].size ==  docs[i].casesBatch && docs[i].position != 'last' ){
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}
-
-
-else if(docs[i].size !=  docs[i].casesBatch && docs[i].position != 'last' ){
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}
-
-
-else if(docs[i].size ==  docs[i].casesBatch && docs[i].position == 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
 /*else{
 document.getElementById("closePallet").style.display = "";
 document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
@@ -701,11 +681,63 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
                 
                
             });
-             
-           
+}
+    
 
-          
-        } else
+
+        else if(data.size === data.casesBatch){
+             alert('Batch Closed')
+
+                var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+	//var td3 = tr.appendChild(document.createElement('td'));
+    var td4 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
+   // var link= tr.appendChild(document.createElement('td'));
+    td1.id =data._id
+    td5.id = data._id
+/*td2.classList.add('text-end', 'pe-0')
+td3.classList.add('text-end', 'pe-0')
+td4.classList.add('text-end', 'pe-1')
+link.classList.add('text-end','pe-0')*/
+//link.setAttribute("href", "/rec/delete")
+//link.className = "text-end";
+
+
+
+
+    td1.innerHTML = data.barcodeNumber;
+    td2.innerHTML = data.availableCasesDispatch;
+   // td3.innerHTML = data.casesReceived;
+    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
+    td5.innerHTML = data.mformat
+    td6.innerHTML = data.warehouse
+    td7.innerHTML = data.timeOfDispatch
+    //let link2 = "/rec/delete/"+data._id
+
+    //td5.innerHTML = "Delete"
+    //var linkText = 'Delete'
+    // link.appendChild(linkText);
+    //link.href="/rec/delete/"+data._id
+    //td5.innerText = 'Delete'
+    //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+
+    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
+     $("#barcodeNumber").val("")
+
+             // window.location.href = "http://niyonsoft.org/batchDispatch"
+             //window.location.href = "http://localhost:8000/fifoUpdate"
+
+            // window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
+
+            document.getElementById("closeBtn").style.display = "";
+
+        }  else
 
                     
         {
@@ -751,7 +783,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
               <form class="zb-txn-form"  name="sample">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
                   <input type="hidden" name="refNumDispatch" id="refNumDispatch" value="{{refNumDispatch}}">
-                  <input type="hidden" name="batchId" id="batchId" value="{{batchId}}">
+                  <input type="hidden" id="batchId" name="batchId" value="{{batchId}}">
+                  <input type="hidden" id="refNumber" name="refNumber" value="{{refNumber}}">
           <!--<fieldset role="radiogroup" class="form-group">
               <div class="form-check cursor-pointer mb-2">  
               <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>
@@ -768,7 +801,7 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
       <input  id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}" readonly>
                   </div> </div></div>
 
-<input type="hidden" name="batchNumber" id="batchNumber" value="{{batchNumber}}">
+
 
                     <div class="col-lg-2"><label class="col-form-label required">Sales Person</label> <div id="ember330" class="ember-view"><div class="ac-box ">
 
@@ -878,10 +911,10 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
      <hr> <div class="btn-toolbar">
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
 
-     <a  id="closeBtn" class="btn btn-primary ember-view"  href="/dispatch/salesStockUpdate/{{batchId}}" style="display: none;" >Close Batch</a>
-      <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePallet/{{batchId}}" style="display: none;" >Close Pallet</a>
+     <a  id="closeBtn" class="btn btn-primary ember-view"  href="/dispatch/batchDispatchUpdateBranch/{{batchId}}" style="display: none;" >Close Batch</a>
+      <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePalletBranch/{{batchId}}" style="display: none;" >Close Pallet</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>
-      <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/dispatch/eodReport">Run Report</button></div>-->
+      <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/eodReport">Run Report</button></div>-->
       </form>
       </div>
       </div> <!----> <!---->
@@ -910,8 +943,7 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
                                  <div class="zgs19_gsProgressLoaderb"></div>
                                  <div class="zgs19_gsProgressLoaderc"></div>
                                  <div class="zgs19_gsProgressLoaderd"></div></div>
-                                
-                                
+                               
                                 <div id="zgs20_gsCardsPage" class="zgs19_gsCardsPage zgs19_gsDisplayNone"></div>
                                 <div id="zgs20_gsDashboardhome" class="zgs19_gsDashboardhome zgs19_gsDisplayNone"></div>
                                 <div id="zgs20_cloudIntegration" class="zgs19_cloudIntegration zgs19_gsSettingsPages zgs19_gsDisplayNoneImp"></div>

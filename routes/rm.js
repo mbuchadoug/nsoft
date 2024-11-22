@@ -1551,7 +1551,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
       let batchId = req.body.batchId
       let availableMass = req.body.availableMass
       let mass = req.body.code
-      let massTonne
+      let massTonne, totalMass
       let batchNumber = req.body.batchNumber
       BatchRR.find({batchNumber:batchNumber},function(err,docs){
         //console.log(docs,'docs')
@@ -1618,7 +1618,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
       stock.year = year
       stock.batchId = batchId
       stock.openingBatchWeightKg = availableMass
-     
+      stock.totalMass = total5
       stock.openingMass = number2
       stock.newMass = mass
       stock.closingMass = number2 - massNum
@@ -1975,7 +1975,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.month = month
       stock.year = year
       stock.batchId = batchId
-     
+      stock.totalMass = total5
       stock.openingMass = number1
       stock.newMass = mass
       stock.closingMass = massNum + number1
@@ -2048,7 +2048,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.month = month
       stock.year = year
       stock.batchId = batchId
-     
+      stock.totalMass = total5
       stock.openingMass = number1
       stock.newMass = mass
       stock.closingMass = massNum + number1
@@ -2250,7 +2250,7 @@ router.get('/batchListCrush',function(req,res){
       stock.year = year
       stock.batchId = batchId
       stock.openingBatchWeightKg = availableMass
-     
+      stock.totalMass = total5
       stock.openingMass = number2
       stock.newMass = mass
       stock.closingMass = number2 - massNum
