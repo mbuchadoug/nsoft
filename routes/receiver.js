@@ -773,7 +773,7 @@ router.get('/closeBatch/:id',function(req,res){
   StockV.find({refNumber:id},function(err,docs){
   //  console.log(docs,'docs')
     var productChunks = [];
-    var chunkSize = 10;
+    var chunkSize = 140;
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
@@ -1094,8 +1094,8 @@ form.append("file", file,filename);
 await Axios({
   method: "POST",
  //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-//     url: 'http://niyonsoft.org/uploadStatement',
-   url:'http://localhost:8000/receiver/uploadStatement',
+url: 'http://niyonsoft.org/receiver/uploadStatement',
+   //url:'http://localhost:8000/receiver/uploadStatement',
   headers: {
     "Content-Type": "multipart/form-data"  
   },

@@ -2235,6 +2235,28 @@ router.post('/addRefNum2',function(req,res){
 })
 
 
+router.get('/salesList',isLoggedIn,function(req,res){
+  SaleStock.find(function(err,docs){
+    res.render('sales/salesList',{listX:docs})
+  })
+})
+
+router.get('/updateStock/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+res.render('sales/update',{id:id})
+})
+
+
+router.post('/updateStock/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  var cases = req.body.cases
+  console.log(cases,'cases')
+  SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases}},function(err,docs){
+
+    res.redirect('/salesList')
+  })
+
+})
 
 
 

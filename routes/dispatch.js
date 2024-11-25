@@ -586,17 +586,17 @@ router.get('/replace',function(req,res){
     }
     let dispatchedPallets
     let dispatchedPalletsR
-    let totalPallets = cases / 10
+    let totalPallets = cases / 140
     let nextPallet
-    let receivedPallets = hocs.length / 10
-let receivedPalletsR = hocs.length % 10
+    let receivedPallets = hocs.length / 140
+let receivedPalletsR = hocs.length % 140
    StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
- receivedPallets = hocs.length / 10
- receivedPalletsR = hocs.length % 10
+ receivedPallets = hocs.length / 140
+ receivedPalletsR = hocs.length % 140
 
     StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-      dispatchedPallets = mocs.length / 10
-      dispatchedPalletsR = mocs.length % 10
+      dispatchedPallets = mocs.length / 140
+      dispatchedPalletsR = mocs.length % 140
 
 console.log(dispatchedPallets,dispatchedPalletsR,'WR')
 if(dispatchedPallets == 0 && dispatchedPalletsR == 0 && receivedPallets ==0 && receivedPalletsR == 0){
@@ -711,9 +711,9 @@ let nSize = kocs.length + 1
           
                 book.save()   
                 .then(pro =>{
-                  let pallet = batchdCases / 10
+                  let pallet = batchdCases / 140
                   console.log(batchdCases,'blud')
-                  let remainderCases = batchdCases % 10
+                  let remainderCases = batchdCases % 140
                    let currentPallet = 0
                    let palletCasesBatch
                    console.log(nextPallet,remainderCases,'pallet','remainderCases')
@@ -901,12 +901,12 @@ console.log(batchdCases,'batchdCases Iwewe')
 
          let dispatchedPallets
          let dispatchedPalletsR
-         let totalPallets = cases / 10
+         let totalPallets = cases / 140
          let nextPallet
         
          StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-           dispatchedPallets = mocs.length / 10
-           dispatchedPalletsR = mocs.length % 10
+           dispatchedPallets = mocs.length / 140
+           dispatchedPalletsR = mocs.length % 140
      
      console.log(dispatchedPallets,dispatchedPalletsR,'WR')
      if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
@@ -1462,8 +1462,8 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
       StockV.find({pallet:currentPallet,refNumber:refNumber,status:"received"},function(err,socs){
         palletCasesBatch = socs.length
      
-        let palletV = upCasesBatch / 10
-        let remainderCases2 = upCasesBatch2 % 10
+        let palletV = upCasesBatch / 140
+        let remainderCases2 = upCasesBatch2 % 140
         let remainderCases = remainderCases2 * -1
 
         console.log(palletV,'palletV')
@@ -2909,8 +2909,8 @@ form.append("file", file,filename);
 await Axios({
 method: "POST",
 //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
- //url: 'https://niyonsoft.org/uploadStatementDispatch',
- url:'http://localhost:8000/dispatch/uploadStatementDispatch',
+ url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
+ //url:'http://localhost:8000/dispatch/uploadStatementDispatch',
 headers: {
   "Content-Type": "multipart/form-data"  
 },
@@ -5095,18 +5095,18 @@ if(cases >= loc[0].cases){
 }
 let dispatchedPallets
 let dispatchedPalletsR
-let totalPallets = cases / 10
+let totalPallets = cases / 140
 let nextPallet
-let receivedPallets = hocs.length / 10
-let receivedPalletsR = hocs.length % 10
+let receivedPallets = hocs.length / 140
+let receivedPalletsR = hocs.length % 140
 StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
-receivedPallets = hocs.length / 10
-receivedPalletsR = hocs.length % 10
+receivedPallets = hocs.length / 140
+receivedPalletsR = hocs.length % 140
 
 
 StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-  dispatchedPallets = mocs.length / 10
-  dispatchedPalletsR = mocs.length % 10
+  dispatchedPallets = mocs.length / 140
+  dispatchedPalletsR = mocs.length % 140
 
 console.log(dispatchedPallets,dispatchedPalletsR,'WR')
 if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
@@ -5229,9 +5229,9 @@ let nSize = kocs.length + 1
       
             book.save()   
             .then(pro =>{
-              let pallet = batchdCases / 10
+              let pallet = batchdCases / 140
               console.log(batchdCases,'blud')
-              let remainderCases = batchdCases % 10
+              let remainderCases = batchdCases % 140
                let currentPallet = 0
                let palletCasesBatch
                console.log(nextPallet,remainderCases,'pallet','remainderCases')
@@ -5411,19 +5411,19 @@ batchdCases = loc[0].cases
       batchdCases = cases
     }*/
 
-    let pallet = batchdCases / 10
-    let remainderCases = batchdCases % 10
+    let pallet = batchdCases / 140
+    let remainderCases = batchdCases % 140
      let currentPallet = 0
 console.log(batchdCases,'batchdCases Iwewe')
 
      let dispatchedPallets
      let dispatchedPalletsR
-     let totalPallets = cases / 10
+     let totalPallets = cases / 140
      let nextPallet
     
      StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-       dispatchedPallets = mocs.length / 10
-       dispatchedPalletsR = mocs.length % 10
+       dispatchedPallets = mocs.length / 140
+       dispatchedPalletsR = mocs.length % 140
  
  console.log(dispatchedPallets,dispatchedPalletsR,'WR')
  if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
@@ -5921,7 +5921,7 @@ let scannedCases = rocs.length
 BatchD.findById(id,function(err,doc){
   if(doc){
  // let refNumber = doc.refNumber
-  let casesBatch2 = doc.cases - 10
+  let casesBatch2 = doc.cases - 140
   let cases = doc.cases
 
   
@@ -5984,8 +5984,8 @@ res.redirect('/dispatch/batchDispatch2')
   StockV.find({pallet:currentPallet,refNumber:refNumber,status:"received"},function(err,socs){
     palletCasesBatch = socs.length
  
-    let palletV = upCasesBatch / 10
-    let remainderCases2 = upCasesBatch2 % 10
+    let palletV = upCasesBatch / 140
+    let remainderCases2 = upCasesBatch2 % 140
     let remainderCases = remainderCases2 * -1
 
     console.log(palletV,'palletV')
