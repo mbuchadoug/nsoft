@@ -524,13 +524,13 @@ this.firstElementChild.select();
             function handleBarcode(scanned_barcode) {
                 
             $.ajax({
-                dataType: 'jsonp',
+                dataType: 'json',
                 data: {
                     code: scanned_barcode,
                     
                 },
                 type: 'POST',
-                crossDomain: true,
+               
                 url: "/receiver/receiveScan",
                 success: function(data) {
                   console.log(data,'dat666')
