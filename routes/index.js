@@ -4,6 +4,7 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
+var Delivery = require('../models/delivery');
 var SaleStock = require('../models/salesStock');
 var BatchFermentationIngredients = require('../models/batchFermentationIngredients');
 var BlendingTanks = require('../models/blendingTanks');
@@ -1374,19 +1375,19 @@ router.post('/dashChartStockSales',isLoggedIn,function(req,res){
  SaleStock.find({product:product},function(err,docs) {
   // console.log(docs,'docs')
    for(var i = 0;i<docs.length;i++){
-  let product = docs[i].product
-  console.log(docs,'docs')
+ // let product = docs[i].product
+  //console.log(docs,'docs')
 
       if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson  && value.product == docs[i].product )){
              console.log('true')
-            arr.find(value => value.product == docs[i].product).holdingCases.toFixed(2) += docs[i].holdingCases.toFixed(2);
+            arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
        }else{
 arr.push(docs[i])
        }
 
      
    }
-  console.log(arr,'arr')
+  //console.log(arr,'arr')
   res.send(arr)
  })
 
@@ -5872,6 +5873,8 @@ router.get('/updateReturnsSubFile',function(req,res){
 })
 
 
+
+
 router.get('/updateSalesStockUpdate',function(req,res){
   SaleStock.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
@@ -5880,10 +5883,23 @@ router.get('/updateSalesStockUpdate',function(req,res){
 
   })
     }
-    res.redirect('/updateWarehouseQty')
+    res.redirect('/updateDeliveryQty')
   })
 })
 
+
+
+router.get('/updateDeliveryQty',function(req,res){
+ Delivery.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+   Delivery.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateWarehouseQty')
+  })
+})
 
 
 router.get('/updateWarehouseQty',function(req,res){
@@ -5899,8 +5915,196 @@ router.get('/updateWarehouseQty',function(req,res){
 })
 
 
+//salesStock
+
+router.get('/updateSalesStock0',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'kambucha lite'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/updateSalesStock1')
+  })
+})
 
 
+
+router.get('/updateSalesStock1',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'kambucha No1'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/updateSalesStock2')
+  })
+})
+
+
+router.get('/updateSalesStock2',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'kambucha No2'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/updateSalesStock3')
+  })
+})
+
+
+
+
+
+router.get('/updateSalesStock3',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'kambucha No3'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/updateSalesStock4')
+  })
+})
+
+
+
+router.get('/updateSalesStock4',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'manyuchi'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/salesList')
+  })
+})
 
 /*router.get('/eodRepoDispatch/',isLoggedIn,function(req,res){
  
