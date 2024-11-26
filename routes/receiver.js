@@ -56,6 +56,27 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
+<<<<<<< HEAD
+=======
+const cors = require('cors');
+
+
+
+// Use CORS middleware
+router.use(cors());
+
+
+const corsOptions = {
+  origin: 'https://niyonsoft.org/',//(https://your-client-app.com)
+  optionsSuccessStatus: 200,
+};
+
+router.use(cors(corsOptions));
+
+
+
+
+>>>>>>> c3a97cdf1b5ad259e1de8a060259058f446d261a
 const arr = {}
 const arr2 = {}
 const arrE ={}
