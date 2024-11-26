@@ -58,7 +58,7 @@ const methodOverride = require('method-override');
 
 const cors = require('cors');
 
-const app = express();
+
 
 // Use CORS middleware
 router.use(cors());
