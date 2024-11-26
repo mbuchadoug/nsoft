@@ -56,24 +56,6 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
-const cors = require('cors');
-
-
-
-// Use CORS middleware
-router.use(cors());
-
-
-const corsOptions = {
-  origin: 'https://niyonsoft.org/',//(https://your-client-app.com)
-  optionsSuccessStatus: 200,
-};
-
-router.use(cors(corsOptions));
-
-
-
-
 const arr = {}
 const arr2 = {}
 const arrE ={}
@@ -207,7 +189,7 @@ router.get('/warehouseUpdate',function(req,res){
   })
   
 
-router.post('/receiveStock',isLoggedIn,cors(corsOptions), function(req,res){
+router.post('/receiveStock',isLoggedIn, function(req,res){
     console.log('receive Stock2')
     var date4 = req.body.date
     console.log(date4,'date4')
@@ -439,14 +421,14 @@ router.post('/receiveStock',isLoggedIn,cors(corsOptions), function(req,res){
   })
   })
 
-  router.get('/batch',isLoggedIn,cors(corsOptions),function(req,res){
+  router.get('/batch',isLoggedIn,function(req,res){
     var pro = req.user
     res.render('receiver/batch',{pro:pro})
   })
 
 
 
-  router.post('/batch',isLoggedIn,cors(corsOptions),function(req,res){
+  router.post('/batch',isLoggedIn,function(req,res){
 
     //var refNumber = req.body.referenceNumber
     var date = req.body.date
@@ -539,7 +521,7 @@ router.post('/receiveStock',isLoggedIn,cors(corsOptions), function(req,res){
 
 
 
-  router.get('/receiveStock/:id',isLoggedIn,cors(corsOptions),function(req,res){
+  router.get('/receiveStock/:id',isLoggedIn,function(req,res){
     var date = req.user.date
     var shift = req.user.shift
     var warehouse = req.user.warehouse
@@ -577,7 +559,7 @@ router.post('/receiveStock',isLoggedIn,cors(corsOptions), function(req,res){
 
 
 
-    router.post('/receiveScan',isLoggedIn,cors(corsOptions), function(req,res){
+    router.post('/receiveScan',isLoggedIn, function(req,res){
       console.log('receive scan')
       var date2 = req.user.date
       var product = req.user.product;
@@ -787,7 +769,7 @@ console.log(arr,'doc7')
     
 
 
-router.get('/closeBatch/:id',cors(corsOptions),function(req,res){
+router.get('/closeBatch/:id',function(req,res){
   let id = req.params.id
   console.log(id,'idBatch')
 
