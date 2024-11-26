@@ -584,11 +584,11 @@ link.classList.add('text-end','pe-0')*/
     //link.href="/rec/delete/"+data._id
     //td5.innerText = 'Delete'
     //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
-
+ $("#barcodeNumber").val("")
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.cases)
+ 
      $("#barcodeNumber").val("")
-
+   $("#availableCases").val(data.cases)
                     }
                
                 
@@ -644,7 +644,7 @@ link.classList.add('text-end','pe-0')*/
     
      <td>
     <span class="float-end">
-      <input  id="availableCases" class="ember-text-field text-end ember-view form-control" type="number" name="availableCases"> 
+      <input  id="availableCases" class="ember-text-field text-end ember-view form-control" type="number" name="availableCases" readonly> 
  </span> <label class="col-form-label">Available Cases</label></td>
     </tr> 
     
