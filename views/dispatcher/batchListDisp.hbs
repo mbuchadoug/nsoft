@@ -343,7 +343,8 @@ ul.no-bullets {
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 													        <th class="min-w-100px">Ref Number</th>
 												         	<th class="text-end min-w-75px">Product</th>
-															
+																<th class="text-end min-w-75px">Sales Person</th>
+																	<th class="text-end min-w-75px">Destination</th>
 															<th class="text-end min-w-75px">Cases Received</th>
 															<th class="text-end min-w-75px">Cases Dispatched</th>
 															<th class="text-end min-w-75px">Remaining Cases</th>
@@ -367,7 +368,8 @@ ul.no-bullets {
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.product}}</td>
-
+<td class="text-end pe-0">{{this.salesPerson}}</td>
+<td class="text-end pe-0">{{this.destination}}</td>
 													<td class="text-end pe-0">{{this.cases}}</td>
 													<td class="text-end pe-0">{{this.statsCasesDispatched}}</td>
 													<td class="text-end pe-0">{{this.statsRemainingCases}}</td>

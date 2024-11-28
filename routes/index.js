@@ -2206,15 +2206,15 @@ router.post('/addRefNum2',function(req,res){
 
           
     
-      var num = new RefNoSeqDisp();
+      var seq = new RefNoSeqDisp();
     
-      num.num = refNumber;
+      seq.num = refNumber;
      
      
    
     
     
-      num.save()
+      seq.save()
         .then(dep =>{
          
           req.session.message = {
