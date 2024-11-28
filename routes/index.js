@@ -134,7 +134,7 @@ router.get('/fix',function(req,res){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       RefNoSeqDisp.findByIdAndRemove(id,function(err,locs){
-        
+
       })
     }
   })
@@ -2183,11 +2183,11 @@ router.get('/addRefNum2',function(req,res){
 
 router.post('/addRefNum2',function(req,res){
 
-  var num = req.body.refNumber;
+  var num = req.body.invoiceNumber;
   //var idNumber = req.body.idNumber;
   
  
-      req.check('refNumber','Enter Ref Number').notEmpty().isNumeric();
+      req.check('invoiceNumber','Enter Ref Number').notEmpty().isNumeric();
       //req.check('idNumber','Enter ID Number').notEmpty().isNumeric();
 
     
