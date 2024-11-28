@@ -2806,10 +2806,11 @@ var code = req.params.id
 
 
 //console.log(docs,'docs')
-RefNoSeqDisp.find(function(err,doc){
-let seqNum = doc[0].num
-let seqId = doc[0]._id
+RefNoSeqDisp.find(function(err,hocs){
 
+  console.log(hocs,'hocsss')
+let seqNum = hocs[0].num
+let seqId = hocs[0]._id
 
 
 const compile = async function (templateName, arrStatementR){
