@@ -128,6 +128,18 @@ router.get('/search',function(req,res){
   res.render('kambucha/search')
 })
 
+
+router.get('/fix',function(req,res){
+  RefNoSeqDisp.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      RefNoSeqDisp.findByIdAndRemove(id,function(err,locs){
+        
+      })
+    }
+  })
+})
+
 router.get('/conversai',function(req,res){
   res.render('receiver/index')
 })
