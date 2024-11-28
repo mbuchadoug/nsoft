@@ -6106,6 +6106,24 @@ router.get('/updateSalesStock4',isLoggedIn,function(req,res){
   })
 })
 
+
+
+
+
+
+
+
+router.get('/updateRepoV',function(req,res){
+  RepoFiles.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     RepoFiles.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/')
+  })
+})
 /*router.get('/eodRepoDispatch/',isLoggedIn,function(req,res){
  
   let date  = req.user.date
