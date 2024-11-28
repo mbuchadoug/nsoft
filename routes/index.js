@@ -2171,7 +2171,7 @@ router.get('/addRefNum2',function(req,res){
 
 router.post('/addRefNum2',function(req,res){
 
-  var refNumber = req.body.refNumber;
+  var num = req.body.refNumber;
   //var idNumber = req.body.idNumber;
   
  
@@ -2191,7 +2191,7 @@ router.post('/addRefNum2',function(req,res){
     }
     else{
       
-      RefNoSeqDisp.findOne({'num':refNumber})
+      RefNoSeqDisp.findOne({'num':num})
         .then(dept =>{
             if(dept){ 
   
@@ -2208,7 +2208,7 @@ router.post('/addRefNum2',function(req,res){
     
       var seq = new RefNoSeqDisp();
     
-      seq.num = refNumber;
+      seq.num = num;
      
      
    
