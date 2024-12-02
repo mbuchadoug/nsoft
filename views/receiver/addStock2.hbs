@@ -319,8 +319,8 @@ $.ajax({
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
     var td7 = tr.appendChild(document.createElement('td'));
-     var td8 = tr.appendChild(document.createElement('td'));
-         var td9 = tr.appendChild(document.createElement('td'));
+    // var td8 = tr.appendChild(document.createElement('td'));
+         //var td9 = tr.appendChild(document.createElement('td'));
     var link= tr.appendChild(document.createElement('td'));
    
     td1.id =data[i]._id
@@ -343,8 +343,8 @@ td5.appendChild(link);*/
    // td3.innerHTML = data.casesReceived;
     td6.innerHTML=  data[i].availableCases + data[i].casesReceived ;
     td7.innerHTML = data[i].mformat
-    td8.innerHTML = data[i].warehouse
-    td9.innerHTML = data[i].shift
+    //td8.innerHTML = data[i].warehouse
+    //td9.innerHTML = data[i].shift
     /*let link2 = "/rec/delete/"+data[i]._id
 
     var linkText = 'Delete'
@@ -577,8 +577,8 @@ let preRefNumber = data.preRefNumber
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
     var td7 = tr.appendChild(document.createElement('td'));
-    var td8 = tr.appendChild(document.createElement('td'));
-     var td9 = tr.appendChild(document.createElement('td'));
+    //var td8 = tr.appendChild(document.createElement('td'));
+     //var td9 = tr.appendChild(document.createElement('td'));
 
     td1.id =data._id
     td5.id = data._id
@@ -590,8 +590,8 @@ let preRefNumber = data.preRefNumber
    // td3.innerHTML = data.casesReceived;
     td6.innerHTML=  data.availableCases + data.casesReceived ;
     td7.innerHTML = data.mformat
-    td8.innerHTML = data.warehouse
-    td9.innerHTML = data.shift
+    //td8.innerHTML = data.warehouse
+    //td9.innerHTML = data.shift
     
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
     $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
@@ -622,8 +622,8 @@ console.log(docs,'ocs')
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
     var td7 = tr.appendChild(document.createElement('td'));
-    var td8 = tr.appendChild(document.createElement('td'));
-    var td9 = tr.appendChild(document.createElement('td'));
+    //var td8 = tr.appendChild(document.createElement('td'));
+    //var td9 = tr.appendChild(document.createElement('td'));
 
 
 
@@ -641,8 +641,8 @@ console.log(docs,'ocs')
    // td3.innerHTML = data.casesReceived;
     td6.innerHTML=  docs[i].availableCases + docs[i].casesReceived ;
     td7.innerHTML = docs[i].mformat
-    td8.innerHTML = docs[i].warehouse
-    td9.innerHTML = docs[i].shift
+   // td8.innerHTML = docs[i].warehouse
+    //td9.innerHTML = docs[i].shift
     
 
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
@@ -718,8 +718,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
     var td7 = tr.appendChild(document.createElement('td'));
-    var td8 = tr.appendChild(document.createElement('td'));
-    var td9 = tr.appendChild(document.createElement('td'));
+    //var td8 = tr.appendChild(document.createElement('td'));
+    //var td9 = tr.appendChild(document.createElement('td'));
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
     td5.id = data._id
@@ -739,8 +739,8 @@ link.classList.add('text-end','pe-0')*/
    // td3.innerHTML = data.casesReceived;
     td6.innerHTML=  data.availableCases + data.casesReceived ;
     td7.innerHTML = data.mformat
-    td8.innerHTML = data.warehouse
-    td9.innerHTML = data.shift
+   //td8.innerHTML = data.warehouse
+    //td9.innerHTML = data.shift
     //let link2 = "/rec/delete/"+data._id
 
     //td5.innerHTML = "Delete"
@@ -842,8 +842,8 @@ link.classList.add('text-end','pe-0')*/
 	<!--<th>Cases Received</th>-->
 	<th>Closing Balance</th>
   <th>Date</th>
-   <th>Warehouse</th>
-   <th>Shift</th>
+   <!--<th>Warehouse</th>
+   <th>Shift</th>-->
 
                               </tr>
 </thead>
