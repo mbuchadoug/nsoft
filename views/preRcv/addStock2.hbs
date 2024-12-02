@@ -2,7 +2,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Receive Stock | Kambucha Inventory</title>
+    <title>Add Barcodes| Kambucha Inventory</title>
 
     
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
@@ -297,13 +297,13 @@ ul.no-bullets {
 
 <script>
 
-
+var refNumber = document.getElementById('refNumber').value
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-    url: `/receiver/autoLoad/{{{refNumber}}}`,
+    url: "/addStock3/"+refNumber,
     success: function(data) {
     console.log(data)
     console.log(data.length,'wwww')
@@ -319,8 +319,6 @@ $.ajax({
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
     var td7 = tr.appendChild(document.createElement('td'));
-     var td8 = tr.appendChild(document.createElement('td'));
-         var td9 = tr.appendChild(document.createElement('td'));
     var link= tr.appendChild(document.createElement('td'));
    
     td1.id =data[i]._id
@@ -336,15 +334,14 @@ link.className = "text-end";*/
 
 td5.appendChild(link);*/
 
-  td1.innerHTML = data[i].barcodeNumber;
-    td2.innerHTML = data[i].refCases;
-      td4.innerHTML = data[i].pallet;
-    td5.innerHTML = data[i].availableCases;
+
+td1.innerHTML = data[i].barcodeNumber;
+    td2.innerHTML = data[i].availableCases;
    // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  data[i].availableCases + data[i].casesReceived ;
-    td7.innerHTML = data[i].mformat
-    td8.innerHTML = data[i].warehouse
-    td9.innerHTML = data[i].shift
+    td4.innerHTML=  data[i].availableCases + data[i].casesReceived ;
+    td5.innerHTML = data[i].mformat
+    td6.innerHTML = data[i].warehouse
+    td7.innerHTML = data[i].shift
     /*let link2 = "/rec/delete/"+data[i]._id
 
     var linkText = 'Delete'
@@ -508,7 +505,7 @@ this.firstElementChild.select();
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Receive Stock </h3></div>
+<h3 class="over-flow">Add Barcodes </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
@@ -547,7 +544,7 @@ this.firstElementChild.select();
                 },
                 type: 'POST',
                
-                url: "/receiver/receiveScan",
+                url: "/admin/receiveScan",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -563,149 +560,10 @@ this.firstElementChild.select();
                 }
 
 
-  
-
-       else if(data.countSize === 3){
-
-         console.log('yea',data.countSize)
-let preRefNumber = data.preRefNumber
-           var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-     var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-    var td8 = tr.appendChild(document.createElement('td'));
-     var td9 = tr.appendChild(document.createElement('td'));
-
-    td1.id =data._id
-    td5.id = data._id
-
-    td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.refCases;
-    td4.innerHTML = data.pallet;
-    td5.innerHTML = data.availableCases;
-   // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  data.availableCases + data.casesReceived ;
-    td7.innerHTML = data.mformat
-    td8.innerHTML = data.warehouse
-    td9.innerHTML = data.shift
-    
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
-     $("#barcodeNumber").val("")
-
-           let refNumber = document.getElementById('refNumber').value
-            $.ajax({
-                dataType: 'json',
-                data: {
-                    code: scanned_barcode,
-                    
-                },
-                type: 'POST',
-                url: "./receiver/receivePallet/"+preRefNumber,
-                success: function(docs) {
-console.log(docs,'ocs')
-
-                 for(var i =0;i< docs.length;i++){ 
-                   let nSize = docs.length - 1
-
-                   console.log(i,'iiiii')
-                   var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-    var td8 = tr.appendChild(document.createElement('td'));
-    var td9 = tr.appendChild(document.createElement('td'));
 
 
 
-
-    td1.id =docs[i]._id
-    td5.id = docs[i]._id
-
-
-
-
-    td1.innerHTML = docs[i].barcodeNumber;
-    td2.innerHTML = docs[i].refCases;
-    td4.innerHTML = docs[i].pallet;
-    td5.innerHTML = docs[i].availableCases;
-   // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  docs[i].availableCases + docs[i].casesReceived ;
-    td7.innerHTML = docs[i].mformat
-    td8.innerHTML = docs[i].warehouse
-    td9.innerHTML = docs[i].shift
-    
-
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#barcodeNumber").val("")
-   $("#availableCases").val(docs[nSize].cases)
-   $("#refCases").val(docs[nSize].refCases)
-let size = docs[i].cases % 20
-let preId = docs[i].preRefNumber
-if(size == 0 ){
-document.getElementById("closeBtn").style.display = "";
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/receiver/closePallet/${preId}`)
-}
-
-
-/*else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-
-
-//if(docs[i].size === data.casesBatch){
-             //alert('Batch Closed')
-             // window.location.href = "http://niyonsoft.org/batchDispatch"
-             //window.location.href = "http://localhost:8000/fifoUpdate"
-            //document.getElementById('barcodeNumber').setAttribute('readonly', true);
-              //  document.getElementById('barcodeNumber').setAttribute('hidden', false);
-             //window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
-
-
-        //}
-
-
-}
-
-
-document.getElementById('barcodeNumber').setAttribute('readonly', true);
-
-         
-//document.getElementById('closeBtn').setAttribute('hidden', false);
-/*if(docs[0].position === 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-                    }
-               
-             
                 
-                 
-                
-               
-            });
-             
-           
-
-          
-        }
-
-
                     else{
 
                     
@@ -713,13 +571,10 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
 	//var td3 = tr.appendChild(document.createElement('td'));
+    var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-    var td8 = tr.appendChild(document.createElement('td'));
-    var td9 = tr.appendChild(document.createElement('td'));
+    
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
     td5.id = data._id
@@ -732,15 +587,13 @@ link.classList.add('text-end','pe-0')*/
 
 
 
+
     td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.refCases;
-   td4.innerHTML = data.pallet;
-    td5.innerHTML = data.availableCases;
+    td2.innerHTML = data.availableBarcodes;
    // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  data.availableCases + data.casesReceived ;
-    td7.innerHTML = data.mformat
-    td8.innerHTML = data.warehouse
-    td9.innerHTML = data.shift
+    td4.innerHTML=  data.availableBarcodes + data.barcodesReceived ;
+    td5.innerHTML = data.mformat
+  
     //let link2 = "/rec/delete/"+data._id
 
     //td5.innerHTML = "Delete"
@@ -753,8 +606,7 @@ link.classList.add('text-end','pe-0')*/
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
  
      $("#barcodeNumber").val("")
-   $("#availableCases").val(data.cases)
-    $("#refCases").val(data.refCases)
+   $("#availableCases").val(data.barcodes)
                     }
                
                 
@@ -779,21 +631,8 @@ link.classList.add('text-end','pe-0')*/
         <div class="col-lg-2"><label class="col-form-label required">Date</label> 
          <input placeholder="dd MMM yyyy" id="ember329" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{date}}" readonly></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Shift</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="shift" class="ember-text-field ember-view form-control" type="text" value="{{shift}}" readonly></div> </div></div>
-
-                                    <div class="col-lg-2"><label class="col-form-label required">Warehouse</label>
-                                     <div id="ember330" class="ember-view">
-                                       <div class="ac-box ">
-
-      <input  id="warehouse" class="ember-text-field ember-view form-control" type="text" value="{{warehouse}}" readonly>
-            </div> </div></div>
-       
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
-    <input  id="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}" readonly></div>
+     
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref.No</label> 
     <input  id="refNumber" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
@@ -810,17 +649,8 @@ link.classList.add('text-end','pe-0')*/
     
      <td>
     <span class="float-end">
-      <input  id="refCases" class="ember-text-field text-end ember-view form-control" type="number" name="availableCases" readonly> 
- </span> <label class="col-form-label">Batch Cases</label></td>
-
-
-   <td>
-    <span class="float-end">
       <input  id="availableCases" class="ember-text-field text-end ember-view form-control" type="number" name="availableCases" readonly> 
- </span> <label class="col-form-label">Available Cases</label></td>
-
-
-
+ </span> <label class="col-form-label">Available Barcodes</label></td>
     </tr> 
     
     
@@ -836,14 +666,11 @@ link.classList.add('text-end','pe-0')*/
 <thead>
 <tr>
   <th>BarcodeNumber</th>
-  <th>BatchCaseNumber</th>
-    <th>Pallet</th>
 	<th>Opening Balance</th>
 	<!--<th>Cases Received</th>-->
 	<th>Closing Balance</th>
   <th>Date</th>
-   <th>Warehouse</th>
-   <th>Shift</th>
+  
 
                               </tr>
 </thead>
@@ -867,13 +694,8 @@ link.classList.add('text-end','pe-0')*/
      <hr> <div class="btn-toolbar">
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
 
-     <a  id="closeBtn" class="btn btn-primary ember-view" href="/receiver/closeBatch/{{refNumber}}"   style="display: none;" >Close Batch</a>
-      <a  id="closePallet" class="btn btn-primary ember-view"   style="display: none;" >Next Pallet</a>
-
-
- <!--<a  id="closePallet" class="btn btn-primary ember-view"   style="display: none;" >Close Pallet</a>
-     <a onclick="return confirm('Are you sure you want to Close this batch ?');" href="/receiver/closeBatch/{{refNumber}}" id="ember334" class="btn btn-primary ember-view" id="ember334" >Close Batch</a>
-     <button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>-->
+     <a onclick="return confirm('Are you sure you want to Close this batch ?');" href="/admin/closeBatch/{{refNumber}}" id="ember334" class="btn btn-primary ember-view" id="ember334" >Close Batch</a>
+     <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>-->
      <!-- <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/receiver/eodRepo">Run Report</button></div>-->
       </form></div>
       </div> <!----> <!---->

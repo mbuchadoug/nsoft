@@ -22,6 +22,8 @@ var userSchema = new mongoose.Schema({
     quoteCode:{type:String},
     num:{type:Number},
     cases:{type:Number},
+    countSize:{type:Number},
+    refNumReceive: {type: String },
     uid:{type:String, required:true},
     username:{type:String, required:true},
     date:{type:String, required:true},

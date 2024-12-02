@@ -32,7 +32,7 @@ var indexRoute7= require('./routes/rm')
 var indexRoute8= require('./routes/admin')
 var indexRoute9= require('./routes/sales')
 var indexRouteX= require('./routes/deliveries')
-
+var indexRouteX2= require('./routes/preRcv')
 /* var recordsRoute = require('./routes/records')
  var studentRoute= require('./routes/student')
  var teacherRoute= require('./routes/teacher')
@@ -111,6 +111,7 @@ app.use('/rm', indexRoute7);
 app.use('/admin', indexRoute8);
 app.use('/sales', indexRoute9);
 app.use('/merch', indexRouteX);
+app.use('/admin', indexRouteX2);
 
 
 

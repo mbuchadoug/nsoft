@@ -3,6 +3,8 @@ var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
+var PreRcvd = require('../models/preRcvd');
+var BatchPR = require('../models/batchPR');
 var Ware = require('../models/ware');
 var Delivery = require('../models/delivery');
 var SaleStock = require('../models/salesStock');
@@ -1199,6 +1201,8 @@ router.post('/', passport.authenticate('local.signin', {
     res.redirect('/rm/voucherNumberUpdate')
   }else if(req.user.role == "sales-branch"){
     res.redirect('/merch/refDispUpdate/')
+  }else if(req.user.role == "admin"){
+    res.redirect('/admin/batch')
   }
 
 
@@ -5921,6 +5925,31 @@ router.get('/updateWarehouseQty',function(req,res){
   Warehouse.findByIdAndUpdate(id,{$set:{quantity:0,openingQuantity:0,rcvdQuantity:0,cases:0}},function(err,locs){
 
   })
+    }
+   // res.redirect('/warehouseStock')
+   res.redirect('/updatePreBarc')
+  })
+})
+////
+router.get('/updatePreBarc',function(req,res){
+  PreRcvd.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     PreRcvd.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateBatchPR')
+  })
+})
+////
+router.get('/updateBatchPR',function(req,res){
+ BatchPR.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     BatchPR.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
     }
     res.redirect('/warehouseStock')
   })
