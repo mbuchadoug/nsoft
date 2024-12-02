@@ -114,7 +114,7 @@ const storage = new GridFsStorage({
 
 
 const upload = multer({ storage })
-router.get('/countUpdate',isLoggedIn,function(req,res){
+router.get('/countUpdate3',isLoggedIn,function(req,res){
   var id = req.user._id
   User.findByIdAndUpdate(id,{$set:{countSize:2}},function(err,docs){
   
