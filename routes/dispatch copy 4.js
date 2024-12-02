@@ -586,10 +586,10 @@ router.get('/replace',function(req,res){
     }
     let dispatchedPallets
     let dispatchedPalletsR
-    let totalPallets = cases / 20
+    let totalPallets = cases / 140
     let nextPallet
-    let receivedPallets = hocs.length / 20
-let receivedPalletsR = hocs.length % 20
+    let receivedPallets = hocs.length / 140
+let receivedPalletsR = hocs.length % 140
    StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
  receivedPallets = hocs.length / 140
  receivedPalletsR = hocs.length % 140
@@ -711,9 +711,9 @@ let nSize = kocs.length + 1
           
                 book.save()   
                 .then(pro =>{
-                  let pallet = batchdCases / 20
+                  let pallet = batchdCases / 140
                   console.log(batchdCases,'blud')
-                  let remainderCases = batchdCases % 20
+                  let remainderCases = batchdCases % 140
                    let currentPallet = 0
                    let palletCasesBatch
                    console.log(nextPallet,remainderCases,'pallet','remainderCases')
@@ -901,12 +901,12 @@ console.log(batchdCases,'batchdCases Iwewe')
 
          let dispatchedPallets
          let dispatchedPalletsR
-         let totalPallets = cases / 20
+         let totalPallets = cases / 140
          let nextPallet
         
          StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-           dispatchedPallets = mocs.length / 20
-           dispatchedPalletsR = mocs.length % 20
+           dispatchedPallets = mocs.length / 140
+           dispatchedPalletsR = mocs.length % 140
      
      console.log(dispatchedPallets,dispatchedPalletsR,'WR')
      if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
