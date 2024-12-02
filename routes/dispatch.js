@@ -591,12 +591,12 @@ router.get('/replace',function(req,res){
     let receivedPallets = hocs.length / 20
 let receivedPalletsR = hocs.length % 20
    StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
- receivedPallets = hocs.length / 140
- receivedPalletsR = hocs.length % 140
+ receivedPallets = hocs.length / 20
+ receivedPalletsR = hocs.length % 20
 
     StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-      dispatchedPallets = mocs.length / 140
-      dispatchedPalletsR = mocs.length % 140
+      dispatchedPallets = mocs.length / 20
+      dispatchedPalletsR = mocs.length % 20
 
 console.log(dispatchedPallets,dispatchedPalletsR,'WR')
 if(dispatchedPallets == 0 && dispatchedPalletsR == 0 && receivedPallets ==0 && receivedPalletsR == 0){
@@ -894,8 +894,8 @@ batchdCases = loc[0].cases
           batchdCases = cases
         }*/
   
-        let pallet = batchdCases / 10
-        let remainderCases = batchdCases % 10
+        let pallet = batchdCases / 20
+        let remainderCases = batchdCases % 20
          let currentPallet = 0
 console.log(batchdCases,'batchdCases Iwewe')
 

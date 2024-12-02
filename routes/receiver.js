@@ -723,6 +723,7 @@ var idU = req.user._id
                      
                             let size = n + 4
                             let availableCases = hoc.cases + n
+                            let barc = ocs[n].barcodeNumber
 
                             let openingBalance = docs[0].availableCases
                             //let casesRcvdX =  focs.length + 1
@@ -748,7 +749,7 @@ var idU = req.user._id
                             book.mformat = mformat
                             //book.code =  code
                             book.warehouse = warehouse
-                            book.barcodeNumber = barcodeNumber
+                            book.barcodeNumber = barc
                             book.status = 'received'
                             book.statusCheck2 = 'scannedLoop'
                             book.cases = 0
