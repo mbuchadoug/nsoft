@@ -209,7 +209,7 @@ router.get('/updateAll',isLoggedIn,function(req,res){
   PreRcvd.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-  PreRcvd.findByIdAndUpdate(id,{$set:{status:"pending"}},function(err,locs){
+  PreRcvd.findByIdAndUpdate(id,{$set:{status:"pending",refNumReceive:"null",statusCheck:"null",statusCheck2:"null"}},function(err,locs){
 
   })
     }
