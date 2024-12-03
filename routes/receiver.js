@@ -201,6 +201,18 @@ console.log(vocs.length,'size9')
 
   })
 })
+
+
+router.get('/updateAll',isLoggedIn,function(req,res){
+  PreRcvd.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+  PreRcvd.findByIdAndUpdate(id,{$set:{status:"pending"}},function(err,locs){
+    
+  })
+    }
+  })
+})
 router.get('/countUpdate3',isLoggedIn,function(req,res){
   var id = req.user._id
   User.findByIdAndUpdate(id,{$set:{countSize:2}},function(err,docs){
