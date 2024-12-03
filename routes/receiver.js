@@ -120,15 +120,17 @@ router.get('/countF',isLoggedIn,function(req,res){
   StockV.find(function(err,docs){
     let size = docs.length - 1
     let id = docs[size]
-    let count = req.user.countSize - 1
+  let uCount = req.user.countSize
     var uid = req.user._id
 StockV.findByIdAndRemove(id,function(err,locs){
 
 })
-
+if(uCount > 0){
+  let count = req.user.countSize - 1
 User.findByIdAndUpdate(uid,{$set:{countSize:count}},function(err,hocs){
 
 })
+}
 
 
 let arr16=[]
@@ -208,7 +210,7 @@ router.get('/updateAll',isLoggedIn,function(req,res){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
   PreRcvd.findByIdAndUpdate(id,{$set:{status:"pending"}},function(err,locs){
-    
+
   })
     }
   })
