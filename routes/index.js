@@ -5995,7 +5995,17 @@ router.get('/updateSalesStock0',isLoggedIn,function(req,res){
 })
 
 
+router.get('/updateSalesList',function(req,res){
+  SalesStock.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
 
+      SalesStock.findByIdAndUpdate(id,{$set:{qty:0,holdingCases:0,openingBal:0,casesReceived:0}},function(err,vocs){
+
+      })
+    }
+  })
+})
 router.get('/updateSalesStock1',isLoggedIn,function(req,res){
   
   SalesList.find(function(err,docs){

@@ -132,7 +132,17 @@ User.findByIdAndUpdate(id,{$set:{date:"null",cases:0, truck:"null", salesPerson:
   })
 })
 
+router.get('/updateSalesList',function(req,res){
+  SaleStock.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
 
+      SaleStock.findByIdAndUpdate(id,{$set:{qty:0,holdingCases:0,openingBal:0,casesReceived:0}},function(err,vocs){
+
+      })
+    }
+  })
+})
 
 router.get('/fifoUpdate',isLoggedIn,function(req,res){
   
