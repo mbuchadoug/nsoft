@@ -8,6 +8,7 @@ var PreRcvd = require('../models/preRcvd');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
+var BatchD = require('../models/batchD');
 var BatchRR = require('../models/batchRR');
 var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var RtnsSubBatch= require('../models/rtnsSubBatch');
@@ -299,6 +300,85 @@ console.log(vocs.length,'size9')
 
 
 })
+
+
+
+router.get('/dispatchUpdate',isLoggedIn,function(req,res){
+  StockV.find(function(err,docs){
+for(var i = 0;i<docs.length;i++){
+
+let idF = docs[i]._id
+
+  StockV.findByIdAndUpdate(idF,{$set:{timeOfDispatch:"null",truck:"null",salesPerson:"null",
+    dispatcher:"null",casesBatch:0,refNumDispatch:"null",availableCasesDispatch:0,cases:0,status:'received',
+  mformatDispatch:"null",dispatchStatus:"pending",size:0,casesDispatched:0,batchId:"null",statusCheck:"null",
+refNumDispatch:"null",casesBatchNumber:0,palletCasesBatch:0,type:"null"}},function(err,lof){
+
+})
+}
+
+
+//res.redirect('/receiver/updateSalesStock0')
+})
+
+
+})
+
+router.get('/batchdUpdate',isLoggedIn,function(req,res){
+  BatchD.find(function(err,ocs){
+    for(var n = 0;n<ocs.length;n++){
+  let id = ocs[n]._id
+  BatchD.findByIdAndRemove(id,function(err,locs){
+  
+  })
+    }
+
+    BatchR.find(function(err,docs){
+      for(var i=0;i<docs.length;i++){
+        let idF = docs[i]._id
+    BatchR.findByIdAndUpdate(idF,{$set:{status:"received"}},function(err,tocs){
+
+    })
+      }
+    })
+  })
+})
+router.get('/updateSalesStock0',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'kambucha No3'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/')
+  })
+})
+
 
 router.get('/warehouseUpdate',function(req,res){
   let arr16=[]

@@ -559,8 +559,9 @@ this.firstElementChild.select();
                
                 }
                 
-else if( data.casesBatch < 10 || data.casesBatch > 10 ){
-  console.log('yea',data.size)
+                
+else if( data.palletCasesBatch < 20 && data.casesBatch >= data.palletCasesBatch ){
+  console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
 
            var tr = document.createElement('tr');
 

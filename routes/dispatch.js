@@ -118,7 +118,19 @@ const upload = multer({ storage })
 
 
 
+router.get('/updateV',isLoggedIn,function(req,res){
+  
 
+var id =req.user._id
+
+
+
+User.findByIdAndUpdate(id,{$set:{date:"null",cases:0, truck:"null", salesPerson:"null", time:"null", openingStock:0,
+  product:"null",currentBatchCount:1,refNumber:"null",refNumDispatch:"null",destination:"null",batchId:"null",currentCount:1,
+  casesBatch:0,currentPallet:1,palletCasesBatch:0,aggCases:0,currentCases:0,pallets:1,remainderCases:0,currentBatchCount:0,palletCasesBatch:0,aggCases:0,product:"null" }},function(err,docs){
+
+  })
+})
 
 
 
@@ -1267,6 +1279,7 @@ res.redirect(url)
       var salesPerson = req.user.salesPerson
       var truck = req.user.truck
       var cases = req.user.cases
+      var currentCases = req.user.currentCases
       var id = req.user._id
       var openingStock = req.user.openingBal
       var refNumber = req.user.refNumber
@@ -1289,7 +1302,7 @@ res.redirect(url)
       Product.find(function(err,docs){
        res.render('dispatcher/dispStock2',{listX:docs,date:date,time:time,salesPerson:salesPerson, truck:truck,
       product:product,batchId:batchId,cases:cases,refNumber:refNumber,refNumber2:refNumber2,warehouse:warehouse,destination:destination,
-    refNumberDispatch:refNumberDispatch,pallets:pallets,remainderCases:remainderCases,currentPallet:currentPallet})
+    refNumberDispatch:refNumberDispatch,currentCases:currentCases,pallets:pallets,remainderCases:remainderCases,currentPallet:currentPallet})
       })
     })
   
@@ -1399,7 +1412,7 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
     BatchD.findById(id,function(err,doc){
       if(doc){
      // let refNumber = doc.refNumber
-      let casesBatch2 = doc.cases - 10
+      let casesBatch2 = doc.cases - 20
       let cases = doc.cases
 
       
@@ -1462,8 +1475,8 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
       StockV.find({pallet:currentPallet,refNumber:refNumber,status:"received"},function(err,socs){
         palletCasesBatch = socs.length
      
-        let palletV = upCasesBatch / 140
-        let remainderCases2 = upCasesBatch2 % 140
+        let palletV = upCasesBatch / 20
+        let remainderCases2 = upCasesBatch2 % 20
         let remainderCases = remainderCases2 * -1
 
         console.log(palletV,'palletV')
@@ -2109,10 +2122,12 @@ var currentPallet = req.user.currentPallet
 console.log(product,casesDispatched,warehouse,'out')
 
 
+StockV.find({status:"received",pallet:currentPallet},function(err,yocs){
+  let nSize = yocs.length 
 StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'pending',pallet:currentPallet,casesBatchNumber:casesBatchNumber},function(err,focs){
   
     //let size  = focs.length + 1
-  
+  console.log(focs.length,'size')
     if(focs.length > casesBatch){ 
       size = casesBatch
     }
@@ -2160,7 +2175,7 @@ res.send(c)
         
             StockV.findByIdAndUpdate(doc._id,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,
               dispatcher:dispatcher,casesBatch:casesBatch,refNumDispatch:refNumber,availableCasesDispatch:availableCases,cases:tCases,status:'dispatched',
-            mformatDispatch:mformat,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
+            mformatDispatch:mformat,palletCasesBatch :nSize,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
           refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,type:"individual"}},function(err,lof){
         
              
@@ -2247,7 +2262,7 @@ res.send(c)
   
   })
 
-      
+})
 })
 
 /////////////
@@ -2910,8 +2925,8 @@ form.append("file", file,filename);
 await Axios({
 method: "POST",
 //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
- url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
- //url:'http://localhost:8000/dispatch/uploadStatementDispatch',
+ //url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
+ url:'http://localhost:8000/dispatch/uploadStatementDispatch',
 headers: {
   "Content-Type": "multipart/form-data"  
 },
