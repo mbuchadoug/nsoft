@@ -560,7 +560,7 @@ this.firstElementChild.select();
                 }
                 
                 
-else if( data.palletCasesBatch < 20 && data.casesBatch >= data.palletCasesBatch ){
+else if( data.casesBatch< 20 && data.casesBatch > data.palletCasesBatch && data.size == 1  ){
   console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
 
            var tr = document.createElement('tr');

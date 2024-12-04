@@ -689,9 +689,9 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
                
                 }
 
-
-else if(data.position == 'last' && data.casesBatch == data.palletCasesBatch ){
-  console.log('yea',data.size)
+                         
+else if( data.casesBatch< 20 && data.casesBatch >= data.palletCasesBatch && data.size == 1  ){
+  console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
 
            var tr = document.createElement('tr');
 
@@ -813,6 +813,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
                
             });
 }
+    
+
           
 
        else if(data.size === data.casesBatch){
