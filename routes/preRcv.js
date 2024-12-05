@@ -486,24 +486,304 @@ router.post('/receiveStock',isLoggedIn, function(req,res){
     .then(pro =>{
 
       console.log('success')
-      res.redirect('/admin/receiveStock/'+refNo)
+     // res.redirect('/admin/receiveStock/'+refNo)
+     res.redirect('/admin/importBarcodes/')
 
     })
   })
   
     })
   
-    
-
-
-
-    
-
+  
 
     
   })
 
 
+  router.get('/importBarcodes/',isLoggedIn,function(req,res){
+    var pro = req.user
+    var errorMsg = req.flash('danger')[0];
+    var successMsg = req.flash('success')[0];
+    res.render('imports/barcodes',{pro:pro,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+  })
+  
+  
+  
+  
+  
+  
+  router.post('/importBarcodes',isLoggedIn,uploadX.single('file'),  (req,res)=>{
+    var date2 = req.user.date
+   
+    var m = moment(date2)
+    var receiver = req.user.fullname
+    var year = m.format('YYYY')
+    var dateValue = m.valueOf()
+    var date = m.toString()
+    var numDate = m.valueOf()
+  
+
+  var barcodesReceived = 1
+  var lot = req.user.lot
+  var refNumber = req.user.refNumber
+
+ var arr = []
+ var batchId = req.user.batchId
+  //var mformat = m.format("L")
+    //var receiver = req.user.fullname
+  var mformat = req.user.mformat
+  var dateValue = req.user.dateValue
+
+
+  
+  /*  if(!req.file){
+        req.session.message = {
+          type:'errors',
+          message:'Select File!'
+        }     
+          res.render('imports/students', {message:req.session.message,pro:pro}) */
+     if (!req.file || req.file.mimetype !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+            req.session.message = {
+                type:'errors',
+                message:'Upload Excel File'
+              }     
+                res.render('imports/barcodes', {message:req.session.message,pro:pro
+                     
+                 }) 
+  
+  
+  
+        }
+          
+        else{
+     
+  
+        
+           const file = req.file.filename;
+    
+            
+                var wb =  xlsx.readFile('./public/uploads/' + file)
+  
+             
+         
+                 var sheets = wb.Sheets;
+                 var sheetNames = wb.SheetNames;
+     
+                 var sheetName = wb.SheetNames[0];
+     var sheet = wb.Sheets[sheetName ];
+     
+        for (var i = 0; i < wb.SheetNames.length; ++i) {
+         var sheet = wb.Sheets[wb.SheetNames[i]];
+     
+         console.log(wb.SheetNames.length)
+         var data =xlsx.utils.sheet_to_json(sheet)
+             
+         var newData = data.map(function (record){
+     
+        
+       
+      
+          
+         
+        
+           
+          
+            let barcodeNumber = record.barcodeNumber;
+            let status = record.status;
+  
+            req.body.barcodeNumber = record.barcodeNumber
+            req.body.status = record.status
+  
+  //req.body.photo = record.photo          
+  
+            
+        
+            
+              req.check('barcodeNumber','Enter Barcode Number').notEmpty();
+              //req.check('name','Enter Name').notEmpty();
+          
+              
+              var errors = req.validationErrors();
+  
+              if (errors) {
+                
+                req.session.errors = errors;
+                req.session.success = false;
+                req.flash('danger', req.session.errors[0].msg);
+       
+        
+                res.redirect('/admin/importBarcodes');
+              
+          }
+  else
+  
+  
+  {
+  PreRcvd.findOne({'barcodeNumber':barcodeNumber})
+  .then(user =>{
+      if(user){ 
+    // req.session.errors = errors
+      //req.success.user = false;
+  
+  
+  
+      req.flash('danger', 'Item already in the system');
+  
+      res.redirect('/admin/importBarcodes');
+  }
+  else{
+  
+  
+  
+  
+    
+    
+    BatchPR.findOne({'refNumber':refNumber})
+    .then(hoc=>{
+  
+
+      PreRcvd.findOne({'barcodeNumber':barcodeNumber})
+      .then(doc=>{
+      //  console.log(doc,'doc',hoc,'hoc')
+
+      if( doc == null){
+        
+        PreRcvd.find({refNumber:refNumber},function(err,focs){
+  let size  = focs.length + 1
+  let nSize = focs.length
+  if(focs.length == 0){
+
+    let openingBalance = hoc.barcodes
+    //let casesRcvdX =  focs.length + 1
+    let closingBalance = hoc.barcodes + 1
+    BatchPR.findByIdAndUpdate(batchId,{$set:{barcodes:size,openingBal:openingBalance,closingBal:closingBalance}},function(err,noc){
+
+    })
+
+  }
+  if(focs.length >0){
+
+    console.log(size,'size')
+ 
+  let openingBalance = focs[0].availableBarcodes
+  //let casesRcvdX =  focs.length + 1
+  let closingBalance = focs[0].availableBarcodes + focs.length + 1
+  BatchPR.findByIdAndUpdate(batchId,{$set:{barcodes:size,openingBal:openingBalance,closingBal:closingBalance}},function(err,noc){
+
+  })
+
+  PreRcvd.find({date:date2},function(err,jocs){
+    if(jocs.length >0){
+
+    let openingBalanceX = jocs[0].availableBarcodes
+    let totalBarcodes = jocs.length + 1
+    let closingBalanceX = jocs[0].availableBarcodes + jocs.length + 1
+    
+    BatchPR.find({date:date2},function(err,tocs){
+      for(var i = 0;i< tocs.length;i++){
+        BatchPR.findByIdAndUpdate(tocs[i]._id,{$set:{barcodesRcvdX:totalBarcodes,openingBalX:openingBalanceX,closingBalX:closingBalanceX}},function(err,noc){
+
+        })
+
+      }
+    })
+  
+  }
+
+  })
+}
+    var book = new PreRcvd();
+
+  
+    //book.code =  code
+    
+    book.barcodeNumber = barcodeNumber
+    book.status = 'pending'
+    book.pallet = 0
+    book.barcodes = 0
+    book.barcodesReceived =barcodesReceived
+    book.availableBarcodes =hoc.barcodes
+    book.date = date
+    book.refNumber = refNumber
+    book.mformat = date
+   
+         
+          book.save()
+            .then(pro =>{
+  let stock = pro.barcodesReceived + pro.availableBarcodes
+  
+  PreRcvd.findByIdAndUpdate(pro._id,{$set:{barcodes:stock}},function(err,vocs){
+
+  })
+  
+  PreRcvd.find({mformat:mformat},(err, ocs) => {
+    let size = ocs.length - 1
+    console.log(ocs[size],'fff')
+    res.send(ocs[size])
+            })
+            
+          })
+          
+
+        })
+      
+      
+        
+        }else{
+
+console.log(arr,'doc7')
+          res.send(arr)
+        }
+      })
+      }) 
+  
+  }
+  
+  })
+  
+  
+  
+  
+  }     
+                 
+                     
+   
+                    // .catch(err => console.log(err))
+             
+                 
+                    })
+                  
+                    req.flash('success', 'File Successfully!');
+  
+                    res.redirect('/admin/importBarcodes')  
+         
+                  }
+                  
+                  
+                    
+                    
+        
+                   
+        
+                    
+             
+                }
+      
+        
+  
+  
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
   router.get('/receiveStock/:id',isLoggedIn,function(req,res){
