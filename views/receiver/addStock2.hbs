@@ -318,7 +318,8 @@ $.ajax({
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
+    /*var td7 = tr.appendChild(document.createElement('td'));
+    var td8 = tr.appendChild(document.createElement('td'));*/
     // var td8 = tr.appendChild(document.createElement('td'));
          //var td9 = tr.appendChild(document.createElement('td'));
     var link= tr.appendChild(document.createElement('td'));
@@ -338,11 +339,12 @@ td5.appendChild(link);*/
 
   td1.innerHTML = data[i].barcodeNumber;
     td2.innerHTML = data[i].refCases;
-      td4.innerHTML = data[i].pallet;
-    td5.innerHTML = data[i].availableCases;
+    /*td4.innerHTML = data[i].prPallet;
+    td5.innerHTML = data[i].countSize;*/
+    td4.innerHTML = data[i].availableCases;
    // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  data[i].availableCases + data[i].casesReceived ;
-    td7.innerHTML = data[i].mformat
+    td5.innerHTML=  data[i].availableCases + data[i].casesReceived ;
+    td6.innerHTML = data[i].mformat
     //td8.innerHTML = data[i].warehouse
     //td9.innerHTML = data[i].shift
     /*let link2 = "/rec/delete/"+data[i]._id
@@ -443,7 +445,7 @@ link.href="/rec/delete/"+data[i]._id*/
                
                 url: "/receiver/receiveScan",
                 success: function(data) {
-                  console.log(data,'dat666')
+                  console.log(data,'',data.length,'length')
                if(data.length === 0){
                
                
@@ -457,7 +459,18 @@ link.href="/rec/delete/"+data[i]._id*/
                 }
 
 
-  
+     else if(data.length == 3){
+               
+               
+                 
+                 alert('case does not belong to pallet')
+                   $("#barcodeNumber").val("")
+                 
+                 
+                 
+               
+                }
+
 
        else if(data.countSize == 3){
 
@@ -470,7 +483,8 @@ let preRefNumber = data.preRefNumber
      var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
+    /*var td7 = tr.appendChild(document.createElement('td'));
+    var td8 = tr.appendChild(document.createElement('td'));*/
     //var td8 = tr.appendChild(document.createElement('td'));
      //var td9 = tr.appendChild(document.createElement('td'));
 
@@ -479,11 +493,12 @@ let preRefNumber = data.preRefNumber
 
     td1.innerHTML = data.barcodeNumber;
     td2.innerHTML = data.refCases;
-    td4.innerHTML = data.pallet;
-    td5.innerHTML = data.availableCases;
+    /*td4.innerHTML = data.prPallet;
+    td5.innerHTML = data.countSize;*/
+    td4.innerHTML = data.availableCases;
    // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  data.availableCases + data.casesReceived ;
-    td7.innerHTML = data.mformat
+    td5.innerHTML=  data.availableCases + data.casesReceived ;
+    td6.innerHTML = data.mformat
     //td8.innerHTML = data.warehouse
     //td9.innerHTML = data.shift
     
@@ -515,7 +530,8 @@ console.log(docs,'ocs')
 	//var td3 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
+    /*var td7 = tr.appendChild(document.createElement('td'));
+    var td8 = tr.appendChild(document.createElement('td'));*/
     //var td8 = tr.appendChild(document.createElement('td'));
     //var td9 = tr.appendChild(document.createElement('td'));
 
@@ -530,11 +546,12 @@ console.log(docs,'ocs')
 
     td1.innerHTML = docs[i].barcodeNumber;
     td2.innerHTML = docs[i].refCases;
-    td4.innerHTML = docs[i].pallet;
-    td5.innerHTML = docs[i].availableCases;
+    /*td4.innerHTML = docs[i].prPallet;
+    td5.innerHTML = docs[i].countSize;*/
+    td4.innerHTML = docs[i].availableCases;
    // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  docs[i].availableCases + docs[i].casesReceived ;
-    td7.innerHTML = docs[i].mformat
+    td5.innerHTML=  docs[i].availableCases + docs[i].casesReceived ;
+    td6.innerHTML = docs[i].mformat
    // td8.innerHTML = docs[i].warehouse
     //td9.innerHTML = docs[i].shift
     
@@ -611,7 +628,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
 	//var td3 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
+    /*var td7 = tr.appendChild(document.createElement('td'));
+    var td8 = tr.appendChild(document.createElement('td'));*/
     //var td8 = tr.appendChild(document.createElement('td'));
     //var td9 = tr.appendChild(document.createElement('td'));
    // var link= tr.appendChild(document.createElement('td'));
@@ -628,11 +646,12 @@ link.classList.add('text-end','pe-0')*/
 
     td1.innerHTML = data.barcodeNumber;
     td2.innerHTML = data.refCases;
-   td4.innerHTML = data.pallet;
-    td5.innerHTML = data.availableCases;
+    /*td4.innerHTML = data.prPallet;
+    td5.innerHTML = data.countSize;*/
+    td4.innerHTML = data.availableCases;
    // td3.innerHTML = data.casesReceived;
-    td6.innerHTML=  data.availableCases + data.casesReceived ;
-    td7.innerHTML = data.mformat
+    td5.innerHTML=  data.availableCases + data.casesReceived ;
+    td6.innerHTML = data.mformat
    //td8.innerHTML = data.warehouse
     //td9.innerHTML = data.shift
     //let link2 = "/rec/delete/"+data._id
@@ -731,7 +750,8 @@ link.classList.add('text-end','pe-0')*/
 <tr>
   <th>BarcodeNumber</th>
   <th>BatchCaseNumber</th>
-    <th>Pallet</th>
+   <!-- <th>DB Pallet</th>
+    <th>Count Size</th>-->
 	<th>Opening Balance</th>
 	<!--<th>Cases Received</th>-->
 	<th>Closing Balance</th>
@@ -763,6 +783,8 @@ link.classList.add('text-end','pe-0')*/
 
      <a  id="closeBtn" class="btn btn-primary ember-view" href="/receiver/closeBatch/{{refNumber}}"   style="display: none;" >Close Batch</a>
       <a  id="closePallet" class="btn btn-primary ember-view"   style="display: none;" >Next Pallet</a>
+
+      <!-- <a onclick="return confirm('Are you sure you want to Update Count this batch ?');"  class="btn btn-primary ember-view" href="/receiver/countUpdateSize/"    >Count</a>-->
 
 
  <!--<a  id="closePallet" class="btn btn-primary ember-view"   style="display: none;" >Close Pallet</a>

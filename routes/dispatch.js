@@ -599,7 +599,9 @@ router.get('/replace',function(req,res){
     let refNumber = loc[0].refNumber
     console.log(refNumber,'refNumber33')
     let batchdCases 
-
+User.findByIdAndUpdate(uid,{$set:{refNumber:refNumber}},function(err,focs){
+  
+})
     
     if(cases >= loc[0].cases){
        batchdCases =loc[0].cases
@@ -608,17 +610,17 @@ router.get('/replace',function(req,res){
     }
     let dispatchedPallets
     let dispatchedPalletsR
-    let totalPallets = cases / 20
+    let totalPallets = cases / 140
     let nextPallet
-    let receivedPallets = hocs.length / 20
-let receivedPalletsR = hocs.length % 20
+    let receivedPallets = hocs.length / 140
+let receivedPalletsR = hocs.length % 140
    StockV.find({refNumber:refNumber,status:"received"},function(err,hocs){
- receivedPallets = hocs.length / 20
- receivedPalletsR = hocs.length % 20
+ receivedPallets = hocs.length / 140
+ receivedPalletsR = hocs.length % 140
 
     StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-      dispatchedPallets = mocs.length / 20
-      dispatchedPalletsR = mocs.length % 20
+      dispatchedPallets = mocs.length / 140
+      dispatchedPalletsR = mocs.length % 140
 
 console.log(dispatchedPallets,dispatchedPalletsR,'WR')
 if(dispatchedPallets == 0 && dispatchedPalletsR == 0 && receivedPallets ==0 && receivedPalletsR == 0){
@@ -733,9 +735,9 @@ let nSize = kocs.length + 1
           
                 book.save()   
                 .then(pro =>{
-                  let pallet = batchdCases / 20
+                  let pallet = batchdCases / 140
                   console.log(batchdCases,'blud')
-                  let remainderCases = batchdCases % 20
+                  let remainderCases = batchdCases % 140
                    let currentPallet = 0
                    let palletCasesBatch
                    console.log(nextPallet,remainderCases,'pallet','remainderCases')
@@ -916,19 +918,19 @@ batchdCases = loc[0].cases
           batchdCases = cases
         }*/
   
-        let pallet = batchdCases / 20
-        let remainderCases = batchdCases % 20
+        let pallet = batchdCases / 140
+        let remainderCases = batchdCases % 140
          let currentPallet = 0
 console.log(batchdCases,'batchdCases Iwewe')
 
          let dispatchedPallets
          let dispatchedPalletsR
-         let totalPallets = cases / 20
+         let totalPallets = cases / 140
          let nextPallet
         
          StockV.find({refNumber:refNumber,status:"dispatched"},function(err,mocs){
-           dispatchedPallets = mocs.length / 20
-           dispatchedPalletsR = mocs.length % 20
+           dispatchedPallets = mocs.length / 140
+           dispatchedPalletsR = mocs.length % 140
      
      console.log(dispatchedPallets,dispatchedPalletsR,'WR')
      if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
@@ -1422,7 +1424,7 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
     BatchD.findById(id,function(err,doc){
       if(doc){
      // let refNumber = doc.refNumber
-      let casesBatch2 = doc.cases - 20
+      let casesBatch2 = doc.cases - 140
       let cases = doc.cases
 
       
@@ -1485,8 +1487,8 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
       StockV.find({pallet:currentPallet,refNumber:refNumber,status:"received"},function(err,socs){
         palletCasesBatch = socs.length
      
-        let palletV = upCasesBatch / 20
-        let remainderCases2 = upCasesBatch2 % 20
+        let palletV = upCasesBatch / 140
+        let remainderCases2 = upCasesBatch2 % 140
         let remainderCases = remainderCases2 * -1
 
         console.log(palletV,'palletV')

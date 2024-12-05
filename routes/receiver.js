@@ -216,11 +216,25 @@ router.get('/updateAll',isLoggedIn,function(req,res){
     }
   })
 })
-router.get('/countUpdate3',isLoggedIn,function(req,res){
+router.get('/countUpdateSize',isLoggedIn,function(req,res){
   var id = req.user._id
-  User.findByIdAndUpdate(id,{$set:{countSize:2}},function(err,docs){
+  var refNumber = req.user.refNumber
+  var countSize = req.user.countSize - 1
+  StockV.find({refNumber:refNumber},function(err,locs){
+    if(locs){
+    let size = locs.length - 1
+    let idF=locs[size]._id
+  StockV.findByIdAndRemove(idF,function(err,focs){
+
+  })
+ 
+  User.findByIdAndUpdate(id,{$set:{countSize:countSize}},function(err,docs){
   
   })
+res.redirect('/receiver/receiveStock/'+refNumber)
+    }
+})
+  
 
 })
 
@@ -735,10 +749,12 @@ router.get('/warehouseUpdate',function(req,res){
     var shift = req.user.shift
     var casesReceived = 1
     var lot = req.user.lot
+    var countSizeV = req.user.countSize
     var refNumber = req.user.refNumber
     var location = req.user.location
     var warehouse = req.user.warehouse
    var arr = []
+   var arr2 =[4,5,6]
    var batchId = req.user.batchId
     //var mformat = m.format("L")
       //var receiver = req.user.fullname
@@ -750,12 +766,31 @@ router.get('/warehouseUpdate',function(req,res){
    
     console.log(product,shift,casesReceived,warehouse,'out')
     
+
+  
+
+
    
     
     PreRcvd.findOne({'barcodeNumber':barcodeNumber})
     .then(joc=>{
+
     if(joc){
       let preId = joc._id
+      let prPallet = joc.pallet
+      if(countSizeV==0){
+        User.findByIdAndUpdate(uid,{$set:{prPallet:prPallet}},function(err,tocs){
+
+        })
+      }else{
+        User.findByIdAndUpdate(uid,{$set:{countPallet:prPallet}},function(err,tocs){
+
+        })
+      }
+
+      if(req.user.prPallet == joc.pallet){
+
+      
       Warehouse.findOne({'product':product,'warehouse':warehouse})
       .then(hoc=>{
     
@@ -770,8 +805,10 @@ router.get('/warehouseUpdate',function(req,res){
   
   StockV.find({refNumber:refNumber},function(err,focs){
     let size  = focs.length + 1
-    if(focs.length == 0){
 
+    if(focs.length == 0){
+  
+      
       let openingBalance = hoc.cases
       //let casesRcvdX =  focs.length + 1
       let closingBalance = hoc.cases + 1
@@ -818,7 +855,7 @@ router.get('/warehouseUpdate',function(req,res){
       let zwl = hoc.zwl
       let rand = hoc.rand
       let rate = hoc.rate
-    
+      let countPallet = req.user.prPallet
       let category = hoc.category
       let subCategory = hoc.subCategory
       book.name = product
@@ -829,6 +866,8 @@ router.get('/warehouseUpdate',function(req,res){
       book.status = 'received'
       book.statusCheck = 'scanned'
       book.cases = 0
+      book.prPallet = prPallet
+      book.countPallet = prPallet
       book.refCases=nSize
       book.date = date2
       book.casesReceived = casesReceived
@@ -938,9 +977,13 @@ console.log(arr,'doc7')
         })
       
       }) 
+    }else{
+res.send(arr2)
+    }
     }
     
-    })    
+    })  
+    
     })
   
   
@@ -1210,7 +1253,7 @@ let cases = docs.length
   })
    
     var productChunks = [];
-    var chunkSize = 20;
+    var chunkSize = 140;
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
@@ -1284,7 +1327,7 @@ let cases = docs.length
       
   })
     var productChunks = [];
-    var chunkSize = 20;
+    var chunkSize = 140;
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }

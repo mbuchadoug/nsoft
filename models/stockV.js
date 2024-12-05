@@ -22,6 +22,8 @@ var schemaV = new Schema({
     statusCheck: {type: String},
     statusCheck2: {type: String},
     pallets: {type: Number },
+    prPallet: {type: Number },
+    countPallet: {type: Number },
     currentPallet: {type: Number },
     remainderCases: {type: Number },
     warehouse: {type: String, required: true},

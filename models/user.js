@@ -43,6 +43,8 @@ var userSchema = new mongoose.Schema({
     remainderCases: {type: Number },
     currentCases:{type:Number},
     lot:{type:Number, required:true},
+    prPallet: {type: Number },
+    countPallet: {type: Number },
     refNumber:{type:String},
     year:{type:Number},
     voucherNumber:{type:Number},
