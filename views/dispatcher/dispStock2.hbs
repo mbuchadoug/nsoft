@@ -892,10 +892,25 @@ console.log(docs,'ocs')
      $("#barcodeNumber").val("")
 
 console.log(docs[i].size, data.casesBatch,'marino1')
+if(docs[i].size ==  docs[i].casesBatch ){
+document.getElementById("closeBtn").style.display = "";
+}
 
-
+else if(docs[i].size ==  docs[i].casesBatch && docs[i].position != 'last' ){
 document.getElementById("closePallet").style.display = "";
 document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
+}
+
+
+else if(docs[i].size !=  docs[i].casesBatch && docs[i].position != 'last' ){
+document.getElementById("closePallet").style.display = "";
+document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
+}
+
+
+else if(docs[i].size ==  docs[i].casesBatch && docs[i].position == 'last'){
+document.getElementById("closeBtn").style.display = "";
+}
 //document.getElementById("closeBtn").style.display = "";
 /*else{
 document.getElementById("closePallet").style.display = "";

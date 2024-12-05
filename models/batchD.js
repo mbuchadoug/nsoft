@@ -32,6 +32,8 @@ var batchSchemaD = new Schema({
     year: {type: Number },
     openingBalance: {type: Number},
     closingBalance: {type: Number},
+    salesOpeningStock: {type: Number},
+    salesClosingStock: {type: Number},
     dispatchMformat: {type: String },
     dateValueDispatch: {type: Number },
     refNumDispatch:{type:String},
