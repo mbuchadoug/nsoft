@@ -343,6 +343,37 @@ router.get('/batchdUpdate',isLoggedIn,function(req,res){
     })
   })
 })
+
+
+
+router.get('/batchrUpdate',isLoggedIn,function(req,res){
+  BatchR.find(function(err,ocs){
+    for(var n = 0;n<ocs.length;n++){
+  let id = ocs[n]._id
+  BatchR.findByIdAndRemove(id,function(err,locs){
+  
+  })
+    }
+
+  res.redirect('/receiver/stockUpdate')
+  })
+
+})
+
+
+router.get('/stockUpdate',isLoggedIn,function(req,res){
+  StockV.find(function(err,ocs){
+    for(var n = 0;n<ocs.length;n++){
+  let id = ocs[n]._id
+  StockV.findByIdAndRemove(id,function(err,locs){
+  
+  })
+    }
+
+  
+  })
+  
+})
 router.get('/updateSalesStock0',isLoggedIn,function(req,res){
   
   SalesList.find(function(err,docs){
