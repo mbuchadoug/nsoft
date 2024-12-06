@@ -2658,11 +2658,12 @@ router.post('/repo',isLoggedIn,function(req,res){
   var m = moment()
   var year = m.format('YYYY')
   var month = m.format('MMMM')
+  let dateQ = req.body.date
   var dateV = req.body.date
   var date = dateV.slice(0,10).replace(/-/g,'/'); 
   let mformat =  moment(date).format('l');
   var uid = req.user._id
-  console.log(mformat,date,'date')
+  console.log(mformat,date,dateQ,'date')
   let total, breakages
   req.check('date','Enter Date').notEmpty();
   
@@ -2708,7 +2709,7 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
   })
     }
 
-    User.findByIdAndUpdate(uid,{$set:{dispatchDate:dateV,date:date}},function(err,kocs){
+    User.findByIdAndUpdate(uid,{$set:{dispatchDate:dateQ,date:date}},function(err,kocs){
 
     })
   })
@@ -2739,7 +2740,7 @@ console.log(total,'totalStockV')
 StockV.find({mformatDispatch:date,status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({date:dateR},function(err,locs){
+  BatchD.find({date:dateQ},function(err,locs){
     //console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -2764,7 +2765,7 @@ router.get('/eodRepo/',isLoggedIn,function(req,res){
     //var code = "Tiana Madzima"
 
 //let date = req.user.dispatchDate
-let date = req.user.dateR
+let date = req.user.dateQ
     //console.log(docs[i].uid,'ccc')
     
     //let uid = "SZ125"
