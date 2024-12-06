@@ -2662,7 +2662,8 @@ router.post('/repo',isLoggedIn,function(req,res){
   let mformatV =  moment(dateQ).format('l');
   var dateV = req.body.date
   var date = dateV.slice(0,10).replace(/-/g,'/'); 
-  let mformat =  moment(date).format('l');
+  let dateR = req.user.date
+  let mformat =  moment(dateR).format('l');
   var uid = req.user._id
   console.log(mformat,date,dateQ,'date')
   let total, breakages
@@ -2695,10 +2696,10 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/dispatch/repo');
     }else{
 
-StockV.find({date:date,status:"dispatched"},function(err,docs){
+StockV.find({status:"dispatched"},function(err,docs){
   total = docs.length
   console.log(total,'total555')
-StockV.find({date:date,status:"breakage"},function(err,vocs){
+StockV.find({status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
   BatchD.find({date:date},function(err,locs){
@@ -2710,7 +2711,7 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
   })
     }
 
-    User.findByIdAndUpdate(uid,{$set:{dispatchDate:mformatV,date:dateQ}},function(err,kocs){
+    User.findByIdAndUpdate(uid,{$set:{dispatchDate:mformat,date:date}},function(err,kocs){
 
     })
   })
@@ -2718,14 +2719,15 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
 })
 })
 
-res.redirect('/dispatch/repoLoad/')
+//res.redirect('/dispatch/repoLoad/')
+res.redirect('/dispatch/eodRepo/')
 
     }
   })
   }
 })
 
-
+/*
 
 router.get('/repoLoad',isLoggedIn,function(req,res){
   
@@ -2758,7 +2760,7 @@ StockV.find({mformatDispatch:date,status:"breakage"},function(err,vocs){
 res.redirect('/dispatch/eodRepo/')
 })
 
-})
+})*/
 
 router.get('/eodRepo/',isLoggedIn,function(req,res){
   //console.log(arrStatementR,'arrRefs')
@@ -2766,7 +2768,7 @@ router.get('/eodRepo/',isLoggedIn,function(req,res){
     //var code = "Tiana Madzima"
 
 //let date = req.user.dispatchDate
-let date = req.user.dateR
+let date = req.user.date
     //console.log(docs[i].uid,'ccc')
     
     //let uid = "SZ125"
