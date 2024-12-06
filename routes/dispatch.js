@@ -2703,7 +2703,7 @@ StockV.find({status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
   BatchD.find({date:date},function(err,locs){
-    //console.log(locs,'locs')
+    console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
   BatchD.findByIdAndUpdate(id,{$set:{total:total,breakages:breakages}},function(err,focs){
@@ -2725,6 +2725,17 @@ res.redirect('/dispatch/eodRepo/')
     }
   })
   }
+})
+
+router.get('/removeRepo',function(req,res){
+  RepoFiles.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      RepoFiles.findByIdAndRemove(id,function(err,loc){
+
+      })
+    }
+  })
 })
 
 /*
