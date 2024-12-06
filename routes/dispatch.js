@@ -2937,6 +2937,7 @@ format:"A4",
 /*width:'60cm',
 height:'21cm',*/
 height: height + 'px',
+landscape: true,
 printBackground:true
 
 })
