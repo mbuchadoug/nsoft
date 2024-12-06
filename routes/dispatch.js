@@ -2708,7 +2708,7 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
   })
     }
 
-    User.findByIdAndUpdate(uid,{$set:{dispatchDate:mformat,date:date}},function(err,kocs){
+    User.findByIdAndUpdate(uid,{$set:{dispatchDate:dateV,date:date}},function(err,kocs){
 
     })
   })
