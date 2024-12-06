@@ -2708,7 +2708,7 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
   })
     }
 
-    User.findByIdAndUpdate(uid,{$set:{dispatchDate:date}},function(err,kocs){
+    User.findByIdAndUpdate(uid,{$set:{dispatchDate:mformatDispatch,date:date}},function(err,kocs){
 
     })
   })
@@ -2728,17 +2728,18 @@ res.redirect('/dispatch/repoLoad/')
 router.get('/repoLoad',isLoggedIn,function(req,res){
   
 let date = req.user.dispatchDate
+let dateR = req.user.date
 var uid = req.user._id
 let breakages,total
 console.log(date,'dateLoad')
 
-StockV.find({date:date,status:"dispatched"},function(err,docs){
+StockV.find({mformatDispatch:date,status:"dispatched"},function(err,docs){
   total = docs.length
 console.log(total,'totalStockV')
-StockV.find({date:date,status:"breakage"},function(err,vocs){
+StockV.find({mformatDispatch:date,status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({date:date},function(err,locs){
+  BatchD.find({date:dateR},function(err,locs){
     //console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -2762,7 +2763,8 @@ router.get('/eodRepo/',isLoggedIn,function(req,res){
   arrStatementR=[]
     //var code = "Tiana Madzima"
 
-let date = req.user.dispatchDate
+//let date = req.user.dispatchDate
+let date = req.user.dateR
     //console.log(docs[i].uid,'ccc')
     
     //let uid = "SZ125"
