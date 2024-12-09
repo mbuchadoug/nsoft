@@ -220,7 +220,7 @@ router.get('/fifoUpdate',isLoggedIn,function(req,res){
         let id = docs[i]._id
         let refNumber = docs[i].refNumber
         StockV.find({refNumber:refNumber},function(err,locs){
-          if(locs){
+          if(locs.length > 0){
           let total = locs.length - 1
 
           //let idV =locs[total]._id
@@ -343,6 +343,15 @@ router.get('/warehouseUpdate',function(req,res){
   })
   
 
+  router.get('/warehouseStock',isLoggedIn,function(req,res){
+    var pro = req.user
+    //res.render('admin/dash6',{pro:pro})
+    Product.find({},function(err,docs){
+   Warehouse.find({},function(err,hocs){
+    res.render('receiver/dash7',{pro:pro,arr:docs,arr1:hocs})
+  })
+    })
+  })
   
 router.get('/replace',function(req,res){
     res.render('dispatcher/batchReplace')
