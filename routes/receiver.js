@@ -243,7 +243,7 @@ router.get('/warehouseStock',isLoggedIn,function(req,res){
   //res.render('admin/dash6',{pro:pro})
   Product.find({},function(err,docs){
  Warehouse.find({},function(err,hocs){
-  res.render('receiver/dash7',{pro:pro,arr:docs,arr1:hocs})
+  res.render('dispatcher/dash7',{pro:pro,arr:docs,arr1:hocs})
 })
   })
 })
