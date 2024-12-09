@@ -238,6 +238,16 @@ res.redirect('/receiver/receiveStock/'+refNumber)
 
 })
 
+router.get('/warehouseStock',isLoggedIn,function(req,res){
+  var pro = req.user
+  //res.render('admin/dash6',{pro:pro})
+  Product.find({},function(err,docs){
+ Warehouse.find({},function(err,hocs){
+  res.render('receiver/dash7',{pro:pro,arr:docs,arr1:hocs})
+})
+  })
+})
+
 router.get('/countUpdate',isLoggedIn,function(req,res){
 var id = req.user._id
 User.findByIdAndUpdate(id,{$set:{countSize:0}},function(err,docs){
