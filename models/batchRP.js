@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var batchSchemaV = new Schema({
+var batchSchemaRP = new Schema({
 
+    
     date: {type: String },
+    time: {type: String },
     shift: {type: String },
-    type: {type: String },
-    reason: {type: String },
     warehouse: {type: String },
     product: {type: String },
+    type: {type: String },
     receiver: {type: String },
     cases: {type: Number },
     openingBal: {type: Number },
@@ -28,6 +29,7 @@ var batchSchemaV = new Schema({
     dispatchDate: {type: String },
     salesPerson: {type: String },
     time: {type: String },
+    type: {type: String },
     destination: {type: String },
     /*warehouseDispatch: {type: String },
     dispatcher: {type: String },
@@ -44,7 +46,9 @@ var batchSchemaV = new Schema({
  
 
    
+
+   
    
 });
 
-module.exports = mongoose.model('BatchR', batchSchemaV);
+module.exports = mongoose.model('BatchRP', batchSchemaRP);

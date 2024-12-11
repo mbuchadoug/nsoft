@@ -179,6 +179,7 @@ console.log(vocs.length,'size9')
       ware.rcvdQuantity = 0
       ware.unitCases = 12
       ware.type='goods'
+      ware.type2 = 'normal'
       ware.account = 'sales'
       ware.size = 0
       ware.rate = 0
@@ -215,6 +216,452 @@ console.log(vocs.length,'size9')
 
 
 })
+
+
+/////
+router.get('/warehouseUpdateRtns',function(req,res){
+  let arr16=[]
+  let arrV = []
+  let number1, number2
+  let arrE = []
+  Product.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let product = docs[i].name
+      let category = docs[i].category
+      let subCategory = docs[i].subCategory
+      let usd = docs[i].usd
+  
+ 
+  
+    Warehouse.find({product:product,reason:"breakages"},function(err,vocs){
+  console.log(vocs.length,'size9')
+      if(vocs.length == 0){
+  
+       
+        var ware = new Warehouse()
+  
+        
+        ware.product = product
+        ware.cases = 0
+        ware.category = category
+        ware.subCategory = subCategory
+        ware.subCategory = category
+        ware.quantity =0
+        ware.openingQuantity = 0
+        ware.rcvdQuantity = 0
+        ware.unitCases = 12
+        ware.reason = "breakages"
+        ware.type='goods'
+        ware.type2='returns'
+        ware.account = 'sales'
+        ware.size = 0
+        ware.rate = 0
+        ware.zwl = 0
+        ware.usd = usd
+        ware.rand = 0
+        ware.price3 = 0
+  
+        ware.save()
+        .then(user =>{
+          
+    })
+  
+      
+  
+      }else{
+        let id = vocs[0]._id
+        
+
+        
+        
+        console.log(product,'product')
+    
+        let cases = vocs.length
+        let number1 = cases * 12
+          number1.toFixed(2)
+        Warehouse.findByIdAndUpdate(id,{$set:{cases:0,quantity:0}},function(err,tocs){
+  
+        })
+  
+            
+          
+      }
+  })
+
+    }
+  })
+  
+  
+  
+  })
+
+  ///////2
+ 
+router.get('/rtnUpdate',isLoggedIn,function(req,res){
+
+
+})
+
+router.get('/wr2',isLoggedIn,function(req,res){
+  let arrV = []
+  let arrV2 = []
+  let number1,number2
+Warehouse.find({reason:"breakages",product:'kambucha lite',type2:'returns'},function(err,tocs){
+for(var i = 0; i<tocs.length; i++){
+  let product = tocs[i].product
+  let id = tocs[i]._id
+arrV2=[]
+console.log(arrV,i,'i')
+BatchR.find({reason:'breakages'},function(err,vocs){
+
+
+  for(var i = 0;i<vocs.length; i++){
+    arrV2=[]
+
+  arrV2.push(vocs[i].cases)
+    }
+    //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+   console.log(arrV2,'arrV2')
+  
+  //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+  number2=0;
+  for(var z in arrV2) { number2 += arrV2[z]; }
+
+let cases2 = number2
+ let nqty2 = number2 *12 
+  
+
+  RtnsSubBatch.find({item:product,reason:"breakages"},function(err,docs){
+
+    console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      arrV=[]
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].total)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+    
+    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+    number1=0;
+    for(var z in arrV) { number1 += arrV[z]; }
+
+    let cases = number1 / 12
+    
+if(cases2 > cases){
+console.log('true1')
+ let nCases = cases2 - cases
+ let nqty = nqty2 - number1
+ console.log(nCases,nqty,'fffff')
+     console.log(cases.toFixed(2),'fixed')
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:nCases.toFixed(2),quantity:nqty,totalReturned:number1,totalRepacked:nqty2}},function(err,tocs){
+
+    })
+  }   else{
+    let nCases = cases - cases2
+ let nqty = number1 - nqty2
+ console.log(nCases,cases,cases2,nqty,nqty2,number1,'fffff2')
+     console.log(cases.toFixed(2),'fixed')
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:nCases.toFixed(2),quantity:nqty,totalReturned:number1,totalRepacked:nqty2}},function(err,tocs){
+
+    })
+  } 
+
+  })
+})
+
+}
+res.redirect('/wr3')
+})
+
+})
+
+
+
+
+router.get('/wr3',isLoggedIn,function(req,res){
+  let arrV = []
+  let number1
+Warehouse.find({reason:"breakages",product:'manyuchi'},function(err,tocs){
+for(var i = 0; i<tocs.length; i++){
+  let product = tocs[i].product
+  let id = tocs[i]._id
+arrV=[]
+console.log(arrV,i,'i')
+  RtnsSubBatch.find({item:product,reason:"breakages"},function(err,docs){
+
+    console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      arrV=[]
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].total)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+    
+    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+    number1=0;
+    for(var z in arrV) { number1 += arrV[z]; }
+
+    let cases = number1 / 12
+  
+    cases.toFixed(0)
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:number1}},function(err,tocs){
+
+    })
+    
+})
+
+}
+res.redirect('/wr4')
+})
+
+})
+
+
+router.get('/wr4',isLoggedIn,function(req,res){
+  let arrV = []
+  let number1
+Warehouse.find({reason:"breakages",product:'kambucha No3'},function(err,tocs){
+for(var i = 0; i<tocs.length; i++){
+  let product = tocs[i].product
+  let id = tocs[i]._id
+arrV=[]
+console.log(arrV,i,'i')
+  RtnsSubBatch.find({item:product,reason:"breakages"},function(err,docs){
+
+    console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      arrV=[]
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].total)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+    
+    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+    number1=0;
+    for(var z in arrV) { number1 += arrV[z]; }
+
+    let cases = number1 / 12
+  
+    cases.toFixed(0)
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:number1}},function(err,tocs){
+
+    })
+    
+})
+
+}
+res.redirect('/')
+})
+
+})
+
+//////expired
+router.get('/warehouseUpdateRtns2',function(req,res){
+  let arr16=[]
+  let arrV = []
+  let number1, number2
+  let arrE = []
+  Product.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let product = docs[i].name
+      let category = docs[i].category
+      let subCategory = docs[i].subCategory
+      let usd = docs[i].usd
+  
+    
+  
+    Warehouse.find({product:product,reason:"expired"},function(err,vocs){
+  console.log(vocs.length,'size9')
+      if(vocs.length == 0){
+  
+       
+        var ware = new Warehouse()
+  
+        ware.warehouse=warehouse
+        ware.product = product
+        ware.cases = 0
+        ware.category = category
+        ware.subCategory = subCategory
+        ware.subCategory = category
+        ware.quantity =0
+        ware.openingQuantity = 0
+        ware.rcvdQuantity = 0
+        ware.unitCases = 12
+        ware.reason = "expired"
+        ware.type='goods'
+        ware.type2='returns'
+        ware.account = 'sales'
+        ware.size = 0
+        ware.rate = 0
+        ware.zwl = 0
+        ware.usd = usd
+        ware.rand = 0
+        ware.price3 = 0
+  
+        ware.save()
+        .then(user =>{
+          
+    })
+  
+      
+  
+      }else{
+        let id = vocs[0]._id
+        
+
+        
+        
+        console.log(product,'product')
+    
+        let cases = vocs.length
+        let number1 = cases * 12
+          number1.toFixed(2)
+        Warehouse.findByIdAndUpdate(id,{$set:{cases:0,quantity:0}},function(err,tocs){
+  
+        })
+  
+            
+          
+   
+  }
+      })
+    }
+
+
+
+    res.redirect('/wre2')
+  })
+  
+  
+  
+  })
+
+
+router.get('/wre2',isLoggedIn,function(req,res){
+  let arrV = []
+  let number1
+Warehouse.find({reason:"expired",product:'kambucha lite'},function(err,tocs){
+for(var i = 0; i<tocs.length; i++){
+  let product = tocs[i].product
+  let id = tocs[i]._id
+arrV=[]
+console.log(arrV,i,'i')
+  RtnsSubBatch.find({item:product,reason:"expired"},function(err,docs){
+
+    console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      arrV=[]
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].total)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+    
+    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+    number1=0;
+    for(var z in arrV) { number1 += arrV[z]; }
+
+    let cases = number1 / 12
+  
+    cases.toFixed(2)
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:number1}},function(err,tocs){
+
+    })
+    
+})
+
+}
+res.redirect('/wre3')
+})
+
+})
+
+
+
+
+router.get('/wre3',isLoggedIn,function(req,res){
+  let arrV = []
+  let number1
+Warehouse.find({reason:"expired",product:'manyuchi'},function(err,tocs){
+for(var i = 0; i<tocs.length; i++){
+  let product = tocs[i].product
+  let id = tocs[i]._id
+arrV=[]
+console.log(arrV,i,'i')
+  RtnsSubBatch.find({item:product,reason:"expired"},function(err,docs){
+
+    console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      arrV=[]
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].total)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+    
+    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+    number1=0;
+    for(var z in arrV) { number1 += arrV[z]; }
+
+    let cases = number1 / 12
+  
+    cases.toFixed(2)
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:number1}},function(err,tocs){
+
+    })
+    
+})
+
+}
+res.redirect('/wre4')
+})
+
+})
+
+
+router.get('/wre4',isLoggedIn,function(req,res){
+  let arrV = []
+  let number1
+Warehouse.find({reason:"expired",product:'kambucha No3'},function(err,tocs){
+for(var i = 0; i<tocs.length; i++){
+  let product = tocs[i].product
+  let id = tocs[i]._id
+arrV=[]
+console.log(arrV,i,'i')
+  RtnsSubBatch.find({item:product,reason:"expired"},function(err,docs){
+
+    console.log(docs.length)
+    for(var i = 0;i<docs.length; i++){
+      arrV=[]
+      console.log(docs[i].qty,'serima')
+    arrV.push(docs[i].total)
+      }
+      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+     console.log(arrV,'arrV')
+    
+    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+    number1=0;
+    for(var z in arrV) { number1 += arrV[z]; }
+
+    let cases = number1 / 12
+  
+    cases.toFixed(2)
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:number1}},function(err,tocs){
+
+    })
+    
+})
+
+}
+res.redirect('/')
+})
+
+})
+
+
 
 router.get('/add',function(req,res){
 
@@ -1225,6 +1672,81 @@ router.get("/logout",(req,res)=>{
 
 
 
+router.post('/dashChartStockRtns',isLoggedIn,function(req,res){
+
+  
+  var reason = req.body.reason
+   console.log(reason,'fReason')
+   var date = req.body.date
+   var arr = []
+   var id = req.user._id
+   let num = req.user.num
+   num++
+   
+  
+  
+   Warehouse.find({reason:reason},function(err,docs) {
+     console.log(docs,'docs5')
+     for(var i = 0;i<docs.length;i++){
+
+    //console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.reason == docs[i].reason  && value.product == docs[i].product )){
+               console.log('true')
+              arr.find(value => value.product == docs[i].product).quantity += docs[i].quantity;
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }
+    console.log(arr,'arr')
+    res.send(arr)
+   })
+  
+  
+  })
+  
+  
+
+  router.get('/rtnsList',isLoggedIn,function(req,res){
+
+  
+
+     var arr = []
+ 
+     var id = req.user._id
+     let num = req.user.num
+     num++
+     
+  
+    
+    
+     Warehouse.find({type2:'returns'},function(err,docs) {
+       console.log(docs,'docs5')
+       for(var i = 0;i<docs.length;i++){
+  
+      //console.log(docs,'docs')
+    
+          if(arr.length > 0 && arr.find(value => value.reason == docs[i].reason  && value.product == docs[i].product )){
+                 console.log('true')
+                arr.find(value => value.product == docs[i].product).quantity += docs[i].quantity;
+                arr.find(value => value.product == docs[i].product).cases += docs[i].cases.toFixed(2);
+           }else{
+    arr.push(docs[i])
+           }
+    
+         
+       }
+   
+     res.render('dispatcher/rtnsList',{listX:arr})
+     })
+    
+    
+    })
+    
+    
+  
 
 
 router.post('/dashChartStockXI',isLoggedIn,function(req,res){
@@ -1239,7 +1761,7 @@ router.post('/dashChartStockXI',isLoggedIn,function(req,res){
   
  
  
-  Warehouse.find({},function(err,docs) {
+  Warehouse.find({type2:'normal'},function(err,docs) {
    // console.log(docs,'docs')
     for(var i = 0;i<docs.length;i++){
  
@@ -1315,7 +1837,7 @@ console.log(warehouse,'warehouse')
  
 
 
- Warehouse.find({warehouse:warehouse},function(err,docs) {
+ Warehouse.find({warehouse:warehouse,type2:'normal'},function(err,docs) {
   // console.log(docs,'docs')
    for(var i = 0;i<docs.length;i++){
   let product = docs[i].product
@@ -1351,7 +1873,7 @@ console.log(warehouse,'warehouse')
  
 
 
- Warehouse.find({warehouse:warehouse},function(err,docs) {
+ Warehouse.find({warehouse:warehouse,type2:"normal"},function(err,docs) {
   // console.log(docs,'docs')
    for(var i = 0;i<docs.length;i++){
   let product = docs[i].product
@@ -1396,7 +1918,7 @@ router.post('/dashChartStockSales',isLoggedIn,function(req,res){
 
       if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson  && value.product == docs[i].product )){
              console.log('true')
-            arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
+            arr.find(value => value.product == docs[i].product).holdingCases.toFixed(2) += docs[i].holdingCases.toFixed(2)
        }else{
 arr.push(docs[i])
        }
@@ -1416,12 +1938,12 @@ arr.push(docs[i])
 /////////////////RawMaterials
 
 
-
+/*
 router.post('/dashChartStockRtns',isLoggedIn,function(req,res){
 
   
-  var product = req.body.product
-//console.log(warehouse,'warehouse')
+  var reason = req.body.reason
+console.log(reason,'warehouse')
  var date = req.body.date
  var arr = []
  var id = req.user._id
@@ -1431,7 +1953,7 @@ router.post('/dashChartStockRtns',isLoggedIn,function(req,res){
 
 console.log(product,'proRtns')
  RtnsSubBatch.find({item:product},function(err,docs) {
-  // console.log(docs,'docs')
+
    for(var i = 0;i<docs.length;i++){
   let product = docs[i].item
   console.log(docs,'docs')
@@ -1445,12 +1967,12 @@ arr.push(docs[i])
 
      
    }
-  console.log(arr,'arr')
+  console.log(arr,'arr6')
   res.send(arr)
  })
 
 
-})
+})*/
 
 
 
@@ -7516,6 +8038,43 @@ arr.push(docs[i])
 
 
 
+router.post('/batchAutoStockProduct',isLoggedIn,function(req,res){
+  var product = req.body.code
+  var id= req.user._id
+ 
+  User.findByIdAndUpdate(id,{$set:{product:product}},function(err,docs){
+
+    res.send(docs)
+  })
+})
+
+
+
+
+
+router.post('/batchAutoRtns',isLoggedIn,function(req,res){
+  var reason = req.body.code
+  var product = req.user.product
+  var arr = []
+  console.log(product,reason,'pro7')
+  Warehouse.find({product:product,reason:reason},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+ 
+ 
+      if(arr.length > 0 && arr.find(value =>value.reason == docs[i].reason   && value.product == docs[i].product)){
+             console.log('true')
+            arr.find(value => value.product == docs[i].product).quantity += docs[i].quantity;
+       }else{
+arr.push(docs[i])
+       }
+
+     
+   }
+   //console.log(arr,'arr')
+  
+    res.send(arr)
+  })
+})
 
 
 

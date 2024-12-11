@@ -94,7 +94,7 @@ let stock = arr2[i].qty
     </div></div> 
        <div class="ac-stock">
          <div>Stock on Hand</div>
-          <div class="stock-available">${stock}:cases</div></div></div>
+          <div class="stock-available">${stock}:units</div></div></div>
           </a>
            <div class="border-line"></div></li>
                            

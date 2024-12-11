@@ -9,6 +9,7 @@ var rtnSubBatchSchema = new Schema({
     salesPerson: {type: String},
     salesPersonId:{type:String},
     qty: {type: Number, required: true},
+    cases: {type: Number, required: true},
     price: {type: Number, required: true},
     total:{type:Number,required:true},
     balance:{type:Number},

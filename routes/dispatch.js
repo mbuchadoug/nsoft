@@ -9,6 +9,7 @@ var Delivery = require('../models/delivery');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
+var BatchRP = require('../models/batchRP');
 var BatchRR = require('../models/batchRR');
 var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var RtnsSubBatch= require('../models/rtnsSubBatch');
@@ -284,7 +285,7 @@ router.get('/warehouseUpdate',function(req,res){
   for(var i = 0;i<locs.length;i++){
     let warehouse = locs[i].name
   
-    Warehouse.find({product:product,warehouse:warehouse},function(err,vocs){
+    Warehouse.find({product:product,warehouse:warehouse,type2:'normal'},function(err,vocs){
   console.log(vocs.length,'size9')
       if(vocs.length == 0){
   
@@ -300,6 +301,7 @@ router.get('/warehouseUpdate',function(req,res){
         ware.subCategory = subCategory
         ware.subCategory = category
         ware.quantity = 0
+        ware.type2 = 'normal'
         ware.openingQuantity = 0
         ware.rcvdQuantity = 0
         ware.unitCases = 12
@@ -2129,6 +2131,7 @@ var casesDispatched = 1
 var casesBatch = req.user.cases
 var lot = req.user.lot
 var pallet
+var type2 = 'normal'
 var refNumber = req.user.refNumber
 var casesBatchNumber = req.user.invoiceNumber
 var refNumDispatch = req.user.refNumDispatch
@@ -2169,7 +2172,7 @@ StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'p
   
 
 
-    Warehouse.findOne({'product':product,'warehouse':warehouse})
+    Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
   .then(hoc=>{
 
 
@@ -2230,7 +2233,7 @@ res.send(c)
 
 
 
-               Warehouse.find({product:product,warehouse:warehouse},function(err,docs){
+               Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
                 let id = docs[0]._id
                 console.log(id,'id')
                 let nqty, nqty2
@@ -2316,6 +2319,7 @@ var truck = req.user.truck
 var casesDispatched = 1
 var casesBatch = req.user.cases
 var lot = req.user.lot
+var type2 = 'normal'
 var pallet = req.user.pallets
 var refNumber = req.user.refNumber
 var refNumDispatch = req.user.refNumDispatch
@@ -2355,7 +2359,7 @@ StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'p
   
 
 
-    Warehouse.findOne({'product':product,'warehouse':warehouse})
+    Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
   .then(hoc=>{
 
 
@@ -2416,7 +2420,7 @@ res.send(c)
 
 
 
-               Warehouse.find({product:product,warehouse:warehouse},function(err,docs){
+               Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
                 let id = docs[0]._id
                 console.log(id,'id')
                 let nqty, nqty2
@@ -2595,7 +2599,7 @@ console.log(casesBatchNumber,'batchNumber')
 
 
                
-                Warehouse.find({product:product,warehouse:warehouse},function(err,kocs){
+                Warehouse.find({product:product,warehouse:warehouse,type2:'normal'},function(err,kocs){
                 let wareId = kocs[0]._id
                 console.log(wareId,'wareId')
                 let nqty, nqty2
@@ -3316,6 +3320,7 @@ let ar4=[]
  ar2 = req.body['quantity[]']
  ar3 = req.body['price[]']
  ar4 = req.body['reason[]']
+  ar5 = req.body['cases[]']
 var rtnsNumber = req.user.rtnsNumber
 var month = m.format('MMMM')
 let dateValue = m.valueOf()
@@ -3352,17 +3357,19 @@ ar4.push(req.body['reason[]'])*/
 
 //console.log(ar1[0].length,'ha')
 
-if(typeof(ar1) === 'object' ){
+if(typeof(ar1) === 'object' && typeof(ar5) ){
   console.log('true')
    ar1 = ar1.filter(v=>v!='')
    ar2 = ar2.filter(v=>v!='')
    ar3 = ar3.filter(v=>v!='')
    ar4 = ar4.filter(v=>v!='')
+   ar5 = ar5.filter(v=>v!='')
   
  console.log(ar1,'iwee1')
  console.log(ar2,'iwee2')
  console.log(ar3,'iwee3')
  console.log(ar4,'iwee4')
+ console.log(ar5,'iwee5')
 
 for(var i = 0; i<ar1.length;i++){
 console.log(i,'ss')
@@ -3371,17 +3378,25 @@ console.log(ar1[i])
 let code = ar1[i]
 
 let qty1 = ar2[i]
+
+let cases1 = ar5[i]
 let price1 = ar3[i]
 let reason = ar4[i]
 let reg = /\d+\.*\d*/g;
 let resultQty = qty1.match(reg)
 let qty = Number(resultQty)
 
+let resultCases = cases1.match(reg)
+let cases = Number(resultCases)
 
+let nqty2 = cases * 12
+let nqty = nqty2 + qty
+
+console.log(nqty2,nqty,'output')
 let resultPrice = price1.match(reg)
 let price = Number(resultPrice)
 
-let total = qty * price
+let total = nqty * price
 
 var book = new RtnsSubBatch();
 book.item = ar1[i]
@@ -3390,8 +3405,9 @@ book.rtnsNumber = rtnsNumber
 
 book.salesPerson = salesPerson
 book.qty = qty
+book.cases = cases
 book.price = price
-book.total = total
+book.total = nqty
 book.reason = reason
 book.month = month
 book.year = year
@@ -3403,7 +3419,7 @@ book.status = 'not saved'
 book.type = "Rtns Inwards"
 
 book.size = i
-book.subtotal = 0
+book.subtotal = total
 
 
 
@@ -3429,7 +3445,7 @@ book.subtotal = 0
   console.log(ar3,ar4,'qty')
 
 
-  if(typeof(ar2)=== "string"){
+  if(typeof(ar2)=== "string" && typeof(ar5)=== "string" ){
     let reg = /\d+\.*\d*/g;
     let resultQty = ar2.match(reg)
      qtyV = Number(resultQty)
@@ -3441,18 +3457,25 @@ book.subtotal = 0
 console.log('else2')
 
     let qty1 = ar2
+    
+let cases1 = ar5
     let price1 = ar3
     let reason = ar4
     let reg = /\d+\.*\d*/g;
     let resultQty = qty1.match(reg)
     let qty = Number(resultQty)
+
+let resultCases = cases1.match(reg)
+let cases = Number(resultCases)
     
     
     let resultPrice = price1.match(reg)
     let price = Number(resultPrice)
+    let nqty2 = cases * 12
+let nqty = nqty2 + qty
+    let total = nqty * price
     
-    let total = qty * price
-    
+    console.log(nqty2,nqty,qty,total,'output')
     var book = new RtnsSubBatch();
     book.item = ar1
     
@@ -3460,8 +3483,9 @@ console.log('else2')
     
     book.salesPerson = salesPerson
     book.qty = qty
+    book.cases = cases
     book.price = price
-    book.total = total
+    book.total = nqty
     book.reason = reason
     book.month = month
     book.year = year
@@ -3473,7 +3497,7 @@ console.log('else2')
     book.type = "Rtns Inwards"
     
     book.size = 1
-    book.subtotal = 0
+    book.subtotal = total
     
     
     
@@ -3506,8 +3530,8 @@ RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
 
 console.log(docs.length)
 for(var i = 0;i<docs.length; i++){
-  console.log(docs[i].qty,'serima')
-arrV.push(docs[i].qty)
+  console.log(docs[i].total,'serima')
+arrV.push(docs[i].total)
   }
   //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
  console.log(arrV,'arrV')
@@ -3544,7 +3568,7 @@ RtnsSubBatch.find({rtnsNumber:rtnsNumber},function(err,docs){
 console.log(docs.length)
 for(var i = 0;i<docs.length; i++){
   console.log(docs[i].qty,'serima')
-arrV.push(docs[i].qty)
+arrV.push(docs[i].total)
   }
   //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
  console.log(arrV,'arrV')
@@ -4475,6 +4499,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
       var date2 = req.user.date
       var product = req.user.product;
       var m = moment(date2)
+      var type2 = 'normal'
       var m2 = moment()
       var dispatcher = req.user.fullname
       var year = m.format('YYYY')
@@ -4528,7 +4553,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
       
     
     
-        Warehouse.findOne({'product':product,'warehouse':warehouse})
+        Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
       .then(hoc=>{
     
     
@@ -4589,7 +4614,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
     
     
     
-                   Warehouse.find({product:product,warehouse:warehouse},function(err,docs){
+                   Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
                     let id = docs[0]._id
                     console.log(id,'id')
                     let nqty, nqty2
@@ -4672,6 +4697,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
     var month = m.format('MMMM')
     var time = req.user.time
     var truck = req.user.truck
+    var type2 = 'normal'
     var casesDispatched = 1
     var casesBatch = req.user.cases
     var lot = req.user.lot
@@ -4714,7 +4740,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
       
     
     
-        Warehouse.findOne({'product':product,'warehouse':warehouse})
+        Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
       .then(hoc=>{
     
     
@@ -4775,7 +4801,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
     
     
     
-                   Warehouse.find({product:product,warehouse:warehouse},function(err,docs){
+                   Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
                     let id = docs[0]._id
                     console.log(id,'id')
                     let nqty, nqty2
@@ -4885,6 +4911,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
     var status2 = 'dispatched'
     var mformat = m.format("L")
     let count = 0
+    var type2 = 'normal'
     var id = req.params.id
     let currentCases = req.user.currentCases
     var uid = req.user._id
@@ -4909,7 +4936,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
                             
                             
                                   if(count == docs.length){
-                                    Warehouse.findOne({'product':product,'warehouse':warehouse})
+                                    Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
                                     .then(hoc=>{
                                    
                             
@@ -4954,7 +4981,7 @@ router.get('/eodRepoView',isLoggedIn,function(req,res){
     
     
                    
-                    Warehouse.find({product:product,warehouse:warehouse},function(err,kocs){
+                    Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,kocs){
                     let wareId = kocs[0]._id
                     console.log(wareId,'wareId')
                     let nqty, nqty2
@@ -6168,6 +6195,7 @@ router.post('/dispatchScanBranch',isLoggedIn, function(req,res){
 var month = m.format('MMMM')
 var time = req.user.time
 var truck = req.user.truck
+var type2 = 'normal'
 var casesDispatched = 1
 var casesBatch = req.user.cases
 var lot = req.user.lot
@@ -6210,7 +6238,7 @@ StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'p
   
 
 
-    Warehouse.findOne({'product':product,'warehouse':warehouse})
+    Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
   .then(hoc=>{
 
 
@@ -6271,7 +6299,7 @@ res.send(c)
 
 
 
-               Warehouse.find({product:product,warehouse:warehouse},function(err,docs){
+               Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
                 let id = docs[0]._id
                 console.log(id,'id')
                 let nqty, nqty2
@@ -6356,6 +6384,7 @@ var time = req.user.time
 var truck = req.user.truck
 var casesDispatched = 1
 var casesBatch = req.user.cases
+var type2 = 'normal'
 var lot = req.user.lot
 var pallet = req.user.pallets
 var refNumber = req.user.refNumber
@@ -6396,7 +6425,7 @@ StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'p
   
 
 
-    Warehouse.findOne({'product':product,'warehouse':warehouse})
+    Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
   .then(hoc=>{
 
 
@@ -6457,7 +6486,7 @@ res.send(c)
 
 
 
-               Warehouse.find({product:product,warehouse:warehouse},function(err,docs){
+               Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
                 let id = docs[0]._id
                 console.log(id,'id')
                 let nqty, nqty2
@@ -7127,6 +7156,439 @@ res.redirect('/dispatch/statusUpdate')
 })
 })
 })
+
+
+
+
+
+
+
+router.get('/rtnsList',isLoggedIn,function(req,res){
+
+  
+
+  var arr = []
+
+  var id = req.user._id
+  let num = req.user.num
+  num++
+  
+
+ 
+ 
+  Warehouse.find({type2:'returns'},function(err,docs) {
+    console.log(docs,'docs5')
+    for(var i = 0;i<docs.length;i++){
+
+   //console.log(docs,'docs')
+ 
+       if(arr.length > 0 && arr.find(value => value.reason == docs[i].reason  && value.product == docs[i].product )){
+              console.log('true')
+             arr.find(value => value.product == docs[i].product).quantity += docs[i].quantity;
+             arr.find(value => value.product == docs[i].product).cases += docs[i].cases;
+        }else{
+ arr.push(docs[i])
+        }
+ 
+      
+    }
+
+  res.render('dispatcher/rtnsList',{listX:arr})
+  })
+ 
+ 
+ })
+ 
+
+ 
+
+router.get('/batchReturns',isLoggedIn,function(req,res){
+ 
+var batchNumber = req.user.invoiceNumber
+var pro = req.user
+var readonly = 'hidden'
+var read =''
+
+
+
+res.render('dispatcher/batchDispRtns',{pro:pro})
+
+
+})
+
+ 
+///////////////
+
+
+router.post('/batchReturns',isLoggedIn,function(req,res){
+
+  //var refNumber = req.body.referenceNumber
+  var date = req.body.date
+  var shift = 'day'
+  var stock = req.body.stock
+  var time = req.body.time
+  var reason = req.body.reason
+  var cases = req.body.cases
+  var product = req.body.product
+  var expiryDate = req.body.expiryDate
+  let refNo
+ // var lotNumber = req.body.lotNumber
+  //var location = req.body.location
+console.log(expiryDate,'expiry')
+  let date6 =  moment().format('l');
+  let dateValue = moment().valueOf()
+  let expiryDateValue = moment(expiryDate).valueOf()
+  console.log(expiryDateValue,'expiryValue')
+  let expiryDate2 = moment(expiryDate)
+  let expiryMformat = moment(expiryDate).format('l');
+let code
+//let shift = req.user.shift
+ let date7 =  date6.replace(/\//g, "");
+
+  console.log(date6,'date')
+
+
+  if( shift == 'day'){
+    code = "S1"
+  }else{
+    code = "S2"
+  }
+
+
+  if(stock < cases){
+    
+           
+    /* BatchR.find({status:'received'}).lean().sort({fifoPosition:1}).then(docs=>{
+       var arr = docs*/
+     req.session.message = {
+       type:'errors',
+       message:stock+' '+'cases Left for '+' '+product
+     }
+     res.render('dispatcher/batchDispRtns',{user:req.body, use:req.user,message:req.session.message,readonly:'hidden'})
+   //})
+   }
+   else{
+
+  RefNo.find({date:date},function(err,docs){
+    let size = docs.length + 1
+   refNo = date7+code+'B'+size+'RT'
+    console.log(refNo,'refNo')
+
+    var truck = new BatchR()
+    truck.date = date
+    truck.mformat = date6
+    truck.dateValue = dateValue
+    truck.expiryDateValue = expiryDateValue
+    truck.expiryMformat = expiryDate2
+    truck.shift = shift
+    truck.type = 'returns'
+    truck.product = product
+    truck.refNumber = refNo
+    truck.expiryDate = expiryDate
+    truck.cases = cases
+    truck.status = 'received'
+    truck.reason = reason
+    truck.receiver = req.user.fullname
+   
+
+    truck.save()
+        .then(pro =>{
+
+
+
+    var id = req.user._id
+    User.findByIdAndUpdate(id,{$set:{date:date, shift:shift, reason:reason,casesBatchR:cases,time:time,
+    product:product,refNumber:refNo,batchId:pro._id,mformat:date6,dateValue:dateValue, expiryDate:expiryDate,
+    expiryDateValue:expiryDateValue,expiryMformat:expiryMformat}},function(err,docs){
+
+    })
+
+
+
+    var book = new RefNo();
+  book.refNumber = refNo
+  book.date = date
+  book.type = 'returns'
+  book.save()
+  .then(pro =>{
+
+    console.log('success')
+    res.redirect('/dispatch/receiveStock/'+refNo)
+
+  })
+})
+
+//res.redirect('/dispatcher/receiveStock/'+refNo)
+
+  })
+
+}
+
+
+
+  
+
+
+  
+})
+
+
+
+
+router.get('/receiveStock/:id',isLoggedIn,function(req,res){
+  var date = req.user.date
+  var shift = req.user.shift
+  var casesBatchR = req.user.casesBatchR
+  var product = req.user.product
+  var refNumber = req.user.refNumber
+  var pro = req.user
+  var time = req.user.time
+  var date = req.user.date
+  var id = req.params.id
+  Product.find(function(err,docs){
+   res.render('dispatcher/receiveReturns',{listX:docs,casesBatchR:casesBatchR,date:date,shift:shift,
+  product:product,refNumber:refNumber,time:time,pro:pro,id:id,date:date})
+  })
+
+ })
+
+
+
+
+ router.post('/receiveScan',isLoggedIn, function(req,res){
+  console.log('receive scan')
+  var date2 = req.user.date
+  var product = req.user.product;
+  var m = moment(date2)
+  var receiver = req.user.fullname
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+  var date = m.toString()
+  var numDate = m.valueOf()
+  var barcodeNumber = req.body.code
+var month = m.format('MMMM')
+var shift = req.user.shift
+var casesReceived = 1
+var lot = req.user.lot
+var refNumber = req.user.refNumber
+var location = req.user.location
+var warehouse = req.user.warehouse
+var arr = []
+let casesBatchR = req.user.casesBatchR
+var batchId = req.user.batchId
+//var mformat = m.format("L")
+  //var receiver = req.user.fullname
+var mformat = req.user.mformat
+var dateValue = req.user.dateValue
+var expiryDate = req.user.expiryDate
+var expiryDateValue = expiryDateValue
+var expiryMformat = expiryMformat
+var reason = req.user.reason
+
+console.log(product,shift,casesReceived,warehouse,'out')
+
+
+
+
+  Warehouse.findOne({'product':product,'warehouse':warehouse})
+  .then(hoc=>{
+
+
+    StockV.findOne({'barcodeNumber':barcodeNumber})
+    .then(doc=>{
+      console.log(doc,'doc',hoc,'hoc')
+
+    if( doc == null){
+      
+StockV.find({refNumber:refNumber},function(err,focs){
+let size  = focs.length + 1
+if(focs.length == 0){
+
+  let openingBalance = hoc.cases
+  //let casesRcvdX =  focs.length + 1
+  let closingBalance = hoc.cases + 1
+  BatchR.findByIdAndUpdate(batchId,{$set:{cases:size,openingBal:openingBalance,closingBal:closingBalance}},function(err,noc){
+
+  })
+
+}
+if(focs.length >0){
+
+  console.log(size,'size')
+
+let openingBalance = focs[0].availableCases
+//let casesRcvdX =  focs.length + 1
+let closingBalance = focs[0].availableCases + focs.length + 1
+BatchR.findByIdAndUpdate(batchId,{$set:{cases:size,openingBal:openingBalance,closingBal:closingBalance}},function(err,noc){
+
+})
+
+StockV.find({date:date2},function(err,jocs){
+  if(jocs.length >0){
+
+  let openingBalanceX = jocs[0].availableCases
+  let totalCases = jocs.length + 1
+  let closingBalanceX = jocs[0].availableCases + jocs.length + 1
+  
+  BatchR.find({date:date2},function(err,tocs){
+    for(var i = 0;i< tocs.length;i++){
+      BatchR.findByIdAndUpdate(tocs[i]._id,{$set:{casesRcvdX:totalCases,openingBalX:openingBalanceX,closingBalX:closingBalanceX}},function(err,noc){
+
+      })
+
+    }
+  })
+
+}
+
+})
+}
+  var book = new StockV();
+
+  let unitCases = hoc.unitCases
+  let usd= hoc.usd
+  let zwl = hoc.zwl
+  let rand = hoc.rand
+  let rate = hoc.rate
+
+  let category = hoc.category
+  let subCategory = hoc.subCategory
+  book.name = product
+  book.mformat = mformat
+  //book.code =  code
+  book.warehouse = warehouse
+  book.barcodeNumber = barcodeNumber
+  book.status = 'received'
+  book.cases = 0
+  book.date = date2
+  book.casesReceived = casesReceived
+  book.availableCases = hoc.cases
+  book.shift = shift
+  book.type = "returns"
+  book.reason = reason
+  book.year = year
+  book.month = month
+  book.casesBatchR = casesBatchR
+  book.receiver = receiver
+  book.dateValue = dateValue
+  book.unitCases = unitCases
+  book.dispatchStatus ='pending'
+  book.zwl = zwl
+  book.usd = usd
+  book.rand = rand
+  book.rate = rate
+  book.category = category
+  book.subCategory = subCategory
+  book.sizeR = size
+  book.refNumber = refNumber
+  book.expiryDate = expiryDate
+  book.dateValue = dateValue
+  book.expiryDateValue = expiryDateValue
+  book.expiryMformat = expiryMformat
+
+      
+       
+        book.save()
+          .then(pro =>{
+let stock = pro.casesReceived + pro.availableCases
+
+StockV.findByIdAndUpdate(pro._id,{$set:{cases:stock}},function(err,vocs){
+
+})
+
+
+
+
+
+
+
+Warehouse.find({product:product,warehouse:warehouse,type2:'normal'},function(err,docs){
+  let id = docs[0]._id
+  console.log(id,'id')
+  let nqty, nqty2
+   let rcvdQty = pro.casesReceived
+   let openingQuantity = docs[0].cases
+  //nqty = pro.quantity + docs[0].quantity
+  nqty = pro.casesReceived + docs[0].cases
+  nqty2 = nqty * docs[0].unitCases
+  console.log(nqty,'nqty')
+  Warehouse.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, rcvdQuantity:rcvdQty,quantity:nqty2}},function(err,nocs){
+
+  })
+
+  
+
+ })
+
+
+ 
+
+Warehouse.find({product:product,reason:reason,type2:'returns'},function(err,docs){
+  let id = docs[0]._id
+  console.log(id,'id')
+  let nqty, nqty2
+   let rcvdQty = pro.casesReceived
+   let openingQuantity = docs[0].cases
+  //nqty = pro.quantity + docs[0].quantity
+  nqty =  docs[0].cases - pro.casesReceived 
+  nqty2 = nqty * docs[0].unitCases
+  console.log(nqty,'nqty')
+  let nqty3 = nqty2.toFixed(0) 
+  Warehouse.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, rcvdQuantity:rcvdQty,quantity:nqty3}},function(err,nocs){
+
+  })
+
+  
+
+ })
+
+
+            Product.find({'name':product},function(err,docs){
+              let id = docs[0]._id
+              console.log(id,'id')
+              let nqty, nqty2
+               let rcvdQty = pro.casesReceived
+               let openingQuantity = docs[0].cases
+              //nqty = pro.quantity + docs[0].quantity
+              nqty = pro.casesReceived + docs[0].cases
+              nqty2 = nqty * docs[0].unitCases
+              console.log(nqty,'nqty')
+              Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, rcvdQuantity:rcvdQty,quantity:nqty2}},function(err,nocs){
+ 
+              })
+ 
+              
+ 
+             })
+
+
+            
+            StockV.find({mformat:mformat},(err, ocs) => {
+              let size = ocs.length - 1
+              console.log(ocs[size],'fff')
+              res.send(ocs[size])
+                      })
+        })
+        
+
+      })
+    
+    
+      
+      }else{
+
+console.log(arr,'doc7')
+        res.send(arr)
+      }
+    })
+    }) 
+
+      
+})
+
+
+
+ 
 
 
 

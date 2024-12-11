@@ -139,10 +139,12 @@ cloneBtn.onclick = function(){
 
  var n = clone.getElementsByTagName('input')
 
- n[0].id = 'quantity'+trSize
- n[1].id = 'price'+trSize
- n[0].data = 'quantity'+trSize
- n[1].data = 'price'+trSize
+ n[0].id = 'cases'+trSize
+ n[1].id = 'quantity'+trSize
+ n[2].id = 'price'+trSize
+ n[0].data = 'cases'+trSize
+ n[1].data = 'quantity'+trSize
+ n[2].data = 'price'+trSize
 
  var n2 = document.getElementsByName('cross')
  n2[trSize-1].id = 'autoPro'+trSize

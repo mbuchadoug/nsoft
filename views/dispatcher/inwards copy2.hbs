@@ -298,9 +298,7 @@
     <table class="line-item-table line-item-table-light " id="lineitems-section"><thead class="line-item-header invoice-nodiscount ">
       <tr >
         <th class="drag-icon-container "></th>
-        <th class="line-item-column over-flow ">Item Details</th>
-        <th class="line-item-column over-flow item-qty text-end">Cases<!----><!----></th>
-        <th class="line-item-column over-flow item-qty text-end">Quantity <!----><!----></th>
+        <th class="line-item-column over-flow ">Item Details</th><th class="line-item-column over-flow item-qty text-end">Quantity <!----><!----></th>
         <th class="line-item-column item-rate text-end text-nowrap">Rate <span id="ember397" class="popover-container ember-view"><a id="ember398" class="ember-view"><i><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-s align-middle mx-2 mb-1"><g id="Layer_1-2"><path d="M392.4 0H119.6C53.7 0 0 53.7 0 119.6v272.8C0 458.4 53.7 512 119.6 512h272.8c66 0 119.6-53.7 119.6-119.6V119.6C512 53.6 458.3 0 392.4 0zM472 392.4c0 43.9-35.7 79.6-79.6 79.6H119.6C75.7 472 40 436.3 40 392.4V119.6C40 75.7 75.7 40 119.6 40h272.8c43.9 0 79.6 35.7 79.6 79.6v272.8z"></path><path d="M402.8 141.3h-96.9c-11 0-20 9-20 20s9 20 20 20h96.9c11 0 20-9 20-20s-9-20-20-20zM402.8 372.3h-96.9c-11 0-20 9-20 20s9 20 20 20h96.9c11 0 20-9 20-20s-9-20-20-20zM402.8 290.8h-96.9c-11 0-20 9-20 20s9 20 20 20h96.9c11 0 20-9 20-20s-9-20-20-20zM224.4 141.3h-37.6v-37.6c0-11-9-20-20-20s-20 9-20 20v37.6h-37.6c-11 0-20 9-20 20s9 20 20 20h37.6v37.6c0 11 9 20 20 20s20-9 20-20v-37.6h37.6c11 0 20-9 20-20s-9-20-20-20zM221.7 296.7c-7.8-7.8-20.5-7.8-28.3 0l-26.6 26.6-26.6-26.6c-7.8-7.8-20.5-7.8-28.3 0-7.8 7.8-7.8 20.5 0 28.3l26.6 26.6-26.6 26.6c-7.8 7.8-7.8 20.5 0 28.3 3.9 3.9 9 5.9 14.1 5.9s10.2-2 14.1-5.9l26.6-26.6 26.6 26.6c3.9 3.9 9 5.9 14.1 5.9s10.2-2 14.1-5.9c7.8-7.8 7.8-20.5 0-28.3l-26.6-26.6 26.6-26.6c7.8-7.8 7.8-20.5 0-28.3z"></path></g></svg></i></a>
          <div id="ember399" class="popover position-absolute d-none bs-popover-top mb-2 ember-view  font-xs"><!----></div></span></th>
          <th class="line-item-column over-flow item-tax ">Reason <span id="ember401" class="popover-container ember-view"><div id="ember402" class="popover position-absolute d-none bs-popover-top mb-2 ember-view font-xxs"><!----></div></span><!----><!----><!----></th>
@@ -374,13 +372,6 @@
     </div></div> 
    <div class="d-flex"></div> </div></div></div></td> 
   <td id="ember409" class="line-item-column item-qty ember-view">
-    <div>
-      <input id="cases1" name="cases[]" data="cases1" class="ember-text-field text-end ember-view form-control qty-field " data-integrity="line_items.0.quantity" type="number" autocomplete="off"> 
-    <div id="ember411" class="ember-view">
-    <div class="font-xs text-end px-3"></div> 
-    </div></div></td>
-
-     <td id="ember409" class="line-item-column item-qty ember-view">
     <div>
       <input id="quantity1" name="quantity[]" data="quantity1" class="ember-text-field text-end ember-view form-control qty-field " data-integrity="line_items.0.quantity" type="number" autocomplete="off"> 
     <div id="ember411" class="ember-view">
@@ -680,43 +671,6 @@ console.log('click')
 var arr=[]
 let quan = document.getElementById('quantity1').value
 if(quan !=''){
-  let rate = document.getElementById('price1').value
-  let amount = quan * rate
-  document.getElementById('amount1').textContent = amount
-
-let amounts = document.getElementsByName('amount')
-for(var i = 0;i<amounts.length;i++){
-  console.log(amounts[i].textContent,'amounts')
-  let num = amounts[i].textContent
-  	let regTotal = /\d+\.*\d*/g;  
-    let resultTotal =num.match(regTotal)
-    let total= Number(num)
-  arr.push(total)
-}
-
- number1=0;
-      for(var z in arr) { number1 += arr[z]; }
-      document.getElementById('subTotal').textContent = number1
-      document.getElementById('totalAmount').textContent = number1
-}
-
-
-
-
-       })
-
-</script>
-
-
-
-
-<script>
-
-       $('body').on('blur','#cases1', function (e) {
-console.log('click')
-var arr=[]
-let cases = document.getElementById('cases1').value
-if(cases !=''){
   let rate = document.getElementById('price1').value
   let amount = quan * rate
   document.getElementById('amount1').textContent = amount
