@@ -3,6 +3,7 @@ var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
+var Dispose = require('../models/dispose');
 var PreRcvd = require('../models/preRcvd');
 var BatchPR = require('../models/batchPR');
 var Ware = require('../models/ware');
@@ -305,7 +306,8 @@ router.get('/rtnUpdate',isLoggedIn,function(req,res){
 router.get('/wr2',isLoggedIn,function(req,res){
   let arrV = []
   let arrV2 = []
-  let number1,number2
+  let arrV3 = []
+  let number1,number2,number3
 Warehouse.find({reason:"breakages",product:'kambucha lite',type2:'returns'},function(err,tocs){
 for(var i = 0; i<tocs.length; i++){
   let product = tocs[i].product
@@ -331,6 +333,23 @@ let cases2 = number2
  let nqty2 = number2 *12 
   
 
+ Dispose.find({type:'breakages'},function(err,ocs){
+
+
+  for(var i = 0;i<ocs.length; i++){
+    arrV3=[]
+
+  arrV3.push(ocs[i].quantity)
+    }
+    //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+   console.log(arrV3,'arrV3')
+  
+  //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+  number3=0;
+  for(var z in arrV3) { number3 += arrV3[z]; }
+
+let cases3 = number3 / 12
+ let nqty3 = number3
   RtnsSubBatch.find({item:product,reason:"breakages"},function(err,docs){
 
     console.log(docs.length)
@@ -350,28 +369,29 @@ let cases2 = number2
     
 if(cases2 > cases){
 console.log('true1')
- let nCases = cases2 - cases
- let nqty = nqty2 - number1
+ let nCases = cases2 - cases - cases3
+ let nqty = nqty2 - number1 - number3
  console.log(nCases,nqty,'fffff')
      console.log(cases.toFixed(2),'fixed')
-    Warehouse.findByIdAndUpdate(id,{$set:{cases:nCases.toFixed(2),quantity:nqty,totalReturned:number1,totalRepacked:nqty2}},function(err,tocs){
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:nCases.toFixed(2),quantity:nqty,totalReturned:number1,totalRepacked:nqty2,totalDisposed:nqty3}},function(err,tocs){
 
     })
   }   else{
-    let nCases = cases - cases2
- let nqty = number1 - nqty2
+    let nCases = cases - cases2 - cases3
+ let nqty = number1 - nqty2 - number3
  console.log(nCases,cases,cases2,nqty,nqty2,number1,'fffff2')
      console.log(cases.toFixed(2),'fixed')
-    Warehouse.findByIdAndUpdate(id,{$set:{cases:nCases.toFixed(2),quantity:nqty,totalReturned:number1,totalRepacked:nqty2}},function(err,tocs){
+    Warehouse.findByIdAndUpdate(id,{$set:{cases:nCases.toFixed(2),quantity:nqty,totalReturned:number1,totalRepacked:nqty2,totalDisposed:nqty3}},function(err,tocs){
 
     })
   } 
 
   })
 })
-
+})
 }
 res.redirect('/wr3')
+
 })
 
 })

@@ -24,6 +24,7 @@ var warehouseSchema = new Schema({
     size: {type: Number},
     totalReturned: {type: Number},
     totalRepacked: {type: Number},
+    totalDisposed: {type: Number},
     rate: {type: Number, },
     zwl: {type: Number, },
     usd: {type: Number},

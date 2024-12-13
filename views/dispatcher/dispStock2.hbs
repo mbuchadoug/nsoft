@@ -580,8 +580,8 @@ this.firstElementChild.select();
                 }
 
                    
-else if( data.casesBatch< 140 && data.casesBatch >= data.palletCasesBatch && data.size == 1  ){
-  console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
+else if( data.casesBatch< 10 && data.casesBatch >= data.palletCasesBatch && data.size == 1  ){
+  console.log('yea11',data.size,data.casesBatch,data.palletCasesBatch)
 
            var tr = document.createElement('tr');
 
@@ -709,8 +709,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
 
             
                 
-else if( data.casesBatch < 140 || data.casesBatch >= data.palletCasesBatch && {{{remainderCases}}} == 0 && {{currentCases}}== data.casesBatch ){
-  console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
+else if( data.casesBatch < 10 || data.casesBatch >= data.palletCasesBatch && {{{remainderCases}}} == 0 && {{currentCases}}== data.casesBatch ){
+  console.log('yea22',data.size,data.casesBatch,data.palletCasesBatch)
 
            var tr = document.createElement('tr');
 
@@ -836,8 +836,8 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
 
 
                          
-else if( data.casesBatch < 140 || data.casesBatch >= data.palletCasesBatch && {{{remainderCases}}} == 0 ){
-  console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
+else if( data.casesBatch < 10 || data.casesBatch >= data.palletCasesBatch && {{{remainderCases}}} == 0 ){
+  console.log('yea33',data.size,data.casesBatch,data.palletCasesBatch)
 
            var tr = document.createElement('tr');
 
@@ -932,10 +932,10 @@ else if(docs[i].size ==  docs[i].casesBatch && docs[i].position == 'last'){
 document.getElementById("closeBtn").style.display = "";
 }
 //document.getElementById("closeBtn").style.display = "";
-/*else{
+else{
 document.getElementById("closePallet").style.display = "";
 document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
+}
 
 
 //if(docs[i].size === data.casesBatch){
