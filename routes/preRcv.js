@@ -486,8 +486,8 @@ router.post('/receiveStock',isLoggedIn, function(req,res){
     .then(pro =>{
 
       console.log('success')
-      res.redirect('/admin/receiveStock/'+refNo)
-    //res.redirect('/admin/importBarcodes/')
+      //res.redirect('/admin/receiveStock/'+refNo)
+    res.redirect('/admin/importBarcodes/')
 
     })
   })
