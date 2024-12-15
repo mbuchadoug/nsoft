@@ -1263,7 +1263,7 @@ let cases = docs.length
   })
    
     var productChunks = [];
-    var chunkSize = 10;
+    var chunkSize = 140;
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
@@ -1337,7 +1337,7 @@ let cases = docs.length
       
   })
     var productChunks = [];
-    var chunkSize = 10;
+    var chunkSize = 140;
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }

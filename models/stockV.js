@@ -70,7 +70,9 @@ var schemaV = new Schema({
     palletDispatched: {type: Number },
     palletRcvd: {type: Number },
     palletRemaining: {type: Number },
-    replacementCase: {type: Number }
+    replacementCase: {type: Number },
+    batchPallets:{type:Number},
+    palletCount:{type:Number},
  
    
    

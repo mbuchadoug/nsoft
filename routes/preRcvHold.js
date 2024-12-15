@@ -486,8 +486,8 @@ router.post('/receiveStock',isLoggedIn, function(req,res){
     .then(pro =>{
 
       console.log('success')
-     // res.redirect('/admin/receiveStock/'+refNo)
-    res.redirect('/admin/importBarcodes/')
+      res.redirect('/admin/receiveStock/'+refNo)
+    //res.redirect('/admin/importBarcodes/')
 
     })
   })
@@ -965,7 +965,7 @@ router.get('/closeBatch/:id',function(req,res){
   PreRcvd.find({refNumber:id},function(err,docs){
   //  console.log(docs,'docs')
     var productChunks = [];
-    var chunkSize = 140
+    var chunkSize = 10
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }

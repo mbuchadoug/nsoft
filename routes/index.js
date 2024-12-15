@@ -1652,9 +1652,16 @@ router.post('/', passport.authenticate('local.signin', {
 }), function (req, res, next) {
   if(req.user.role == "receiver"){
     res.redirect("/receiver/batch");
-  }else if(req.user.role == "dispatch"){
+  }else if(req.user.role == "receiverTest"){
+    res.redirect('/receiverTest/batch')
+  }
+  else if(req.user.role == "dispatch"){
     res.redirect('/dispatch/fifoUpdate')
-  }else if(req.user.role == "sales"){
+  }
+  else if(req.user.role == "dispatchTest"){
+    res.redirect('/dispatchTest/fifoUpdate')
+  }
+  else if(req.user.role == "sales"){
     res.redirect('/sales/invoice')
   }else if(req.user.role == "accountant1"){
     res.redirect('/accounts1/stockRequisitions')
@@ -1670,6 +1677,8 @@ router.post('/', passport.authenticate('local.signin', {
     res.redirect('/merch/refDispUpdate/')
   }else if(req.user.role == "admin"){
     res.redirect('/admin/batch')
+  }else if(req.user.role == "adminTest"){
+    res.redirect('/adminTest/batch')
   }
 
 

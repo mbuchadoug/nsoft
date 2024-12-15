@@ -1012,6 +1012,7 @@ router.post('/receivePallet/:id',isLoggedIn,function(req,res){
   var barcodeNumber = req.body.code
 var month = m.format('MMMM')
 var shift = req.user.shift
+var prPallet = req.user.prPallet
 var casesReceived = 1
 var lot = req.user.lot
 var refNumber = req.user.refNumber
@@ -1044,24 +1045,26 @@ var idU = req.user._id
 
       
       console.log('tapinda')
-                        PreRcvd.find({refNumber:id,statusCheck:"scanned",refNumReceive:refNumReceive},function(err,docs){
+                        PreRcvd.find({refNumber:id,pallet:prPallet,statusCheck:"scanned",refNumReceive:refNumReceive},function(err,docs){
 
                           let pallet = docs[0].pallet
+                          console.log(pallet,'pallet33')
                           for(var i = 0;i<docs.length;i++){
                             
-        
+                           console.log(docs.length,'length')
         
              
         
                             if(docs[i].pallet == pallet){
                               count++
                         
-                        
+                        console.log(count,'count')
                               if(count == docs.length){
+                                console.log('true55')
                                 Warehouse.findOne({'product':product,'warehouse':warehouse})
                                 .then(hoc=>{
-                               
-                        
+                               console.log(hoc,'hoc')
+                        console.log(id,'ref',pallet,'pallet')
                                 PreRcvd.find({refNumber:id,status:'pending',pallet:pallet},function(err,ocs){
                         for(var n = 0;n<ocs.length;n++){
                          let objId = ocs[n]._id
