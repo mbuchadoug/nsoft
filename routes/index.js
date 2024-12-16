@@ -298,10 +298,7 @@ router.get('/warehouseUpdateRtns',function(req,res){
 
   ///////2
  
-router.get('/rtnUpdate',isLoggedIn,function(req,res){
 
-
-})
 
 router.get('/wr2',isLoggedIn,function(req,res){
   let arrV = []
