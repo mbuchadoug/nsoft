@@ -2273,7 +2273,7 @@ var button8 = document.getElementById('myChart8tab').addEventListener('click', f
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].product,"y":data[i].holdingCases})
+        labels3.push({"x":data[i].salesPerson,"y":data[i].holdingCases})
         // labels3.push(data[i].qty)
          }
     

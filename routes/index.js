@@ -1947,7 +1947,7 @@ router.post('/dashChartStockSales',isLoggedIn,function(req,res){
 
       if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson  && value.product == docs[i].product )){
              console.log('true')
-            arr.find(value => value.product == docs[i].product).holdingCases.toFixed(2) += docs[i].holdingCases.toFixed(2)
+            arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
        }else{
 arr.push(docs[i])
        }
