@@ -1234,7 +1234,7 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
 let aggCases2 = batchTotalCases - gocs.length
 
 console.log(aggCases2,aggCases2,'kkkk')
-      BatchR.find({fifoPosition:batchCount},function(err,loc){
+      BatchR.find({status:"received"},function(err,loc){
         console.log(loc,'newBatch')
         let refNumber = loc[0].refNumber
         let batchRCases = loc[0].cases
