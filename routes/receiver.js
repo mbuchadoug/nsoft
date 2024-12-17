@@ -874,6 +874,7 @@ router.get('/warehouseUpdate',function(req,res){
       book.warehouse = warehouse
       book.barcodeNumber = barcodeNumber
       book.status = 'received'
+      book.status2 = 'dispatch'
       book.statusCheck = 'scanned'
       book.cases = 0
       book.prPallet = prPallet
@@ -1100,6 +1101,7 @@ var idU = req.user._id
                             book.warehouse = warehouse
                             book.barcodeNumber = barc
                             book.status = 'received'
+                            book.status2 = 'dispatch'
                             book.statusCheck2 = 'scannedLoop'
                             book.cases = 0
                             book.refCases= size

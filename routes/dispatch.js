@@ -603,7 +603,7 @@ router.get('/replace',function(req,res){
   })
                  
   
-  BatchR.find({fifoPosition:0,status:"received"},function(err,loc){
+  BatchR.find({status:"received",product:product},function(err,loc){
     let batchId = loc[0]._id
     let product = loc[0].product
     let warehouse = loc[0].warehouse
@@ -960,7 +960,7 @@ else{
      })*/
                     
      
-     BatchR.find({status:"received"},function(err,loc){
+     BatchR.find({status:"received",product:product},function(err,loc){
        let batchId = loc[0]._id
        let product = loc[0].product
        let warehouse = loc[0].warehouse
@@ -1114,7 +1114,7 @@ router.post('/selectPallet2/',isLoggedIn,function(req,res){
    })*/
                   
    
-   BatchR.find({fifoPosition:batchCount,status:"received"},function(err,loc){
+   BatchR.find({product:product,status:"received"},function(err,loc){
      let batchId = loc[0]._id
      let product = loc[0].product
      let warehouse = loc[0].warehouse
@@ -2137,7 +2137,7 @@ res.redirect('/dispatch/statusUpdate')
     let number1
     var arr16=[]
     let op 
-    let holdingCases,salesClosingStock,salesOpeningStock
+    let holdingCases,salesClosingStock,salesOpeningStock,closingBalF,closingBalF4
     SaleStock.find({salesPerson:salesPerson,product:product},function(err,vocs){
 //let op = vocs[0].holdingCases  
 if(vocs.length == 0){
@@ -2155,7 +2155,7 @@ console.log(op,'op')
 BatchD.find(function(err,rocs){
 
 
-BatchD.find({refNumDispatch:refNumDispatch},function(err,docs){
+BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,docs){
 //console.log(docs,'docsgg')
 salesClosingStock = holdingCases + docs[0].cases
 console.log(holdingCases, docs[0].cases,'ka')
@@ -2191,7 +2191,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
       
         openingBal = jocs[0].closingStock
       
-        BatchD.find({size:rSize,refNumDispatch:refNumDispatch},function(err,yocs){
+        BatchD.find({size:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
          
           let idV = yocs[0]._id
@@ -2201,7 +2201,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
         })
   
   
-        BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
+        BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,hocs){
   
           for(var q = 0;q<hocs.length; q++){
         
@@ -2259,13 +2259,13 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 
 
 
-       BatchD.find({size:size},function(err,jocs){
+       BatchD.find({size:size,product:product},function(err,jocs){
 
 
       
         openingBal = holdingCases
       
-        BatchD.find({size:rSize,refNumDispatch:refNumDispatch},function(err,yocs){
+        BatchD.find({size:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
           let idV = yocs[0]._id
         BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,rocs){
@@ -2274,7 +2274,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
         })
   
   
-        BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
+        BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,hocs){
   
           for(var q = 0;q<hocs.length; q++){
         
@@ -2340,13 +2340,13 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
    
 
     
-    BatchD.find({position:size,refNumDispatch:refNumDispatch},function(err,jocs){
+    BatchD.find({position:size,refNumDispatch:refNumDispatch,product:product},function(err,jocs){
 
 
       
       openingBal = jocs[0].closingStock
     
-      BatchD.find({position:rSize,refNumDispatch:refNumDispatch},function(err,yocs){
+      BatchD.find({position:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
         closingBal = openingBal + yocs[0].cases
         let idV = yocs[0]._id
       BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
@@ -2355,7 +2355,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
       })
 
 
-      BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
+      BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,hocs){
 
         for(var q = 0;q<hocs.length; q++){
       
@@ -2436,14 +2436,14 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 
     })
           
-          BatchD.find({position:size,refNumDispatch:refNumDispatch},function(err,jocs){
+          BatchD.find({position:size,refNumDispatch:refNumDispatch,product:product},function(err,jocs){
       
            
       
             
             openingBal = jocs[0].closingStock
           
-            BatchD.find({position:rSize2,refNumDispatch:refNumDispatch},function(err,yocs){
+            BatchD.find({position:rSize2,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
               closingBal = openingBal + yocs[0].cases
               let idV = yocs[0]._id
             BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
@@ -2451,7 +2451,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
             })
 
 
-            BatchD.find({position:rSize,refNumDispatch:refNumDispatch},function(err,nocs){
+            BatchD.find({position:rSize,refNumDispatch:refNumDispatch,product:product},function(err,nocs){
              let closingBalF = closingBal + nocs[0].cases
               let idVV = nocs[0]._id
             BatchD.findByIdAndUpdate(idVV,{$set:{openingStock:closingBal,closingStock:closingBalF,salesClosingStock:closingBalF,salesOpeningStock:closingBal}},function(err,rocs){
@@ -2464,7 +2464,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
             })
       
       
-            BatchD.find({refNumDispatch:refNumDispatch},function(err,hocs){
+            BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,hocs){
       
               for(var q = 0;q<hocs.length; q++){
             
@@ -2516,6 +2516,118 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
         }
 
     
+
+///////
+if (docs.length == 4){
+  console.log('trueeee4')
+      
+  
+      size = docs.length - 4
+      rSize3 = docs.length -3
+      rSize2 = docs.length -2
+     rSize = docs.length - 1
+     
+  
+openingBal =op
+closingBal = op + docs[0].cases 
+let id2 = docs[0]._id
+
+BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
+
+})
+      
+      BatchD.find({position:size,refNumDispatch:refNumDispatch,product:product},function(err,jocs){
+  
+       
+  
+        
+        openingBal = jocs[0].closingStock
+      
+        BatchD.find({position:rSize3,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
+          closingBal = openingBal + yocs[0].cases
+          let idV = yocs[0]._id
+        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
+  
+        })
+
+
+        BatchD.find({position:rSize2,refNumDispatch:refNumDispatch,product:product},function(err,nocs){
+          closingBalF = closingBal + nocs[0].cases
+          let idVV = nocs[0]._id
+        BatchD.findByIdAndUpdate(idVV,{$set:{openingStock:closingBal,closingStock:closingBalF,salesClosingStock:closingBalF,salesOpeningStock:closingBal}},function(err,rocs){
+  
+        })
+
+     
+
+
+
+      BatchD.find({position:rSize,refNumDispatch:refNumDispatch,product:product},function(err,nocs){
+       closingBalF4 = closingBalF + nocs[0].cases
+         let idV4 = nocs[0]._id
+       BatchD.findByIdAndUpdate(idV4,{$set:{openingStock:closingBalF,closingStock:closingBalF4,salesClosingStock:closingBalF4,salesOpeningStock:closingBalF}},function(err,rocs){
+ 
+       })
+
+     })
+
+    })
+
+
+        })
+  
+  
+        BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,hocs){
+  
+          for(var q = 0;q<hocs.length; q++){
+        
+            arr16.push(hocs[q].cases)
+              }
+              //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+               number1=0;
+              for(var z in arr16) { number1 += arr16[z]; }
+  
+              SaleStock.find({salesPerson:salesPerson,product:product},function(err,ocs){
+    
+                if(ocs.length == 0)
+                {
+        
+                  var sale =SaleStock();
+                  sale.product = product
+                  sale.casesReceived = number1
+                  sale.openingBal = 0
+                  sale.holdingCases = number1
+                  sale.salesPerson = salesPerson
+                  sale.qty = number1 * 12
+                  sale.price = 1
+                  
+                  sale.save()
+                  .then(pas =>{
+        
+                 
+        
+                  })
+                }else{
+                  var  idX  = ocs[0]._id
+                    console.log(idX)
+                    let openingBal2 = ocs[0].holdingCases
+                    var closingBal2 = ocs[0].holdingCases + number1
+                 
+                    let qty = ocs[0].holdingCases + number1 * 12
+                    
+                    SaleStock.findByIdAndUpdate(idX,{$set:{casesReceived:number1,openingBal:openingBal2,holdingCases:closingBal2,qty:qty}},function(err,locs){
+        
+                    })
+                  
+                }
+              
+              })
+  
+  
+        })
+      })
+    }
+
 
 
     
@@ -2758,6 +2870,7 @@ console.log(product,casesDispatched,warehouse,'out')
 
 StockV.find({status:"received",pallet:currentPallet},function(err,yocs){
   let nSize = yocs.length 
+  let nSize2 = yocs.length - req.user.cases
 StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'pending',pallet:currentPallet,casesBatchNumber:casesBatchNumber},function(err,focs){
   
     //let size  = focs.length + 1
@@ -2809,7 +2922,7 @@ res.send(c)
         
             StockV.findByIdAndUpdate(doc._id,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,
               dispatcher:dispatcher,casesBatch:casesBatch,refNumDispatch:refNumber,availableCasesDispatch:availableCases,cases:tCases,status:'dispatched',
-            mformatDispatch:mformat,palletCasesBatch :nSize,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
+            mformatDispatch:mformat,nSize2:nSize2,palletCasesBatch :nSize,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
           refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,type:"individual"}},function(err,lof){
         
              
@@ -2899,9 +3012,371 @@ res.send(c)
 })
 })
 
+
+
+
+router.post('/dispatchScanRemaining',isLoggedIn, function(req,res){
+ 
+  var date2 = req.user.date
+  var product = req.user.product;
+  var m = moment(date2)
+  var m2 = moment()
+  var dispatcher = req.user.fullname
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+  var dateValueDispatch = m2.valueOf()
+  var date = m.toString()
+  var numDate = m.valueOf()
+  var barcodeNumber = req.body.code
+var month = m.format('MMMM')
+var time = req.user.time
+var truck = req.user.truck
+var casesDispatched = 1
+var casesBatch = req.user.cases
+var lot = req.user.lot
+var pallet
+var type2 = 'normal'
+var refNumber = req.user.refNumber
+var casesBatchNumber = req.user.invoiceNumber
+var refNumDispatch = req.user.refNumDispatch
+var salesPerson = req.user.salesPerson
+var warehouse = req.user.warehouse
+var batchId = req.user.batchId
+console.log(batchId,'batchId')
+var arr = []
+var arr2 = []
+var c = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id:"",amountDue:0} 
+arr2.push(c)
+var id =req.user._id
+var status1 = 'received'
+var status2 = 'dispatched'
+var mformat = m.format("L")
+var currentPallet = req.user.currentPallet
+  //var receiver = req.user.fullname
+
+console.log(product,casesDispatched,warehouse,'out')
+
+
+StockV.find({status:"dispatched",pallet:currentPallet},function(err,yocs){
+  let nSize = yocs.length 
+  //let nSize2 = yocs.length - req.user.cases
+StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'pending',pallet:currentPallet,casesBatchNumber:casesBatchNumber},function(err,focs){
+  
+    //let size  = focs.length + 1
+  console.log(focs.length,'size')
+    if(focs.length > casesBatch){ 
+      size = casesBatch
+    }
+    else{
+      size = focs.length + 1
+    }
+
+
+ 
+
+  
+
+
+    Warehouse.findOne({'product':product,'warehouse':warehouse,'type2':type2})
+  .then(hoc=>{
+
+
+
+    StockV.findOne({'barcodeNumber':barcodeNumber,'refNumber':refNumber,'pallet':currentPallet})
+    .then(doc=>{
+      console.log(doc,'doc',hoc,'hocVVV')
+
+    if(doc){
+
+      if(doc.status == 'received' || doc.status2 =='remaining'){
+res.send(c)
+      }
+      else if(doc.status == 'dispatched'){
+
+        /*if(size > casesBatch){
+          User.findByIdAndUpdate(id,{$set:{refNumDispatch:"null"}},function(err,noc){
+          
+          })
+        
+            }
+            
+
+
+        
+        console.log('true')
+        let availableCases = hoc.cases
+        let tCases = hoc.cases + 1
+        */
+        let uid = req.user._id
+        
+        StockV.findByIdAndUpdate(doc._id,{$set:{
+        casesBatch:casesBatch,status2:'remaining',status:"received",
+        palletCasesBatch :nSize,size:size,statusCheck:"scanned",
+      refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,type:"individual"}},function(err,lof){
+
+      
+        
+             
+        
+        
+             /* Product.find({'name':product},function(err,docs){
+                let id = docs[0]._id
+                console.log(id,'id')
+                let nqty, nqty2
+                
+                 let openingQuantity = docs[0].cases
+                //nqty = pro.quantity + docs[0].quantity
+                nqty =  docs[0].cases - 1 
+                console.log(docs[0].cases, '**',1)
+                nqty2 = nqty * docs[0].unitCases
+                console.log(nqty,'nqty')
+                Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
+        
+                })
+        
+                
+        
+               })*/
+
+
+
+             /*  Warehouse.find({product:product,warehouse:warehouse,type2:type2},function(err,docs){
+                let id = docs[0]._id
+                console.log(id,'id')
+                let nqty, nqty2
+                
+                 let openingQuantity = docs[0].cases
+                //nqty = pro.quantity + docs[0].quantity
+                nqty =  docs[0].cases - 1 
+                console.log(docs[0].cases, '**',1)
+                nqty2 = nqty * docs[0].unitCases
+                console.log(nqty,'nqty')
+                Warehouse.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
+        
+                })
+        
+                
+        
+               })*/
+
+               StockV.find({refNumber:refNumber,status2:'remaining'},function(err,gocs){
+
+                let currentCases = gocs.length
+                console.log(currentCases,'currentRemainingCases')
+                User.findByIdAndUpdate(uid,{$set:{currentRemainingCases:currentCases}},function(err,tocs){
+
+                })
+
+
+              })
+              
+
+           
+
+                        StockV.findById(doc._id,function(err,oc){
+                          //console.log(oc,'ocs')
+                res.send(oc)
+                        })
+
+                     
+        
+                      })
+        
+      }
+    }else{
+
+      res.send(arr)
+
+    }
+
+
+
+
+    })
+
+  
+
+    }) 
+  
+  })
+
+})
+})
+
 /////////////
 
 
+
+
+
+
+router.post('/dispatchScanRemainingF/',isLoggedIn,function(req,res){
+
+  
+  var date2 = req.user.date
+  var product = req.user.product;
+  var m = moment(date2)
+  var m2 = moment()
+  var mformat = m.format("L")
+  var dispatcher = req.user.fullname
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+  var dateValueDispatch = m2.valueOf()
+  var date = m.toString()
+  var numDate = m.valueOf()
+  var barcodeNumber = req.body.code
+var month = m.format('MMMM')
+var time = req.user.time
+ var dispatcher = req.user.fullname
+var casesDispatched = 1
+var casesBatch = req.user.cases
+let casesBatchNumber = req.user.invoiceNumber
+var lot = req.user.lot
+var refNumber = req.user.refNumber
+var salesPerson = req.user.salesPerson
+var truck = req.user.truck
+var warehouse = req.user.warehouse
+var batchId = req.user.batchId
+console.log(batchId,'batchId')
+var arr = []
+var arr2 = []
+var c = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id:"",amountDue:0} 
+arr2.push(c)
+var id =req.user._id
+var status1 = 'received'
+var status2 = 'dispatched'
+var mformat = m.format("L")
+let count = 0
+var id = req.user.refNumber
+let currentCases = req.user.currentCases
+var uid = req.user._id
+var refNumDispatch = req.user.refNumDispatch
+var idU = req.user._id
+var currentPallet = req.user.currentPallet
+var palletCasesBatch = req.user.palletCasesBatch
+console.log(casesBatchNumber,id,currentPallet,'batchNumber')
+      
+      
+                        StockV.find({refNumber:id,status2:"remaining",casesBatchNumber:casesBatchNumber,pallet:currentPallet},function(err,docs){
+console.log(docs.length,'length')
+                          let pallet = docs[0].pallet
+                          for(var i = 0;i<docs.length;i++){
+                            
+        
+        
+             
+        
+                            if(docs[i].pallet == pallet){
+                              count++
+                        
+                        console.log(count,'count')
+                              if(count == docs.length){
+                                console.log('tapinda')
+                                Warehouse.findOne({'product':product,'warehouse':warehouse})
+                                .then(hoc=>{
+                               
+                        
+                                StockV.find({refNumber:id,status:'received',status2:"dispatch",pallet:pallet},function(err,ocs){
+
+                        for(var n = 0;n<ocs.length;n++){
+                         let objId = ocs[n]._id
+                         console.log(objId,'objId')
+                     
+                            let size = n + 4
+                            let availableCases = hoc.cases - n
+
+                            console.log(hoc.cases, n,'jack reverse')
+                            let tCases = hoc.cases + 1
+                            
+                          StockV.findByIdAndUpdate(objId,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,
+                            dispatcher:dispatcher,casesBatch:casesBatch,refNumDispatch:refNumDispatch,availableCasesDispatch:availableCases,cases:tCases,status:'dispatched',
+                          mformatDispatch:mformat,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",statusCheck2:'scannedLoop',dateValueDispatch:dateValueDispatch,casesBatchNumber:casesBatchNumber,palletCasesBatch:palletCasesBatch,type:"individual"}},function(err,lof){
+
+                          })
+              
+
+                     
+             
+                Product.find({'name':product},function(err,pocs){
+                let pId = pocs[0]._id
+                 console.log(pId,'pId')
+                let nqty, nqty2
+                
+                 let openingQuantity = pocs[0].cases
+                //nqty = pro.quantity + docs[0].quantity
+                nqty =  pocs[0].cases - 1 
+                console.log(pocs[0].cases, '**',1)
+                nqty2 = nqty * pocs[0].unitCases
+                console.log(nqty,'nqty')
+                Product.findByIdAndUpdate(pId,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
+                 // console.log(nocs,'updatedProduct')
+                })
+        
+              })
+        
+              
+
+
+               
+                Warehouse.find({product:product,warehouse:warehouse,type2:'normal'},function(err,kocs){
+                let wareId = kocs[0]._id
+                console.log(wareId,'wareId')
+                let nqty, nqty2
+                
+                 let openingQuantity = kocs[0].cases
+                //nqty = pro.quantity + docs[0].quantity
+                nqty =  kocs[0].cases - 1 
+                console.log(kocs[0].cases, '**',1)
+                nqty2 = nqty * kocs[0].unitCases
+                console.log(nqty,'nqty')
+                Warehouse.findByIdAndUpdate(wareId,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
+        
+                //  console.log(nocs,'updatedWareH')
+                })
+        })
+             currentCases++
+             console.log(currentCases,'currentCasesV')
+          User.findByIdAndUpdate(uid,{$set:{currentCases:currentCases}},function(err,vocs){
+
+          })
+
+                      
+                       
+                        }
+
+                        StockV.find({refNumber:id,status:'dispatched',pallet:pallet,statusCheck2:"scannedLoop",refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber},function(err,gocs){
+
+                        
+                        StockV.find({refNumber:id,status:'dispatched',pallet:pallet,statusCheck2:"scannedLoop",refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber},function(err,pocs){
+
+
+
+                         //console.log(pocs,'ocsV')
+                          res.send(pocs)
+
+                        })
+                      })
+                    })
+                    })
+                        
+                                
+                        
+                              }
+                            }
+                          
+                          }
+                        
+                        
+                     
+                        })
+        
+                      
+
+                    
+                 
+          
+  
+})
 router.post('/dispatchScanCase',isLoggedIn, function(req,res){
  
   var date2 = req.user.date
@@ -2945,8 +3420,11 @@ let palletCasesBatch = req.user.palletCasesBatch
 console.log(product,casesDispatched,warehouse,'out')
 
 
+StockV.find({status:'received',refNumber:refNumber,pallet:currentPallet},function(err,ocs){
+
 StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'pending',pallet:currentPallet,casesBatchNumber:casesBatchNumber},function(err,focs){
-  
+  let nSize2 = palletCasesBatch - req.user.cases
+  console.log(nSize2,'nSize2')
     //let size  = focs.length + 1
   
     if(focs.length > casesBatch){
@@ -2996,7 +3474,7 @@ res.send(c)
         
             StockV.findByIdAndUpdate(doc._id,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,
               dispatcher:dispatcher,casesBatch:casesBatch,refNumDispatch:refNumber,availableCasesDispatch:availableCases,cases:tCases,status:'dispatched',
-            mformatDispatch:mformat,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
+            mformatDispatch:mformat,nSize2:nSize2,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
           refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,palletCasesBatch:palletCasesBatch,type:"individual"}},function(err,lof){
         
              
@@ -3082,7 +3560,7 @@ res.send(c)
     }) 
   
   })
-
+})
       
 })
 
@@ -3612,8 +4090,8 @@ form.append("file", file,filename);
 await Axios({
 method: "POST",
 //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
- url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
- //url:'http://localhost:8000/dispatch/uploadStatementDispatch',
+ //url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
+ url:'http://localhost:8000/dispatch/uploadStatementDispatch',
 headers: {
   "Content-Type": "multipart/form-data"  
 },

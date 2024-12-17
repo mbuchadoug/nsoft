@@ -572,7 +572,7 @@ this.firstElementChild.select();
                
                
                  
-                 alert('case already dispatched')
+                 alert('case already dispatched or scanned')
                    $("#barcodeNumber").val("")
                  
                  
@@ -580,7 +580,173 @@ this.firstElementChild.select();
                
                 }
                 
+        else if(data.casesBatch > data.nSize2 && data.nSize2 >  0){
+    console.log('match')
+ $.ajax({
+                dataType: 'json',
+                data: {
+                    code: scanned_barcode,
+                    
+                },
+                type: 'POST',
+                url: "./dispatch/dispatchScanRemaining/",
+                success: function(docs) {
+
+console.log(data.size,docs.nSize2,'ndocs')
+
+  if(data.size == docs.nSize2){
+
+       var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+
+    var td4 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
+
+    td1.id =data._id
+    td5.id = data._id
+
+    td1.innerHTML = data.barcodeNumber;
+    td2.innerHTML = data.availableCasesDispatch;
+
+    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
+    td5.innerHTML = data.mformat
+    td6.innerHTML = data.warehouse
+    td7.innerHTML = data.timeOfDispatch
+    
+    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
+     $("#barcodeNumber").val("")
+
+   let batchId = document.getElementById('batchId').value
+           let refNumber = document.getElementById('refNumber').value
+ $.ajax({
+                dataType: 'json',
+                data: {
+                    code: scanned_barcode,
+                    
+                },
+                type: 'POST',
+                url: "./dispatch/dispatchScanRemainingF/",
+                success: function(docs) {
+
+
+
+console.log(docs,'ocs')
+
+                 for(var i =0;i< docs.length;i++){ 
+                   var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+
+    var td4 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
+
+
+
+
+    td1.id =docs[i]._id
+    td5.id = docs[i]._id
+
+
+
+
+
+    td1.innerHTML = docs[i].barcodeNumber;
+    td2.innerHTML = docs[i].availableCasesDispatch;
+   
+    td4.innerHTML=  docs[i].availableCasesDispatch - docs[i].casesDispatched ;
+    td5.innerHTML = docs[i].mformat
+    td6.innerHTML = docs[i].warehouse
+    td7.innerHTML = docs[i].timeOfDispatch
+    
+
+    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    $("#availableCases").val(docs[i].availableCasesDispatch - docs[i].casesDispatched)
+     $("#barcodeNumber").val("")
+
+console.log(docs[i].size, data.casesBatch,'marino1')
+
+
+
+document.getElementById("closeBtn").style.display = "";
+
+
+
+
+
+
+document.getElementById('barcodeNumber').setAttribute('readonly', true);
+console.log(docs.length,'docsLength',docs[0].casesBatch,'casesBatch')
+                 }
+                }     
+                })
+                    }
+               else{
+
+
+console.log('gggg')
+
+console.log('yeaN',data.nSize,data.size)
+                   var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+	//var td3 = tr.appendChild(document.createElement('td'));
+    var td4 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
+   // var link= tr.appendChild(document.createElement('td'));
+    td1.id =data._id
+    td5.id = data._id
+/*td2.classList.add('text-end', 'pe-0')
+td3.classList.add('text-end', 'pe-0')
+td4.classList.add('text-end', 'pe-1')
+link.classList.add('text-end','pe-0')*/
+//link.setAttribute("href", "/rec/delete")
+//link.className = "text-end";
+
+
+
+
+    td1.innerHTML = data.barcodeNumber;
+    td2.innerHTML = data.availableCasesDispatch;
+   // td3.innerHTML = data.casesReceived;
+    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
+    td5.innerHTML = data.mformat
+    td6.innerHTML = data.warehouse
+    td7.innerHTML = data.timeOfDispatch
+    //let link2 = "/rec/delete/"+data._id
+
+    //td5.innerHTML = "Delete"
+    //var linkText = 'Delete'
+    // link.appendChild(linkText);
+    //link.href="/rec/delete/"+data._id
+    //td5.innerText = 'Delete'
+    //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+
+    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
+     $("#barcodeNumber").val("")
+
+                 
+               }
+             
+                }
                 
+
+                })
+  }
+
+                         
+
 else if( data.casesBatch< 140 && data.casesBatch >= data.palletCasesBatch && data.size == 1  ){
   console.log('yea',data.size,data.casesBatch,data.palletCasesBatch)
 

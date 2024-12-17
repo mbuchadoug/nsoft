@@ -47,6 +47,7 @@ var userSchema = new mongoose.Schema({
     currentPallet: {type: Number },
     remainderCases: {type: Number },
     currentCases:{type:Number},
+    currentRemainingCases:{type:Number},
     lot:{type:Number, required:true},
     prPallet: {type: Number },
     countPallet: {type: Number },

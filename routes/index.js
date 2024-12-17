@@ -147,6 +147,18 @@ router.get('/conversai',function(req,res){
   res.render('receiver/index')
 })
 
+
+
+
+router.get('/updateUser',isLoggedIn,function(req,res){
+User.find({role:"receiver"},function(err,doc){
+  let id = doc[0]._id
+  User.findByIdAndUpdate(id,{$set:{fullname:"Armstrong"}},function(err,loc){
+    
+  })
+})
+})
+
 router.get('/warehouseUpdate',function(req,res){
 let arr16=[]
 Product.find(function(err,docs){
@@ -2226,7 +2238,120 @@ product.save()
 
 
 })
+/////
 
+router.get('/addSales',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addSales',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+
+
+router.post('/addSales', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                    
+          let salesPerson = req.body.salesPerson
+          let driver = req.body.driver;
+          let type = req.body.type;
+         
+              
+                
+                req.check('salesPerson','Enter SalesPerson').notEmpty();
+                 
+                req.check('driver','Enter Driver').notEmpty();
+               
+                req.check('type','Enter Type').notEmpty();
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addSales');
+                      
+                    
+                  }
+                  else{
+                
+                
+                           
+               
+                  SalesList.findOne({'salesPerson':salesPerson})
+                  .then(user =>{
+                      if(user){ 
+                    // req.session.errors = errors
+                      //req.success.user = false;
+                  
+                  
+                  
+                      req.flash('danger', 'Item already in the system');
+                  
+                      res.redirect('/addSales')
+                  }
+                  else{
+                  
+                  
+                  
+                  
+                          
+                  var product = new SalesList();
+                  product.salesPerson = salesPerson;
+                  product.driver = driver;
+                  product.type = type
+                  
+                  product.save()
+                    .then(user =>{
+                  
+                  
+
+                      req.flash('success', 'Sales Person added Successfully!');
+
+                      res.redirect('/addSales')  
+
+                    })
+                  
+                  }
+                  
+                  })
+                  
+                  
+                  
+                  
+                  }     
+                                 
+                                     
+                   
+                                  
+                                    
+                                    
+                        
+                                   
+                        
+                
+                 
+                  
+
+                  
+})
 
 
 //import drivers
@@ -2400,6 +2525,112 @@ product.save()
 
 
 
+router.get('/addDrivers',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addDriver',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+
+
+router.post('/addDrivers', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                    
+     
+          let driver = req.body.driver;
+       
+         
+              
+          
+                 
+                req.check('driver','Enter Driver').notEmpty();
+               
+          
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addDrivers');
+                      
+                    
+                  }
+                  else{
+                
+                
+                           
+               
+                    Drivers.findOne({'driver':driver})
+                  .then(user =>{
+                      if(user){ 
+                    // req.session.errors = errors
+                      //req.success.user = false;
+                  
+                  
+                  
+                      req.flash('danger', 'Item already in the system');
+                  
+                      res.redirect('/addDrivers')
+                  }
+                  else{
+                  
+                  
+                  
+                    var product = new Drivers();
+
+                    product.driver = driver;
+                    
+                    product.save()
+                      .then(user =>{
+                    
+                        req.flash('success', 'Driver added Successfully!');
+
+                        res.redirect('/addDrivers')  
+  
+                      })
+                  }
+                  
+                  })
+                  
+                  
+                  
+                  
+                  }     
+                                 
+                                     
+                   
+                                  
+                                    
+                                    
+                        
+                                   
+                        
+                
+                 
+                  
+
+                  
+})
+
 
 
 
@@ -2560,6 +2791,119 @@ product.save()
 
 
 })
+
+
+///////////
+
+router.get('/addTrucks',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  res.render('kambucha/addTruck',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+
+
+
+})
+
+
+
+router.post('/addTrucks', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                    
+     
+         
+    let truckNo = req.body.truckNo
+   /* let driver = req.body.driver;
+    let make = req.body.make;
+    let weight = req.body.weight*/
+       
+         
+              
+          
+                req.check('truckNo','Enter Truck').notEmpty();
+                   
+          
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addTrucks');
+                      
+                    
+                  }
+                  else{
+                
+                
+                           
+               
+                    Truck.findOne({'truckNo':truckNo})
+                  .then(user =>{
+                      if(user){ 
+                    // req.session.errors = errors
+                      //req.success.user = false;
+                  
+                  
+                  
+                      req.flash('danger', 'Item already in the system');
+                  
+                      res.redirect('/addTrucks')
+                  }
+                  else{
+                  
+                  
+                  
+                    var product = new Truck();
+                    product.truckNo = truckNo;
+            
+                    
+                    product.save()
+                    .then(user =>{
+                    
+                      req.flash('success', 'Truck added Successfully!');
+
+                      res.redirect('/addTrucks')  
+
+                    })
+                  }
+                  
+                  })
+                  
+                  
+                  
+                  
+                  }     
+                                 
+                                     
+                   
+                                  
+                                    
+                                    
+                        
+                                   
+                        
+                
+                 
+                  
+
+                  
+})
+
 
 
 
