@@ -135,8 +135,19 @@ router.get('/updateBatch',function(req,res){
   BatchR.find(function(err,docs){
     let id = docs[0]._id
     BatchR.findByIdAndUpdate(id,{$set:{cases:720,closingBal:738,closingBalX:720,casesRcvdX:720}},function(err,locs){
-      
+
     })
+  })
+})
+
+router.get('/update20',function(req,res){
+  StockV.find({pallet:6},function(err,docs){
+    for(var i = 0;i<20;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,function(err,rocs){
+        
+      })
+    }
   })
 })
 router.get('/fix',function(req,res){
