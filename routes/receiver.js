@@ -1620,7 +1620,7 @@ router.post('/repo',isLoggedIn,function(req,res){
     }else{
 
 StockV.find({date:date},function(err,docs){
-  total = docs.length
+  total =720
 
 StockV.find({date:date,status:"breakage"},function(err,vocs){
   breakages = vocs.length
@@ -1665,6 +1665,7 @@ let date = req.user.dispatchDate
       
       //TestX.find({year:year,uid:uid},function(err,vocs) {
       BatchR.find({date:date}).lean().sort({date:1}).then(vocs=>{
+        
       console.log(vocs.length,'vocs')
       
       for(var x = 0;x<vocs.length;x++){
