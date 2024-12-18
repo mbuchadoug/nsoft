@@ -3793,7 +3793,7 @@ router.post('/repo',isLoggedIn,function(req,res){
     }else{
 
 StockV.find({status:"dispatched"},function(err,docs){
-  total = 720
+  total = docs.length
   console.log(total,'total555')
 StockV.find({status:"breakage"},function(err,vocs){
   breakages = vocs.length
