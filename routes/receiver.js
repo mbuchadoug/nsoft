@@ -1317,7 +1317,7 @@ let cases = docs.length
 
 
 
-
+/*
   
 router.get('/closePallet/:id',isLoggedIn,function(req,res){
   var id = req.params.id
@@ -1326,7 +1326,7 @@ router.get('/closePallet/:id',isLoggedIn,function(req,res){
   console.log(id,'idBatch')
 
   StockV.find({refNumber:id},function(err,docs){
-  //  console.log(docs,'docs')
+
 let cases = docs.length
   BatchR.findById(batchId,function(err,doc){
     let openingBal = doc.openingBal
@@ -1348,7 +1348,7 @@ let cases = docs.length
     }
 
   
-    console.log(productChunks.length,'chunks')
+
 
     for(var i =0 ; i< productChunks.length;i++){
    let arr = []
@@ -1393,9 +1393,9 @@ let cases = docs.length
 })
 
 
+*/
 
-
-router.get('/warehousePalletUpdate',function(req,res){
+router.get('/closePallet/:id',function(req,res){
   let arr16=[]
   Product.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
@@ -1633,6 +1633,44 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
 
   })
     }
+    /*BatchR.find({date:date},function(err,pocs){
+     if(pocs.length > 0){
+      for(var q = 0;q<hocs.length; q++){
+    
+        arr16.push(hocs[q].cases)
+          }
+          //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+           number1=0;
+          for(var z in arr16) { number1 += arr16[z]; }
+          let rId = BatchR.findByIdAndUpdate(rId,{$set:{casesRcvdX:cases}},function(err,tocs){
+
+          })
+        }
+  
+        })
+*/
+
+
+
+        StockV.find({date:date},function(err,jocs){
+          if(jocs.length >0){
+      
+          let openingBalanceX = jocs[0].availableCases
+          let totalCases = jocs.length 
+          let closingBalanceX = jocs[0].availableCases + jocs.length 
+          
+          BatchR.find({date:date2},function(err,tocs){
+            for(var i = 0;i< tocs.length;i++){
+              BatchR.findByIdAndUpdate(tocs[i]._id,{$set:{casesRcvdX:totalCases,openingBalX:openingBalanceX,closingBalX:closingBalanceX}},function(err,noc){
+      
+              })
+      
+            }
+          })
+      
+        }
+      })
+                          
 
     User.findByIdAndUpdate(uid,{$set:{dispatchDate:date}},function(err,kocs){
 

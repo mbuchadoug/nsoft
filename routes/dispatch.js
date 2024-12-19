@@ -272,6 +272,22 @@ router.get('/updatePalletPos',function(req,res){
 
 })
 
+router.get('/batchdUpdateX',function(req,res){
+  var arr3=[]
+  var c1 = {id:"67641bbc405dbf3f8ee43130"} 
+  var c2= {id:"67641bbc405dbf3f8ee43130"} 
+  var c3 = {id:"67641bbc405dbf3f8ee43130"} 
+  var c4 = {id:"67641bbc405dbf3f8ee43130"} 
+arr3.push(c1,c2,c3,c4)
+
+for(var i = 0;i<arr3.length;i++){
+  let id = arr3[i].id
+  BatchD.findByIdAndRemove(id,function(err,locs){
+    
+  })
+}
+})
+
 
 router.get('/warehouseUpdate',function(req,res){
   let arr16=[]
