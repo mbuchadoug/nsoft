@@ -141,6 +141,19 @@ router.get('/updateBatch',function(req,res){
 })
 
 
+router.get('/pallet9',function(req,res){
+  
+PreRcvd.find({pallet:9},function(err,docs){
+  for(var i = 0;i<docs.length;i++){
+    let id = docs[i]._id
+    PreRcvd.findByIdAndUpdate(id,{$set:{status:"pending"}},function(err,locs){
+
+    })
+  }
+})
+})
+
+
 router.get('/updateBatchRemaining',function(req,res){
   StockV.find({status2:"remaining",status:"received"},function(err,docs){
     console.log(docs.length,'length')
@@ -155,6 +168,8 @@ router.get('/updateBatchRemaining',function(req,res){
 
   })
 })
+
+
 
 /*router.get('/update20',function(req,res){
   StockV.find({pallet:6},function(err,docs){
