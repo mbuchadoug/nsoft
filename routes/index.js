@@ -140,6 +140,22 @@ router.get('/updateBatch',function(req,res){
   })
 })
 
+
+router.get('/updateBatchRemaining',function(req,res){
+  StockV.find({status2:"remaining",status:"received"},function(err,docs){
+    console.log(docs.length,'length')
+
+    for(var i = 0;i<docs.length;i++){
+      
+      let idV = docs[i]._id
+      StockV.findByIdAndUpdate(idV,{$set:{status2:"dispatch"}},function(err,locs){
+        
+      })
+    }
+
+  })
+})
+
 /*router.get('/update20',function(req,res){
   StockV.find({pallet:6},function(err,docs){
     for(var i = 0;i<18;i++){

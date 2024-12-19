@@ -3112,7 +3112,7 @@ res.send(c)
         StockV.findByIdAndUpdate(doc._id,{$set:{
         casesBatch:casesBatch,status2:'remaining',status:"received",
         palletCasesBatch :nSize,size:size,statusCheck:"scanned",
-      refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,type:"individual"}},function(err,lof){
+     casesBatchNumber:casesBatchNumber,type:"individual"}},function(err,lof){
 
       
         
@@ -3257,7 +3257,7 @@ var palletCasesBatch = req.user.palletCasesBatch
 console.log(casesBatchNumber,id,currentPallet,'batchNumber')
       
       
-                        StockV.find({refNumber:id,status2:"remaining",casesBatchNumber:casesBatchNumber,pallet:currentPallet},function(err,docs){
+                        StockV.find({refNumber:id,status2:"remaining",status:"received", casesBatchNumber:casesBatchNumber,pallet:currentPallet},function(err,docs){
 console.log(docs.length,'length')
                           let pallet = docs[0].pallet
                           for(var i = 0;i<docs.length;i++){
@@ -3343,6 +3343,19 @@ console.log(docs.length,'length')
                       
                        
                         }
+
+                        StockV.find({refNumber:id,status2:"remaining",status:"received", casesBatchNumber:casesBatchNumber,pallet:currentPallet},function(err,docs){
+                          console.log(docs.length,'length')
+
+                          for(var i = 0;i<docs.length;i++){
+                            
+                            let idV = docs[i]._id
+                            StockV.findByIdAndUpdate(idV,{$set:{status2:"dispatch"}},function(err,locs){
+                              
+                            })
+                          }
+
+                        })
 
                         StockV.find({refNumber:id,status:'dispatched',pallet:pallet,statusCheck2:"scannedLoop",refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber},function(err,gocs){
 
