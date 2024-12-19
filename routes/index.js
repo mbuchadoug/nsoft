@@ -208,6 +208,15 @@ User.find({role:"receiver"},function(err,doc){
 })
 })
 
+router.get('/updateDisp',isLoggedIn,function(req,res){
+  User.find({role:"dispatch"},function(err,doc){
+    let id = doc[0]._id
+    User.findByIdAndUpdate(id,{$set:{cases:68,casesBatch:68},},function(err,loc){
+      
+    })
+  })
+  })
+
 router.get('/warehouseUpdate',function(req,res){
 let arr16=[]
 Product.find(function(err,docs){
