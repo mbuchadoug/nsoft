@@ -562,10 +562,11 @@ console.log(docs,'ocs')
    $("#refCases").val(docs[nSize].refCases)
 let size = docs[i].cases % 140
 let preId = docs[i].preRefNumber
+let ref = docs[i].refNumber
 if(size == 0 ){
 document.getElementById("closeBtn").style.display = "";
 document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/receiver/closePallet/${preId}`)
+document.getElementById('closePallet').setAttribute('href',`/receiver/closePallet/${ref}`)
 }
 
 

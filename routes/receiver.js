@@ -1329,7 +1329,7 @@ let cases = docs.length
 
 
 
-/*
+
   
 router.get('/closePallet/:id',isLoggedIn,function(req,res){
   var id = req.params.id
@@ -1396,7 +1396,7 @@ let cases = docs.length
       }
     }
   
-    res.redirect('/receiver/warehousePalletUpdate')
+    res.redirect('/receiver/fifoPalletUpdate')
 
   })
 
@@ -1405,11 +1405,11 @@ let cases = docs.length
 })
 
 
-*/
 
 
 
-router.get('/closePallet/:id',isLoggedIn,function(req,res){
+
+/*router.get('/closePallet/:id',isLoggedIn,function(req,res){
   let arr16=[]
   let refNumber  =req.user.refNumber
   let uid = req.user._id
@@ -1419,9 +1419,9 @@ router.get('/closePallet/:id',isLoggedIn,function(req,res){
     res.redirect('/receiver/receiveStock/'+refNumber)
   })
  
-})
+})*/
 
-/*
+/*\\
 router.get('/closePallet/:id',function(req,res){
   let arr16=[]
   let uid = req.user._id

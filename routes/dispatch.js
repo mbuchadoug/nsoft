@@ -2203,7 +2203,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 
        BatchD.find({size:size},function(err,jocs){
 
-
+console.log(jocs,'yams')
       
         openingBal = jocs[0].closingStock
       
