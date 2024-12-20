@@ -3821,10 +3821,10 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/dispatch/repo');
     }else{
 
-StockV.find({status:"dispatched"},function(err,docs){
+StockV.find({status:"dispatched",date:date},function(err,docs){
   total = docs.length
   console.log(total,'total555')
-StockV.find({status:"breakage"},function(err,vocs){
+StockV.find({status:"breakage",date:date},function(err,vocs){
   breakages = vocs.length
 
   BatchD.find({date:date},function(err,locs){
