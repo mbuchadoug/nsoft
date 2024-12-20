@@ -1407,6 +1407,84 @@ let cases = docs.length
 
 */
 
+
+
+router.get('/closePallet/:id'isLoggedIn,function(req,res){
+  let arr16=[]
+  let refNumber  =req.user.refNumber
+  let uid = req.user._id
+  User.findByIdAndUpdate(uid,{$set:{countSize:0}},function(err,tocs){
+      
+  })
+  Product.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let product = docs[i].name
+      let category = docs[i].category
+      let subCategory = docs[i].subCategory
+      let usd = docs[i].usd
+  
+      Ware.find(function(err,locs){
+  for(var i = 0;i<locs.length;i++){
+    let warehouse = locs[i].name
+  
+    Warehouse.find({product:product,warehouse:warehouse},function(err,vocs){
+  console.log(vocs.length,'size9')
+      if(vocs.length == 0){
+  
+        StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
+        let cases = nocs.length
+   
+        var ware = new Warehouse()
+  
+        ware.warehouse=warehouse
+        ware.product = product
+        ware.cases = cases
+        ware.category = category
+        ware.subCategory = subCategory
+        ware.subCategory = category
+        ware.quantity = 0
+        ware.openingQuantity = 0
+        ware.rcvdQuantity = 0
+        ware.unitCases = 12
+        ware.type='goods'
+        ware.account = 'sales'
+        ware.size = 0
+        ware.rate = 0
+        ware.zwl = 0
+        ware.usd = usd
+        ware.rand = 0
+        ware.price3 = 0
+  
+        ware.save()
+        .then(user =>{
+          
+    })
+  
+      })
+  
+      }else{
+        let id = vocs[0]._id
+        StockV.find({name:product,warehouse:warehouse,status:'received'},function(err,nocs){
+          let cases = nocs.length
+          let quantity = nocs.length * 12
+          quantity.toFixed(2)
+        Warehouse.findByIdAndUpdate(id,{$set:{cases:cases,quantity:quantity}},function(err,tocs){
+  
+        })
+  
+            })
+      }
+    })
+  }
+      })
+    }
+    res.redirect('/receiver/receiveStock/'+refNumber)
+  })
+  
+
+})
+
+/*
 router.get('/closePallet/:id',function(req,res){
   let arr16=[]
   let uid = req.user._id
@@ -1483,7 +1561,7 @@ router.get('/closePallet/:id',function(req,res){
   })
 
 
-  
+  */
 
   router.get('/fifoPalletUpdate',isLoggedIn,function(req,res){
     var refNumber = req.user.refNumber
