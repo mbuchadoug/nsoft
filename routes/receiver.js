@@ -1409,7 +1409,7 @@ let cases = docs.length
 
 
 
-router.get('/closePallet/:id'isLoggedIn,function(req,res){
+router.get('/closePallet/:id',isLoggedIn,function(req,res){
   let arr16=[]
   let refNumber  =req.user.refNumber
   let uid = req.user._id
