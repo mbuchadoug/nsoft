@@ -2358,7 +2358,7 @@ console.log(jocs,'yams')
     
     BatchD.find({position:size,refNumDispatch:refNumDispatch,product:product},function(err,jocs){
 
-
+      console.log(jocs,'yams2')
       
       openingBal = jocs[0].closingStock
     
