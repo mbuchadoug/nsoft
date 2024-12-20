@@ -786,8 +786,10 @@ router.get('/warehouseUpdate',function(req,res){
     .then(joc=>{
 
     if(joc){
+
       let preId = joc._id
       let prPallet = joc.pallet
+     console.log()
       if(countSizeV==0){
         User.findByIdAndUpdate(uid,{$set:{prPallet:prPallet}},function(err,tocs){
 
@@ -1220,7 +1222,7 @@ var idU = req.user._id
 
 
 
-                         console.log(pocs,'ocsV')
+                         //console.log(pocs,'ocsV')
                           res.send(pocs)
 
                         })
@@ -1397,6 +1399,10 @@ let cases = docs.length
 
 router.get('/closePallet/:id',function(req,res){
   let arr16=[]
+  let uid = req.user._id
+  User.findByIdAndUpdate(uid,{$set:{countSize:0}},function(err,tocs){
+      
+  })
   Product.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let product = docs[i].name
@@ -1659,7 +1665,7 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
           let totalCases = jocs.length 
           let closingBalanceX = jocs[0].availableCases + jocs.length 
           
-          BatchR.find({date:date2},function(err,tocs){
+          BatchR.find({date:date},function(err,tocs){
             for(var i = 0;i< tocs.length;i++){
               BatchR.findByIdAndUpdate(tocs[i]._id,{$set:{casesRcvdX:totalCases,openingBalX:openingBalanceX,closingBalX:closingBalanceX}},function(err,noc){
       
@@ -1858,7 +1864,7 @@ await Axios({
   method: "POST",
  //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
 url: 'https://niyonsoft.org/receiver/uploadStatement',
-   //url:'http://localhost:8000/receiver/uploadStatement',
+  //url:'http://localhost:8000/receiver/uploadStatement',
   headers: {
     "Content-Type": "multipart/form-data"  
   },
