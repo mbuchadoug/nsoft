@@ -195,7 +195,20 @@ router.get('/fix',function(req,res){
 router.get('/conversai',function(req,res){
   res.render('receiver/index')
 })
-
+router.get('/updateSize',isLoggedIn,function(req,res){
+  let n
+  BatchD.find(function(err,doc){
+    for(var i =0;i<doc.length;i++){
+      let id = doc[i]._id
+      n = i + 1
+      console.log(n,'nn')
+      BatchD.findByIdAndUpdate(id,{$set:{size:n}},function(err,loc){
+        
+      })
+    }
+    
+  })
+  })
 
 
 
