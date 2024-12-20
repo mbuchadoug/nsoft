@@ -119,8 +119,8 @@ router.get('/upChange',function(req,res){
   PreRcvd.find({refNumber:"12202024CS1R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-      PreRecvd.findByIdAndUpdate(id,{$set:{status:"pending"}},function(err,locs){
-        
+      PreRcvd.findByIdAndUpdate(id,{$set:{status:"pending"}},function(err,locs){
+
       })
     }
   })
