@@ -778,6 +778,7 @@ router.get('/warehouseUpdate',function(req,res){
     //var mformat = m.format("L")
       //var receiver = req.user.fullname
     var mformat = req.user.mformat
+    let status = 'pending'
     var dateValue = req.user.dateValue
     var expiryDate = req.user.expiryDate
     var expiryDateValue = expiryDateValue
@@ -791,7 +792,7 @@ router.get('/warehouseUpdate',function(req,res){
 
    
     
-    PreRcvd.findOne({'barcodeNumber':barcodeNumber})
+    PreRcvd.findOne({'barcodeNumber':barcodeNumber, 'status':status})
     .then(joc=>{
 
     if(joc){
@@ -1286,7 +1287,7 @@ let cases = docs.length
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =0 ; i< productChunks.length;i++){
+    for(var i =0 ; i< 10;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
