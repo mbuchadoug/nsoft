@@ -1903,6 +1903,13 @@ StockV.find({casesBatchNumber:casesBatchNumber,status:"dispatched"},function(err
 })
 })
 
+router.get('/verify',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  let refNumber = req.user.refNumber
+  res.render('dispatcher/verify',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,refNumber:refNumber})
+})
+
   router.get('/selectPallet3',isLoggedIn,function(req,res){
     var errorMsg = req.flash('danger')[0];
     var successMsg = req.flash('success')[0];
