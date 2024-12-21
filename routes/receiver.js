@@ -1135,7 +1135,7 @@ let currentCases = req.user.currentCases
 var idU = req.user._id
 
       
-      console.log('tapinda')
+     // console.log('tapinda')
                         PreRcvd.find({refNumber:id,pallet:prPallet,statusCheck:"scanned",refNumReceive:refNumReceive},function(err,docs){
 
                           let pallet = docs[0].pallet
@@ -1151,15 +1151,15 @@ var idU = req.user._id
                         
                         console.log(count,'count')
                               if(count == docs.length){
-                                console.log('true55')
+                              //  console.log('true55')
                                 Warehouse.findOne({'product':product,'warehouse':warehouse})
                                 .then(hoc=>{
-                               console.log(hoc,'hoc')
-                        console.log(id,'ref',pallet,'pallet')
+                              // console.log(hoc,'hoc')
+                       // console.log(id,'ref',pallet,'pallet')
                                 PreRcvd.find({refNumber:id,status:'pending',pallet:pallet},function(err,ocs){
                         for(var n = 0;n<ocs.length;n++){
                          let objId = ocs[n]._id
-                         console.log(objId,'objId')
+                        // console.log(objId,'objId')
                      
                             let size = n + 4
                             let availableCases = hoc.cases + n
@@ -1172,7 +1172,7 @@ var idU = req.user._id
                         
                             })
                             
-                            console.log(hoc.cases, n,'jack reverse')
+                            //console.log(hoc.cases, n,'jack reverse')
                             let tCases = hoc.cases + 1
                             
                             var book = new StockV();
@@ -1232,6 +1232,9 @@ var idU = req.user._id
                                       })
 
 
+                                      User.findByIAndUpdate(id,{$set:{refNumReceive:refNumReceive}},function(err,tocs){
+                                        
+                                      })
                                       
    PreRcvd.findByIdAndUpdate(objId ,{$set:{status:"received",statusCheck2:"scannedLoop"}},function(err,kocs){
 
@@ -1262,15 +1265,15 @@ var idU = req.user._id
              
                 Product.find({'name':product},function(err,pocs){
                 let pId = pocs[0]._id
-                 console.log(pId,'pId')
+                // console.log(pId,'pId')
                 let nqty, nqty2
                 
                  let openingQuantity = pocs[0].cases
                 //nqty = pro.quantity + docs[0].quantity
                 nqty =  pocs[0].cases - 1 
-                console.log(pocs[0].cases, '**',1)
+                //console.log(pocs[0].cases, '**',1)
                 nqty2 = nqty * pocs[0].unitCases
-                console.log(nqty,'nqty')
+               // console.log(nqty,'nqty')
                 Product.findByIdAndUpdate(pId,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
                  // console.log(nocs,'updatedProduct')
                 })
@@ -1289,9 +1292,9 @@ var idU = req.user._id
                  let openingQuantity = kocs[0].cases
                 //nqty = pro.quantity + docs[0].quantity
                 nqty =  kocs[0].cases - 1 
-                console.log(kocs[0].cases, '**',1)
+                //console.log(kocs[0].cases, '**',1)
                 nqty2 = nqty * kocs[0].unitCases
-                console.log(nqty,'nqty')
+               // console.log(nqty,'nqty')
                 Warehouse.findByIdAndUpdate(wareId,{$set:{cases:nqty,openingQuantity:openingQuantity,rcvdQuantity:0, quantity:nqty2}},function(err,nocs){
         
                 //  console.log(nocs,'updatedWareH')
@@ -1363,7 +1366,7 @@ let cases = docs.length
         productChunks.push(docs.slice(i, i + chunkSize));
     }
 
-    console.log(productChunks.length,'chunks')
+    //console.log(productChunks.length,'chunks')
 
     for(var i =0 ; i< productChunks.length;i++){
    let arr = []
