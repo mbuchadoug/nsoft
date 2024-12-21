@@ -474,7 +474,7 @@ link.href="/rec/delete/"+data[i]._id*/
 
        else if(data.countSize == 3){
 
-         console.log('yea33',data.countSize)
+         console.log('yea',data.countSize)
 let preRefNumber = data.preRefNumber
            var tr = document.createElement('tr');
 
@@ -518,19 +518,56 @@ let preRefNumber = data.preRefNumber
                 success: function(docs) {
 console.log(docs,'ocs')
 
-               
-    $("#barcodeNumber").val("")
-  /* $("#availableCases").val(docs[nSize].cases)
-   $("#refCases").val(docs[nSize].refCases)
-let size = docs[0].cases % 140
-let preId = docs[0].preRefNumber
-let ref = docs[0].refNumber*/
-console.log('bho')
+                 for(var i =0;i< docs.length;i++){ 
+                   let nSize = docs.length - 1
 
+                   console.log(i,'iiiii')
+                   var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+    var td4 = tr.appendChild(document.createElement('td'));
+	//var td3 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    /*var td7 = tr.appendChild(document.createElement('td'));
+    var td8 = tr.appendChild(document.createElement('td'));*/
+    //var td8 = tr.appendChild(document.createElement('td'));
+    //var td9 = tr.appendChild(document.createElement('td'));
+
+
+
+
+    td1.id =docs[i]._id
+    td5.id = docs[i]._id
+
+
+
+
+    td1.innerHTML = docs[i].barcodeNumber;
+    td2.innerHTML = docs[i].refCases;
+    /*td4.innerHTML = docs[i].prPallet;
+    td5.innerHTML = docs[i].countSize;*/
+    td4.innerHTML = docs[i].availableCases;
+   // td3.innerHTML = data.casesReceived;
+    td5.innerHTML=  docs[i].availableCases + docs[i].casesReceived ;
+    td6.innerHTML = docs[i].mformat
+   // td8.innerHTML = docs[i].warehouse
+    //td9.innerHTML = docs[i].shift
+    
+
+    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    $("#barcodeNumber").val("")
+   $("#availableCases").val(docs[nSize].cases)
+   $("#refCases").val(docs[nSize].refCases)
+let size = docs[i].cases % 140
+let preId = docs[i].preRefNumber
+let ref = docs[i].refNumber
+if(size == 0 ){
 document.getElementById("closeBtn").style.display = "";
 document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href','/receiver/closePallet/'+{{{refNumber}}})
-
+document.getElementById('closePallet').setAttribute('href','/receiver/closePallet/'+ref)
+}
 
 
 /*else{
@@ -551,7 +588,7 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
         //}
 
 
-
+}
 
 
 document.getElementById('barcodeNumber').setAttribute('readonly', true);
