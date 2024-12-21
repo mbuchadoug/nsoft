@@ -10,5 +10,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD [ "node --max-old-space-size=8192", "server.js" ]
+CMD [ "node --max-old-space-size=4096", "server.js" ]
 
