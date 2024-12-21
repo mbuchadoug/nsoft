@@ -892,6 +892,23 @@ let nSize = kocs.length + 1
     
     })*/
 
+    router.get('/batchListDispatch',function(req,res){
+      BatchD.find(function(err,docs){
+      
+        let arr=[]
+        for(var i = docs.length - 1; i>=0; i--){
+      
+          arr.push(docs[i])
+        }
+      
+        res.render('dispatcher/batchListDisp2',{listX:arr})
+      
+      })
+      
+      
+      
+      })
+      
 
     router.post('/scanPallet',isLoggedIn,function(req,res){
       var barcodeNumber = req.body.code
@@ -2170,7 +2187,7 @@ if(vocs.length == 0){
 console.log(op,'op')
 BatchD.find(function(err,rocs){
 
-
+console.log(refNumDispatch,'refNum')
 BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,docs){
 //console.log(docs,'docsgg')
 salesClosingStock = holdingCases + docs[0].cases
@@ -4298,23 +4315,6 @@ router.get('/folderRegDispatch',function(req,res){
 
 
 
-  router.get('/batchListDispatch',function(req,res){
-    BatchR.find(function(err,docs){
-    
-      let arr=[]
-      for(var i = docs.length - 1; i>=0; i--){
-    
-        arr.push(docs[i])
-      }
-    
-      res.render('dispatcher/batchListDisp',{listX:arr})
-    
-    })
-    
-    
-    
-    })
-    
     
     
     

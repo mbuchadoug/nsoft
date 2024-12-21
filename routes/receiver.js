@@ -1333,8 +1333,9 @@ router.get('/closePallet/:id',isLoggedIn,function(req,res){
   User.findByIdAndUpdate(uid,{$set:{countSize:0}},function(err,tocs){
       console.log('success')
 
-    res.redirect('/receiver/receiveStock/'+refNumber)
+    
   })
+  res.redirect('/receiver/receiveStock/'+refNumber)
  
 })
 
