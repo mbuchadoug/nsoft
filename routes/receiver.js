@@ -1237,8 +1237,8 @@ var idU = req.user._id
 
 
 
-                         console.log(pocs,'ocsV')
-                          //res.send(arr3)
+                         //console.log(pocs,'ocsV')
+                          res.send(pocs)
 
                         })
                       })
