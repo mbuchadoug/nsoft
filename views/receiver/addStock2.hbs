@@ -474,7 +474,7 @@ link.href="/rec/delete/"+data[i]._id*/
 
        else if(data.countSize == 3){
 
-         console.log('yea',data.countSize)
+         console.log('yea33',data.countSize)
 let preRefNumber = data.preRefNumber
            var tr = document.createElement('tr');
 
@@ -516,19 +516,20 @@ let preRefNumber = data.preRefNumber
                 type: 'POST',
                 url: "./receiver/receivePallet/"+preRefNumber,
                 success: function(docs) {
-//console.log(docs,'ocs')
+console.log(docs,'ocs')
 
                
     $("#barcodeNumber").val("")
-   $("#availableCases").val(docs[nSize].cases)
+  /* $("#availableCases").val(docs[nSize].cases)
    $("#refCases").val(docs[nSize].refCases)
 let size = docs[0].cases % 140
 let preId = docs[0].preRefNumber
-let ref = docs[0].refNumber
+let ref = docs[0].refNumber*/
+console.log('bho')
 
 document.getElementById("closeBtn").style.display = "";
 document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href','/receiver/closePallet/'+ref)
+document.getElementById('closePallet').setAttribute('href','/receiver/closePallet/'+{{{refNumber}}})
 
 
 

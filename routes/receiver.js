@@ -1042,11 +1042,16 @@ var expiryDate = req.user.expiryDate
 var expiryDateValue = expiryDateValue
 var expiryMformat = expiryMformat
 
-
+var arr3=[]
 var arr = []
 var arr2 = []
 var c = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id:"",amountDue:0} 
+
+
+var d = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id:"",amountDue:0} 
+var e = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id:"",amountDue:0} 
 arr2.push(c)
+arr3.push(d,c)
 var id =req.user._id
 
 
@@ -1233,7 +1238,7 @@ var idU = req.user._id
 
 
                          //console.log(pocs,'ocsV')
-                          res.send(pocs)
+                          res.send(arr3)
 
                         })
                       })
