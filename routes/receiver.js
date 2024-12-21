@@ -1326,10 +1326,20 @@ let cases = docs.length
   })
 })
 
+router.get('/closePallet/:id',isLoggedIn,function(req,res){
+  let arr16=[]
+  let refNumber  =req.params.id
+  let uid = req.user._id
+  User.findByIdAndUpdate(uid,{$set:{countSize:0}},function(err,tocs){
+      console.log('success')
+
+    res.redirect('/receiver/receiveStock/'+refNumber)
+  })
+ 
+})
 
 
-
-
+/*
   
 router.get('/closePallet/:id',isLoggedIn,function(req,res){
   var id = req.params.id
@@ -1403,7 +1413,7 @@ let cases = docs.length
   
 
 })
-
+*/
 
 
 
