@@ -214,7 +214,9 @@ router.get('/updateAll',function(req,res){
   StockV.find({pallet:9,refNumber:"12212024S1B2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{status:"received",refNumDispatch:"null",dispatchStatus:"pending",statusCheck2:"null"}})
+      StockV.findByIdAndUpdate(id,{$set:{status:"received",refNumDispatch:"null",dispatchStatus:"pending",statusCheck2:"null"}},function(err,tocs){
+        
+      })
     }
   })
 })
