@@ -239,7 +239,7 @@ StockV.find({pallet:6,refNumber:"12212024S1B2R"},function(err,docs){
   }
   res.redirect('/fona2')
 })
-r
+
 })
 
 router.get('/fona2',function(req,res){
