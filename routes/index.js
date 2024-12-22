@@ -268,12 +268,12 @@ router.get('/fona3',function(req,res){
   })
   })
 
-/*
+
   router.get('/fona4',function(req,res){
-    StockV.find({pallet:10,refNumber:"12212024S1B2R",status:"received"},function(err,docs){
+    StockV.find({pallet:10,refNumber:"12212024S1B2R",status:"dispatched",salesPerson:"Suspense",},function(err,docs){
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
-        StockV.findByIdAndUpdate(id,{$set:{status:"dispatched",salesPerson:"Suspense",timeOfDispatch:"19:07",dispatcher:"Gloria",dispatchStatus:"dispatched",mformatDispatch:"12/21/2024",refNumDispatch:"12212024B2D12212024S1B2R"}},function(err,rocs){
+        StockV.findByIdAndUpdate(id,{$set:{status:"dispatched",salesPerson:"Suspense",timeOfDispatch:"19:07",dispatcher:"Gloria",dispatchStatus:"dispatched",mformatDispatch:"12/21/2024",refNumDispatch:"12222024B7D12212024S1B2R"}},function(err,rocs){
     
         })
       }
@@ -281,7 +281,7 @@ router.get('/fona3',function(req,res){
     })
     })
 
-  
+  /*
 router.get('/fbreakages',function(req,res){
   StockV.find({pallet:11,refNumber:"12212024S1B2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
