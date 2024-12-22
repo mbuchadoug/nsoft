@@ -852,12 +852,10 @@ router.get('/warehouseUpdate',function(req,res){
       //var receiver = req.user.fullname
     var mformat = req.user.mformat
     let status = 'pending'
-    let status2 = 'null'
     var dateValue = req.user.dateValue
     var expiryDate = req.user.expiryDate
     var expiryDateValue = expiryDateValue
     var expiryMformat = expiryMformat
-    let sId
    
     console.log(product,shift,casesReceived,warehouse,'out')
     
@@ -867,40 +865,38 @@ router.get('/warehouseUpdate',function(req,res){
 
    
     
-    PreRcvd.findOne({'barcodeNumber':barcodeNumber,'status':status})
+    PreRcvd.findOne({'barcodeNumber':barcodeNumber})
     .then(joc=>{
-console.log(joc,'joc')
+
     if(joc){
-console.log(joc,'joc66')
+
       let preId = joc._id
       let prPallet = joc.pallet
-      let prRefNumber = joc.refNumber
+      let prRefNum = joc.refNumber
      console.log()
       if(countSizeV==0){
-        User.findByIdAndUpdate(uid,{$set:{prPallet:prPallet,prRefNumber:prRefNumber}},function(err,tocs){
+        User.findByIdAndUpdate(uid,{$set:{prPallet:prPallet,prRefNum:prRefNum}},function(err,tocs){
 
         })
       }else{
-        User.findByIdAndUpdate(uid,{$set:{countPallet:prPallet,prRefNumber:prRefNumber}},function(err,tocs){
+        User.findByIdAndUpdate(uid,{$set:{countPallet:prPallet,prRefNum:prRefNum}},function(err,tocs){
 
         })
       }
 
-      if(req.user.prPallet == joc.pallet && req.user.prRefNumber == joc.refNumber ){
+      if(req.user.prPallet == joc.pallet && req.user.prRefNum == joc.refNumber ){
 
       
       Warehouse.findOne({'product':product,'warehouse':warehouse})
       .then(hoc=>{
     
 
-        StockV.findOne({'barcodeNumber':barcodeNumber,'status':status2})
+        StockV.findOne({'barcodeNumber':barcodeNumber})
         .then(doc=>{
           console.log(doc,'doc',hoc,'hoc')
 
-        if( doc != null){
-           sId = doc._id
-          console.log(sId,'sId')
-         StockV.find({refNumReceive:refNumReceive,preRefNumber:prRefNumber},function(err,rocs){
+        if( doc == null){
+         StockV.find({refNumReceive:refNumReceive,preRefNumber:prRefNum},function(err,rocs){
            let nSize = rocs.length
   
   StockV.find({refNumber:refNumber},function(err,focs){
@@ -948,7 +944,7 @@ console.log(joc,'joc66')
 
     })
   }
-     
+      var book = new StockV();
   
       let unitCases = hoc.unitCases
       let usd= hoc.usd
@@ -958,26 +954,52 @@ console.log(joc,'joc66')
       let countPallet = req.user.prPallet
       let category = hoc.category
       let subCategory = hoc.subCategory
-      let countSize = req.user.countSize + 1
-    console.log(countSize,'countSize')
-        
-      StockV.findByIdAndUpdate(sId,{$set:{name:product,mformat:mformat,refNumber:refNumber,
-        warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",
-        cases:0,prPallet:prPallet,preRefNumber:prRefNumber,refCases:size,date:date2,casesReceived:casesReceived,availableCases:hoc.cases,
-        shift:shift,year:year,month:month,countSize:countSize,refNumReceive:refNumReceive,receiver:receiver,dateValue:dateValue,
-        expiryDateValue:expiryDateValue,expiryMformat:expiryMformat}},function(err,kocs){
-  
-       StockV.find(function(err,iocs){
-
-      
-           StockV.findById(sId,function(err,vocs){
-
-        
-      
-    let stock = vocs.casesReceived + vocs.availableCases
-    console.log(vocs.casesReceived,vocs.availableCases,'avail')
+      book.name = product
+      book.mformat = mformat
+      //book.code =  code
+      book.warehouse = warehouse
+      book.barcodeNumber = barcodeNumber
+      book.status = 'received'
+      book.status2 = 'dispatch'
+      book.statusCheck = 'scanned'
+      book.cases = 0
+      book.prPallet = prPallet
+      book.countPallet = prPallet
+      book.refCases=nSize
+      book.date = date2
+      book.casesReceived = casesReceived
+      book.availableCases = hoc.cases
+      book.shift = shift
+      book.year = year
+      book.month = month
+      book.preRefNumber = joc.refNumber
+      book.receiver = receiver
+      book.dateValue = dateValue
+      book.unitCases = unitCases
+      book.dispatchStatus ='pending'
+      book.zwl = zwl
+      book.usd = usd
+      book.rand = rand
+      book.rate = rate
+      book.refNumReceive = refNumReceive
+      book.category = category
+      book.subCategory = subCategory
+      book.location = location
+      book.refNumber = refNumber
+      book.lot = lot
+      book.expiryDate = expiryDate
+      book.dateValue = dateValue
+      book.expiryDateValue = expiryDateValue
+      book.expiryMformat = expiryMformat
     
-    StockV.findByIdAndUpdate(sId,{$set:{cases:stock,countSize:countSize}},function(err,vocs){
+          
+           
+            book.save()
+              .then(pro =>{
+    let stock = pro.casesReceived + pro.availableCases
+    let countSize = req.user.countSize + 1
+    console.log(countSize)
+    StockV.findByIdAndUpdate(pro._id,{$set:{cases:stock,countSize:countSize}},function(err,vocs){
   
     })
   
@@ -997,10 +1019,10 @@ console.log(joc,'joc66')
       let id = docs[0]._id
       console.log(id,'id')
       let nqty, nqty2
-       let rcvdQty = casesReceived
+       let rcvdQty = pro.casesReceived
        let openingQuantity = docs[0].cases
       //nqty = pro.quantity + docs[0].quantity
-      nqty = vocs.casesReceived + docs[0].cases
+      nqty = pro.casesReceived + docs[0].cases
       nqty2 = nqty * docs[0].unitCases
       console.log(nqty,'nqty')
       Warehouse.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, rcvdQuantity:rcvdQty,quantity:nqty2}},function(err,nocs){
@@ -1010,19 +1032,16 @@ console.log(joc,'joc66')
       
 
      })
-     StockV.findByIdAndUpdate(sId,{$set:{countSize:countSize}},function(err,vocs){
-  
-    })
-  
+
 
                 Product.find({'name':product},function(err,docs){
                   let id = docs[0]._id
                   console.log(id,'id')
                   let nqty, nqty2
-                   let rcvdQty = vocs.casesReceived
+                   let rcvdQty = pro.casesReceived
                    let openingQuantity = docs[0].cases
                   //nqty = pro.quantity + docs[0].quantity
-                  nqty =vocs.casesReceived + docs[0].cases
+                  nqty = pro.casesReceived + docs[0].cases
                   nqty2 = nqty * docs[0].unitCases
                   console.log(nqty,'nqty')
                   Product.findByIdAndUpdate(id,{$set:{cases:nqty,openingQuantity:openingQuantity, rcvdQuantity:rcvdQty,quantity:nqty2}},function(err,nocs){
@@ -1035,16 +1054,16 @@ console.log(joc,'joc66')
   
   
                 
-                StockV.find({refNumber:refNumber,status:'received',prPallet:prPallet,prRefNumber:prRefNumber},(err, ocs) => {
+                StockV.find({mformat:mformat},(err, ocs) => {
                   let size = ocs.length - 1
                   console.log(ocs[size],'fff')
                   res.send(ocs[size])
                           })
             })
             
+
           })
-          })    
-        })
+        
          })
           
           }else{
@@ -1121,30 +1140,29 @@ var idU = req.user._id
                         PreRcvd.find({refNumber:id,pallet:prPallet,statusCheck:"scanned",refNumReceive:refNumReceive},function(err,docs){
 
                           let pallet = docs[0].pallet
-                         // console.log(pallet,'pallet33')
+                          console.log(pallet,'pallet33')
                           for(var i = 0;i<docs.length;i++){
                             
-                          // console.log(docs.length,'length')
+                           console.log(docs.length,'length')
         
-             let preId = docs[i]._id
+             
         
                             if(docs[i].pallet == pallet){
                               count++
                         
-                        //console.log(count,'count')
+                        console.log(count,'count')
                               if(count == docs.length){
                               //  console.log('true55')
                                 Warehouse.findOne({'product':product,'warehouse':warehouse})
                                 .then(hoc=>{
                               // console.log(hoc,'hoc')
                        // console.log(id,'ref',pallet,'pallet')
-                                StockV.find({prRefNumber:id,status:'null',prPallet:pallet},function(err,ocs){
+                                PreRcvd.find({refNumber:id,status:'pending',pallet:pallet},function(err,ocs){
                         for(var n = 0;n<ocs.length;n++){
                          let objId = ocs[n]._id
-                         
                         // console.log(objId,'objId')
                      
-                            let size = n + 1
+                            let size = n + 4
                             let availableCases = hoc.cases + n
                             let barc = ocs[n].barcodeNumber
 
@@ -1158,7 +1176,7 @@ var idU = req.user._id
                             //console.log(hoc.cases, n,'jack reverse')
                             let tCases = hoc.cases + 1
                             
-                            
+                            var book = new StockV();
   
                             let unitCases = hoc.unitCases
                             let usd= hoc.usd
@@ -1168,24 +1186,49 @@ var idU = req.user._id
                           
                             let category = hoc.category
                             let subCategory = hoc.subCategory
-                           
+                            book.name = product
+                            book.mformat = mformat
+                            //book.code =  code
+                            book.warehouse = warehouse
+                            book.barcodeNumber = barc
+                            book.status = 'received'
+                            book.status2 = 'dispatch'
+                            book.statusCheck2 = 'scannedLoop'
+                            book.cases = 0
+                            book.refCases= size
+                            book.date = date2
+                            book.casesReceived = casesReceived
+                            book.availableCases = availableCases
+                            book.shift = shift
+                            book.year = year
+                            book.month = month
+                            book.refNumReceive = refNumReceive
+                            book.receiver = receiver
+                            book.dateValue = dateValue
+                            book.unitCases = unitCases
+                            book.dispatchStatus ='pending'
+                            book.zwl = zwl
+                            book.usd = usd
+                            book.rand = rand
+                            book.rate = rate
+                            book.category = category
+                            book.subCategory = subCategory
+                            book.location = location
+                            book.refNumber = refNumber
+                            book.preRefNumber = id
+                            book.lot = lot
+                            book.expiryDate = expiryDate
+                            book.dateValue = dateValue
+                            book.expiryDateValue = expiryDateValue
+                            book.expiryMformat = expiryMformat
                           
-                            StockV.findByIdAndUpdate(objId,{$set:{name:product,refNumber:refNumber,mformat:mformat,
-                              warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",
-                              cases:0,prPallet:prPallet,preRefNumber:id,refCases:size,date:date2,casesReceived:casesReceived,availableCases:availableCases,
-                              shift:shift,year:year,month:month,refNumReceive:refNumReceive,receiver:receiver,dateValue:dateValue,
-                              expiryDateValue:expiryDateValue,expiryMformat:expiryMformat}},function(err,kocs){  
-                                 
-                                 
                                 
-       //StockV.find(function(err,iocs){
-
-      
-        StockV.findById(objId,function(err,vocs){
-
-                                      let stock = vocs.casesReceived + vocs.availableCases
+                                 
+                                  book.save()
+                                    .then(pro =>{
+                                      let stock = pro.casesReceived + pro.availableCases
   
-                                      StockV.findByIdAndUpdate(vocs._id,{$set:{cases:stock,statusCheck2:"scannedLoop"}},function(err,vocs){
+                                      StockV.findByIdAndUpdate(pro._id,{$set:{cases:stock,statusCheck2:"scannedLoop"}},function(err,vocs){
                                     
                                       })
 
@@ -1194,12 +1237,12 @@ var idU = req.user._id
 
                                       })
                                       
-   PreRcvd.findByIdAndUpdate(preId ,{$set:{status:"received",statusCheck2:"scannedLoop"}},function(err,kocs){
+   PreRcvd.findByIdAndUpdate(objId ,{$set:{status:"received",statusCheck2:"scannedLoop"}},function(err,kocs){
 
   })
 
 
-  /*StockV.find({date:date2},function(err,jocs){
+  StockV.find({date:date2},function(err,jocs){
     if(jocs.length >0){
 
     let openingBalanceX = jocs[0].availableCases
@@ -1216,7 +1259,7 @@ var idU = req.user._id
     })
 
   }
-})*/
+})
                                     })
 
                      
@@ -1228,7 +1271,7 @@ var idU = req.user._id
                 
                  let openingQuantity = pocs[0].cases
                 //nqty = pro.quantity + docs[0].quantity
-                nqty =  pocs[0].cases + 1 
+                nqty =  pocs[0].cases - 1 
                 //console.log(pocs[0].cases, '**',1)
                 nqty2 = nqty * pocs[0].unitCases
                // console.log(nqty,'nqty')
@@ -1244,12 +1287,12 @@ var idU = req.user._id
                
                 Warehouse.find({product:product,warehouse:warehouse},function(err,kocs){
                 let wareId = kocs[0]._id
-               // console.log(wareId,'wareId')
+                console.log(wareId,'wareId')
                 let nqty, nqty2
                 
                  let openingQuantity = kocs[0].cases
                 //nqty = pro.quantity + docs[0].quantity
-                nqty =  kocs[0].cases + 1 
+                nqty =  kocs[0].cases - 1 
                 //console.log(kocs[0].cases, '**',1)
                 nqty2 = nqty * kocs[0].unitCases
                // console.log(nqty,'nqty')
@@ -1260,8 +1303,7 @@ var idU = req.user._id
         })
          
 
-     })
-    //})       
+                      
                        
                         }
 

@@ -12,6 +12,7 @@ var preSchemaV = new Schema({
     palletDispatched: {type: Number },
     palletRemaining: {type: Number }, 
     status: {type: String },
+    status3: {type: String },
     statusCheck: {type: String },
     statusCheck2: {type: String },
     refNumber: {type: String },

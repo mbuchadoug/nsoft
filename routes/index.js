@@ -293,6 +293,46 @@ router.get('/fbreakages',function(req,res){
     res.redirect('/warehouseStock')
   })
   })*/
+
+  router.get('/preStock',function(req,res){
+    PreRcvd.find({status:"pending"},function(err,docs){
+      for(var i = 0;i<docs.length;i++){
+        let barcodeNumber =docs[i].barcodeNumber
+        let refNumber = docs[i].refNumber
+        let status = 'null'
+        let pallet = docs[i].pallet
+        let id = docs[i]._id
+        console.log(refNumber,'refNumber')
+
+        StockV.findOne({'barcodeNumber':barcodeNumber})
+        .then(doc=>{
+
+          if(doc == null){
+
+            var book = new StockV();
+  
+          
+           
+            book.barcodeNumber = barcodeNumber
+            book.prRefNumber = refNumber
+            book.preRefNumber = refNumber
+            book.prPallet = pallet
+            book.status = 'null'
+         
+            book.save()
+            .then(pro =>{
+
+              PreRcvd.findByIdAndUpdate(id,{$set:{status3:"stocked"}},function(err,yocs){
+                
+              })
+            })
+
+        
+          }
+        })
+      }
+    })
+  })
 router.get('/updateDisp',isLoggedIn,function(req,res){
   User.find({role:"dispatch"},function(err,doc){
     let id = doc[0]._id

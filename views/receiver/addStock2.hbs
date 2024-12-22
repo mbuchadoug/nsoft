@@ -372,7 +372,7 @@ ul.no-bullets {
                 }
 
 
-       else if(data.countSize == 3){
+       else if(data.countSize == 1){
 
          console.log('yea',data.countSize)
 let preRefNumber = data.preRefNumber
@@ -463,11 +463,11 @@ let preRefNumber = data.preRefNumber
 let size = docs[i].cases % 140
 let preId = docs[i].preRefNumber
 let ref = docs[i].refNumber
-if(size == 0 ){
+
 document.getElementById("closeBtn").style.display = "";
 document.getElementById("closePallet").style.display = "";
 document.getElementById('closePallet').setAttribute('href','/receiver/closePallet/'+ref)
-}
+
 
 
 /*else{

@@ -699,6 +699,7 @@ router.post('/receiveStock',isLoggedIn, function(req,res){
     
     book.barcodeNumber = barcodeNumber
     book.status = 'pending'
+    book.status3 = 'null'
     book.pallet = 0
     book.barcodes = 0
     book.barcodesReceived =barcodesReceived

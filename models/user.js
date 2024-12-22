@@ -9,7 +9,7 @@ var userSchema = new mongoose.Schema({
     dispatchDate:{type:String},
     url:{type:String},
     refNo:{type:String},
-    prRefNum:{type:String},
+    prRefNumber:{type:String},
     fullname:{type:String,required:true},
     dob:{type:String},
     time:{type:String},
