@@ -269,7 +269,7 @@ router.get('/fona3',function(req,res){
   })
 
 
-  router.get('/fona4',function(req,res){
+  router.get('/fona9',function(req,res){
     StockV.find({pallet:10,refNumber:"12212024S1B2R",status:"dispatched",salesPerson:"Suspense",},function(err,docs){
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
@@ -277,7 +277,7 @@ router.get('/fona3',function(req,res){
     
         })
       }
-      res.redirect('/fbreakages')
+      res.redirect('/')
     })
     })
 
