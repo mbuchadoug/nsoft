@@ -215,7 +215,7 @@ router.get('/updateAll',function(req,res){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{status:"received",refNumDispatch:"null",dispatchStatus:"pending",statusCheck2:"null"}},function(err,tocs){
-        
+
       })
     }
   })
@@ -229,7 +229,70 @@ User.find({role:"receiver"},function(err,doc){
   })
 })
 })
+router.get('/fona',function(req,res){
+StockV.find({pallet:6,refNumber:"12212024S1B2R"},function(err,docs){
+  for(var i = 0;i<docs.length;i++){
+    let id = docs[i]._id
+    StockV.findByIdAndUpdate(id,{$set:{status:"dispatched",salesPerson:"Mama Gloria",timeOfDispatch:"19:07",dispatcher:"Gloria",dispatchStatus:"dispatched",mformatDispatch:"12/21/2024",refNumDispatch:"12212024B2D12212024S1B2R"}},function(err,rocs){
 
+    })
+  }
+  res.redirect('/fona2')
+})
+r
+})
+
+router.get('/fona2',function(req,res){
+  StockV.find({pallet:8,refNumber:"12212024S1B2R"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{status:"dispatched",salesPerson:"Mama Gloria",timeOfDispatch:"19:07",dispatcher:"Gloria",dispatchStatus:"dispatched",mformatDispatch:"12/21/2024",refNumDispatch:"12212024B2D12212024S1B2R"}},function(err,rocs){
+  
+      })
+    }
+    res.redirect('/fona3')
+  })
+  })
+
+
+  
+router.get('/fona3',function(req,res){
+  StockV.find({pallet:10,refNumber:"12212024S1B2R"},function(err,docs){
+    for(var i = 0;i<20;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{status:"dispatched",salesPerson:"Mama Gloria",timeOfDispatch:"19:07",dispatcher:"Gloria",dispatchStatus:"dispatched",mformatDispatch:"12/21/2024",refNumDispatch:"12212024B2D12212024S1B2R"}},function(err,rocs){
+  
+      })
+    }
+    res.redirect('/fona4')
+  })
+  })
+
+
+  router.get('/fona3',function(req,res){
+    StockV.find({pallet:10,refNumber:"12212024S1B2R",status:"received"},function(err,docs){
+      for(var i = 0;i<docs.length;i++){
+        let id = docs[i]._id
+        StockV.findByIdAndUpdate(id,{$set:{status:"dispatched",salesPerson:"Suspense",timeOfDispatch:"19:07",dispatcher:"Gloria",dispatchStatus:"dispatched",mformatDispatch:"12/21/2024",refNumDispatch:"12212024B2D12212024S1B2R"}},function(err,rocs){
+    
+        })
+      }
+      res.redirect('/fbreakages')
+    })
+    })
+
+  
+router.get('/fbreakages',function(req,res){
+  StockV.find({pallet:11,refNumber:"12212024S1B2R"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{status:"breakages"}},function(err,rocs){
+  
+      })
+    }
+    res.redirect('/warehouseStock')
+  })
+  })
 router.get('/updateDisp',isLoggedIn,function(req,res){
   User.find({role:"dispatch"},function(err,doc){
     let id = doc[0]._id
