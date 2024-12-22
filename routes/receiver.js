@@ -865,25 +865,26 @@ router.get('/warehouseUpdate',function(req,res){
 
    
     
-    PreRcvd.findOne({'barcodeNumber':barcodeNumber, 'status':status})
+    PreRcvd.findOne({'barcodeNumber':barcodeNumber})
     .then(joc=>{
 
     if(joc){
 
       let preId = joc._id
       let prPallet = joc.pallet
+      let prRefNum = joc.refNumber
      console.log()
       if(countSizeV==0){
-        User.findByIdAndUpdate(uid,{$set:{prPallet:prPallet}},function(err,tocs){
+        User.findByIdAndUpdate(uid,{$set:{prPallet:prPallet,prRefNum:prRefNum}},function(err,tocs){
 
         })
       }else{
-        User.findByIdAndUpdate(uid,{$set:{countPallet:prPallet}},function(err,tocs){
+        User.findByIdAndUpdate(uid,{$set:{countPallet:prPallet,prRefNum:prRefNum}},function(err,tocs){
 
         })
       }
 
-      if(req.user.prPallet == joc.pallet){
+      if(req.user.prPallet == joc.pallet && req.user.prRefNum == joc.refNumber ){
 
       
       Warehouse.findOne({'product':product,'warehouse':warehouse})
@@ -895,7 +896,7 @@ router.get('/warehouseUpdate',function(req,res){
           console.log(doc,'doc',hoc,'hoc')
 
         if( doc == null){
-         StockV.find({refNumReceive:refNumReceive},function(err,rocs){
+         StockV.find({refNumReceive:refNumReceive,preRefNumber:prRefNumber},function(err,rocs){
            let nSize = rocs.length
   
   StockV.find({refNumber:refNumber},function(err,focs){
