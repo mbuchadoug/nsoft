@@ -1125,7 +1125,7 @@ var d = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id
 var e = {_id:"",statusV:"dispatched",item:"",description:"",invoiceNumber:"",_id:"",amountDue:0} 
 arr2.push(c)
 arr3.push(d,c)
-var id =req.user._id
+var id6 =req.user._id
 
 
 let count = 0
@@ -1232,8 +1232,8 @@ var idU = req.user._id
                                       })
 
 
-                                      User.findByIAndUpdate(id,{$set:{refNumReceive:refNumReceive}},function(err,tocs){
-                                        
+                                      User.findByIAndUpdate(id6,{$set:{refNumReceive:refNumReceive}},function(err,tocs){
+
                                       })
                                       
    PreRcvd.findByIdAndUpdate(objId ,{$set:{status:"received",statusCheck2:"scannedLoop"}},function(err,kocs){
