@@ -1233,7 +1233,7 @@ var idU = req.user._id
                                       })
 
 
-                                      User.findByIAndUpdate(id6,{$set:{refNumReceive:refNumReceive}},function(err,tocs){
+                                      User.findByIdAndUpdate(id6,{$set:{refNumReceive:refNumReceive}},function(err,tocs){
 
                                       })
                                       

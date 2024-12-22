@@ -295,6 +295,106 @@ ul.no-bullets {
 </div> 
 
 
+<script>
+
+
+$.ajax({
+   
+    dataType: 'json',
+    type: 'POST',
+	
+    url: `/receiver/autoLoad/{{{refNumber}}}`,
+    success: function(data) {
+    console.log(data)
+    console.log(data.length,'wwww')
+
+    
+   for(var i = 0;i<data.length;i++){
+    var tr = document.createElement('tr');
+
+    var td1 = tr.appendChild(document.createElement('td'));
+    var td2 = tr.appendChild(document.createElement('td'));
+	//var td3 = tr.appendChild(document.createElement('td'));
+    var td4 = tr.appendChild(document.createElement('td'));
+    var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
+    /*var td7 = tr.appendChild(document.createElement('td'));
+    var td8 = tr.appendChild(document.createElement('td'));*/
+    // var td8 = tr.appendChild(document.createElement('td'));
+         //var td9 = tr.appendChild(document.createElement('td'));
+    var link= tr.appendChild(document.createElement('td'));
+   
+    td1.id =data[i]._id
+    td4.id = data[i]._id
+/*td2.classList.add('text-end', 'pe-0')
+td3.classList.add('text-end', 'pe-0')
+td4.classList.add('text-end', 'pe-1')
+link.classList.add('text-end','pe-0')
+link.setAttribute("href", "/rec/delete")
+link.className = "text-end";*/
+
+/*let link = document.createTextNode("Delete")
+
+td5.appendChild(link);*/
+
+  td1.innerHTML = data[i].barcodeNumber;
+    td2.innerHTML = data[i].refCases;
+    /*td4.innerHTML = data[i].prPallet;
+    td5.innerHTML = data[i].countSize;*/
+    td4.innerHTML = data[i].availableCases;
+   // td3.innerHTML = data.casesReceived;
+    td5.innerHTML=  data[i].availableCases + data[i].casesReceived ;
+    td6.innerHTML = data[i].mformat
+    //td8.innerHTML = data[i].warehouse
+    //td9.innerHTML = data[i].shift
+    /*let link2 = "/rec/delete/"+data[i]._id
+
+    var linkText = 'Delete'
+link.href="/rec/delete/"+data[i]._id*/
+ 
+    /*link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+
+    console.log(link,'33tt')
+  
+
+    console.log(td4,'yeah')*/
+
+  document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+
+   }
+
+
+
+
+
+
+
+
+
+	}
+
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 
 
 
