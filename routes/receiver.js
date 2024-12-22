@@ -896,7 +896,7 @@ router.get('/warehouseUpdate',function(req,res){
           console.log(doc,'doc',hoc,'hoc')
 
         if( doc == null){
-         StockV.find({refNumReceive:refNumReceive,preRefNumber:prRefNumber},function(err,rocs){
+         StockV.find({refNumReceive:refNumReceive,preRefNumber:prRefNum},function(err,rocs){
            let nSize = rocs.length
   
   StockV.find({refNumber:refNumber},function(err,focs){
