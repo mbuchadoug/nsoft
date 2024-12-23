@@ -1361,10 +1361,79 @@ let cases = docs.length
       }
     }
   
-    res.redirect('/receiver/warehouseUpdate2')
+    res.redirect('/receiver/batch')
 
   })
 })
+
+
+
+/*
+
+
+router.get('/closeBatch/:id',function(req,res){
+  let id = req.params.id
+  var batchId = req.user.batchId
+  console.log(id,'idBatch')
+
+  StockV.find({refNumber:id},function(err,docs){
+ 
+let cases = docs.length
+  BatchR.findById(batchId,function(err,doc){
+    let openingBal = doc.openingBal
+    let closingBalance = doc.openingBal + docs.length
+
+    BatchR.findByIdAndUpdate(batchId,{$set:{cases:cases,closingBal:closingBalance}},function(err,tocs){
+
+    })
+  })
+   
+    var productChunks = [];
+    var chunkSize = 140;
+    for (var i = 0; i < docs.length; i += chunkSize) {
+        productChunks.push(docs.slice(i, i + chunkSize));
+    }
+
+   
+
+    for(var i =0 ; i< productChunks.length;i++){
+   let arr = []
+   arr.push(productChunks[i])
+      for(var x = 0;x<arr.length;x++){
+      
+        for(var n =0;n <arr[x].length;n++){
+          //console.log(arr[x][n],'sufferer')
+
+          let idN = arr[x][n]._id
+          let refNumber = id
+
+          let pallet = i + 1
+          StockV.find({pallet:pallet,refNumber:refNumber},function(err,tocs){
+            let received = tocs.length
+            StockV.find({pallet:pallet,refNumber:refNumber,status:'dispatched'},function(err,ocs){
+            let dispatched = ocs.length
+         
+            StockV.find({pallet:pallet,refNumber:refNumber,status:'received'},function(err,mocs){ 
+              let remaining = mocs.length
+          StockV.findByIdAndUpdate(idN,{$set:{pallet:pallet,palletRcvd:received,palletDispatched:dispatched,palletRemaining:remaining}},function(err,vocs){
+
+          })
+        })
+      })
+        })
+        }
+
+
+
+
+
+      }
+    }
+  
+    res.redirect('/receiver/batch')
+
+  })
+})*/
 
 router.get('/closePallet/:id',isLoggedIn,function(req,res){
   let arr16=[]
