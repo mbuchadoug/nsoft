@@ -399,7 +399,7 @@ router.post('/receiveStock',isLoggedIn, function(req,res){
   router.get('/palletUpdate',isLoggedIn,function(req,res){
   
     BatchPR.find(function(err,docs){
-      
+      let size = docs.length - 1
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
         let refNumber = docs[i].refNumber
@@ -1008,7 +1008,7 @@ router.get('/closeBatch/:id',function(req,res){
       }
     }
   
-    res.redirect('/admin/batch')
+    res.redirect('/admin/palletUpdate')
 
   })
 })
