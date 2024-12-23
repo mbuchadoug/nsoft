@@ -2222,8 +2222,8 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
     if(docs.length == 1){
      console.log(rocs.length,'rocs')
      if(rocs.length >1){
-       rSize = rocs.length 
-       size = rocs.length -1
+       rSize = rocs.length - 1
+       size = rocs.length -2
 
        BatchD.find({size:size},function(err,jocs){
 
@@ -8992,7 +8992,16 @@ res.redirect('/dispatch/rtnsList')
 
 
 
+router.get('/vicUpdate',function(req,res){
 
+  StockV.find({refNumber:"12212024S1B3R",pallet:5},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{status : "dispatched",salesPerson : "Victor",dispatcher : "Victor Ruka",
+      refNumDispatch : "12232024B9D12212024S1B3R", mformatDispatch : "12/23/2024", casesBatch : 280}})
+    }
+  })
+})
 
 
 
