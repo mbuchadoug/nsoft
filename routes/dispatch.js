@@ -2222,8 +2222,8 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
     if(docs.length == 1){
      console.log(rocs.length,'rocs')
      if(rocs.length >1){
-       rSize = rocs.length - 1
-       size = rocs.length -2
+       rSize = rocs.length 
+       size = rocs.length -1
 
        BatchD.find({size:size},function(err,jocs){
 
