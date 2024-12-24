@@ -2225,7 +2225,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
        rSize = rocs.length 
        size = rocs.length -1
 
-       BatchD.find({size:4},function(err,jocs){
+       BatchD.find({size:5},function(err,jocs){
 
 console.log(jocs,'yams')
       
