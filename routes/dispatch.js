@@ -2225,13 +2225,13 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
        rSize = rocs.length 
        size = rocs.length -1
 
-       BatchD.find({size:6},function(err,jocs){
+       BatchD.find({size:size},function(err,jocs){
 
 console.log(jocs,'yams')
       
         openingBal = jocs[0].closingStock
       
-        BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,yocs){
+        BatchD.find({size:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
          
           let idV = yocs[0]._id
