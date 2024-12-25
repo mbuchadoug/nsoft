@@ -115,6 +115,11 @@ const storage = new GridFsStorage({
 
 
 const upload = multer({ storage })
+
+router.get('/')
+
+
+
 router.get('/upChange',function(req,res){
   StockV.find({status:"null"},function(err,docs){
     for(var i = 0;i<docs.length;i++){

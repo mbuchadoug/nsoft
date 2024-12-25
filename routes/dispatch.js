@@ -119,7 +119,17 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 
 
+router.get('/seom',isLoggedIn,function(req,res){
+StockV.find({pallet:13},function(err,docs){
+  for(var i = 0;i<120;i++){
+    let id = docs[i]._id
+    StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12242024B12D12242024S1B1R",salesPerson:"Fatima",time:"16:14",truckNo:"AGA2624",dispatchMformat:"12/24/2024",dispatcher:"Victor Ruka",dateValueDispatch:"1734994800000",
+    status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676be61a8a5ed90483d7703d"}},function(err,tocs){
 
+    })
+  }
+})
+})
 router.get('/updateV',isLoggedIn,function(req,res){
   
 
