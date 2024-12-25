@@ -1829,13 +1829,13 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/receiver/repo');
     }else{
 
-StockV.find({date:date},function(err,docs){
+StockV.find({refNumber:"12242024S1B1R"},function(err,docs){
   total = docs.length
 
-StockV.find({date:date,status:"breakage"},function(err,vocs){
+StockV.find({refNumber:"12242024S1B1R",status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({date:date},function(err,locs){
+  BatchD.find({refNumber:"12242024S1B1R"},function(err,locs){
     //console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -1862,14 +1862,14 @@ StockV.find({date:date,status:"breakage"},function(err,vocs){
 
 
 
-        StockV.find({date:date},function(err,jocs){
+        StockV.find({refNumber:"12242024S1B1R"},function(err,jocs){
           if(jocs.length >0){
       
           let openingBalanceX = jocs[0].availableCases
           let totalCases = jocs.length 
           let closingBalanceX = jocs[0].availableCases + jocs.length 
           
-          BatchR.find({date:date},function(err,tocs){
+          BatchR.find({refNumber:"12242024S1B1R"},function(err,tocs){
             for(var i = 0;i< tocs.length;i++){
               BatchR.findByIdAndUpdate(tocs[i]._id,{$set:{casesRcvdX:totalCases,openingBalX:openingBalanceX,closingBalX:closingBalanceX}},function(err,noc){
       
@@ -1912,7 +1912,7 @@ let date = req.user.dispatchDate
       
       
       //TestX.find({year:year,uid:uid},function(err,vocs) {
-      BatchR.find({date:date}).lean().sort({date:1}).then(vocs=>{
+      BatchR.find({refNumber:"12242024S1B1R"}).lean().sort({date:1}).then(vocs=>{
       console.log(vocs.length,'vocs')
       
       for(var x = 0;x<vocs.length;x++){

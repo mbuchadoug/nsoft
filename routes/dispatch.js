@@ -3916,13 +3916,13 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/dispatch/repo');
     }else{
 
-StockV.find({status:"dispatched",date:date},function(err,docs){
+StockV.find({status:"dispatched",refNumber:"12242024S1B1R"},function(err,docs){
   total = docs.length
   console.log(total,'total555')
-StockV.find({status:"breakage",date:date},function(err,vocs){
+StockV.find({status:"breakage",refNumber:"12242024S1B1R"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({date:date},function(err,locs){
+  BatchD.find({refNumber:"12242024S1B1R"},function(err,locs){
     console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -4006,7 +4006,7 @@ let date = req.user.date
     
     
     //TestX.find({year:year,uid:uid},function(err,vocs) {
-    BatchD.find({date:date}).lean().sort({date:1}).then(vocs=>{
+    BatchD.find({refNumber:"12242024S1B1R"}).lean().sort({date:1}).then(vocs=>{
     console.log(vocs.length,'vocs')
     
     for(var x = 0;x<vocs.length;x++){
