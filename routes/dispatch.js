@@ -120,11 +120,11 @@ const upload = multer({ storage })
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-StockV.find({pallet:44},function(err,docs){
+StockV.find({pallet:33},function(err,docs){
   for(var i = 0;i<docs.length;i++){
     let id = docs[i]._id
     StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-    status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c0ac0e4c8601e3c9b3e7d"
+    status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
     }},function(err,tocs){
 
     })
@@ -135,16 +135,16 @@ StockV.find({pallet:44},function(err,docs){
 
 
 router.get('/seom2',isLoggedIn,function(req,res){
-  StockV.find({pallet:31},function(err,docs){
+  StockV.find({pallet:47},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-      status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c0ac0e4c8601e3c9b3e7d"
+      status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
       }},function(err,tocs){
   
       })
     }
-    res.redirect('/dispatch/seom3')
+    res.redirect('/dispatch/batchDispatch')
   })
   })
   router.get('/seom3',isLoggedIn,function(req,res){
@@ -152,7 +152,7 @@ router.get('/seom2',isLoggedIn,function(req,res){
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
         StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-        status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c0ac0e4c8601e3c9b3e7d"
+        status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
         }},function(err,tocs){
     
         })
@@ -166,7 +166,7 @@ router.get('/seom2',isLoggedIn,function(req,res){
         for(var i = 0;i<docs.length;i++){
           let id = docs[i]._id
           StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-          status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c0ac0e4c8601e3c9b3e7d"
+          status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
           }},function(err,tocs){
       
           })
@@ -180,15 +180,16 @@ router.get('/seom2',isLoggedIn,function(req,res){
           for(var i = 0;i<docs.length;i++){
             let id = docs[i]._id
             StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-            status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c0ac0e4c8601e3c9b3e7d"
+            status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
             }},function(err,tocs){
         
             })
           }
-          res.redirect('/dispatch/batch')
+          res.redirect('/dispatch/batchDispatch')
         })
         })
 
+        
         
 router.get('/updateV',isLoggedIn,function(req,res){
   
