@@ -1321,7 +1321,7 @@ let cases = docs.length
    
     var productChunks = [];
     var chunkSize = 140;
-    for (var i = 10; i < docs.length; i += chunkSize) {
+    for (var i = 20; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
 
