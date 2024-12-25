@@ -7083,7 +7083,7 @@ router.get('/updateSalesList',function(req,res){
 })
 router.get('/updateSalesStock1',isLoggedIn,function(req,res){
   
-  SalesList.find(function(err,docs){
+  SalesList.find({salesPerson:"bulawayo"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
    let  salesPerson = docs[i].salesPerson
 
@@ -7232,6 +7232,42 @@ router.get('/updateSalesStock4',isLoggedIn,function(req,res){
   })
 })
 
+
+router.get('/updateSalesStockB1',isLoggedIn,function(req,res){
+  
+  SalesList.find({salesPerson:"bulawayo"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
+      sale.product = 'kambucha No3'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/')
+  })
+})
 
 
 
