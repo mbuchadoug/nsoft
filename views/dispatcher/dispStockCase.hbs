@@ -1032,6 +1032,8 @@ link.classList.add('text-end','pe-0')*/
     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Destination</label> 
     <input  id="destination" class="ember-text-field ember-view form-control" type="text"  value="{{destination}}" readonly></div>
     
+      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">BatchId</label> 
+    <input  id="batchId" class="ember-text-field ember-view form-control" type="text"  value="{{batchId}}" ></div>
     
     </div> 
     <div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
@@ -1098,7 +1100,7 @@ link.classList.add('text-end','pe-0')*/
     
      <hr> <div class="btn-toolbar">
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
-
+ <a onclick="return confirm('Are you sure you want to Force Close this batch ?');" href="/dispatch/salesStockUpdate/{{batchId}}"  class="btn btn-primary ember-view" id="ember334" >Force Close Batch</a>
      <a  id="closeBtn" class="btn btn-primary ember-view"  href="/dispatch/salesStockUpdate/{{batchId}}" style="display: none;" >Close Batch</a>
       <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePallet/{{batchId}}" style="display: none;" >Close Pallet</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>

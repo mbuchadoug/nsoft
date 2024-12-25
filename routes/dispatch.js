@@ -2983,7 +2983,7 @@ StockV.find({status:"received",pallet:currentPallet},function(err,yocs){
   let nSize2 = yocs.length - req.user.cases
 StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'pending',pallet:currentPallet,casesBatchNumber:casesBatchNumber},function(err,focs){
   
-    //let size  = focs.length + 1
+    let size  = focs.length + 1
   console.log(focs.length,'size')
     if(focs.length > casesBatch){ 
       size = casesBatch
@@ -3032,7 +3032,7 @@ res.send(c)
         
             StockV.findByIdAndUpdate(doc._id,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,
               dispatcher:dispatcher,casesBatch:casesBatch,refNumDispatch:refNumber,availableCasesDispatch:availableCases,cases:tCases,status:'dispatched',
-            mformatDispatch:mformat,nSize2:nSize2,palletCasesBatch :nSize,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
+            mformatDispatch:mformat,nSize2:nSize2,size:size,palletCasesBatch :nSize,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
           refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,type:"individual"}},function(err,lof){
         
              
@@ -3548,7 +3548,7 @@ StockV.find({status:'received',refNumber:refNumber,pallet:currentPallet},functio
 StockV.find({refNumDispatch:refNumDispatch,refNumber:refNumber,dispatchStatus:'pending',pallet:currentPallet,casesBatchNumber:casesBatchNumber},function(err,focs){
   let nSize2 = palletCasesBatch - req.user.cases
   console.log(nSize2,'nSize2')
-    //let size  = focs.length + 1
+    let size  = focs.length + 1
   
     if(focs.length > casesBatch){
       size = casesBatch
@@ -3595,7 +3595,7 @@ res.send(c)
         
         let uid = req.user._id
         
-            StockV.findByIdAndUpdate(doc._id,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,
+            StockV.findByIdAndUpdate(doc._id,{$set:{timeOfDispatch:time,truck:truck,salesPerson:salesPerson,size:size,
               dispatcher:dispatcher,casesBatch:casesBatch,refNumDispatch:refNumber,availableCasesDispatch:availableCases,cases:tCases,status:'dispatched',
             mformatDispatch:mformat,nSize2:nSize2,dateValueDispatch:dateValueDispatch,size:size,casesDispatched:1,batchId:batchId,statusCheck:"scanned",
           refNumDispatch:refNumDispatch,casesBatchNumber:casesBatchNumber,palletCasesBatch:palletCasesBatch,type:"individual"}},function(err,lof){
