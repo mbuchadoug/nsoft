@@ -157,6 +157,32 @@ router.get('/upChange2',function(req,res){
 })
 
 
+router.get('/seom',isLoggedIn,function(req,res){
+  StockV.find({prPallet:1,prRefNumber:"12252024CS2R"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{name:"kambucha No3",warehouse:"warehouse3",date:"2024/12/25",mformat:"12/25/2024",
+      status:"received",shift:day,month:"December",refNumber:"12242024S1B1R",status2:"dispatch",
+      year:2024,casesReceived:1,refNumReceive:"2RC",receiver:"Armstrong"}},function(err,tocs){
+  
+      })
+    }
+    res.redirect('/receiver/seomPrv')
+  })
+  })
+
+router.get('/seomPrv',isLoggedIn,function(req,res){
+  PreRcvd.find({pallet:1,refNumber:"12252024CS2R"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+  PreRcvd.findByIdAndUpdate(id,{$set:{status:"received",refNumReceive:refNumReceive}},function(err,kocs){
+
+  })
+}
+})
+
+  })
+
 router.get('/countF',isLoggedIn,function(req,res){
   StockV.find(function(err,docs){
     let size = docs.length - 1
