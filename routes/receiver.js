@@ -1349,9 +1349,9 @@ let cases = docs.length
         productChunks.push(docs.slice(i, i + chunkSize));
     }
 
-    //console.log(productChunks.length,'chunks')
+    console.log(productChunks.length,'chunks')
 
-    for(var i =0; i< 10;i++){
+    for(var i =10; i< 20;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
@@ -1386,8 +1386,8 @@ let cases = docs.length
       }
     }
   
-    //res.redirect('/receiver/batch')
-    console.log('done')
+    res.redirect('/receiver/batch')
+   // console.log('done')
 
   })
 })
