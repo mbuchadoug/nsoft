@@ -120,11 +120,11 @@ const upload = multer({ storage })
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-StockV.find({pallet:42},function(err,docs){
+StockV.find({pallet:43},function(err,docs){
   for(var i = 0;i<docs.length;i++){
     let id = docs[i]._id
-    StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B13D12242024S1B1R",salesPerson:"Fatima",time:"09:41",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:"1735081200000",
-    status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676befac8ed48b09adbc95d6"}},function(err,tocs){
+    StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B14D12242024S1B1R",salesPerson:"Rosemary",time:"08:41",truckNo:"AGX",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
+    status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676bf6cb2543f90f3c3e112e"}},function(err,tocs){
 
     })
   }
