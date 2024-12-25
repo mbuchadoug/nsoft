@@ -7235,7 +7235,7 @@ router.get('/updateSalesStock4',isLoggedIn,function(req,res){
 
 router.get('/updateSalesStockB1',isLoggedIn,function(req,res){
   
-  SalesList.find({salesPerson:"bulawayo"},function(err,docs){
+  SalesList.find({salesPerson:"wayne"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
    let  salesPerson = docs[i].salesPerson
 
