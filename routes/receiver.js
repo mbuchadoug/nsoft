@@ -175,7 +175,7 @@ router.get('/seomPrv',isLoggedIn,function(req,res){
   PreRcvd.find({pallet:1,refNumber:"12252024CS2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-  PreRcvd.findByIdAndUpdate(id,{$set:{status:"received",refNumReceive:refNumReceive}},function(err,kocs){
+  PreRcvd.findByIdAndUpdate(id,{$set:{status:"received",refNumReceive:"2RC"}},function(err,kocs){
 
   })
 }
