@@ -116,7 +116,7 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 router.get('/upChange',function(req,res){
-  StockV.find({refNumber:"12242024S1B1R"},function(err,docs){
+  StockV.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumber:"12242024S1B1R"}},function(err,locs){
