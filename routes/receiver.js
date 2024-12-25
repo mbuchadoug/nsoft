@@ -126,28 +126,30 @@ router.get('/upChange',function(req,res){
   })
 })
 
-/*router.get('/upChange1',function(req,res){
-  StockV.find({status:"received"}function(err,docs){
+router.get('/upChange1',function(req,res){
+  StockV.find({status:"received"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumber:"12242024S1B1R"}},function(err,locs){
 
       })
     }
+    res.redirect('/receiver/upChange2')
   })
 })
 
 
 router.get('/upChange2',function(req,res){
-  StockV.find({status:"dispatched"}function(err,docs){
+  StockV.find({status:"dispatched"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumber:"12242024S1B1R"}},function(err,locs){
 
       })
     }
+    res.redirect('/receiver/batch')
   })
-})*/
+})
 
 
 router.get('/countF',isLoggedIn,function(req,res){
@@ -1349,7 +1351,7 @@ let cases = docs.length
         productChunks.push(docs.slice(i, i + chunkSize));
     }
 
-    //console.log(productChunks.length,'chunks')
+    console.log(productChunks.length,'chunks')
 
     for(var i =30; i< productChunks.length;i++){
    let arr = []
