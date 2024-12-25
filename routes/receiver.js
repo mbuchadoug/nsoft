@@ -1307,7 +1307,7 @@ router.get('/closeBatch/:id',function(req,res){
   var batchId = req.user.batchId
   console.log(id,'idBatch')
 
-  StockV.find({refNumber:id,mformat:"12/24/2024"},function(err,docs){
+  StockV.find({refNumber:id},function(err,docs){
   //  console.log(docs,'docs')
 let cases = docs.length
   BatchR.findById(batchId,function(err,doc){
