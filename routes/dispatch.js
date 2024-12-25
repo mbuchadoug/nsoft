@@ -120,16 +120,15 @@ const upload = multer({ storage })
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-StockV.find({pallet:41},function(err,docs){
-  for(var i = 0;i<docs.length;i++){
+StockV.find({pallet:1,status:"received"},function(err,docs){
+  for(var i = 0;i<80;i++){
     let id = docs[i]._id
-    StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B16D12242024S1B1R",salesPerson:"wayne",time:"11:31",truckNo:"TVRC555",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-    status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c1573e6134e22bb8cfa10"
+    StockV.findByIdAndUpdate(id,{$set:{status:"breakage"
     }},function(err,tocs){
 
     })
   }
-  res.redirect('/dispatch/seom2')
+  res.redirect('/dispatch/batchDispatch')
 })
 })
 
