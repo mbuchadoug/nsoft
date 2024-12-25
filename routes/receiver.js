@@ -116,7 +116,7 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 router.get('/upChange',function(req,res){
-  StockV.find({status:"null"}function(err,docs){
+  StockV.find({status:"null"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumber:"null"}},function(err,locs){
@@ -126,7 +126,7 @@ router.get('/upChange',function(req,res){
   })
 })
 
-router.get('/upChange1',function(req,res){
+/*router.get('/upChange1',function(req,res){
   StockV.find({status:"received"}function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
@@ -147,7 +147,7 @@ router.get('/upChange2',function(req,res){
       })
     }
   })
-})
+})*/
 
 
 router.get('/countF',isLoggedIn,function(req,res){
