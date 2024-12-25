@@ -158,7 +158,7 @@ router.get('/upChange2',function(req,res){
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-  StockV.find({prPallet:1,prRefNumber:"12252024CS2R"},function(err,docs){
+  StockV.find({prPallet:2,prRefNumber:"12252024CS2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{name:"kambucha No3",warehouse:"warehouse3",date:"2024/12/25",mformat:"12/25/2024",
@@ -172,7 +172,7 @@ router.get('/seom',isLoggedIn,function(req,res){
   })
 
 router.get('/seomPrv',isLoggedIn,function(req,res){
-  PreRcvd.find({pallet:1,refNumber:"12252024CS2R"},function(err,docs){
+  PreRcvd.find({pallet:2,refNumber:"12252024CS2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
   PreRcvd.findByIdAndUpdate(id,{$set:{status:"received",refNumReceive:"2RC"}},function(err,kocs){
