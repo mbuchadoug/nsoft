@@ -116,7 +116,18 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 router.get('/upChange',function(req,res){
-  StockV.find(function(err,docs){
+  StockV.find({status:"null"}function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{refNumber:"null"}},function(err,locs){
+
+      })
+    }
+  })
+})
+
+router.get('/upChange1',function(req,res){
+  StockV.find({status:"received"}function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumber:"12242024S1B1R"}},function(err,locs){
@@ -125,6 +136,19 @@ router.get('/upChange',function(req,res){
     }
   })
 })
+
+
+router.get('/upChange2',function(req,res){
+  StockV.find({status:"dispatched"}function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{refNumber:"12242024S1B1R"}},function(err,locs){
+
+      })
+    }
+  })
+})
+
 
 router.get('/countF',isLoggedIn,function(req,res){
   StockV.find(function(err,docs){
