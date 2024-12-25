@@ -1361,7 +1361,8 @@ let cases = docs.length
       }
     }
   
-    res.redirect('/receiver/batch')
+    //res.redirect('/receiver/batch')
+    console.log('done')
 
   })
 })
