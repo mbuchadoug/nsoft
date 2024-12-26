@@ -132,10 +132,10 @@ router.get('/upChange',function(req,res){
 })
 
 router.get('/upChange1',function(req,res){
-  StockV.find({pallet:6},function(err,docs){
+  StockV.find({pallet:6,status:"null"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{refNumber:"12242024S1B1R"}},function(err,locs){
+      StockV.findByIdAndUpdate(id,{$set:{refNumber:"null"}},function(err,locs){
 
       })
     }
