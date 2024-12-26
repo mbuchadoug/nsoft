@@ -1378,13 +1378,13 @@ let cases = docs.length
    
     var productChunks = [];
     var chunkSize = 140;
-    for (var i = 0; i < 980; i += chunkSize) {
+    for (var i = 90; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =0; i< 7;i++){
+    for(var i =0; i< productChunks.length;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
