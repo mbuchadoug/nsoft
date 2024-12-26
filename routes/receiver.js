@@ -1364,7 +1364,7 @@ router.get('/closeBatch/:id',function(req,res){
   var batchId = req.user.batchId
   console.log(id,'idBatch')
 
-  StockV.find({refNumber:id},function(err,docs){
+  StockV.find({refNumber:id,pallet:7},function(err,docs){
   //  console.log(docs,'docs')
 let cases = docs.length
   BatchR.findById(batchId,function(err,doc){
@@ -1378,13 +1378,13 @@ let cases = docs.length
    
     var productChunks = [];
     var chunkSize = 140;
-    for (var i = 0; i <1400; i += chunkSize) {
+    for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =0; i< 10;i++){
+    for(var i =0; i< productChunks.length;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
