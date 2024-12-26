@@ -1384,7 +1384,7 @@ let cases = docs.length
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =0; i< 10;i++){
+    for(var i =0; i< 8;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
