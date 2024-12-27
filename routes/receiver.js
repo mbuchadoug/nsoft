@@ -151,7 +151,7 @@ router.get('/upChange02',function(req,res){
 
       })
     }
-    res.redirect('/upChange03')
+    res.redirect('/receiver/upChange03')
   })
 })
 
@@ -164,7 +164,7 @@ router.get('/upChange03',function(req,res){
 
       })
     }
-    res.redirect('/upChange04')
+    res.redirect('/receiver/upChange04')
   })
 })
 
@@ -177,7 +177,7 @@ router.get('/upChange04',function(req,res){
 
       })
     }
-    res.redirect('/upChange05')
+    res.redirect('/receiver/upChange05')
   })
 })
 
@@ -189,7 +189,7 @@ router.get('/upChange05',function(req,res){
 
       })
     }
-    res.redirect('/upChange06')
+    res.redirect('/receiver/upChange06')
   })
 })
 
@@ -202,7 +202,7 @@ router.get('/upChange07',function(req,res){
 
       })
     }
-    res.redirect('/upChange07')
+    res.redirect('/receiver/upChange07')
   })
 })
 
@@ -217,7 +217,7 @@ router.get('/upChange08',function(req,res){
 
       })
     }
-    res.redirect('/upChange09')
+    res.redirect('/receiver/upChange09')
   })
 })
 
@@ -231,7 +231,7 @@ router.get('/upChange09',function(req,res){
 
       })
     }
-    res.redirect('/upChange10')
+    res.redirect('/receiver/upChange10')
   })
 })
 
@@ -245,7 +245,7 @@ router.get('/upChange10',function(req,res){
 
       })
     }
-    res.redirect('/upChange11')
+    res.redirect('/receiver/upChange11')
   })
 })
 
@@ -259,7 +259,7 @@ router.get('/upChange11',function(req,res){
 
       })
     }
-    res.redirect('/upChange12')
+    res.redirect('/receiver/upChange12')
   })
 })
 
@@ -273,7 +273,7 @@ router.get('/upChange12',function(req,res){
 
       })
     }
-    res.redirect('/upChange13')
+    res.redirect('/receiver/upChange13')
   })
 })
 
