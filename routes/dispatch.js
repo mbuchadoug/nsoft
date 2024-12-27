@@ -174,20 +174,34 @@ router.get('/seom2',isLoggedIn,function(req,res){
       })
       })
 
-      router.get('/seom5',isLoggedIn,function(req,res){
-        StockV.find({pallet:28},function(err,docs){
+      router.get('/seom55',isLoggedIn,function(req,res){
+        StockV.find({pallet:122},function(err,docs){
           for(var i = 0;i<docs.length;i++){
             let id = docs[i]._id
-            StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-            status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
+            StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12272024B30D12242024S1B1R",salesPerson:"Astone",time:"10:36",truckNo:"AGD0812",dispatchMformat:"12/27/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
+            status:"dispatched",destination:"masvingo",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676e67b961a163240dbe93a6"
             }},function(err,tocs){
         
             })
           }
-          res.redirect('/dispatch/batchDispatch')
+          res.redirect('/dispatch/seom56')
         })
         })
 
+
+        router.get('/seom56',isLoggedIn,function(req,res){
+          StockV.find({pallet:29},function(err,docs){
+            for(var i = 0;i<100;i++){
+              let id = docs[i]._id
+              StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12272024B30D12242024S1B1R",salesPerson:"Astone",time:"10:36",truckNo:"AGD0812",dispatchMformat:"12/27/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
+              status:"dispatched",destination:"masvingo",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676e67b961a163240dbe93a6"
+              }},function(err,tocs){
+          
+              })
+            }
+            res.redirect('/dispatch/batchDispatch')
+          })
+          })
         
         
 router.get('/updateV',isLoggedIn,function(req,res){
