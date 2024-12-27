@@ -132,17 +132,162 @@ router.get('/upChange',function(req,res){
 })
 
 router.get('/upChange1',function(req,res){
-  StockV.find({pallet:6,status:"null"},function(err,docs){
-    for(var i = 0;i<docs.length;i++){
+  StockV.find({pallet:2,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{refNumber:"null"}},function(err,locs){
+      StockV.findByIdAndUpdate(id,{$set:{pallet:121}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange02')
+  })
+})
+
+router.get('/upChange02',function(req,res){
+  StockV.find({pallet:73,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:122}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange03')
+  })
+})
+
+
+router.get('/upChange03',function(req,res){
+  StockV.find({pallet:74,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:123}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange04')
+  })
+})
+
+
+router.get('/upChange04',function(req,res){
+  StockV.find({pallet:77,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:124}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange05')
+  })
+})
+
+router.get('/upChange05',function(req,res){
+  StockV.find({pallet:78,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:125}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange06')
+  })
+})
+
+
+router.get('/upChange07',function(req,res){
+  StockV.find({pallet:81,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:126}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange07')
+  })
+})
+
+
+
+
+router.get('/upChange08',function(req,res){
+  StockV.find({pallet:83,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:127}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange09')
+  })
+})
+
+
+
+router.get('/upChange09',function(req,res){
+  StockV.find({pallet:84,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:128}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange10')
+  })
+})
+
+
+
+router.get('/upChange10',function(req,res){
+  StockV.find({pallet:85,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:129}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange11')
+  })
+})
+
+
+
+router.get('/upChange11',function(req,res){
+  StockV.find({pallet:85,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:130}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange12')
+  })
+})
+
+
+
+router.get('/upChange12',function(req,res){
+  StockV.find({pallet:88,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:131}},function(err,locs){
+
+      })
+    }
+    res.redirect('/upChange13')
+  })
+})
+
+router.get('/upChange14',function(req,res){
+  StockV.find({pallet:90,status:"received"},function(err,docs){
+    for(var i = 0;i<140;i++){
+      let id = docs[i]._id
+      StockV.findByIdAndUpdate(id,{$set:{pallet:132}},function(err,locs){
 
       })
     }
     res.redirect('/')
   })
 })
-
 
 router.get('/upChange2',function(req,res){
   StockV.find({status:"dispatched"},function(err,docs){
