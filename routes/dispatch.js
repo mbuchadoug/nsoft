@@ -1980,6 +1980,14 @@ router.get('/verify',isLoggedIn,function(req,res){
   res.render('dispatcher/verify',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,refNumber:refNumber})
 })
 
+router.get('/verifyDispatch',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  let refNumber = req.user.refNumber
+  res.render('dispatcher/verify',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,refNumber:refNumber})
+})
+
+
   router.get('/selectPallet3',isLoggedIn,function(req,res){
     var errorMsg = req.flash('danger')[0];
     var successMsg = req.flash('success')[0];
@@ -2301,7 +2309,7 @@ console.log(jocs,'yams')
       
         openingBal = jocs[0].closingStock
       
-        BatchD.find({size:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
+        BatchD.find({size:rSize,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
          
           let idV = yocs[0]._id
