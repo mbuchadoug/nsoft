@@ -190,11 +190,11 @@ router.get('/seom2',isLoggedIn,function(req,res){
 
 
         router.get('/seom56',isLoggedIn,function(req,res){
-          StockV.find({pallet:29},function(err,docs){
-            for(var i = 0;i<100;i++){
+          StockV.find({pallet:81,status:"received"},function(err,docs){
+            for(var i = 0;i<21;i++){
               let id = docs[i]._id
-              StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12272024B30D12242024S1B1R",salesPerson:"Astone",time:"10:36",truckNo:"AGD0812",dispatchMformat:"12/27/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-              status:"dispatched",destination:"masvingo",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676e67b961a163240dbe93a6"
+              StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12272024B17D12242024S1B1R",salesPerson:"Rosemary",time:"07:24",truckNo:"AGX0418",dispatchMformat:"12/27/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
+              status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676e3a67473d7ffb674ff683"
               }},function(err,tocs){
           
               })
