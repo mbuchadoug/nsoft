@@ -744,7 +744,7 @@ router.get('/warehouseUpdateRtns2',function(req,res){
 
 
 
-    res.redirect('/wre2')
+    //res.redirect('/wre2')
   })
   
   

@@ -1829,13 +1829,13 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/receiver/repo');
     }else{
 
-StockV.find({refNumber:"12242024S1B1R",date:date},function(err,docs){
+StockV.find({refNumber:"12242024S1B1R"},function(err,docs){
   total = docs.length
 
-StockV.find({refNumber:"12242024S1B1R",status:"breakage",date:date},function(err,vocs){
+StockV.find({refNumber:"12242024S1B1R",status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({refNumber:"12242024S1B1R",date:date},function(err,locs){
+  BatchD.find({refNumber:"12242024S1B1R"},function(err,locs){
     //console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -1912,7 +1912,7 @@ let date = req.user.dispatchDate
       
       
       //TestX.find({year:year,uid:uid},function(err,vocs) {
-      BatchR.find({refNumber:"12242024S1B1R",date:date}).lean().sort({date:1}).then(vocs=>{
+      BatchR.find({refNumber:"12242024S1B1R"}).lean().sort({date:1}).then(vocs=>{
       console.log(vocs.length,'vocs')
       
       for(var x = 0;x<vocs.length;x++){
