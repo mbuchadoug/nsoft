@@ -692,7 +692,7 @@ router.get('/warehouseUpdateRtns2',function(req,res){
        
         var ware = new Warehouse()
   
-        ware.warehouse=warehouse
+       
         ware.product = product
         ware.cases = 0
         ware.category = category
