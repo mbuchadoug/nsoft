@@ -3938,7 +3938,7 @@ router.post('/repo',isLoggedIn,function(req,res){
     }else{
 
 StockV.find({status:"dispatched",refNumber:"12242024S1B1R"},function(err,docs){
-  total = docs.length
+  total = 8704
   console.log(total,'total555')
 StockV.find({status:"breakage",refNumber:"12242024S1B1R"},function(err,vocs){
   breakages = vocs.length
