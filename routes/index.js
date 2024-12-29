@@ -212,13 +212,39 @@ router.get('/updateSize',isLoggedIn,function(req,res){
   })
 
 router.get('/updateAll',function(req,res){
-  StockV.find({pallet:9,refNumber:"12212024S1B2R"},function(err,docs){
+  BatchD.find({date:"2024/12/29"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{status:"received",refNumDispatch:"null",dispatchStatus:"pending",statusCheck2:"null"}},function(err,tocs){
+      BatchD.findByIdAndUpdate(id,{$set:{date:"2024/12/28"}},function(err,tocs){
 
       })
     }
+    res.redirect('/updateBrival')
+  })
+})
+
+
+router.get('/updateBrival',function(req,res){
+  BatchD.find({salesPerson:"Brival"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      BatchD.findByIdAndUpdate(id,{$set:{salesOpeningStock:18,salesClosingStock:100}},function(err,tocs){
+
+      })
+    }
+    res.redirect('/updateOtilia')
+  })
+})
+
+router.get('/updateOtilia',function(req,res){
+  BatchD.find({salesPerson:"Otilia"},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      BatchD.findByIdAndUpdate(id,{$set:{salesOpeningStock:116,salesClosingStock:216}},function(err,tocs){
+
+      })
+    }
+    res.redirect('/')
   })
 })
 
