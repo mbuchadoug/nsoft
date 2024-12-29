@@ -44,6 +44,7 @@ var userSchema = new mongoose.Schema({
     palletCasesBatch:{type:Number},
     batchRCases:{type:Number},
     pallets: {type: Number },
+    palletNum: {type: Number },
     aggCases: {type: Number },
     currentPallet: {type: Number },
     remainderCases: {type: Number },

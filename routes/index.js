@@ -4,6 +4,7 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Dispose = require('../models/dispose');
+var BatchSplit = require('../models/batchSplit');
 var PreRcvd = require('../models/preRcvd');
 var BatchPR = require('../models/batchPR');
 var Ware = require('../models/ware');
@@ -6835,10 +6836,22 @@ router.get('/updateStockD',function(req,res){
 
      }) 
     }
-    res.redirect('/updateRefN')
+    res.redirect('/updateStockBC')
   })
 })
 
+
+router.get('/updateStockBC',function(req,res){
+  BatchSplit.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    BatchSplit.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/updateRefN')
+  })
+})
 
 router.get('/updateRefN',function(req,res){
   RefNo.find(function(err,docs){

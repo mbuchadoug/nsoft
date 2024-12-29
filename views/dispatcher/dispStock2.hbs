@@ -145,6 +145,7 @@ ul.no-bullets {
     </li>
   
 
+
  <ul class="nav flex-column" id="nav_accordion">
 
   <li class="divider"></li>	
@@ -182,6 +183,12 @@ ul.no-bullets {
               </a>
 
                 <a id="ember79" class="ember-view nav-link" href="/dispatch/warehouseRtns" ><span class="d-inline-block " style=" margin-left: 20px; " >Warehouse Breakages</span> 
+
+              </a>
+
+                </a>
+
+                <a id="ember79" class="ember-view nav-link" href="/dispatch/verify" ><span class="d-inline-block " style=" margin-left: 20px; " >Verify</span> 
 
               </a>
             
@@ -229,7 +236,8 @@ ul.no-bullets {
     </li>
 
 
-  </ul><!----><!----><!----><!----> <!---->
+  </ul><!---->
+<!----><!----><!----><!----> <!---->
     <li class="divider"></li> 
     <li class="divider"></li> 
     <li class="divider"></li> 
@@ -552,7 +560,8 @@ this.firstElementChild.select();
              
 
     let batchId = document.getElementById('batchId').value
-    console.log(batchId,'batchIDfff')
+    console.log(batchId,'batchIDfff',data)
+
 
 
                if(data.length === 0){
@@ -579,662 +588,11 @@ this.firstElementChild.select();
                
                 }
 
-                   
-else if({{{rCases}}} == {{{palletCasesBatch}}} || {{{rCases}}} < {{{palletCasesBatch}}}  && data.size == 1  ){
-  console.log('yea77',data.size,data.casesBatch,data.palletCasesBatch)
-
-           var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-    td1.id =data._id
-    td5.id = data._id
-
-    td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.availableCasesDispatch;
-
-    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
-    td5.innerHTML = data.mformat
-    td6.innerHTML = data.warehouse
-    td7.innerHTML = data.timeOfDispatch
-    
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
-     $("#barcodeNumber").val("")
-
-   let batchId = document.getElementById('batchId').value
-           let refNumber = document.getElementById('refNumber').value
-            $.ajax({
-                dataType: 'json',
-                data: {
-                    code: scanned_barcode,
-                    
-                },
-                type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
-                success: function(docs) {
-console.log(docs,'ocs')
-
-                 for(var i =0;i< docs.length;i++){ 
-                   var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-
-
-
-    td1.id =docs[i]._id
-    td5.id = docs[i]._id
-
-
-
-
-
-    td1.innerHTML = docs[i].barcodeNumber;
-    td2.innerHTML = docs[i].availableCasesDispatch;
    
-    td4.innerHTML=  docs[i].availableCasesDispatch - docs[i].casesDispatched ;
-    td5.innerHTML = docs[i].mformat
-    td6.innerHTML = docs[i].warehouse
-    td7.innerHTML = docs[i].timeOfDispatch
-    
-
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(docs[i].availableCasesDispatch - docs[i].casesDispatched)
-     $("#barcodeNumber").val("")
-
-console.log(docs[i].size, data.casesBatch,'marino1')
-
-
-document.getElementById("closeBtn").style.display = "";
-/*else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-
-
-//if(docs[i].size === data.casesBatch){
-             //alert('Batch Closed')
-             // window.location.href = "http://niyonsoft.org/batchDispatch"
-             //window.location.href = "http://localhost:8000/fifoUpdate"
-            //document.getElementById('barcodeNumber').setAttribute('readonly', true);
-              //  document.getElementById('barcodeNumber').setAttribute('hidden', false);
-             //window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
-
-
-        //}
-
-
-}
-
-
-document.getElementById('barcodeNumber').setAttribute('readonly', true);
-console.log(docs.length,'docsLength',docs[0].casesBatch,'casesBatch')
-
-         
-//document.getElementById('closeBtn').setAttribute('hidden', false);
-/*if(docs[0].position === 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-                    }
-               
-             
-                
                  
-                
-               
-            });
-}
-    
 
 
-
-                   
-else if( {{{rCases}}} > {{{palletCasesBatch}}}  && data.size == 1  ){
-  console.log('yea66',data.size,data.casesBatch,data.palletCasesBatch)
-
-           var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-    td1.id =data._id
-    td5.id = data._id
-
-    td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.availableCasesDispatch;
-
-    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
-    td5.innerHTML = data.mformat
-    td6.innerHTML = data.warehouse
-    td7.innerHTML = data.timeOfDispatch
-    
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
-     $("#barcodeNumber").val("")
-
-   let batchId = document.getElementById('batchId').value
-           let refNumber = document.getElementById('refNumber').value
-            $.ajax({
-                dataType: 'json',
-                data: {
-                    code: scanned_barcode,
-                    
-                },
-                type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
-                success: function(docs) {
-console.log(docs,'ocs')
-
-                 for(var i =0;i< docs.length;i++){ 
-                   var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-
-
-
-    td1.id =docs[i]._id
-    td5.id = docs[i]._id
-
-
-
-
-
-    td1.innerHTML = docs[i].barcodeNumber;
-    td2.innerHTML = docs[i].availableCasesDispatch;
-   
-    td4.innerHTML=  docs[i].availableCasesDispatch - docs[i].casesDispatched ;
-    td5.innerHTML = docs[i].mformat
-    td6.innerHTML = docs[i].warehouse
-    td7.innerHTML = docs[i].timeOfDispatch
-    
-
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(docs[i].availableCasesDispatch - docs[i].casesDispatched)
-     $("#barcodeNumber").val("")
-
-console.log(docs[i].size, data.casesBatch,'marino1')
-
-
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-//document.getElementById("closeBtn").style.display = "";
-/*else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-
-
-//if(docs[i].size === data.casesBatch){
-             //alert('Batch Closed')
-             // window.location.href = "http://niyonsoft.org/batchDispatch"
-             //window.location.href = "http://localhost:8000/fifoUpdate"
-            //document.getElementById('barcodeNumber').setAttribute('readonly', true);
-              //  document.getElementById('barcodeNumber').setAttribute('hidden', false);
-             //window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
-
-
-        //}
-
-
-}
-
-
-document.getElementById('barcodeNumber').setAttribute('readonly', true);
-console.log(docs.length,'docsLength',docs[0].casesBatch,'casesBatch')
-
-         
-//document.getElementById('closeBtn').setAttribute('hidden', false);
-/*if(docs[0].position === 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-                    }
-               
-             
-                
-                 
-                
-               
-            });
-}
-    
-          
-
-                 
-else if( data.casesBatch< 140 && data.casesBatch >= data.palletCasesBatch && data.size == 1  ){
-  console.log('yea11',data.size,data.casesBatch,data.palletCasesBatch)
-
-           var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-    td1.id =data._id
-    td5.id = data._id
-
-    td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.availableCasesDispatch;
-
-    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
-    td5.innerHTML = data.mformat
-    td6.innerHTML = data.warehouse
-    td7.innerHTML = data.timeOfDispatch
-    
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
-     $("#barcodeNumber").val("")
-
-   let batchId = document.getElementById('batchId').value
-           let refNumber = document.getElementById('refNumber').value
-            $.ajax({
-                dataType: 'json',
-                data: {
-                    code: scanned_barcode,
-                    
-                },
-                type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
-                success: function(docs) {
-console.log(docs,'ocs')
-
-                 for(var i =0;i< docs.length;i++){ 
-                   var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-
-
-
-    td1.id =docs[i]._id
-    td5.id = docs[i]._id
-
-
-
-
-
-    td1.innerHTML = docs[i].barcodeNumber;
-    td2.innerHTML = docs[i].availableCasesDispatch;
-   
-    td4.innerHTML=  docs[i].availableCasesDispatch - docs[i].casesDispatched ;
-    td5.innerHTML = docs[i].mformat
-    td6.innerHTML = docs[i].warehouse
-    td7.innerHTML = docs[i].timeOfDispatch
-    
-
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(docs[i].availableCasesDispatch - docs[i].casesDispatched)
-     $("#barcodeNumber").val("")
-
-console.log(docs[i].size, data.casesBatch,'marino1')
-
-
-
-document.getElementById("closeBtn").style.display = "";
-/*else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-
-
-//if(docs[i].size === data.casesBatch){
-             //alert('Batch Closed')
-             // window.location.href = "http://niyonsoft.org/batchDispatch"
-             //window.location.href = "http://localhost:8000/fifoUpdate"
-            //document.getElementById('barcodeNumber').setAttribute('readonly', true);
-              //  document.getElementById('barcodeNumber').setAttribute('hidden', false);
-             //window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
-
-
-        //}
-
-
-}
-
-
-document.getElementById('barcodeNumber').setAttribute('readonly', true);
-console.log(docs.length,'docsLength',docs[0].casesBatch,'casesBatch')
-
-         
-//document.getElementById('closeBtn').setAttribute('hidden', false);
-/*if(docs[0].position === 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-                    }
-               
-             
-                
-                 
-                
-               
-            });
-}
-    
-
-          
-
-            
-            
-                
-else if( data.casesBatch < 140 || data.casesBatch >= data.palletCasesBatch && {{{remainderCases}}} == 0 && {{currentCases}}== data.casesBatch && {{{rCases}}} <= 140 ){
-  console.log('yea22',data.size,data.casesBatch,data.palletCasesBatch)
-
-           var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-    td1.id =data._id
-    td5.id = data._id
-
-    td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.availableCasesDispatch;
-
-    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
-    td5.innerHTML = data.mformat
-    td6.innerHTML = data.warehouse
-    td7.innerHTML = data.timeOfDispatch
-    
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
-     $("#barcodeNumber").val("")
-
-   let batchId = document.getElementById('batchId').value
-           let refNumber = document.getElementById('refNumber').value
-            $.ajax({
-                dataType: 'json',
-                data: {
-                    code: scanned_barcode,
-                    
-                },
-                type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
-                success: function(docs) {
-console.log(docs,'ocs')
-
-                 for(var i =0;i< docs.length;i++){ 
-                   var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-
-
-
-    td1.id =docs[i]._id
-    td5.id = docs[i]._id
-
-
-
-
-
-    td1.innerHTML = docs[i].barcodeNumber;
-    td2.innerHTML = docs[i].availableCasesDispatch;
-   
-    td4.innerHTML=  docs[i].availableCasesDispatch - docs[i].casesDispatched ;
-    td5.innerHTML = docs[i].mformat
-    td6.innerHTML = docs[i].warehouse
-    td7.innerHTML = docs[i].timeOfDispatch
-    
-
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(docs[i].availableCasesDispatch - docs[i].casesDispatched)
-     $("#barcodeNumber").val("")
-
-console.log(docs[i].size, data.casesBatch,'marino1')
-
-
-document.getElementById("closeBtn").style.display = "";
-/*else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-
-
-//if(docs[i].size === data.casesBatch){
-             //alert('Batch Closed')
-             // window.location.href = "http://niyonsoft.org/batchDispatch"
-             //window.location.href = "http://localhost:8000/fifoUpdate"
-            //document.getElementById('barcodeNumber').setAttribute('readonly', true);
-              //  document.getElementById('barcodeNumber').setAttribute('hidden', false);
-             //window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
-
-
-        //}
-
-
-}
-
-
-document.getElementById('barcodeNumber').setAttribute('readonly', true);
-console.log(docs.length,'docsLength',docs[0].casesBatch,'casesBatch')
-
-         
-//document.getElementById('closeBtn').setAttribute('hidden', false);
-/*if(docs[0].position === 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-                    }
-               
-             
-                
-                 
-                
-               
-            });
-}
-    
-          
-
-
-                         
-else if( data.casesBatch < 140 || data.casesBatch >= data.palletCasesBatch && {{{remainderCases}}} == 0 ){
-  console.log('yea33',data.size,data.casesBatch,data.palletCasesBatch)
-
-           var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-    td1.id =data._id
-    td5.id = data._id
-
-    td1.innerHTML = data.barcodeNumber;
-    td2.innerHTML = data.availableCasesDispatch;
-
-    td4.innerHTML=  data.availableCasesDispatch - data.casesDispatched ;
-    td5.innerHTML = data.mformat
-    td6.innerHTML = data.warehouse
-    td7.innerHTML = data.timeOfDispatch
-    
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(data.availableCasesDispatch - data.casesDispatched)
-     $("#barcodeNumber").val("")
-
-   let batchId = document.getElementById('batchId').value
-           let refNumber = document.getElementById('refNumber').value
-            $.ajax({
-                dataType: 'json',
-                data: {
-                    code: scanned_barcode,
-                    
-                },
-                type: 'POST',
-                url: "./dispatch/dispatchPallet/"+refNumber,
-                success: function(docs) {
-console.log(docs,'ocs')
-
-                 for(var i =0;i< docs.length;i++){ 
-                   var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    var td7 = tr.appendChild(document.createElement('td'));
-
-
-
-
-    td1.id =docs[i]._id
-    td5.id = docs[i]._id
-
-
-
-
-
-    td1.innerHTML = docs[i].barcodeNumber;
-    td2.innerHTML = docs[i].availableCasesDispatch;
-   
-    td4.innerHTML=  docs[i].availableCasesDispatch - docs[i].casesDispatched ;
-    td5.innerHTML = docs[i].mformat
-    td6.innerHTML = docs[i].warehouse
-    td7.innerHTML = docs[i].timeOfDispatch
-    
-
-    document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#availableCases").val(docs[i].availableCasesDispatch - docs[i].casesDispatched)
-     $("#barcodeNumber").val("")
-
-console.log(docs[i].size, data.casesBatch,'marino1')
-if(docs[i].size ==  docs[i].casesBatch ){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else if(docs[i].size ==  docs[i].casesBatch && docs[i].position != 'last' ){
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}
-
-
-else if(docs[i].size !=  docs[i].casesBatch && docs[i].position != 'last' ){
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}
-
-
-else if(docs[i].size ==  docs[i].casesBatch && docs[i].position == 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-//document.getElementById("closeBtn").style.display = "";
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}
-
-
-//if(docs[i].size === data.casesBatch){
-             //alert('Batch Closed')
-             // window.location.href = "http://niyonsoft.org/batchDispatch"
-             //window.location.href = "http://localhost:8000/fifoUpdate"
-            //document.getElementById('barcodeNumber').setAttribute('readonly', true);
-              //  document.getElementById('barcodeNumber').setAttribute('hidden', false);
-             //window.location.href = "http://localhost:8000/salesStockUpdate/"+data.batchId
-
-
-        //}
-
-
-}
-
-
-document.getElementById('barcodeNumber').setAttribute('readonly', true);
-console.log(docs.length,'docsLength',docs[0].casesBatch,'casesBatch')
-
-         
-//document.getElementById('closeBtn').setAttribute('hidden', false);
-/*if(docs[0].position === 'last'){
-document.getElementById("closeBtn").style.display = "";
-}
-
-else{
-document.getElementById("closePallet").style.display = "";
-document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
-}*/
-                    }
-               
-             
-                
-                 
-                
-               
-            });
-}
-    
-          
-
-       else if(data.size === 3){
+       else if(data.size === 1){
 
          console.log('yea',data.size)
 
@@ -1311,16 +669,16 @@ console.log(docs,'ocs')
 
 console.log(docs[i].size, data.casesBatch,'marino1')
 
-if(docs[i].size ==  docs[i].casesBatch ){
+if(docs.length ==  docs[i].casesBatch ){
 document.getElementById("closeBtn").style.display = "";
 }
 
-else if(docs[i].size ==  docs[i].casesBatch && docs[i].position != 'last' ){
+else if(docs.length < docs[i].casesBatch  ){
 document.getElementById("closePallet").style.display = "";
 document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
 }
 
-
+/*
 else if(docs[i].size !=  docs[i].casesBatch && docs[i].position != 'last' ){
 document.getElementById("closePallet").style.display = "";
 document.getElementById('closePallet').setAttribute('href',`/dispatch/closePallet/${batchId}`)
@@ -1553,7 +911,7 @@ document.getElementById('closePallet').setAttribute('href',`/dispatch/closePalle
       <!--<button id="ember334" class="btn btn-primary ember-view" type="submit"> Receive </button>-->
         <a onclick="return confirm('Are you sure you want to Force Close this batch ?');" href="/dispatch/salesStockUpdate/{{batchId}}"  class="btn btn-primary ember-view" id="ember334" >Force Close Batch</a>
      <a  id="closeBtn" class="btn btn-primary ember-view"  href="/dispatch/salesStockUpdate/{{batchId}}" style="display: none;" >Close Batch</a>
-      <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePallet/{{batchId}}" style="display: none;" >Close Pallet</a>
+      <a  id="closePallet" class="btn btn-primary ember-view"  href="/dispatch/closePallet/{{batchId}}" style="display: none;" >Next Pallet</a>
      <!--<button id="ember335" class="btn btn-secondary ember-view" type="button"> Convert to Adjusted</button>
       <a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/dispatch/eodReport">Run Report</button></div>-->
       </form>
