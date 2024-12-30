@@ -135,8 +135,8 @@ StockV.find({pallet:1,status:"received"},function(err,docs){
 
 
 router.get('/seom29',isLoggedIn,function(req,res){
-  StockV.find({pallet:93},function(err,docs){
-    for(var i = 0;i<142;i++){
+  StockV.find({pallet:32},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B55D12242024S1B1R",salesPerson:"Privilege",time:"14:51",truckNo:"AFG2997",dispatchMformat:"2024/12/30",dispatcher:"Victor Ruka",dateValueDispatch:1735513200000,
       status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677297a65a3223bf5571c1a6"
@@ -144,15 +144,15 @@ router.get('/seom29',isLoggedIn,function(req,res){
   
       })
     }
-    res.redirect('/dispatch/batchDispatch')
+    res.redirect('/dispatch/seom30')
   })
   })
   router.get('/seom30',isLoggedIn,function(req,res){
-    StockV.find({pallet:80},function(err,docs){
+    StockV.find({pallet:37},function(err,docs){
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
-        StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12292024B53D12242024S1B1R",salesPerson:"Victor",time:"11:47",truckNo:"AGF8167",dispatchMformat:"12/29/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
-        status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677288638802e6b79be9d859"
+        StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B55D12242024S1B1R",salesPerson:"Privilege",time:"14:51",truckNo:"AFG2997",dispatchMformat:"2024/12/30",dispatcher:"Victor Ruka",dateValueDispatch:1735513200000,
+        status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677297a65a3223bf5571c1a6"
         }},function(err,tocs){
     
         })
@@ -160,14 +160,12 @@ router.get('/seom29',isLoggedIn,function(req,res){
       res.redirect('/dispatch/seom31')
     })
     })
-    
-
     router.get('/seom31',isLoggedIn,function(req,res){
-      StockV.find({pallet:26},function(err,docs){
+      StockV.find({pallet:84},function(err,docs){
         for(var i = 0;i<docs.length;i++){
           let id = docs[i]._id
-          StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12292024B53D12242024S1B1R",salesPerson:"Victor",time:"11:47",truckNo:"AGF8167",dispatchMformat:"12/29/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
-          status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677288638802e6b79be9d859"
+          StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B55D12242024S1B1R",salesPerson:"Privilege",time:"14:51",truckNo:"AFG2997",dispatchMformat:"2024/12/30",dispatcher:"Victor Ruka",dateValueDispatch:1735513200000,
+          status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677297a65a3223bf5571c1a6"
           }},function(err,tocs){
       
           })
@@ -175,13 +173,12 @@ router.get('/seom29',isLoggedIn,function(req,res){
         res.redirect('/dispatch/seom32')
       })
       })
-
       router.get('/seom32',isLoggedIn,function(req,res){
-        StockV.find({pallet:41},function(err,docs){
+        StockV.find({pallet:91},function(err,docs){
           for(var i = 0;i<docs.length;i++){
             let id = docs[i]._id
-            StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12292024B53D12242024S1B1R",salesPerson:"Victor",time:"11:47",truckNo:"AGF8167",dispatchMformat:"12/29/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
-            status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677288638802e6b79be9d859"
+            StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B55D12242024S1B1R",salesPerson:"Privilege",time:"14:51",truckNo:"AFG2997",dispatchMformat:"2024/12/30",dispatcher:"Victor Ruka",dateValueDispatch:1735513200000,
+            status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677297a65a3223bf5571c1a6"
             }},function(err,tocs){
         
             })
@@ -191,12 +188,12 @@ router.get('/seom29',isLoggedIn,function(req,res){
         })
 
 
-        router.get('/seom56',isLoggedIn,function(req,res){
-          StockV.find({pallet:81,status:"received"},function(err,docs){
-            for(var i = 0;i<21;i++){
+        router.get('/seom29',isLoggedIn,function(req,res){
+          StockV.find({pallet:32},function(err,docs){
+            for(var i = 0;i<docs.length;i++){
               let id = docs[i]._id
-              StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12272024B17D12242024S1B1R",salesPerson:"Rosemary",time:"07:24",truckNo:"AGX0418",dispatchMformat:"12/27/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-              status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676e3a67473d7ffb674ff683"
+              StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B55D12242024S1B1R",salesPerson:"Privilege",time:"14:51",truckNo:"AFG2997",dispatchMformat:"2024/12/30",dispatcher:"Victor Ruka",dateValueDispatch:1735513200000,
+              status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677297a65a3223bf5571c1a6"
               }},function(err,tocs){
           
               })
