@@ -1562,7 +1562,7 @@ let total = hocs.length
             StockV.find({pallet:palletNum,refNumber:refNumber},function(err,hocs){
               for(var i = 0;i<hocs.length;i++){
                 let id = hocs[i]._id
-            StockV.findByIdAndUpate(id,{$set:{remainingCases:remainingCases}},function(err,locs){
+            StockV.findByIdAndUpdate(id,{$set:{remainingCases:remainingCases}},function(err,locs){
               
             })
               }
