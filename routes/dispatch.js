@@ -135,11 +135,11 @@ StockV.find({pallet:1,status:"received"},function(err,docs){
 
 
 router.get('/seom29',isLoggedIn,function(req,res){
-  StockV.find({pallet:87},function(err,docs){
-    for(var i = 0;i<docs.length;i++){
+  StockV.find({pallet:93},function(err,docs){
+    for(var i = 0;i<142;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12282024B54D12242024S1B1R",salesPerson:"Faith Murehwa",time:"12:24",truckNo:"AGC6653",dispatchMformat:"12/28/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
-      status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677247577d1772966fc3e96e"
+      StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B55D12242024S1B1R",salesPerson:"Privilege",time:"14:51",truckNo:"AFG2997",dispatchMformat:"2024/12/30",dispatcher:"Victor Ruka",dateValueDispatch:1735513200000,
+      status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677297a65a3223bf5571c1a6"
       }},function(err,tocs){
   
       })
