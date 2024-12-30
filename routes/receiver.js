@@ -1368,8 +1368,8 @@ router.get('/closeBatch/:id',function(req,res){
   //  console.log(docs,'docs')
 let cases = docs.length
   BatchR.findById(batchId,function(err,doc){
-    let openingBal = doc.openingBal
-    let closingBalance = doc.openingBal + docs.length
+    let openingBal = 0
+    let closingBalance = 0l + docs.length
 
     BatchR.findByIdAndUpdate(batchId,{$set:{cases:cases,closingBal:closingBalance}},function(err,tocs){
 
@@ -1384,7 +1384,7 @@ let cases = docs.length
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =110; i< productChunks.length;i++){
+    for(var i =100; i< productChunks.length;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
