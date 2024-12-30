@@ -138,7 +138,7 @@ router.get('/seom29',isLoggedIn,function(req,res){
   StockV.find({pallet:87},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12302024B47D12242024S1B1R",salesPerson:"Victor",time:"09:09",truckNo:"AGC6653",dispatchMformat:"12/30/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
+      StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12282024B54D12242024S1B1R",salesPerson:"Faith Murehwa",time:"12:24",truckNo:"AGC6653",dispatchMformat:"12/28/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
       status:"dispatched",destination:"Local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"677247577d1772966fc3e96e"
       }},function(err,tocs){
   
