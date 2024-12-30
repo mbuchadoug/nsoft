@@ -2362,7 +2362,7 @@ StockV.find({casesBatchNumber:casesBatchNumber,statusB:"dispatched"},function(er
 
   console.log(cases,scannedCases,'asap',status)
 
-      if(cases == scannedCases || statusB == 'dispatched' ){
+      if(cases == scannedCases || status == 'dispatched' ){
         currentBatchCount++
         //if(currentBatchCount == batchCount){
   BatchD.findByIdAndUpdate(id,{$set:{batchStatus:'closed'}},function(err,locs){
