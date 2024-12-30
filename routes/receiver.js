@@ -158,16 +158,16 @@ router.get('/upChange2',function(req,res){
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-  StockV.find({prPallet:2,prRefNumber:"12252024CS2R"},function(err,docs){
+  StockV.find({pallet:20,prRefNumber:"12252024CS2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{name:"kambucha No3",warehouse:"warehouse3",date:"2024/12/25",mformat:"12/25/2024",
       status:"received",shift:'day',month:"December",refNumber:"12242024S1B1R",status2:"dispatch",
-      year:2024,casesReceived:1,refNumReceive:"2RC",receiver:"Armstrong"}},function(err,tocs){
+      year:2024,casesReceived:1,refNumReceive:"77BRC",receiver:"Armstrong"}},function(err,tocs){
   
       })
     }
-    res.redirect('/receiver/seomPrv')
+    res.redirect('/')
   })
   })
 
@@ -1384,7 +1384,7 @@ let cases = docs.length
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =100; i< productChunks.length;i++){
+    for(var i =110; i< productChunks.length;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){

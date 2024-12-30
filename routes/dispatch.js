@@ -134,12 +134,12 @@ StockV.find({pallet:1,status:"received"},function(err,docs){
 })
 
 
-router.get('/seom2',isLoggedIn,function(req,res){
-  StockV.find({pallet:1},function(err,docs){
-    for(var i = 0;i<10;i++){
+router.get('/seom29',isLoggedIn,function(req,res){
+  StockV.find({pallet:29},function(err,docs){
+    for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
-      StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B16D12242024S1B1R",salesPerson:"wayne",time:"11:31",truckNo:"TVRC555",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
-      status:"dispatched",destination:"local",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"676c1573e6134e22bb8cfa10"
+      StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12292024B41D12242024S1B1R",salesPerson:"Esthery Lampi",time:"10:27",truckNo:"TAFG2988",dispatchMformat:"12/29/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735426800000,
+      status:"dispatched",destination:"Nyanga",name:"kambucha No3",month:"December",year:2024,type:"individual",batchId:"67722f6b81842a5c847c1d1f"
       }},function(err,tocs){
   
       })
@@ -148,10 +148,10 @@ router.get('/seom2',isLoggedIn,function(req,res){
   })
   })
   router.get('/seom3',isLoggedIn,function(req,res){
-    StockV.find({pallet:25},function(err,docs){
+    StockV.find({pallet:26},function(err,docs){
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
-        StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12252024B15D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
+        StockV.findByIdAndUpdate(id,{$set:{refNumDispatch:"12292024B41D12242024S1B1R",salesPerson:"Bulawayo",time:"11:31",truckNo:"AGA2624",dispatchMformat:"12/25/2024",dispatcher:"Victor Ruka",dateValueDispatch:1735081200000,
         status:"dispatched",destination:"bulawayo",name:"kambucha No3",month:"December",year:2024,type:"branch",batchId:"676c0ac0e4c8601e3c9b3e7d"
         }},function(err,tocs){
     
