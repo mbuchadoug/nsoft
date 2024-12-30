@@ -1369,7 +1369,7 @@ router.get('/closeBatch/:id',function(req,res){
 let cases = docs.length
   BatchR.findById(batchId,function(err,doc){
     let openingBal = 0
-    let closingBalance = 0l + docs.length
+    let closingBalance = 0 + docs.length
 
     BatchR.findByIdAndUpdate(batchId,{$set:{cases:cases,closingBal:closingBalance}},function(err,tocs){
 
