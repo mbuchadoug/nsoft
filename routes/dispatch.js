@@ -4373,13 +4373,13 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/dispatch/repo');
     }else{
 
-StockV.find({statusB:"dispatched",refNumber:"12242024S1B1R"},function(err,docs){
+StockV.find({statusB:"dispatched",refNumber:"12242024S1B1R",date:'2024/12/30'},function(err,docs){
   total = docs.length
   console.log(total,'total555')
 StockV.find({status:"breakage",refNumber:"12242024S1B1R"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({refNumber:"12242024S1B1R",date:'2024/12/31'},function(err,locs){
+  BatchD.find({refNumber:"12242024S1B1R",date:'2024/12/30'},function(err,locs){
     console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -4463,7 +4463,7 @@ let date = req.user.date
     
     
     //TestX.find({year:year,uid:uid},function(err,vocs) {
-    BatchD.find({refNumber:"12242024S1B1R",date:'2024/12/31'}).lean().sort({date:1}).then(vocs=>{
+    BatchD.find({refNumber:"12242024S1B1R",date:'2024/12/30'}).lean().sort({date:1}).then(vocs=>{
     console.log(vocs.length,'vocs')
     
     for(var x = 0;x<vocs.length;x++){
