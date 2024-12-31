@@ -38,6 +38,7 @@ var userSchema = new mongoose.Schema({
     batchNumber:{type:String},
     currentBatchCount:{type:Number},
     batchCount:{type:Number},
+    openingBal:{type:Number},
     casesBatch:{type:Number},
     batchPallets:{type:Number},
     palletCount:{type:Number},
