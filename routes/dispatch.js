@@ -578,6 +578,7 @@ router.get('/replace',function(req,res){
   
       //var refNumber = req.body.referenceNumber
       var m = moment()
+      var openingStock = req.body.stock
       var year = m.format('YYYY')
       var month = m.format('MMMM')
       var date = req.body.date
@@ -825,8 +826,8 @@ let nSize = kocs.length + 1
    
                 var book = new BatchD()
                 book.date = date
-                book.openingStock = openingBal
-                book.closingStock = closingBal
+                book.openingStock = openingStock
+                //book.closingStock = closingBal
                 book.cases = batchdCases
                 book.batchTotalCases = cases
                 book.truck = truck
@@ -2701,6 +2702,9 @@ res.redirect('/dispatch/statusUpdate')
     var arr16=[]
     let op 
     let holdingCases,salesClosingStock,salesOpeningStock,closingBalF,closingBalF4
+    StockV.find({status:"received"},function(err,gocs){
+   let gSize = gocs.length
+   
     SaleStock.find({salesPerson:salesPerson,product:product},function(err,vocs){
 //let op = vocs[0].holdingCases  
 if(vocs.length == 0){
@@ -2738,7 +2742,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
     closingBal = op + docs[0].cases 
     let id2 = docs[0]._id
     
-    BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
+    BatchD.findByIdAndUpdate(id2,{$set:{closingStock:gSize,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
 
     })
 
@@ -2758,7 +2762,7 @@ console.log(jocs,'yams')
           closingBal = openingBal + yocs[0].cases
          
           let idV = yocs[0]._id
-        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesOpeningBalance:holdingCases}},function(err,rocs){
+        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:gSize,salesOpeningBalance:holdingCases}},function(err,rocs){
   
         })
         })
@@ -2831,7 +2835,7 @@ console.log(jocs,'yams')
         BatchD.find({size:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
           let idV = yocs[0]._id
-        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,rocs){
+        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:gSize,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,rocs){
   
         })
         })
@@ -2912,7 +2916,7 @@ console.log(jocs,'yams')
       BatchD.find({position:rSize,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
         closingBal = openingBal + yocs[0].cases
         let idV = yocs[0]._id
-      BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
+      BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:gSize,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
 
       })
       })
@@ -2995,7 +2999,7 @@ console.log(jocs,'yams')
     closingBal = op + docs[0].cases 
     let id2 = docs[0]._id
     
-    BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
+    BatchD.findByIdAndUpdate(id2,{$set:{closingStock:gSize,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
 
     })
           
@@ -3009,7 +3013,7 @@ console.log(jocs,'yams')
             BatchD.find({position:rSize2,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
               closingBal = openingBal + yocs[0].cases
               let idV = yocs[0]._id
-            BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
+            BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:gSize,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
       
             })
 
@@ -3095,7 +3099,7 @@ openingBal =op
 closingBal = op + docs[0].cases 
 let id2 = docs[0]._id
 
-BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
+BatchD.findByIdAndUpdate(id2,{$set:{closingStock:gSize,openingStock:openingBal,salesClosingStock:salesClosingStock,salesOpeningStock:holdingCases}},function(err,locs){
 
 })
       
@@ -3109,7 +3113,7 @@ BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:opening
         BatchD.find({position:rSize3,refNumDispatch:refNumDispatch,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
           let idV = yocs[0]._id
-        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:closingBal,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
+        BatchD.findByIdAndUpdate(idV,{$set:{openingStock:openingBal,closingStock:gSize,salesClosingStock:closingBal,salesOpeningStock:openingBal}},function(err,rocs){
   
         })
 
@@ -3117,7 +3121,7 @@ BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:opening
         BatchD.find({position:rSize2,refNumDispatch:refNumDispatch,product:product},function(err,nocs){
           closingBalF = closingBal + nocs[0].cases
           let idVV = nocs[0]._id
-        BatchD.findByIdAndUpdate(idVV,{$set:{openingStock:closingBal,closingStock:closingBalF,salesClosingStock:closingBalF,salesOpeningStock:closingBal}},function(err,rocs){
+        BatchD.findByIdAndUpdate(idVV,{$set:{openingStock:gSize,closingStock:closingBalF,salesClosingStock:closingBalF,salesOpeningStock:closingBal}},function(err,rocs){
   
         })
 
@@ -3128,7 +3132,7 @@ BatchD.findByIdAndUpdate(id2,{$set:{closingStock:closingBal,openingStock:opening
       BatchD.find({position:rSize,refNumDispatch:refNumDispatch,product:product},function(err,nocs){
        closingBalF4 = closingBalF + nocs[0].cases
          let idV4 = nocs[0]._id
-       BatchD.findByIdAndUpdate(idV4,{$set:{openingStock:closingBalF,closingStock:closingBalF4,salesClosingStock:closingBalF4,salesOpeningStock:closingBalF}},function(err,rocs){
+       BatchD.findByIdAndUpdate(idV4,{$set:{openingStock:closingBalF,closingStock:gSize,salesClosingStock:closingBalF4,salesOpeningStock:closingBalF}},function(err,rocs){
  
        })
 
@@ -3272,7 +3276,7 @@ res.redirect('/dispatch/statusUpdate')
 })
 })
   })
-  
+})
   
 
   router.get('/salesStockUpdate33/:id',function(req,res){
