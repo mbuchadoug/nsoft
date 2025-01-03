@@ -582,6 +582,8 @@ router.get('/replace',function(req,res){
       var year = m.format('YYYY')
       var month = m.format('MMMM')
       var date = req.body.date
+      var currentTime = moment();
+      console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
       let mformat =  moment(date).format('l');
       let dateValue = moment(date).valueOf()
       var dispatcher = req.user.fullname
@@ -813,7 +815,7 @@ else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
         closingBal = cases
       }
      
-      BatchD.find(function(err,kocs){
+      BatchD.find({status:"dispatch"},function(err,kocs){
 let nSize = kocs.length + 1
     
       
@@ -832,8 +834,8 @@ let nSize = kocs.length + 1
                 book.batchTotalCases = cases
                 book.truck = truck
                 book.salesPerson = salesPerson
-                book.time = time
-                book.status = 'pending'
+                book.time = moment(currentTime).format("HH:mm")
+                book.status = 'dispatched'
                 book.destination = destination
                 //book.warehouse = warehouse
                 book.product = product
@@ -1899,7 +1901,7 @@ console.log(batchdCases,'batchdCases Iwewe')
                 book.pallets = nextPallet
                 book.currentPallet = 0
                 book.remainderCases = dispatchedPalletsR
-                book.status = 'pending'
+                book.status = 'dispatch'
                 book.destination = destination
                 //book.warehouse = warehouse
                 book.product = product
@@ -2720,7 +2722,7 @@ if(vocs.length == 0){
 
 
 console.log(op,'op')
-BatchD.find(function(err,rocs){
+BatchD.find({status:"dispatched"},function(err,rocs){
 
 console.log(refNumDispatch,'refNum')
 BatchD.find({refNumDispatch:refNumDispatch,product:product},function(err,docs){
@@ -4373,13 +4375,13 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/dispatch/repo');
     }else{
 
-StockV.find({statusB:"dispatched",refNumber:"12242024S1B1R",date:'2024/12/30'},function(err,docs){
+StockV.find({statusB:"dispatched",},function(err,docs){
   total = docs.length
   console.log(total,'total555')
-StockV.find({status:"breakage",refNumber:"12242024S1B1R"},function(err,vocs){
+StockV.find({status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({refNumber:"12242024S1B1R",date:'2024/12/31'},function(err,locs){
+  BatchD.find({},function(err,locs){
     console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -4463,7 +4465,7 @@ let date = req.user.date
     
     
     //TestX.find({year:year,uid:uid},function(err,vocs) {
-    BatchD.find({refNumber:"12242024S1B1R",date:'2024/12/31'}).lean().sort({date:1}).then(vocs=>{
+    BatchD.find({}).lean().sort({date:1}).then(vocs=>{
     console.log(vocs.length,'vocs')
     
     for(var x = 0;x<vocs.length;x++){
@@ -4671,8 +4673,8 @@ form.append("file", file,filename);
 await Axios({
 method: "POST",
 //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
- url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
- //url:'http://localhost:8000/dispatch/uploadStatementDispatch',
+ //url: 'https://niyonsoft.org/dispatch/uploadStatementDispatch',
+ url:'http://localhost:8000/dispatch/uploadStatementDispatch',
 headers: {
   "Content-Type": "multipart/form-data"  
 },

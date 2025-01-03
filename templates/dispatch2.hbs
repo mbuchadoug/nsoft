@@ -155,7 +155,7 @@ body {
     <div class="middlepane">
         <h1 style="text-align: center;font-family: Georgia, serif; font-size:25px;"> <b></b> KUMBUCHA FRESH <br> ZIMBABWE <b></h1>
          
-        <p style="text-align: center; ">17001<br> Sande Crescent Graniteside <br>Harare,Zim <br> 12/31/2024  </p>
+        <p style="text-align: center; ">17001<br> Sande Crescent Graniteside <br>Harare,Zim <br> {{this.0.date}}  </p>
 
         <br>
         <br>
@@ -232,12 +232,12 @@ body {
              Item
             </th>
    <th  style="text-align:center">
-             Sales Person
+            Action
              
                </th>
 
                   <th  style="text-align:center">
-             Truck
+             Truck / Pallet
              
                </th>
 
@@ -264,19 +264,24 @@ body {
              
                </th>
 
+                <th  style="text-align:center">
+          Cases Received
+             
+               </th>
+
 
                  <th  style="text-align:center">
            SalesP Closing Stock
              
                </th>
            
-            <th  style="text-align:center; "  >
-            Dispatcher
-             
-               </th>
+         
 
                 
-
+ <th  style="text-align:center; "  >
+            Dispatcher / Receiver
+             
+               </th>
               
 
                <th  style="text-align:center; ">
@@ -305,7 +310,7 @@ body {
             </td>
 
             <td style="text-align: left; ">
-             {{this.salesPerson}}
+            {{this.status}} : {{this.salesPerson}}
             </td>
 
             <td style="text-align: left; ">
@@ -328,6 +333,10 @@ body {
              {{this.cases}}
             </td>
 
+             <td style="text-align: right; ">
+             {{this.casesReceived}}
+            </td>
+
 
              <td style="text-align: right; ">
              {{this.salesClosingStock}}
@@ -336,6 +345,8 @@ body {
       <td style="text-align: right;  " >
           {{this.dispatcher}}
         </td>
+
+   
 
            
 
@@ -383,12 +394,12 @@ body {
   ;">
         <tr style="border-bottom:1px solid black" >
             <td  > Cases Dispatched</td>
-            <td  style="text-align: end;"> 1091</td>
+            <td  style="text-align: end;">280</td>
          
         </tr>
         <tr style="border-bottom:1px solid black">
            <td> Breakages </td>
-           <td  style="text-align: end;">40 </td>
+           <td  style="text-align: end;">{{this.0.breakages}} </td>
          
        </tr>
        

@@ -158,16 +158,16 @@ router.get('/upChange2',function(req,res){
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-  StockV.find({pallet:20,prRefNumber:"12252024CS2R"},function(err,docs){
+  StockV.find({prPallet:2,prRefNumber:"12252024CS2R"},function(err,docs){
     for(var i = 0;i<docs.length;i++){
       let id = docs[i]._id
       StockV.findByIdAndUpdate(id,{$set:{name:"kambucha No3",warehouse:"warehouse3",date:"2024/12/25",mformat:"12/25/2024",
-      status:"received",shift:'day',pallet:118,month:"December",refNumber:"12242024S1B1R",status2:"dispatch",
-      year:2024,casesReceived:1,refNumReceive:"77BRC",receiver:"Armstrong"}},function(err,tocs){
+      status:"received",shift:'day',month:"December",refNumber:"12242024S1B1R",status2:"dispatch",
+      year:2024,casesReceived:1,refNumReceive:"2RC",receiver:"Armstrong"}},function(err,tocs){
   
       })
     }
-    res.redirect('/')
+    res.redirect('/receiver/seomPrv')
   })
   })
 
@@ -406,13 +406,22 @@ refNumDispatch:"null",casesBatchNumber:0,palletCasesBatch:0,type:"null"}},functi
 
 })
 }
-
-
 //res.redirect('/receiver/updateSalesStock0')
 })
 
-
 })
+router.get('/batchrUpdate',isLoggedIn,function(req,res){
+  var refNumber = req.user.refNumber
+  var id = req.user._id
+  StockV.find({refNumber:refNumber},function(err,docs){
+    let size = docs.length / 140
+  
+    User.findByIdAndUpdate(id,{$set:{palletNum:size}},function(err,rocs){
+
+    })
+  })
+})
+
 
 router.get('/batchdUpdate',isLoggedIn,function(req,res){
   BatchD.find(function(err,ocs){
@@ -898,6 +907,7 @@ router.get('/warehouseUpdate',function(req,res){
     var shift = req.user.shift
     var casesReceived = 1
     var lot = req.user.lot
+    //let palletNum = req.user.palletNum + 1
     var countSizeV = req.user.countSize
     var refNumber = req.user.refNumber
     var location = req.user.location
@@ -915,6 +925,7 @@ router.get('/warehouseUpdate',function(req,res){
     var expiryDateValue = expiryDateValue
     var expiryMformat = expiryMformat
     let sId
+    let palletNum
    
     console.log(product,shift,casesReceived,warehouse,'out')
     
@@ -957,6 +968,21 @@ console.log(joc,'joc66')
         if( doc != null){
            sId = doc._id
           console.log(sId,'sId')
+      
+StockV.find({refNumber:refNumber},function(err,zocs){
+  let vSize = zocs.length / 140
+  if(vSize == 0  || vSize < 0){
+    palletNum = 1
+    User.findByIdAndUpdate(uid,{$set:{palletNum:palletNum}},function(err,tocs){
+
+    })
+  } else{
+    palletNum = vSize + 1
+    User.findByIdAndUpdate(uid,{$set:{palletNum:palletNum}},function(err,tocs){
+      
+    })
+  }
+
          StockV.find({refNumReceive:refNumReceive,preRefNumber:prRefNumber},function(err,rocs){
            let nSize = rocs.length
   
@@ -1019,7 +1045,7 @@ console.log(joc,'joc66')
     console.log(countSize,'countSize')
         
       StockV.findByIdAndUpdate(sId,{$set:{name:product,mformat:mformat,refNumber:refNumber,
-        warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",
+        warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",pallet:palletNum,
         cases:0,prPallet:prPallet,preRefNumber:prRefNumber,refCases:size,date:date2,casesReceived:casesReceived,availableCases:hoc.cases,
         shift:shift,year:year,month:month,countSize:countSize,refNumReceive:refNumReceive,receiver:receiver,dateValue:dateValue,
         expiryDateValue:expiryDateValue,expiryMformat:expiryMformat}},function(err,kocs){
@@ -1087,7 +1113,7 @@ console.log(joc,'joc66')
                   })
      
                   
-     
+                
                  })
   
   
@@ -1098,12 +1124,12 @@ console.log(joc,'joc66')
                   res.send(ocs[size])
                           })
             })
-            
+          
           })
           })    
         })
          })
-          
+        })
           }else{
 
 console.log(arr,'doc7')
@@ -1117,10 +1143,10 @@ res.send(arr2)
     }
     }
     
-    })  
+    
     
     })
-  
+  })
   
 
 
@@ -1140,6 +1166,7 @@ var shift = req.user.shift
 var prPallet = req.user.prPallet
 var casesReceived = 1
 var lot = req.user.lot
+let palletNum = req.user.palletNum 
 var refNumber = req.user.refNumber
 var refNumReceive = req.user.refNumReceive
 var location = req.user.location
@@ -1228,7 +1255,7 @@ var idU = req.user._id
                            
                           
                             StockV.findByIdAndUpdate(objId,{$set:{name:product,refNumber:refNumber,mformat:mformat,
-                              warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",
+                              warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",pallet:palletNum,
                               cases:0,prPallet:prPallet,preRefNumber:id,refCases:size,date:date2,casesReceived:casesReceived,availableCases:availableCases,
                               shift:shift,year:year,month:month,refNumReceive:refNumReceive,receiver:receiver,dateValue:dateValue,
                               expiryDateValue:expiryDateValue,expiryMformat:expiryMformat}},function(err,kocs){  
@@ -1368,8 +1395,8 @@ router.get('/closeBatch/:id',function(req,res){
   //  console.log(docs,'docs')
 let cases = docs.length
   BatchR.findById(batchId,function(err,doc){
-    let openingBal = 0
-    let closingBalance = 0 + docs.length
+    let openingBal = doc.openingBal
+    let closingBalance = doc.openingBal + docs.length
 
     BatchR.findByIdAndUpdate(batchId,{$set:{cases:cases,closingBal:closingBalance}},function(err,tocs){
 
@@ -1384,7 +1411,7 @@ let cases = docs.length
 
     console.log(productChunks.length,'chunks')
 
-    for(var i =110; i< productChunks.length;i++){
+    for(var i =100; i< productChunks.length;i++){
    let arr = []
    arr.push(productChunks[i])
       for(var x = 0;x<arr.length;x++){
@@ -1494,18 +1521,92 @@ let cases = docs.length
   })
 })*/
 
-router.get('/closePallet/:id',isLoggedIn,function(req,res){
+router.get('/closePallet/:id/:id2/:id3/:id4',isLoggedIn,function(req,res){
+  let arr16=[]
+  var receiver = req.user.fullname
+  var batchId = req.user.batchId
+  var m = moment()
+  var year = m.format('YYYY')
+  var month = m.format('MMMM')
+  let mformat =  moment().format('l');
+  var currentTime = moment();
+console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+  let refNumber  =req.params.id
+  let pallet = req.params.id4
+  let uid = req.user._id
+  let product = req.params.id2
+  let warehouse = req.params.id3
+  let date = req.user.date
+  let closingStock,openingStock
+StockV.find({name:product,status:"received"},function(err,locs){
+
+closingStock = locs.length
+openingStock = locs.length - 140
+  var book = new BatchD()
+                book.date = date
+                book.openingStock = openingStock
+                book.closingStock = closingStock
+                book.casesReceived = 140
+                
+                book.palletNum = pallet
+                book.time = moment(currentTime).format("HH:mm")
+                book.salesPerson = receiver
+                book.truck = pallet
+                warehouse = warehouse
+                
+                book.status = 'received'
+     
+                //book.warehouse = warehouse
+                book.product = product
+                book.refNumber = refNumber
+           
+              
+                book.dispatcher = receiver
+                book.year = year
+               
+                book.month = month
+          
+                book.save()   
+                .then(pro =>{
+                  let palletNum = req.user.palletNum + 1
+                  User.findByIdAndUpdate(uid,{$set:{countSize:0,palletNum:palletNum}},function(err,tocs){
+                      console.log('success')
+                      StockV.find({refNumber:refNumber},function(err,docs){
+                        //  console.log(docs,'docs')
+                      let casesT = docs.length
+                      
+                      
+                          BatchR.findByIdAndUpdate(batchId,{$set:{cases:casesT}},function(err,tocs){
+                      
+                          })
+
+                        })
+                        
+                
+                    
+                  })
+                  res.redirect('/receiver/receiveStock/'+refNumber)
+
+                })
+ 
+})
+})
+
+
+
+/*router.get('/closePallet/:id',isLoggedIn,function(req,res){
   let arr16=[]
   let refNumber  =req.params.id
   let uid = req.user._id
-  User.findByIdAndUpdate(uid,{$set:{countSize:0}},function(err,tocs){
+  let palletNum = req.user.palletNum + 1
+  User.findByIdAndUpdate(uid,{$set:{countSize:0,palletNum:palletNum}},function(err,tocs){
       console.log('success')
 
     
   })
   res.redirect('/receiver/receiveStock/'+refNumber)
  
-})
+})*/
 
 
 /*
@@ -1692,7 +1793,7 @@ router.get('/closePallet/:id',function(req,res){
           let remainingBal = locs.length - vocs.length
   
           if(total == totalDispatched){
-            BatchR.findByIdAndUpdate(id,{$set:{status:"dispatched",statsTotalCases:total,
+            BatchR.findByIdAndUpdate(id,{$set:{statusB:"dispatched",statsTotalCases:total,
           statsCasesDispatched:totalDispatched,statsRemainingCases:remainingBal}},function(err,nocs){
 
             })
@@ -2414,7 +2515,7 @@ router.get('/batchList',function(req,res){
     
       router.get('/dispatchedCases/:id',function(req,res){
         let refNumber = req.params.id
-        StockV.find({refNumber:refNumber,status:'dispatched'},function(err,docs){
+        StockV.find({refNumber:refNumber,statusB:'dispatched'},function(err,docs){
         
          
         
@@ -2469,7 +2570,7 @@ router.get('/batchList',function(req,res){
       router.get('/dispatchedCasesPallet/:id/:otherId',function(req,res){
         let refNumber = req.params.id
         let pallet = req.params.otherId
-        StockV.find({refNumber:refNumber,status:'dispatched',pallet:pallet},function(err,docs){
+        StockV.find({refNumber:refNumber,statusB:'dispatched',pallet:pallet},function(err,docs){
         
          
         
