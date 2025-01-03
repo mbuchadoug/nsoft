@@ -6838,7 +6838,7 @@ res.render('kambucha/itemFilesDispatchV',{listX:arr,month:month,pro:pro,year:yea
 
 
   
-router.get('/updateStockV888',function(req,res){
+router.get('/updateStock777',function(req,res){
   StockV.find(function(err,docs){
     for(var i = 0;i<docs.length;i++){
      let id = docs[i]._id
