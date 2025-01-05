@@ -129,8 +129,8 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 const publicVapidKey =
-  "BGFwt962IWOn7bmLgpHbymUBT5qnE-9pBbXVXmtlPdJEeIopDMqc4z_SAjoRl9yJjd8JLDOA9RustC8TpmKjiD0";
-const privateVapidKey = "qKAtR2IGV5Ll-neZbv91lvrzDOorSc2qScJZ8GvSEoo";
+  "BDFiLrd_w03VQWM5Zl9pc-71FsH6FPnbB3--YBuDTL3R7-sJ_puiEDUJFDFrWT1-JuvNMKd5bAMXL7vwZr8Hlic";
+const privateVapidKey = "uuCjz0XE27oKkGM3sPBECtCSykt0NcT0-QNcQe9MZ8A";
 
 webpush.setVapidDetails(
   "mailto:kratosmusasa@gmail.com",
