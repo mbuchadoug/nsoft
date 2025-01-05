@@ -149,7 +149,7 @@ router.post("/subscribe", (req, res) => {
   res.status(201).json({});
 
   // Create payload
-  const payload = JSON.stringify({ title: "Push Test" });
+  const payload = JSON.stringify({ title: "500kgs of Ginger Received" });
 
   // Pass object into sendNotification
   webpush
