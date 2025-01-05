@@ -8,6 +8,7 @@ var BatchSplit = require('../models/batchSplit');
 var PreRcvd = require('../models/preRcvd');
 var BatchPR = require('../models/batchPR');
 var Ware = require('../models/ware');
+const webpush = require("web-push");
 var Delivery = require('../models/delivery');
 var SaleStock = require('../models/salesStock');
 var BatchFermentationIngredients = require('../models/batchFermentationIngredients');
@@ -127,6 +128,34 @@ const storage = new GridFsStorage({
 
 
 const upload = multer({ storage })
+const publicVapidKey =
+  "BGFwt962IWOn7bmLgpHbymUBT5qnE-9pBbXVXmtlPdJEeIopDMqc4z_SAjoRl9yJjd8JLDOA9RustC8TpmKjiD0";
+const privateVapidKey = "qKAtR2IGV5Ll-neZbv91lvrzDOorSc2qScJZ8GvSEoo";
+
+webpush.setVapidDetails(
+  "mailto:kratosmusasa@gmail.com",
+  publicVapidKey,
+  privateVapidKey
+);
+
+
+
+// Subscribe Route
+router.post("/subscribe", (req, res) => {
+  // Get pushSubscription object
+  const subscription = req.body;
+
+  // Send 201 - resource created
+  res.status(201).json({});
+
+  // Create payload
+  const payload = JSON.stringify({ title: "Push Test" });
+
+  // Pass object into sendNotification
+  webpush
+    .sendNotification(subscription, payload)
+    .catch(err => console.error(err));
+});
 
 router.get('/search',function(req,res){
   res.render('kambucha/search')
