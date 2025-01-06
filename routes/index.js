@@ -75,7 +75,14 @@ const arr = {}
 const arr2 = {}
 const arrE ={}
 const arrE2 ={}
-
+const admin = require("firebase-admin")
+const getMessaging = require("firebase/messaging")
+var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-76b6f1f9bd.json')
+const tokenArray = ['cXhyshB0TgSyp7PzoevTBH:APA91bFn-Imz0vwwv58V3KkqNdcd2kFo1XjSP2wdTRBoVEY7BAZwn5GWaWxunkF5kogGdm1pXjT2istE1A_ItE-L8ihnydq8aCerDQ2sSmmln8kl_gXhCQw']
+/*admin.initializeApp({
+  credential:admin.credential.cert(serviceAccount)
+})*/
+//import { getMessaging } from "firebase-admin/messaging";
 const arrStatement = {}
 let arrStatementR = []
 var storageX = multer.diskStorage({
@@ -171,6 +178,75 @@ router.get('/updateBatch',function(req,res){
 })
 
 
+router.get('/pushV',function(req,res){
+  const firebaseConfig = {
+    apiKey: "AIzaSyDVT1YYuMqBl1SMOw07Nv2DS9uiK62liLI",
+    authDomain: "pushnot-f1f03.firebaseapp.com",
+    projectId: "pushnot-f1f03",
+    storageBucket: "pushnot-f1f03.firebasestorage.app",
+    messagingSenderId: "642936146229",
+    appId: "1:642936146229:web:565280568db4b136aae47c",
+    measurementId: "G-EMJP3MJKFH"
+  };
+  
+  // Initialize Firebase
+  admin.initializeApp(firebaseConfig);
+  const messaging =admin.messaging()
+  messaging.requestPermission()
+  .then(function(){
+    console.log('Have Permission')
+    return messaging.getToken()
+  })
+
+  .then(function(token){
+    console.log(token)
+  })
+
+  .catch(function(err){
+console.log('Error Occured')
+  })
+
+})
+router.get('/push',function(req,res){
+  console.log('trip')
+  if(!tokenArray.length){
+    return res.status(400).json({msg:"Fail"})
+  }
+
+  const message = {
+    notification:{
+      title:"Your Notification Title",
+      body:"Your Notification Body",
+    },
+    token:tokenArray[0],
+  }
+  admin
+   .messaging()
+   .send(message)
+   .then((response)=>{
+     console.log("Successfully sent message:",response);
+     return res.status(200).json({msg:"Send token"})
+   })
+   .catch((error)=>{
+     console.error("Error sending message",error);
+     return res.status(400).json({error})
+   })
+})
+
+
+
+router.post('/submitToken',function(req,res){
+  const token = req.body.token
+
+
+  if(!token){
+    return res.status(401).json({error:"Token not provided"})
+  }
+
+  tokenArray.push(token);
+
+  return res.json({msg:"Token received successfully"})
+})
 router.get('/pallet9',function(req,res){
   
 PreRcvd.find({pallet:9},function(err,docs){
