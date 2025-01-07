@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
 }
 
 // Register SW, Register Push, Send Push
-async function send() {
+async function send() { 
   // Register Service Worker
   console.log("Registering service worker...");
   const register = await navigator.serviceWorker.register("/worker.js", {

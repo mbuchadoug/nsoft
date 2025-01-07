@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
@@ -66,6 +67,7 @@ const crypto = require('crypto');
 var multer = require('multer')
 var Axios = require('axios')
 var mongodb = require('mongodb');
+var firebase = require('firebase')
 var FormData = require('form-data')
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
@@ -76,12 +78,13 @@ const arr2 = {}
 const arrE ={}
 const arrE2 ={}
 const admin = require("firebase-admin")
+
 const getMessaging = require("firebase/messaging")
-var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-76b6f1f9bd.json')
-const tokenArray = ['cXhyshB0TgSyp7PzoevTBH:APA91bFn-Imz0vwwv58V3KkqNdcd2kFo1XjSP2wdTRBoVEY7BAZwn5GWaWxunkF5kogGdm1pXjT2istE1A_ItE-L8ihnydq8aCerDQ2sSmmln8kl_gXhCQw']
-/*admin.initializeApp({
+var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-33a5a23e21.json')
+const tokenArray = ['crgbFGc4T9vSRU8rY3IwOy:APA91bHI3c9A3Y5Rwrl996k51IBhAAC2RssH9WYD2TVl9HhC8rxawa67h8e0VxxZifdixG4ZyIVTVXGiRQ7chusiq7-Uo7pzFTUMrat10xTy817UBobw02g']
+admin.initializeApp({
   credential:admin.credential.cert(serviceAccount)
-})*/
+})
 //import { getMessaging } from "firebase-admin/messaging";
 const arrStatement = {}
 let arrStatementR = []
@@ -134,6 +137,8 @@ const storage = new GridFsStorage({
 });
 
 
+
+
 const upload = multer({ storage })
 const publicVapidKey =
   "BDFiLrd_w03VQWM5Zl9pc-71FsH6FPnbB3--YBuDTL3R7-sJ_puiEDUJFDFrWT1-JuvNMKd5bAMXL7vwZr8Hlic";
@@ -152,6 +157,7 @@ router.post("/subscribe", (req, res) => {
   // Get pushSubscription object
   const subscription = req.body;
 
+  console.log(subscription,'subscription')
   // Send 201 - resource created
   res.status(201).json({});
 
@@ -176,7 +182,32 @@ router.get('/updateBatch',function(req,res){
     })
   })
 })
+router.get('/ngoma',function(req,res){
+  var messaging = admin.messaging();
 
+
+  const registrationToken = 'crgbFGc4T9vSRU8rY3IwOy:APA91bHhb5lOI3rGntrdMfzQKN1sEyXXQ7cHj8TCDxDDYEetoBi7TQ-sX03SEh0fuupmV7qincQZhHqULfF4RaBDUMdzuVA17prcl9Lw2d8tyWaivEtIw_I';
+
+const message = {
+  data: {
+    score: '850',
+    time: '2:45'
+  },
+  token: registrationToken
+};
+
+console.log('territory')
+// Send a message to the device corresponding to the provided
+// registration token.
+admin.messaging().send(message)
+  .then((response) => {
+    // Response is a message ID string.
+    console.log('Successfully sent message:', response);
+  })
+  .catch((error) => {
+    console.log('Error sending message:', error);
+  });
+})
 
 router.get('/pushV',function(req,res){
   const firebaseConfig = {
@@ -212,7 +243,7 @@ router.get('/push',function(req,res){
   if(!tokenArray.length){
     return res.status(400).json({msg:"Fail"})
   }
-
+console.log('flick')
   const message = {
     notification:{
       title:"Your Notification Title",
@@ -233,7 +264,48 @@ router.get('/push',function(req,res){
    })
 })
 
+router.post('/coziest',function(req,res){
+  
 
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDVT1YYuMqBl1SMOw07Nv2DS9uiK62liLI",
+    authDomain: "pushnot-f1f03.firebaseapp.com",
+    projectId: "pushnot-f1f03",
+    storageBucket: "pushnot-f1f03.firebasestorage.app",
+    messagingSenderId: "642936146229",
+    appId: "1:642936146229:web:565280568db4b136aae47c",
+    measurementId: "G-EMJP3MJKFH"
+  };
+
+   //firebase.initializeApp(firebaseConfig);
+   
+   const messaging = firebase.messaging()
+   console.log('tsumo')
+   messaging.onBackgroundMessage(function (payload) {
+    console.log('Handling background message ', payload);
+  
+    /*return self.registration.showNotification('Niyonsoft', {
+      body: 'Test',
+      icon: 'https://joldrillingsolutions.co.zw/kambuchaLogo.jpeg',
+      data: 'https://niyonsoft.org',
+    });*/
+
+    
+self.addEventListener("push", e => {
+  const data = e.data.json();
+  console.log("Push Recieved...");
+  self.registration.showNotification(data.title, {
+    body: "Notified by Niyonsoft!",
+    icon: "https://joldrillingsolutions.co.zw/kambuchaLogo.jpeg"
+  });
+});
+
+  });
+
+
+})
 
 router.post('/submitToken',function(req,res){
   const token = req.body.token
