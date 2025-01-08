@@ -80,7 +80,7 @@ const arrE2 ={}
 const admin = require("firebase-admin")
 
 const getMessaging = require("firebase/messaging")
-var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-33a5a23e21.json')
+var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-c4d3658f0d.json')
 const tokenArray = ['crgbFGc4T9vSRU8rY3IwOy:APA91bHI3c9A3Y5Rwrl996k51IBhAAC2RssH9WYD2TVl9HhC8rxawa67h8e0VxxZifdixG4ZyIVTVXGiRQ7chusiq7-Uo7pzFTUMrat10xTy817UBobw02g']
 admin.initializeApp({
   credential:admin.credential.cert(serviceAccount)
@@ -182,12 +182,50 @@ router.get('/updateBatch',function(req,res){
     })
   })
 })
+
+router.get('/log',function(req,res){
+  res.render('kambucha/login3')
+})
+
+const sendNotification = async (token) => {
+  try {
+    
+    const payload = {
+      notification: {
+        title: 'test',
+        body: 'Niyonsoft',
+      },
+      token: token,
+    };
+
+    const response = await admin.messaging().send(payload);
+    console.log('Successfully sent message:', response);
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+};
+
+
+router.post('/send-notification', async (req, res) => {
+  //const { userId, message } = req.body;
+  //var token = 'crgbFGc4T9vSRU8rY3IwOy:APA91bG0vaEGnPCUZdGb1qxruWibkaO1ro1GeWPQQMJDhEUwdqBEwSICBr4lolAWFdOgGjNfQsdDW3iz7cNda8-aARyWnjVhx5MndrHIey64IpZdLx7BT4M'
+  var token = 'cHUNFzfzhMKdaXA9KtHTYU:APA91bG2jc8_nKTcTDXp3RrMK_CXmpz7hCfYBWn0qfqjRQzMJqO4xA1jaTTTJAJja5f7dWZEI1ifTYp5p6mlLeRIqME8ObYQDYu56unzh5I7POHRWZPYH_0'
+ // var token = 'dFKOKwR9DtAJcsSgv0CeN0:APA91bEDRHKvE-locy0bAmYPO3SJgHuIGP9U2wrQ2YMI6K4bDBr2DwrKtBxkqs-BOP0DFtTQP6C_BSeoA5p66lrzVjdqy5aVhXAKsSBOYIhhIRcH5wSQ4Tk'
+ // var token = 'fwfWuFBmb5nGcCFXCxaYJO:APA91bE0V9xlAE4VY6IucQT26P2vHYnAG-y-vI5ZF2eHeYkcqGnLqoT1DrZPjghxi0n7DFoKd-U5Gzep7-5QzAwQXPeabmjVoDy_22kFwERnrv-IyjZx2iA'
+//var token = 'foJ4-Leh2t780BuosVi7_M:APA91bEau8haAbUfLgVLtGoBB3QYWUp-bYBCC1hHlxh1rx4KIZqRZoXcyq5u73vYhy-_Iu9HxQZ2UCrpSzxTmLpov-8gZ8k0TguDi8cDqSIiPLdEyeuW13M'
+  try {
+    await sendNotification(token);
+    res.status(200).send('Notification sent successfully.');
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
 router.get('/ngoma',function(req,res){
   var messaging = admin.messaging();
+const registrationToken ='dFKOKwR9DtAJcsSgv0CeN0:APA91bEDRHKvE-locy0bAmYPO3SJgHuIGP9U2wrQ2YMI6K4bDBr2DwrKtBxkqs-BOP0DFtTQP6C_BSeoA5p66lrzVjdqy5aVhXAKsSBOYIhhIRcH5wSQ4Tk'
 
-
-  const registrationToken = 'crgbFGc4T9vSRU8rY3IwOy:APA91bHhb5lOI3rGntrdMfzQKN1sEyXXQ7cHj8TCDxDDYEetoBi7TQ-sX03SEh0fuupmV7qincQZhHqULfF4RaBDUMdzuVA17prcl9Lw2d8tyWaivEtIw_I';
-
+  //const registrationToken = 'foJ4-Leh2t780BuosVi7_M:APA91bEau8haAbUfLgVLtGoBB3QYWUp-bYBCC1hHlxh1rx4KIZqRZoXcyq5u73vYhy-_Iu9HxQZ2UCrpSzxTmLpov-8gZ8k0TguDi8cDqSIiPLdEyeuW13M';
+ //const registrationToken ='foJ4-Leh2t780BuosVi7_M:APA91bEau8haAbUfLgVLtGoBB3QYWUp-bYBCC1hHlxh1rx4KIZqRZoXcyq5u73vYhy-_Iu9HxQZ2UCrpSzxTmLpov-8gZ8k0TguDi8cDqSIiPLdEyeuW13M'
 const message = {
   data: {
     score: '850',
