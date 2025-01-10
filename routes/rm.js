@@ -943,8 +943,8 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
 
 //req.flash('success', 'Goods received successfully');
 
-res.redirect('/rm/send-notification/'+weight+'/'+item)
-//res.redirect('/rm/approvedRequisitions')
+//res.redirect('/rm/send-notification/'+weight+'/'+item)
+res.redirect('/rm/approvedRequisitions')
 
     }
   })

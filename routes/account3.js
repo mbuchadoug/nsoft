@@ -114,6 +114,20 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+router.get('/viewGRV/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+console.log('viewItem')
+  BatchRR.find({status:"complete"},function(err,docs){
+
+   BatchRR.find({_id:id},function(err,locs){
+    // console.log(locs,'locs')
+
+    res.render('accounts3/grv2',{listX:locs,listX2:docs})
+  })
+  })
+
+})
+
 
 router.get('/stockRequisitions',isLoggedIn,function(req,res){
 
@@ -329,7 +343,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
             console.log('success')
 
-            res.redirect('/accounts3/grvFileV/'+id)
+            res.redirect('/accounts3/viewPO3/'+id)
         
         
           })
@@ -532,20 +546,11 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       })
     })
   
-    router.get('/viewGRV/:id',isLoggedIn,function(req,res){
-      var id = req.params.id
-    
-      BatchRR.find({status:"complete"},function(err,docs){
-    
-       BatchRR.find({_id:id},function(err,locs){
-         console.log(locs,'locs')
-    
-        res.render('accounts3/grv2',{listX:locs,listX2:docs})
-      })
-      })
-    
+ 
+
+    router.get('/gSample',function(req,res){
+      res.render('accounts3/grvSample')
     })
-  
 
 
 
