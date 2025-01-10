@@ -203,8 +203,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .then(pro =>{
             
                 console.log('success')
-
-                res.redirect('/accounts3/grvFileV/'+id)
+                res.redirect('/accounts3/viewPO3/'+id)
+               // res.redirect('/accounts3/grvFileV/'+id)
             
             
               })
@@ -250,7 +250,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
             console.log('success')
 
-            res.redirect('/accounts3/grvFileV/'+id)
+            res.redirect('/accounts3/viewPO3/'+id)
+           // res.redirect('/accounts3/grvFileV/'+id)
         
         
           })
@@ -297,7 +298,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
             console.log('success')
 
-            res.redirect('/accounts3/grvFileV/'+id)
+           // res.redirect('/accounts3/grvFileV/'+id)
+           res.redirect('/accounts3/viewPO3/'+id)
         
         
           })
