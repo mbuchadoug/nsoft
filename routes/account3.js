@@ -556,6 +556,178 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
 
 
 
+    router.get('/statementGen/',isLoggedIn,function(req,res){
+      //console.log(arrStatementR,'arrSingleUpdate')
+      var arrStatemementR=[]
+      var m = moment()
+      var mformat = m.format('L')
+      var month = m.format('MMMM')
+      var year = m.format('YYYY')
+      var date = req.user.date
+      //var receiveDate = req.user.dispatchDate
+      //var code ="Tiana Madzima"
+      var code = req.params.id
+      
+      //var studentName = 'Tiana Madzima'
+      
+      /*console.log(arr,'iiii')*/
+      
+      RefNoSeq.find(function(err,doc){
+        let seqNum = doc[0].num
+        let seqId = doc[0]._id
+      //console.log(docs,'docs')
+      
+      const compile = async function (templateName, arrStatementR){
+      const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+      
+      const html = await fs.readFile(filePath, 'utf8')
+      
+      return hbs.compile(html)(arrStatementR)
+      
+      };
+      
+      
+      
+      
+      (async function(){
+      
+      try{
+      //const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+      ],
+      executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+      });
+      
+      const page = await browser.newPage()
+      
+      
+      
+      //const content = await compile('report3',arr[uid])
+      const content = await compile('PO',arrStatementR)
+      
+      //const content = await compile('index',arr[code])
+      
+      await page.setContent(content, { waitUntil: 'networkidle2'});
+      //await page.setContent(content)
+      //create a pdf document
+      await page.emulateMediaType('screen')
+      //let height = await page.evaluate(() => document.documentElement.offsetHeight);
+      await page.evaluate(() => matchMedia('screen').matches);
+      await page.setContent(content, { waitUntil: 'networkidle0'});
+      //console.log(await page.pdf(),'7777')
+       
+      let filename = 'POR'+seqNum+'.pdf'
+      await page.pdf({
+      //path:('../gitzoid2/reports/'+year+'/'+month+'/'+uid+'.pdf'),
+      path:(`./public/statements/${year}/${month}/POR${seqNum}`+'.pdf'),
+      format:"A4",
+      width:'30cm',
+      height:'21cm',
+      //height: height + 'px',
+      printBackground:true
+      
+      })
+      
+      
+      var repo = new RepoFiles();
+      
+      repo.filename = filename;
+      repo.fileId = "null";
+      repo.status = 'PO'
+      repo.date = mformat
+      repo.year = year;
+      repo.month = month
+      
+      
+      console.log('done')
+      
+      repo.save().then(poll =>{
+      
+      })
+      
+      
+      //upload.single('3400_Blessing_Musasa.pdf')
+      
+      
+      
+      /*await browser.close()
+      
+      /*process.exit()*/
+      
+      const file = await fs.readFile(`./public/statements/${year}/${month}/POR${seqNum}`+'.pdf');
+      const form = new FormData();
+      form.append("file", file,filename);
+      //const headers = form.getHeaders();
+      //Axios.defaults.headers.cookie = cookies;
+      //console.log(form)
+      await Axios({
+        method: "POST",
+       //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+     // url: 'https://niyonsoft.org/receiver/uploadStatement',
+        url:'http://localhost:8000/accounts3/uploadStatement',
+        headers: {
+          "Content-Type": "multipart/form-data"  
+        },
+        data: form
+      });
+      
+      seqNum++
+      RefNoSeq.findByIdAndUpdate(seqId,{$set:{num:seqNum}},function(err,tocs){
+      
+      })
+        
+      
+     // res.redirect('/receiver/fileId/'+filename);
+      
+      
+      }catch(e) {
+      
+      console.log(e)
+      
+      
+      }
+      
+      
+      }) ()
+      
+      })
+      
+      
+      //res.redirect('/hostel/discList')
+      
+      })
+      
+
+      
+router.post('/uploadStatement',upload.single('file'),(req,res,nxt)=>{
+  var fileId = req.file.id
+  console.log(fileId,'fileId')
+  var filename = req.file.filename
+  console.log(filename,'filename')
+RepoFiles.find({filename:filename},function(err,docs){
+if(docs.length>0){
+
+
+//console.log(docs,'docs')
+let id = docs[0]._id
+RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+
+})
+
+}
+//res.redirect('/receiver/fileId/'+filename)
+})
+
+})
 
 
 module.exports = router;

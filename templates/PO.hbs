@@ -12,7 +12,6 @@
 
 
 
-
 @page {
     margin: 0!important;
     margin-top: 0cm!important;
@@ -139,17 +138,16 @@ body {
 
 
 </style>
-<div class="content-container" style="page-break-before: always">
-    <div class="contents">
+
+    <div class="content-container" >
+    <div class="contents" >
 
 
 
 <div class="container"  style="break-inside: avoid">
-
-    
   <div class="d-flex">
     <div class="leftpane">
-     <img src="https://steuritinternationalschool.org/kambuchaLogo.jpeg" alt="logo"  style="width: 200px; height:250px; display:inline-block; ">
+     <img src="https://joldrillingsolutions.co.zw/kambuchaLogo.jpeg" alt="logo"  style="width: 200px; height:250px; display:inline-block; ">
     </div>
     <div class="middlepane">
         <h1 style="text-align: center;font-family: Georgia, serif; font-size:25px;"> <b></b> KUMBUCHA FRESH <br> ZIMBABWE <b></h1>
@@ -159,7 +157,7 @@ body {
        
     </div>
     <div class="rightpane">
-      <h1>GOODS RECEIVED NOTE</h1>
+      <h3>PURCHASE ORDER</h3>
     </div>
   </div>
 </div>
@@ -168,96 +166,70 @@ body {
 
 
 
-<div class="row">
-    <div class="column">
 
       
 
  
 
-    <table border="1" >
+    <table border="1" width="30%" >
      <tr>
-         <td colspan="2" style=" height: 30px; text-align:center">Supplier Details</td>
+         <td colspan="2" style=" text-align:center"> Details</td>
       
      </tr>
      <tr>
-        <td colspan="2" style=" height: 50px; text-align:center">Name: {{this.0.supplier}} <br>
-      Adress:  {{this.0.address}}  <br>Phone #:{{this.0.mobile}} <br> Reg Number:{{this.0.regNumber}} <br> Driver: {{this.0.driver}}</td>
-      
+        <td colspan="2" style=" height: 50px; text-align:center">Requestor: {{listX.0.name}} <br> Date: {{listX.0.date}} <br>
+        Purchase Order # : {{listX.0.purchaseOrderNum}}
+     
     </tr>
     
     </table>
 
 </div>
 
-        <div class="column">
-    
-    
-    <table border="1" >
-        <tr>
-            <td style="text-align:center">Date</td>
-            <td  style="text-align:center" id="date"> </td>
-         
-        </tr>
-        <tr>
-           <td  style="text-align:center"> Voucher No </td>
-           <td  style="text-align:center"> {{this.0.voucherNumber}} </td>
-         
-       </tr>
-
-           <tr>
-           <td  style="text-align:center"> GRV No </td>
-           <td  style="text-align:center"> {{this.0.refNumber}} </td>
-         
-       </tr>
-       
-       </table>
-
-    </div>
-
-
-
-
-    <table border="1" class="column-bordered-table td thead"  style="break-inside: avoid;border-bottom:1px solid black;" >
+      
+    <table border="1cm" class="column-bordered-table td thead"  style="break-inside: avoid;border-bottom:1px solid black;" >
    
-    <thead>
+    <thead style=" border: 1px solid black;">
      
         <tr >
-        <th  style="text-align:center;width: 20%;" >
-               Qty/Mass
-            </th>
 
-            <th style="text-align:center;width: 30%;"  >
+          
+            <th style="text-align:center; style=" border: 1px solid black;""  >
              Item
             </th>
 
+           
+
+
          
-        
+<th  style="text-align:center"  style=" border: 1px solid black;">
+             Qty
+              
+               </th>
 
-             
-
-            
-        
-        </tr>
+              
        
     </thead>
 
     <tbody >
-            {{#each this}}
-        <tr style="border: 0; ">
+            {{#each listX}}
+        <tr  style=" border: 1px solid black;">
        
-            <td style="text-align:center">
-               {{this.closingMassTonne}}tonne(s)
-            </td>
+           
            
             <td style="text-align:center">
             {{this.item}}
             </td>
-          
-         
-          
+
+
+             <td style="text-align:center">
+               {{this.requestedMassTonnes}}tonne(s)
+            </td>
+
 
             
+          
+          
         </tr>
         {{/each}}
 
@@ -270,7 +242,7 @@ body {
         
                    
 
-                        <tr style="border: 0cm; height: 400px;">
+                        <tr style="border: 1cm; height: 400px;">
                             
                         <td></td>
                          <td></td>
@@ -297,12 +269,12 @@ body {
 
 
 
+    
+
    <!-- </div>-->
     
 
-</div>
 
-</div>
 </div>
 
 
@@ -316,3 +288,6 @@ body {
 
 })()
 </script>
+
+
+  

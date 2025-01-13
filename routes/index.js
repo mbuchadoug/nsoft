@@ -69,6 +69,8 @@ var Axios = require('axios')
 var mongodb = require('mongodb');
 var firebase = require('firebase')
 var FormData = require('form-data')
+const accountSid = 'ACa80a9dbf988b2fd2438243f35d0807f3'; 
+const authToken = '61eb41f047d8a9d4fdf6902146abc007'; 
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
@@ -80,7 +82,7 @@ const arrE2 ={}
 const admin = require("firebase-admin")
 
 const getMessaging = require("firebase/messaging")
-var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-a420fd5a11.json')
+var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-bb69244082.json')
 const tokenArray = ['crgbFGc4T9vSRU8rY3IwOy:APA91bHI3c9A3Y5Rwrl996k51IBhAAC2RssH9WYD2TVl9HhC8rxawa67h8e0VxxZifdixG4ZyIVTVXGiRQ7chusiq7-Uo7pzFTUMrat10xTy817UBobw02g']
 admin.initializeApp({
   credential:admin.credential.cert(serviceAccount)
@@ -150,6 +152,24 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
+
+  
+  
+  router.get('/txt77',isLoggedIn,function(req,res){
+    const accountSid = 'ACa80a9dbf988b2fd2438243f35d0807f3'; 
+    const authToken = '61eb41f047d8a9d4fdf6902146abc007'; 
+  const client = require('twilio')(accountSid, authToken); 
+  const alphanumeric_id = "Kambucha"; 
+   
+client.messages
+.create({
+            from: '+17855724417',
+            to: '+263781165357',
+            body: '3tonnes of Ginger Received',
+})
+.then(message => console.log(message.sid))
+.done();
+  })
 
 
 // Subscribe Route
