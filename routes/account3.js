@@ -672,8 +672,8 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       await Axios({
         method: "POST",
        //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     // url: 'https://niyonsoft.org/receiver/uploadStatement',
-        url:'http://localhost:8000/accounts3/uploadStatement',
+     url: 'https://niyonsoft.org/accounts3/uploadStatement',
+        //url:'http://localhost:8000/accounts3/uploadStatement',
         headers: {
           "Content-Type": "multipart/form-data"  
         },
