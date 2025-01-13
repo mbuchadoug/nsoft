@@ -82,7 +82,7 @@ const arrE2 ={}
 const admin = require("firebase-admin")
 
 const getMessaging = require("firebase/messaging")
-var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-bb69244082.json')
+var serviceAccount = require('../pushnot-f1f03-firebase-adminsdk-nteud-ed2a59fb90.json')
 const tokenArray = ['crgbFGc4T9vSRU8rY3IwOy:APA91bHI3c9A3Y5Rwrl996k51IBhAAC2RssH9WYD2TVl9HhC8rxawa67h8e0VxxZifdixG4ZyIVTVXGiRQ7chusiq7-Uo7pzFTUMrat10xTy817UBobw02g']
 admin.initializeApp({
   credential:admin.credential.cert(serviceAccount)
