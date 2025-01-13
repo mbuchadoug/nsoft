@@ -257,7 +257,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
           })
         })
 
-          }else if(item == 'sugar'){
+          }else if(item == 'rosemary'){
             var truck = new BatchRR()
             truck.date = date
             truck.mformat = date6
@@ -445,6 +445,11 @@ router.get('/viewPO3/:id',isLoggedIn,function(req,res){
 
 router.get('/viewPO/:id',isLoggedIn,function(req,res){
   var voucherId = req.params.id
+  var id = req.user._id
+
+  User.findByIdAndUpdate(id,{$set:{voucherId:voucherId}},function(err,locs){
+  })
+  
 
   StockVoucher.find(function(err,docs){
 
@@ -454,6 +459,8 @@ router.get('/viewPO/:id',isLoggedIn,function(req,res){
     res.render('accounts3/purchaseOrder',{listX:locs,listX2:docs})
   })
   })
+
+
 
 })
 
@@ -556,7 +563,7 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
 
 
 
-    router.get('/statementGen/',isLoggedIn,function(req,res){
+    router.get('/statementGen/:id',isLoggedIn,function(req,res){
       //console.log(arrStatementR,'arrSingleUpdate')
       var arrStatemementR=[]
       var m = moment()
@@ -566,8 +573,16 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       var date = req.user.date
       //var receiveDate = req.user.dispatchDate
       //var code ="Tiana Madzima"
-      var code = req.params.id
+      var voucherId = req.params.id
+      var arrG = []
+      StockVoucher.findById(voucherId).lean().then(docs=>{
+
+
       
+   
+      //arrG.push(docs)
+        
+        console.log(docs,'arrG')
       //var studentName = 'Tiana Madzima'
       
       /*console.log(arr,'iiii')*/
@@ -577,12 +592,12 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
         let seqId = doc[0]._id
       //console.log(docs,'docs')
       
-      const compile = async function (templateName, arrStatementR){
+      const compile = async function (templateName, docs){
       const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
       
       const html = await fs.readFile(filePath, 'utf8')
       
-      return hbs.compile(html)(arrStatementR)
+      return hbs.compile(html)(docs)
       
       };
       
@@ -612,7 +627,7 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       
       
       //const content = await compile('report3',arr[uid])
-      const content = await compile('PO',arrStatementR)
+      const content = await compile('PO',docs)
       
       //const content = await compile('index',arr[code])
       
@@ -637,6 +652,7 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       
       })
       
+      res.redirect('/accounts3/fileIdPO/'+filename)
       
       var repo = new RepoFiles();
       
@@ -672,8 +688,8 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       await Axios({
         method: "POST",
        //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     url: 'https://niyonsoft.org/accounts3/uploadStatement',
-        //url:'http://localhost:8000/accounts3/uploadStatement',
+     //url: 'https://niyonsoft.org/accounts3/uploadStatement',
+        url:'http://localhost:8000/accounts3/uploadStatement',
         headers: {
           "Content-Type": "multipart/form-data"  
         },
@@ -700,13 +716,33 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       }) ()
       
       })
-      
+    })
       
       //res.redirect('/hostel/discList')
       
       })
       
 
+      
+router.get('/openFile/:id',isLoggedIn,function(req,res){
+  var filename = req.params.id
+  var batchNumber = req.user.batchNumber
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  const path =`./public/statements/${year}/${month}/${filename}`+'.pdf'
+  if (fs.existsSync(path)) {
+      res.contentType("application/pdf");
+      fs.createReadStream(path).pipe(res)
+  } else {
+      res.status(500)
+      console.log('File not found')
+      res.send('File not found')
+  }
+  
+  })
+  
       
 router.post('/uploadStatement',upload.single('file'),(req,res,nxt)=>{
   var fileId = req.file.id
@@ -725,9 +761,42 @@ RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
 
 }
 //res.redirect('/receiver/fileId/'+filename)
+res.redirect('/accounts3/fileIdPO/'+filename)
 })
 
 })
+
+
+router.get('/fileIdPO/:id',function(req,res){
+  console.log(req.params.id)
+  var id = req.params.id
+  
+  res.redirect('/accounts3/openPO/'+id)
+  
+  })
+
+
+router.get('/openPO/:id',(req,res)=>{
+  var filename = req.params.id
+  console.log(filename,'fileId')
+    const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+    gfs.files.find({filename: filename}).toArray((err, files) => {
+    console.log(files[0])
+  
+      const readStream = bucket.openDownloadStream(files[0]._id);
+          readStream.pipe(res);
+  
+    })
+   //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+  })
+
+
+
+
+
+
+
+
 
 
 module.exports = router;

@@ -177,8 +177,8 @@ body {
       
      </tr>
      <tr>
-        <td colspan="2" style=" height: 50px; text-align:center">Requestor: {{listX.0.name}} <br> Date: {{listX.0.date}} <br>
-        Purchase Order # : {{listX.0.purchaseOrderNum}}
+        <td colspan="2" style=" height: 50px; text-align:center">Requestor: {{this.name}} <br> Date: {{this.date}} <br>
+        Purchase Order # : {{this.purchaseOrderNum}}
      
     </tr>
     
@@ -212,7 +212,7 @@ body {
     </thead>
 
     <tbody >
-            {{#each listX}}
+         
         <tr  style=" border: 1px solid black;">
        
            
@@ -231,7 +231,7 @@ body {
           
           
         </tr>
-        {{/each}}
+    
 
 
              
