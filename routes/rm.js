@@ -593,12 +593,12 @@ var year = m.format('YYYY')
 let dateValue = moment().valueOf()
 let arrV = []
 let number1
-
+console.log('postMass')
 let mass = req.body.code
 let massTonne
 let refNumber = req.body.refNumber
 BatchRR.find({refNumber:refNumber},function(err,docs){
-  //console.log(docs,'docs')
+  console.log(docs,'docs','receiveMass')
   let supplier = docs[0].supplier
   let item = docs[0].item
   let date = docs[0].date
@@ -616,6 +616,7 @@ BatchRR.find({refNumber:refNumber},function(err,docs){
   let batchId = docs[0]._id
 let newMassNum = 0
 
+console.log(voucherNo,'voucherNo',docs[0].voucherNo)
 
 
 StockRM.find({refNumber:refNumber},function(err,docs){
@@ -653,7 +654,7 @@ stock.voucherNumber = voucherNumber
 stock.batchNumber = batchNumber
 stock.idNumber = idNumber
 stock.trailer = trailer
-//stock.voucherNumber = voucherNumber
+stock.voucherNumber = docs[0].voucherNo
 stock.refNumber = refNumber
 stock.mobile = mobile
 stock.month = month
