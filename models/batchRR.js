@@ -11,6 +11,7 @@ var batchSchemaRR = new Schema({
     priceStatus:{type:String},
     voucherNo:{type:Number},
     voucherId:{type:String},
+    invoiceNumber:{type:Number},
     openingWeightKg:{type:Number},
     openingWeightTonnes:{type:Number},
     receivedWeightKg:{type:Number},

@@ -177,6 +177,31 @@ router.get('/grvListView',isLoggedIn,function(req,res){
 
 
 
+router.get('/invoiceGenNumberUpdate/:id',isLoggedIn,function(req,res){
+  var id = req.user._id
+  var id2 = req.params.id2
+
+    InvoNum.find(function(err,doc){
+      let invoNum = doc[0].num
+      let invoId = doc[0]._id
+  
+  
+  User.findByIdAndUpdate(id,{$set:{invoNumber:invoNum}},function(err,docs){
+  
+  })
+  invoNum++
+  
+  InvoNum.findByIdAndUpdate(invoId,{$set:{num:invoNum}},function(err,tocs){
+  
+  })
+  res.redirect('/accounts1/price/'+id2)
+  
+    })
+  
+  })
+
+
+
 router.get('/price/:id',isLoggedIn,function(req,res){
   var pro = req.user
   var id = req.params.id
@@ -205,7 +230,7 @@ router.post('/price/:id',isLoggedIn,function(req,res){
   var price = req.body.price
   var receivedKgs = req.body.receivedKgs
 
-
+var invoiceNumber = req.user.num
   
 var errors = req.validationErrors();
  
@@ -225,7 +250,7 @@ else{
 
   let subtotal = price * receivedKgs
 
-  BatchRR.findByIdAndUpdate(id,{$set:{price:price,subtotal:subtotal,priceStatus:"set"}},function(err,docs){
+  BatchRR.findByIdAndUpdate(id,{$set:{price:price,subtotal:subtotal,priceStatus:"set",invoiceNumber:invoiceNumber}},function(err,docs){
 
   })
 
@@ -236,15 +261,17 @@ else{
 
 
 
+
+
 router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
 var id = req.params.id
-
+let invoiceNumber = req.user.num
 
 BatchRR.find({priceStatus:"set"},function(err,vocs){
 
 
 BatchRR.find({_id:id},function(err,docs){
-  res.render('accounts1/pdf',{listX:docs,listX2:vocs})
+  res.render('accounts1/pdf',{listX:docs,listX2:vocs,invoiceNumber:invoiceNumber})
 })
 
 })

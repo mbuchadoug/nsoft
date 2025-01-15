@@ -334,7 +334,7 @@ Purchase Orders
 												{{#each listX}}
 												<tr>
 													<!--begin::Date=-->
-	 <td >9272024GRV245</td>
+	 <td >{{this.refNumber}}</td>
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.item}}</td>
@@ -360,7 +360,7 @@ Purchase Orders
 														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
-																<a href="/accounts1/price/{{this._id}}" class="menu-link px-3">Set Price</a>
+																<a href="/accounts1/invoiceGenNumberUpdate/{{this._id}}" class="menu-link px-3">Set Price</a>
 															</div>
 
 
