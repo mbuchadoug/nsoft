@@ -14,7 +14,7 @@ var stockSchemaRM = new Schema({
     trailer: {type: Number },
     refNumber: {type: String },
     batchNumber: {type: String },
-    voucherNumber: {type: String },
+    voucherNumber: {type: Number },
     mobile: {type: String },
     month: {type: String },
     year: {type: Number },

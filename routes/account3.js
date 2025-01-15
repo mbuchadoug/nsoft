@@ -257,7 +257,162 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
           })
         })
 
-          }else if(item == 'rosemary'){
+      }
+      else if(item == 'garlic'){
+        var truck = new BatchRR()
+        truck.date = date
+        truck.mformat = date6
+        truck.dateValue = dateValue
+        truck.item = item
+        truck.stage = 'cooking'
+        truck.refNumber = refNo
+        truck.month = month
+        truck.openingWeightKg = stocKgs
+        truck.openingWeightTonne = stockTonnes
+        truck.month = month
+        truck.status = 'pending'
+        truck.receivedTonnes = 0
+        truck.receivedKgs = 0
+        truck.requestedMassTonnes = requestedMassTonnes
+        truck.requestedMassKgs = requestedMassKgs
+        truck.year = year
+        truck.voucherNo = voucherNo
+        truck.voucherId = id
+        
+       
+    
+        truck.save()
+            .then(pro =>{
+    
+    
+    
+      
+    
+    let batchId = pro._id
+    
+        var book = new RefNo();
+      book.refNumber = refNo
+      book.date = date
+      book.type = 'receiving material'
+      book.save()
+      .then(pro =>{
+    
+        console.log('success')
+
+        res.redirect('/accounts3/viewPO3/'+id)
+       // res.redirect('/accounts3/grvFileV/'+id)
+    
+    
+      })
+    })
+
+  
+
+
+
+          }
+
+          else if(item == 'sugar'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'cooking'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/viewPO3/'+id)
+        
+        
+          })
+        })
+      }
+
+          else if(item == 'honey'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'cooking'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/viewPO3/'+id)
+           // res.redirect('/accounts3/grvFileV/'+id)
+        
+        
+          })
+        })
+
+      }
+          
+          
+          
+          else if(item == 'rosemary'){
             var truck = new BatchRR()
             truck.date = date
             truck.mformat = date6
@@ -304,7 +459,109 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
           })
         })
-          }else if(item == 'bananas'){
+          }
+
+          else if(item == 'black-pepper'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'crush'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/viewPO3/'+id)
+        
+        
+          })
+        })
+
+      }
+
+          else if(item == 'lemon'){
+            var truck = new BatchRR()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.stage = 'crush'
+            truck.refNumber = refNo
+            truck.month = month
+            truck.openingWeightKg = stocKgs
+            truck.openingWeightTonne = stockTonnes
+            truck.month = month
+            truck.status = 'pending'
+            truck.receivedTonnes = 0
+            truck.receivedKgs = 0
+            truck.requestedMassTonnes = requestedMassTonnes
+            truck.requestedMassKgs = requestedMassKgs
+            truck.year = year
+            truck.voucherNo = voucherNo
+            truck.voucherId = id
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+        
+        
+          
+        
+        let batchId = pro._id
+        
+            var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date
+          book.type = 'receiving material'
+          book.save()
+          .then(pro =>{
+        
+            console.log('success')
+
+            res.redirect('/accounts3/viewPO3/'+id)
+        
+        
+          })
+        })
+
+
+      }  
+          
+          
+          else if(item == 'bananas'){
             var truck = new BatchRR()
             truck.date = date
             truck.mformat = date6
@@ -351,6 +608,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
           })
         })
           }
+
+
         })
         }
 

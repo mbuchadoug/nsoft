@@ -9,7 +9,7 @@ var batchSchemaRR = new Schema({
     item:{type:String},
     stage:{type:String},
     priceStatus:{type:String},
-    voucherNo:{type:String},
+    voucherNo:{type:Number},
     voucherId:{type:String},
     openingWeightKg:{type:Number},
     openingWeightTonnes:{type:Number},
