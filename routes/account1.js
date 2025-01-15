@@ -186,7 +186,7 @@ console.log(id2,'id2')
       let invoId = doc[0]._id
   
   
-  User.findByIdAndUpdate(id,{$set:{invoNumber:invoNum}},function(err,docs){
+  User.findByIdAndUpdate(id,{$set:{invoiceNumber:invoNum}},function(err,docs){
   
   })
   invoNum++
@@ -231,7 +231,7 @@ router.post('/price/:id',isLoggedIn,function(req,res){
   var price = req.body.price
   var receivedKgs = req.body.receivedKgs
 
-var invoiceNumber = req.user.num
+var invoiceNumber = req.user.invoiceNumber
   
 var errors = req.validationErrors();
  

@@ -62,6 +62,7 @@ var userSchema = new mongoose.Schema({
     item: {type: String },
     supplier: {type: String },
     availableMass: {type: Number },
+    invoiceNumber: {type: Number },
     product: {type: String },
     dateValue: {type: String },
     expiryDateValue: {type: String },
