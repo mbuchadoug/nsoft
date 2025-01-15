@@ -616,7 +616,7 @@ BatchRR.find({refNumber:refNumber},function(err,docs){
   let batchId = docs[0]._id
 let newMassNum = 0
 
-console.log(voucherNo,'voucherNo',docs[0].voucherNo)
+console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
 
 
 StockRM.find({refNumber:refNumber},function(err,docs){
@@ -654,7 +654,7 @@ stock.voucherNumber = voucherNumber
 stock.batchNumber = batchNumber
 stock.idNumber = idNumber
 stock.trailer = trailer
-stock.voucherNumber = docs[0].voucherNo
+stock.voucherNumber = voucherNumber
 stock.refNumber = refNumber
 stock.mobile = mobile
 stock.month = month
