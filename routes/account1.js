@@ -180,7 +180,7 @@ router.get('/grvListView',isLoggedIn,function(req,res){
 router.get('/invoiceGenNumberUpdate/:id',isLoggedIn,function(req,res){
   var id = req.user._id
   var id2 = req.params.id2
-
+console.log(id2,'id2')
     InvoNum.find(function(err,doc){
       let invoNum = doc[0].num
       let invoId = doc[0]._id
@@ -205,6 +205,7 @@ router.get('/invoiceGenNumberUpdate/:id',isLoggedIn,function(req,res){
 router.get('/price/:id',isLoggedIn,function(req,res){
   var pro = req.user
   var id = req.params.id
+  console.log(id,'idPrice')
   BatchRR.findById(id,function(err,doc){
     let refNumber = doc.refNumber
     let item = doc.item
