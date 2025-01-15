@@ -179,7 +179,7 @@ router.get('/grvListView',isLoggedIn,function(req,res){
 
 router.get('/invoiceGenNumberUpdate/:id',isLoggedIn,function(req,res){
   var id = req.user._id
-  var id2 = req.params.id2
+  var id2 = req.params.id
 console.log(id2,'id2')
     InvoNum.find(function(err,doc){
       let invoNum = doc[0].num
