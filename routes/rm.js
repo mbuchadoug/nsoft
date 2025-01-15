@@ -319,6 +319,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     var dept = req.user.dept
     var description = req.body.description
     var unit = req.body.unit
+    var uid = req.user._id
     var year = 2024
     let requestedMassTonnes,requestedMassKgs
     let date6 = moment().format('l');
@@ -417,6 +418,11 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
   
         user.save()
           .then(user =>{
+
+            let nV = req.user.voucherNumber + 1
+User.findByIdAndUpdate(uid,{$set:{voucherNumber:nV}},function(err,locs){
+  
+})
   
             req.flash('success', 'Request Sent');
   
