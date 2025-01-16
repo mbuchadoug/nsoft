@@ -3024,7 +3024,7 @@ console.log(id,'fermentationPreload')
 
                      if(ingredient == 'ginger'){
                   
-                        RawMat.find({item:ingredient,type:'ingredient'},function(err,tocs){
+                        RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
                           let opBalTonnes = opBal / 1000
                           let id4 = tocs[0]._id
