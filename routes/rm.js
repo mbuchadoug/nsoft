@@ -2770,7 +2770,7 @@ else{
       })
   
 
-      RawMat.find({item:finalProduct,type:'ingredient'},function(err,tocs){
+      RawMat.find({item:finalProduct,stage:'cooking'},function(err,tocs){
         let opBal = tocs[0].massKgs + number1
         let opBalTonnes = opBal / 1000
         let id4 = tocs[0]._id
