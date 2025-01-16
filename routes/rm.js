@@ -1255,8 +1255,8 @@ if (fs.existsSync(path)) {
 
 
     router.post('/batchAuto',function(req,res){
-      
-      BatchRR.find({status:"complete"},function(err,docs){
+      var batchNumber = req.body.code
+      BatchRR.find({status:"complete",batchNumber:batchNumber},function(err,docs){
         res.send(docs)
       })
     })
@@ -1283,6 +1283,9 @@ if (fs.existsSync(path)) {
     var date = req.body.date
     var shift = req.body.shift
     var batchNumber = req.body.batchNumber
+
+
+    console.log(batchNumber,'batchNumber666')
     let id = req.user._id
     let m = moment()
     var month = m.format('MMMM')
@@ -1325,7 +1328,7 @@ else{
 
     let avbMass = noc[0].massKgs
 
-      User.findByIdAndUpdate(id,{$set:{item:item,supplier:supplier,date:date,availableMass:avbMass,refNumber:refNumber}},function(err,vocs){
+      User.findByIdAndUpdate(id,{$set:{item:item,supplier:supplier,date:date,availableMass:avbMass,refNumber:refNumber,batchNumber:batchNumber}},function(err,vocs){
 
       })
 
