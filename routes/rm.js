@@ -2744,9 +2744,15 @@ if(docs.length > 1){
 }else if(docs.length == 1){
 if(docs[0].ingredient == 'sugar'){
   finalProduct = 'colour'
-}else if(docs[0].ingredient == 'tea leaves'){
+}else if(docs[0].ingredient == 'tea'){
   finalProduct = 'tea'
-}else{
+}
+else if(docs[0].ingredient == 'ginger'){
+  finalProduct = 'ginger'
+}
+
+
+else{
   finalProduct =docs[0].ingredient 
 }
 }
