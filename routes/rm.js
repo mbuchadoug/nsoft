@@ -4333,6 +4333,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         format:"A4",
         width:'30cm',
         height:'21cm',
+        landscape: true,
         //height: height + 'px',
         printBackground:true
         
