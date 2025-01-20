@@ -167,6 +167,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
                 var truck = new BatchRR()
                 truck.date = date
                 truck.mformat = date6
+                truck.paymentStatus = 'unpaid'
+                truck.priceStatus = 'null'
                 truck.stage = 'wash'
                 truck.dateValue = dateValue
                 truck.item = item
@@ -215,6 +217,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.mformat = date6
             truck.dateValue = dateValue
             truck.item = item
+            truck.paymentStatus = 'unpaid'
+            truck.priceStatus = 'null'
             truck.stage = 'cooking'
             truck.refNumber = refNo
             truck.month = month
@@ -264,7 +268,9 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         truck.mformat = date6
         truck.dateValue = dateValue
         truck.item = item
-        truck.stage = 'cooking'
+        truck.paymentStatus = 'unpaid'
+        truck.priceStatus = 'null'
+        truck.stage = 'crush'
         truck.refNumber = refNo
         truck.month = month
         truck.openingWeightKg = stocKgs
@@ -318,6 +324,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.mformat = date6
             truck.dateValue = dateValue
             truck.item = item
+            truck.paymentStatus = 'unpaid'
+            truck.priceStatus = 'null'
             truck.stage = 'cooking'
             truck.refNumber = refNo
             truck.month = month
@@ -366,9 +374,11 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.mformat = date6
             truck.dateValue = dateValue
             truck.item = item
-            truck.stage = 'cooking'
+            truck.stage = 'crush'
+            truck.priceStatus = 'null'
             truck.refNumber = refNo
             truck.month = month
+            truck.paymentStatus = 'unpaid'
             truck.openingWeightKg = stocKgs
             truck.openingWeightTonne = stockTonnes
             truck.month = month
@@ -419,8 +429,10 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.dateValue = dateValue
             truck.item = item
             truck.stage = 'cooking'
+            truck.priceStatus = 'null'
             truck.refNumber = refNo
             truck.month = month
+            truck.paymentStatus = 'unpaid'
             truck.openingWeightKg = stocKgs
             truck.openingWeightTonne = stockTonnes
             truck.month = month
@@ -470,6 +482,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.stage = 'crush'
             truck.refNumber = refNo
             truck.month = month
+            truck.paymentStatus = 'unpaid'
+            truck.priceStatus = 'null'
             truck.openingWeightKg = stocKgs
             truck.openingWeightTonne = stockTonnes
             truck.month = month
@@ -517,8 +531,10 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.dateValue = dateValue
             truck.item = item
             truck.stage = 'crush'
+            truck.priceStatus = 'null'
             truck.refNumber = refNo
             truck.month = month
+            truck.paymentStatus = 'unpaid'
             truck.openingWeightKg = stocKgs
             truck.openingWeightTonne = stockTonnes
             truck.month = month
@@ -567,6 +583,8 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             truck.mformat = date6
             truck.dateValue = dateValue
             truck.item = item
+            truck.paymentStatus = 'unpaid'
+            truck.priceStatus = 'null'
             truck.stage = 'crush'
             truck.refNumber = refNo
             truck.month = month
@@ -710,7 +728,7 @@ router.get('/viewPO/:id',isLoggedIn,function(req,res){
   })
   
 
-  StockVoucher.find(function(err,docs){
+  StockVoucher.find({status3:"approved"},function(err,docs){
 
     StockVoucher.find({_id:voucherId},function(err,locs){
 

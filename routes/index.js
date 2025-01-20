@@ -2121,6 +2121,9 @@ router.post('/', passport.authenticate('local.signin', {
     res.redirect('/accounts1/stockRequisitions')
   }else if(req.user.role == "accountant2"){
     res.redirect('/accounts2/stockRequisitions')
+  }
+  else if(req.user.role == "accountsClerk"){
+    res.redirect('/accounts5/grvListView')
   }else if(req.user.role == "md"){
     res.redirect('/accounts3/stockRequisitions')
   }else if(req.user.role == "ceo"){

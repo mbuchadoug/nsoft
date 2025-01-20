@@ -727,7 +727,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     console.log(availableMass,'availableMass333')
     RawMat.find({item:item},function(err,docs){
       console.log(docs,'letu')
-      if(docs.status != 'wash'){
+      if(docs.item == 'sugar'){
         console.log('true')
         let date =  moment().format('l');
   let date6 =  moment().format('l');
@@ -742,6 +742,47 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       
 
 
+     RefNo.find({date:date,type:"crush"},function(err,docs){
+      let size = docs.length + 1
+     refNo = date7+'B'+size+item+'crush'
+      console.log(refNo,'refNo')
+  
+      var truck = new BatchGingerCrush()
+      truck.date = date
+      truck.mformat = date6
+      truck.dateValue = dateValue
+      truck.item = item
+      truck.refNumber = refNumber
+      truck.refNumber2 = refNo
+      truck.batchNumber = batchNumber
+      truck.month = month
+      truck.qtyInMass = 0
+      truck.qtyOutMass= 0
+      truck.month = month
+      truck.status = 'null'
+      truck.year = year
+     
+      
+     
+  
+      truck.save()
+          .then(pro =>{
+  
+           
+            var book = new RefNo();
+            book.refNumber = refNo
+            book.date = date
+            book.type = 'crush'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
+
+          })
+
+        })
 
       /*RefNo.find({type:item},function(err,docs){
         let size = docs.length + 1
@@ -1148,8 +1189,8 @@ arrG.push(docs[size])
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
      //url: 'https://niyonsoft.org/uploadStatementDispatch',
-     url:'https://niyonsoft.org/rm/uploadGrv',
-    // url:'localhost:8000/rm/uploadGrv',
+    // url:'https://niyonsoft.org/rm/uploadGrv',
+     url:'localhost:8000/rm/uploadGrv',
     headers: {
       "Content-Type": "multipart/form-data"  
     },
@@ -1786,11 +1827,22 @@ let item = docs[0].item
       
 
       BatchRR.find({status:'complete',stage:'crush'}).lean().then(ocs=>{
-      arr.push(ocs[0])
+
+        for(var i = 0;i<ocs.length;i++){
+          //console.log(ocs[i],'ocs')
+          arr.push(ocs[i])
+        }
+        
         //arr =ocs
       BatchGingerWash.find({status:'qtyOut',status2:"null"}).lean().then(docs=>{
-    arr.push(docs[0])
+   // arr.push(docs[0])
+    
+    for(var i = 0;i<docs.length;i++){
+     // console.log(docs[i],'docs')
+      arr.push(docs[i])
+    }
       //arr=docs
+     // console.log(docs[0],'docs')
     console.log(arr,'arr')
       res.render('rStock/batchCrushing',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
       })
@@ -1859,8 +1911,8 @@ else{
         truck.mformat = date6
         truck.dateValue = dateValue
         truck.item = item
-        truck.refNumber = refNo
-        truck.refNumber2 = batchNumber
+        truck.refNumber = refNumber
+        truck.refNumber2 = refNo
         truck.batchNumber = batchNumber
         truck.month = month
         truck.qtyInMass = 0
@@ -1917,8 +1969,8 @@ else{
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
-          truck.refNumber = refNo
-          truck.refNumber2 = batchNumber
+          truck.refNumber = refNumber
+          truck.refNumber2 =refNo
           truck.batchNumber = batchNumber
           truck.month = month
           truck.qtyInMass = 0
@@ -2146,6 +2198,245 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
 
 
     }
+
+
+    else if(item == 'lemon'){
+
+      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+        //console.log(docs,'docs')
+      
+        let item = docs[0].item
+        let date = docs[0].date
+       // let refNo = docs[0].refNumber
+        let batchNumber = docs[0].batchNumber
+       
+        let dateValue = docs[0].dateValue
+        
+
+        
+        let openingMass= docs[0].closingWeightKg
+
+        let newMassNum = 0
+      
+      
+      
+      GingerCrush.find({batchNumber:batchNumber},function(err,docs){
+      
+      for(var i = 0;i<docs.length; i++){
+       // console.log(docs[i].newMass,'serima')
+      arrV.push(docs[i].newMass)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+       //console.log(arrV,'arrV')
+      
+      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+      number1=0;
+      for(var z in arrV) { number1 += arrV[z]; }
+      number1.toFixed(2)
+      let reg = /\d+\.*\d*/g;
+      let resultQty = mass.match(reg)
+      let massNum = Number(resultQty)
+      
+      let total5 = massNum + number1
+      
+      massNum.toFixed(2)
+      let size = docs.length + 1
+      let weight = 'weight'+size
+       console.log(batchId,'batchId')
+      var stock = new GingerCrush();
+      stock.weight = weight
+      stock.date =mformat
+      stock.item = item
+      stock.status = "ready"
+      stock.type = 'qtyIn'
+      stock.batchNumber = batchNumber
+      stock.refNumber = refNo
+      stock.month = month
+      stock.year = year
+      stock.batchId = batchId
+      stock.totalMass = total5
+      stock.openingMass = number1
+      stock.newMass = mass
+      stock.closingMass = massNum + number1
+      stock.size = size
+      stock.dateValue = dateValue
+      
+      stock.save()
+      .then(pro =>{
+      
+        res.send(pro)
+      
+      })
+      
+      
+      
+      })
+      
+      })
+
+
+
+    }
+
+
+
+
+    
+    else if(item == 'honey'){
+
+      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+        //console.log(docs,'docs')
+      
+        let item = docs[0].item
+        let date = docs[0].date
+       // let refNo = docs[0].refNumber
+        let batchNumber = docs[0].batchNumber
+       
+        let dateValue = docs[0].dateValue
+        
+
+        
+        let openingMass= docs[0].closingWeightKg
+
+        let newMassNum = 0
+      
+      
+      
+      GingerCrush.find({batchNumber:batchNumber},function(err,docs){
+      
+      for(var i = 0;i<docs.length; i++){
+       // console.log(docs[i].newMass,'serima')
+      arrV.push(docs[i].newMass)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+       //console.log(arrV,'arrV')
+      
+      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+      number1=0;
+      for(var z in arrV) { number1 += arrV[z]; }
+      number1.toFixed(2)
+      let reg = /\d+\.*\d*/g;
+      let resultQty = mass.match(reg)
+      let massNum = Number(resultQty)
+      
+      let total5 = massNum + number1
+      
+      massNum.toFixed(2)
+      let size = docs.length + 1
+      let weight = 'weight'+size
+       console.log(batchId,'batchId')
+      var stock = new GingerCrush();
+      stock.weight = weight
+      stock.date =mformat
+      stock.item = item
+      stock.status = "ready"
+      stock.type = 'qtyIn'
+      stock.batchNumber = batchNumber
+      stock.refNumber = refNo
+      stock.month = month
+      stock.year = year
+      stock.batchId = batchId
+      stock.totalMass = total5
+      stock.openingMass = number1
+      stock.newMass = mass
+      stock.closingMass = massNum + number1
+      stock.size = size
+      stock.dateValue = dateValue
+      
+      stock.save()
+      .then(pro =>{
+      
+        res.send(pro)
+      
+      })
+      
+      
+      
+      })
+      
+      })
+
+
+
+    }
+
+    else if(item == 'garlic'){
+
+      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+        //console.log(docs,'docs')
+      
+        let item = docs[0].item
+        let date = docs[0].date
+       // let refNo = docs[0].refNumber
+        let batchNumber = docs[0].batchNumber
+       
+        let dateValue = docs[0].dateValue
+        
+
+        
+        let openingMass= docs[0].closingWeightKg
+
+        let newMassNum = 0
+      
+      
+      
+      GingerCrush.find({batchNumber:batchNumber},function(err,docs){
+      
+      for(var i = 0;i<docs.length; i++){
+       // console.log(docs[i].newMass,'serima')
+      arrV.push(docs[i].newMass)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+       //console.log(arrV,'arrV')
+      
+      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+      number1=0;
+      for(var z in arrV) { number1 += arrV[z]; }
+      number1.toFixed(2)
+      let reg = /\d+\.*\d*/g;
+      let resultQty = mass.match(reg)
+      let massNum = Number(resultQty)
+      
+      let total5 = massNum + number1
+      
+      massNum.toFixed(2)
+      let size = docs.length + 1
+      let weight = 'weight'+size
+       console.log(batchId,'batchId')
+      var stock = new GingerCrush();
+      stock.weight = weight
+      stock.date =mformat
+      stock.item = item
+      stock.status = "ready"
+      stock.type = 'qtyIn'
+      stock.batchNumber = batchNumber
+      stock.refNumber = refNo
+      stock.month = month
+      stock.year = year
+      stock.batchId = batchId
+      stock.totalMass = total5
+      stock.openingMass = number1
+      stock.newMass = mass
+      stock.closingMass = massNum + number1
+      stock.size = size
+      stock.dateValue = dateValue
+      
+      stock.save()
+      .then(pro =>{
+      
+        res.send(pro)
+      
+      })
+      
+      
+      
+      })
+      
+      })
+
+
+
+    }
       })
       
 
@@ -2220,7 +2511,7 @@ router.get('/batchListCrush',function(req,res){
 
   router.get('/gingerCrushQtyOut/:id/',isLoggedIn,function(req,res){
     var id = req.params.id
-
+console.log(id,'id')
     GingerCrush.find({refNumber:id},function(err,docs){
 
     
@@ -2424,6 +2715,180 @@ if(item == 'ginger'){
             let qtyInMass= doc.qtyInMass
             variance = number1 - qtyInMass
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
+ RawMat.find({item:item,stage:'raw'},function(err,tocs){
+              let opBal = tocs[0].massKgs - qtyInMass
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })
+
+            RawMat.find({item:item,stage:'crush'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })
+
+            var final = new FinalProduct()
+            final.refNumber = refNumber
+            final.quantity = number1
+            final.date = mformat
+            final.ingredient = item
+            final.month = month
+            final.year = year
+            final.status = 'null'
+      
+            final.save().then(pro =>{
+      
+              res.redirect('/rm/batchListCrush')
+            })
+
+
+          })
+
+        })
+        
+      }
+
+
+      
+      else if(item == 'honey'){
+        for(var i = 0;i<docs.length; i++){
+           
+          arrV.push(docs[i].newMass)
+            }
+            //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+           console.log(arrV,'arrV')
+          
+          //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+          number1=0;
+          for(var z in arrV) { number1 += arrV[z]; }
+
+          BatchGingerCrush.findById(batchId,function(err,doc){
+            let qtyInMass= doc.qtyInMass
+            variance = number1 - qtyInMass
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
+ RawMat.find({item:item,stage:'raw'},function(err,tocs){
+              let opBal = tocs[0].massKgs - qtyInMass
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })
+
+            RawMat.find({item:item,stage:'crush'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })
+
+            var final = new FinalProduct()
+            final.refNumber = refNumber
+            final.quantity = number1
+            final.date = mformat
+            final.ingredient = item
+            final.month = month
+            final.year = year
+            final.status = 'null'
+      
+            final.save().then(pro =>{
+      
+              res.redirect('/rm/batchListCrush')
+            })
+
+
+          })
+
+        })
+        
+      }
+
+
+      else if(item == 'lemon'){
+        for(var i = 0;i<docs.length; i++){
+           
+          arrV.push(docs[i].newMass)
+            }
+            //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+           console.log(arrV,'arrV')
+          
+          //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+          number1=0;
+          for(var z in arrV) { number1 += arrV[z]; }
+
+          BatchGingerCrush.findById(batchId,function(err,doc){
+            let qtyInMass= doc.qtyInMass
+            variance = number1 - qtyInMass
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
+ RawMat.find({item:item,stage:'raw'},function(err,tocs){
+              let opBal = tocs[0].massKgs - qtyInMass
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+
+            })  
+
+            })
+
+            RawMat.find({item:item,stage:'crush'},function(err,focs){
+              let opBal2 = focs[0].massKgs + number1
+              let id5 = focs[0]._id
+              let opBal2Tonnes = opBal2 / 1000
+
+              RawMat.findByIdAndUpdate(id5,{massKgs:opBal2, massTonnes:opBal2Tonnes},function(err,locs){
+
+              }) 
+            })
+
+            var final = new FinalProduct()
+            final.refNumber = refNumber
+            final.quantity = number1
+            final.date = mformat
+            final.ingredient = item
+            final.month = month
+            final.year = year
+            final.status = 'null'
+      
+            final.save().then(pro =>{
+      
+              res.redirect('/rm/batchListCrush')
+            })
+
+
+          })
+
+        })
+        
+      }
+
+      else if(item == 'garlic'){
+        for(var i = 0;i<docs.length; i++){
+           
+          arrV.push(docs[i].newMass)
+            }
+            //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+           console.log(arrV,'arrV')
+          
+          //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+          number1=0;
+          for(var z in arrV) { number1 += arrV[z]; }
+
+          BatchGingerCrush.findById(batchId,function(err,doc){
+            let qtyInMass= doc.qtyInMass
+            variance = number1 - qtyInMass
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'cooking'}},function(err,vocs){
  RawMat.find({item:item,stage:'raw'},function(err,tocs){
               let opBal = tocs[0].massKgs - qtyInMass
               let opBalTonnes = opBal / 1000
@@ -2770,7 +3235,7 @@ else{
       })
   
 
-      RawMat.find({item:finalProduct,stage:'cooking'},function(err,tocs){
+    /*  RawMat.find({item:finalProduct,stage:'cooking'},function(err,tocs){
         let opBal = tocs[0].massKgs + number1
         let opBalTonnes = opBal / 1000
         let id4 = tocs[0]._id
@@ -2778,7 +3243,7 @@ else{
 
       })  
 
-      })
+      })*/
 
       var final = new FinalProduct()
       final.refNumber = refNumber
@@ -4265,7 +4730,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
   
   
         
-     
+     let item = docs[0].item
+     let refNumber = docs[0].refNumber
         //arrG.push(docs)
           
           console.log(docs,'arrG')
@@ -4339,16 +4805,18 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         
         })
         
-        res.redirect('/rm/fileIdGW/'+filename)
-        
+        //res.redirect('/rm/fileIdGW/'+filename)
+        res.redirect('/rm/openFileGW/'+seqNum)
         var repo = new RepoFiles();
         
         repo.filename = filename;
         repo.fileId = "null";
         repo.status = 'GW'
+        repo.type = 'Washing'
+        repo.item = item
         repo.date = mformat
         repo.year = year;
-        repo.month = month
+        repo.refNumber = refNumber
         
         
         console.log('done')
@@ -4375,8 +4843,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         await Axios({
           method: "POST",
          //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-       url: 'https://niyonsoft.org/rm/uploadStatementGW',
-          //url:'http://localhost:8000/rm/uploadStatementGW',
+       //url: 'https://niyonsoft.org/rm/uploadStatementGW',
+        url:'http://localhost:8000/rm/uploadStatementGW',
           headers: {
             "Content-Type": "multipart/form-data"  
           },
@@ -4410,25 +4878,26 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         })
         
   
-        
-  router.get('/openFileGW/:id',isLoggedIn,function(req,res){
-    var filename = req.params.id
-    var batchNumber = req.user.batchNumber
-    var m = moment()
-    var mformat = m.format('L')
-    var month = m.format('MMMM')
-    var year = m.format('YYYY')
-    const path =`./public/statements/${year}/${month}/${filename}`+'.pdf'
-    if (fs.existsSync(path)) {
-        res.contentType("application/pdf");
-        fs.createReadStream(path).pipe(res)
-    } else {
-        res.status(500)
-        console.log('File not found')
-        res.send('File not found')
-    }
-    
-    })
+        router.get('/openFileGW/:id',isLoggedIn,function(req,res){
+          var seqNum = req.params.id
+         // var batchNumber = req.user.batchNumber
+          var m = moment()
+          var mformat = m.format('L')
+          var month = m.format('MMMM')
+          var year = m.format('YYYY')
+          const path =`./public/statements/${year}/${month}/GW${seqNum}.pdf`
+          if (fs.existsSync(path)) {
+              res.contentType("application/pdf");
+              fs.createReadStream(path).pipe(res)
+          } else {
+              res.status(500)
+              console.log('File not found')
+              res.send('File not found')
+          }
+          
+          })
+          
+     
     
         
   router.post('/uploadStatementGW',upload.single('file'),(req,res,nxt)=>{
@@ -4494,7 +4963,10 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     var arrG = []
     BatchGingerCrush.find().lean().then(docs=>{
 
-
+      if(docs){
+        let refNumber = docs[0].refNumber
+        let item = docs[0].item
+  
     
  
     //arrG.push(docs)
@@ -4570,15 +5042,18 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     
     })
     
-    res.redirect('/rm/fileIdGC/'+filename)
-    
+    //res.redirect('/rm/fileIdGC/'+filename)
+    res.redirect('/rm/openFileGC/'+seqNum)
     var repo = new RepoFiles();
     
     repo.filename = filename;
     repo.fileId = "null";
     repo.status = 'GC'
+    repo.type = 'Crushing'
+    repo.item = item
     repo.date = mformat
     repo.year = year;
+    repo.refNumber = refNumber
     repo.month = month
     
     
@@ -4606,8 +5081,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   url: 'https://niyonsoft.org/rm/uploadStatementGC',
-      //url:'http://localhost:8000/rm/uploadStatementGC',
+   //url: 'https://niyonsoft.org/rm/uploadStatementGC',
+      url:'http://localhost:8000/rm/uploadStatementGC',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
@@ -4634,6 +5109,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     }) ()
     
     })
+  }
   })
     
     //res.redirect('/hostel/discList')
@@ -4643,13 +5119,13 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
 
     
 router.get('/openFileGC/:id',isLoggedIn,function(req,res){
-var filename = req.params.id
+var seqNum= req.params.id
 var batchNumber = req.user.batchNumber
 var m = moment()
 var mformat = m.format('L')
 var month = m.format('MMMM')
 var year = m.format('YYYY')
-const path =`./public/statements/${year}/${month}/${filename}`+'.pdf'
+const path =`./public/statements/${year}/${month}/GC${seqNum}`+'.pdf'
 if (fs.existsSync(path)) {
     res.contentType("application/pdf");
     fs.createReadStream(path).pipe(res)
@@ -4710,7 +5186,182 @@ console.log(filename,'fileId')
 
   
   
+  ////////// folders
+  router.get('/folderReg',function(req,res){
+    Product.find({}).then(docs=>{
+    res.render('rStock/itemFolder',{listX:docs})
+
+    })
+  })
+
+ 
+
+  router.get('/selectMonth/:id',isLoggedIn,function(req,res){
+    var pro = req.user
+    var product = req.params.id
+    var uid = req.user._id
+    var arr = []
+    var year = 2025
+    User.findByIdAndUpdate(uid,{$set:{year:year,product:product}},function(err,locs){
   
+    })
+  
+    Month.find({}).sort({num:1}).then(docs=>{
+       
+            res.render('rStock/itemFilesMonthly',{pro:pro,listX:docs})
+  
+    })
+    
+  })
+
+  
+
+router.get('/folderFiles/:id',isLoggedIn,function(req,res){
+  var arr = []
+  
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+   var term = req.user.term
+   var m = moment()
+   var pro = req.user
+   
+   var year = m.format('YYYY')
+   var month = req.params.id
+
+   var date = req.user.invoCode
+ BatchRR.find({year:year,month:month},function(err,docs){
+     if(docs){
+ 
+   console.log(docs,'docs')
+      let arr=[]
+      for(var i = docs.length - 1; i>=0; i--){
+  
+        arr.push(docs[i])
+      }
+ 
+ 
+ res.render('rStock/itemFiles',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+ }
+ })
+    
+ })
+
+ /*8888*/
+ 
+ router.get('/selectMonthDispatch/',isLoggedIn,function(req,res){
+  var pro = req.user
+  var id = req.params.id
+  var uid = req.user._id
+  var arr = []
+  var year = 2024
+  User.findByIdAndUpdate(uid,{$set:{year:year}},function(err,locs){
+
+  })
+
+  Month.find({}).sort({num:1}).then(docs=>{
+     
+          res.render('receiver/itemFilesMonthlyDispatch',{pro:pro,listX:docs,id:id})
+
+  })
+  
+})
+
+
+
+router.get('/folderFilesDispatch/:id',isLoggedIn,function(req,res){
+var arr = []
+
+var errorMsg = req.flash('danger')[0];
+var successMsg = req.flash('success')[0];
+ var term = req.user.term
+ var m = moment()
+ var pro = req.user
+ 
+ var year = m.format('YYYY')
+ var month = req.params.id
+
+ var date = req.user.invoCode
+RepoFiles.find({year:year,month:month,status:'dispatch'},function(err,docs){
+   if(docs){
+
+ console.log(docs,'docs')
+    let arr=[]
+    for(var i = docs.length - 1; i>=0; i--){
+
+      arr.push(docs[i])
+    }
+
+
+res.render('receiver/itemFilesDispatch',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+}
+})
+  
+})
+
+ 
+
+
+/*********Dispatch */
+router.get('/folderRegDispatch',function(req,res){
+res.render('receiver/itemFolderDispatch')
+})
+
+
+/*8888*/
+
+router.get('/selectMonthDispatchV/',isLoggedIn,function(req,res){
+var pro = req.user
+var id = req.params.id
+var uid = req.user._id
+var arr = []
+var year = 2024
+User.findByIdAndUpdate(uid,{$set:{year:year}},function(err,locs){
+
+})
+
+Month.find({}).sort({num:1}).then(docs=>{
+ 
+      res.render('receiver/itemFilesMonthlyDispatchV',{pro:pro,listX:docs,id:id})
+
+})
+
+})
+
+
+
+router.get('/folderFilesDispatchV/:id',isLoggedIn,function(req,res){
+var arr = []
+
+var errorMsg = req.flash('danger')[0];
+var successMsg = req.flash('success')[0];
+var term = req.user.term
+var m = moment()
+var pro = req.user
+
+var year = m.format('YYYY')
+var month = req.params.id
+
+var date = req.user.invoCode
+RepoFiles.find({year:year,month:month,status:'dispatch'},function(err,docs){
+if(docs){
+
+console.log(docs,'docs')
+let arr=[]
+for(var i = docs.length - 1; i>=0; i--){
+
+  arr.push(docs[i])
+}
+
+
+res.render('receiver/itemFilesDispatchV',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+}
+})
+
+})
+
+
+
+
 
 
 
