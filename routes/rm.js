@@ -3788,9 +3788,24 @@ BatchFermentationIngredients.find({refNumber:refNumber},function(err,nocs){
     let nQty =  quantity * tanks
     let ingredient = nocs[i].ingredient
   
+
+
+    Ingredients.find({item:ingredient},function(err,tocs){
+  
+  
+      // RawMat.find({item:item,stage:'fermentation'},function(err,tocs){
+         let opBal1 = tocs[0].massKgs - nQty
+         let opBalTonnes1 = opBal1 / 1000
+         let id4 = tocs[0]._id
+       Ingredients.findByIdAndUpdate(id4,{massKgs:opBal1,massTonnes:opBalTonnes1},function(err,locs){
+   
+       })  
+   
+       //})
+     })
     RawMat.find({item:ingredient,stage:"fermentation"},function(err,tocs){
   
-  
+  if(tocs.length>0){
      // RawMat.find({item:item,stage:'fermentation'},function(err,tocs){
         let opBal1 = tocs[0].massKgs - nQty
         let opBalTonnes1 = opBal1 / 1000
@@ -3798,18 +3813,19 @@ BatchFermentationIngredients.find({refNumber:refNumber},function(err,nocs){
       RawMat.findByIdAndUpdate(id4,{massKgs:opBal1,massTonnes:opBalTonnes1},function(err,locs){
   
       })  
-  
+    }
       //})
     })
     //arrQ.push(nQty)
     RawMat.find({item:ingredient,stage:'blending'},function(err,tocs){
+      if(tocs.length > 0){
       let opBal2 = tocs[0].massKgs + nQty
       let opBalTonnes2 = opBal2 / 1000
       let id5 = tocs[0]._id
     RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
   
     })  
-  
+      }
     })
   
   }
