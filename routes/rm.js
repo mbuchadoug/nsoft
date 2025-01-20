@@ -1189,8 +1189,8 @@ arrG.push(docs[size])
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
      //url: 'https://niyonsoft.org/uploadStatementDispatch',
-    // url:'https://niyonsoft.org/rm/uploadGrv',
-     url:'localhost:8000/rm/uploadGrv',
+     url:'https://niyonsoft.org/rm/uploadGrv',
+     //url:'localhost:8000/rm/uploadGrv',
     headers: {
       "Content-Type": "multipart/form-data"  
     },
@@ -4843,8 +4843,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         await Axios({
           method: "POST",
          //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-       //url: 'https://niyonsoft.org/rm/uploadStatementGW',
-        url:'http://localhost:8000/rm/uploadStatementGW',
+       url: 'https://niyonsoft.org/rm/uploadStatementGW',
+       // url:'http://localhost:8000/rm/uploadStatementGW',
           headers: {
             "Content-Type": "multipart/form-data"  
           },
@@ -5081,8 +5081,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   //url: 'https://niyonsoft.org/rm/uploadStatementGC',
-      url:'http://localhost:8000/rm/uploadStatementGC',
+   url: 'https://niyonsoft.org/rm/uploadStatementGC',
+      //url:'http://localhost:8000/rm/uploadStatementGC',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
