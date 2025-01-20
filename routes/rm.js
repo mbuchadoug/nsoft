@@ -4149,6 +4149,15 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
              })
             }
 
+
+            else if(item == 'sugar'){
+         
+              BatchRR.find({item:item,batchNumber:id},function(err,docs){
+                res.render('rStock/trackRaw',{listX:docs})
+           
+                 })
+                }
+
             else if(item == 'lemon'){
          
               BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
