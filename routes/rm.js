@@ -4065,8 +4065,8 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         var id = req.params.id
         var ingredient = req.params.id2
         if(ingredient == 'ginger'){
-          Cooking.find({ingredient:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking',{listX:docs})
+          Cooking.find({refNumber:id},function(err,docs){
+            res.render('rStock/trackCooking2',{listX:docs})
      
            })
         }else if(ingredient == 'bananas'){
@@ -4076,6 +4076,41 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
            })
         }
       
+
+        else if(ingredient == 'gingerGarlic'){
+          Cooking.find({refNumber:id},function(err,docs){
+            res.render('rStock/trackCooking2',{listX:docs})
+     
+           })
+        }
+
+        else if(ingredient == 'colour'){
+          Cooking.find({refNumber:id},function(err,docs){
+            res.render('rStock/trackCooking2',{listX:docs})
+     
+           })
+        }
+
+        else if(ingredient == 'gingerTea'){
+          BatchGingerCrush.find({finalProduct:ingredient,refNumber:id},function(err,docs){
+            res.render('rStock/trackCrushing',{listX:docs})
+     
+           })
+        }
+
+        else if(ingredient == 'honey'){
+          BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
+            res.render('rStock/trackCrushing',{listX:docs})
+     
+           })
+        }
+
+        else if(ingredient == 'garlic'){
+          Cooking.find({refNumber:id},function(err,docs){
+            res.render('rStock/trackCooking2',{listX:docs})
+     
+           })
+        }
       })
      
 
@@ -4105,7 +4140,31 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
      
            })
         }
+
+       else if(item == 'garlic'){
+         
+          BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+            res.render('rStock/trackCrushing',{listX:docs})
+       
+             })
+            }
+
+            else if(item == 'lemon'){
+         
+              BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+                res.render('rStock/trackCrushing',{listX:docs})
+           
+                 })
+                }
       
+
+                else if(item == 'honey'){
+         
+                  BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+                    res.render('rStock/trackCrushing',{listX:docs})
+               
+                     })
+                    }
       })
      
 
@@ -4127,6 +4186,29 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
        
              })
           }
+
+          if(item == 'garlic'){
+            BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+              res.render('rStock/trackWashing',{listX:docs})
+         
+               })
+              }
+
+
+              if(item == 'honey'){
+                BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+                  res.render('rStock/trackWashing',{listX:docs})
+             
+                   })
+                  }
+
+
+                  if(item == 'lemon'){
+                    BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+                      res.render('rStock/trackWashing',{listX:docs})
+                 
+                       })
+                      }
       })
 
 
