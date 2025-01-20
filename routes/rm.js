@@ -713,6 +713,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
  StockRM.find({refNumber:refNumber},function(err,nocs){
 
   let batchId = nocs[0].batchId
+  let closingMass = nocs[0].closingMass
 
   BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete"}},function(err,vocs){
 
@@ -727,7 +728,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     console.log(availableMass,'availableMass333')
     RawMat.find({item:item},function(err,docs){
       console.log(docs,'letu')
-      if(docs.item == 'sugar'){
+      if(docs[0].item == 'sugar'){
         console.log('true')
         let date =  moment().format('l');
   let date6 =  moment().format('l');
@@ -756,8 +757,9 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       truck.refNumber2 = refNo
       truck.batchNumber = batchNumber
       truck.month = month
-      truck.qtyInMass = 0
-      truck.qtyOutMass= 0
+      truck.nxtStage='cooking'
+      truck.qtyInMass = closingMass
+      truck.qtyOutMass= closingMass
       truck.month = month
       truck.status = 'null'
       truck.year = year
@@ -3266,15 +3268,29 @@ else{
           let item = docs[i].ingredient
           let quantity= docs[i].quantity
 
+          if(item == 'sugar'){
+            RawMat.find({item:item,stage:'raw'},function(err,tocs){
+              if(tocs.length > 0){
+              let opBal = tocs[0].massKgs - quantity
+              let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+  
+            })  
+          }
+            })
+          }
           RawMat.find({item:item,stage:'crush'},function(err,tocs){
+            if(tocs.length > 0){
             let opBal = tocs[0].massKgs - quantity
             let opBalTonnes = opBal / 1000
             let id4 = tocs[0]._id
           RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
 
           })  
-
+        }
           })
+        
         }
 
         })
