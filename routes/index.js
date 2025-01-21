@@ -2123,7 +2123,7 @@ router.post('/', passport.authenticate('local.signin', {
     res.redirect('/accounts2/stockRequisitions')
   }
   else if(req.user.role == "accountsClerk"){
-    res.redirect('/accounts5/grvListView')
+    res.redirect('/accounts5/grvList')
   }else if(req.user.role == "md"){
     res.redirect('/accounts3/stockRequisitions')
   }else if(req.user.role == "ceo"){

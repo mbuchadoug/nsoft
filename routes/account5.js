@@ -118,7 +118,7 @@ const upload = multer({ storage })
 
 
 
-router.get('/grvListView',isLoggedIn,function(req,res){
+router.get('/grvList',isLoggedIn,function(req,res){
   BatchRR.find({status:"complete",priceStatus:"null"},function(err,docs){
     res.render('accounts5/grvList',{listX:docs})
   })
@@ -247,7 +247,7 @@ let id = vocs[0]._id
   })
   
 
-
+/*
   router.get('/grvList',isLoggedIn,function(req,res){
     BatchRR.find({status:"complete"},function(err,docs){
       if(docs.length > 1){
@@ -279,7 +279,7 @@ let id = vocs[0]._id
   
   })
 
-
+*/
 
   
 router.get('/purchaseOrders/',isLoggedIn,function(req,res){
@@ -314,7 +314,7 @@ router.get('/viewPurchaseOrders/:id',isLoggedIn,function(req,res){
 
 
 
-
+/*
 router.get('/supplierInvoices',isLoggedIn,function(req,res){
  
   
@@ -339,7 +339,7 @@ router.get('/invoicePdf',function(req,res){
 })
 
 
-
+*/
 
 router.get('/statementGen/:id',isLoggedIn,function(req,res){
   //console.log(arrStatementR,'arrSingleUpdate')

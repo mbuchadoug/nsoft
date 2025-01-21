@@ -733,7 +733,7 @@ router.get('/viewPO/:id',isLoggedIn,function(req,res){
     StockVoucher.find({_id:voucherId},function(err,locs){
 
    // console.log(docs,'ok')
-    res.render('accounts3/purchaseOrder',{listX:locs,listX2:docs})
+    res.render('accounts3/purchaseOrder',{listX:locs,listX2:docs,id:voucherId})
   })
   })
 
@@ -929,7 +929,9 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       
       })
       
-      res.redirect('/accounts3/fileIdPO/'+filename)
+      //res.redirect('/accounts3/openFile/'+filename)
+      console.log(seqNum,'seqNum')
+      res.redirect('/accounts3/openFile/'+seqNum)
       
       var repo = new RepoFiles();
       
@@ -965,8 +967,8 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       await Axios({
         method: "POST",
        //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     url: 'https://niyonsoft.org/accounts3/uploadStatement',
-        //url:'http://localhost:8000/accounts3/uploadStatement',
+     //url: 'https://niyonsoft.org/accounts3/uploadStatement',
+        url:'http://localhost:8000/accounts3/uploadStatement',
         headers: {
           "Content-Type": "multipart/form-data"  
         },
@@ -1002,13 +1004,13 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
 
       
 router.get('/openFile/:id',isLoggedIn,function(req,res){
-  var filename = req.params.id
+  var seqNum =  req.params.id
   var batchNumber = req.user.batchNumber
   var m = moment()
   var mformat = m.format('L')
   var month = m.format('MMMM')
   var year = m.format('YYYY')
-  const path =`./public/statements/${year}/${month}/${filename}`+'.pdf'
+  const path =`./public/statements/${year}/${month}/POR${seqNum}`+'.pdf'
   if (fs.existsSync(path)) {
       res.contentType("application/pdf");
       fs.createReadStream(path).pipe(res)
