@@ -6,6 +6,7 @@ var batchSchemaGW = new Schema({
     date: {type: String },
     mformat: {type: String },
     item:{type:String},
+    type:{type:String},
     nxtStage:{type:String},
     variance: {type: Number },
     qtyInMass: {type: Number },

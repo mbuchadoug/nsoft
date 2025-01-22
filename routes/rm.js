@@ -753,6 +753,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       truck.mformat = date6
       truck.dateValue = dateValue
       truck.item = item
+      truck.type ='ingredient'
       truck.refNumber = refNumber
       truck.refNumber2 = refNo
       truck.batchNumber = batchNumber
@@ -1915,6 +1916,7 @@ else{
         truck.item = item
         truck.refNumber = refNumber
         truck.refNumber2 = refNo
+        truck.type ='normal'
         truck.batchNumber = batchNumber
         truck.month = month
         truck.qtyInMass = 0
@@ -2487,7 +2489,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       
  
 router.get('/batchListCrush',function(req,res){
-  BatchGingerCrush.find(function(err,docs){
+  BatchGingerCrush.find({type:"normal"},function(err,docs){
   
     let arr=[]
     for(var i = docs.length - 1; i>=0; i--){
@@ -5142,7 +5144,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     //var code ="Tiana Madzima"
    
     var arrG = []
-    BatchGingerCrush.find().lean().then(docs=>{
+    BatchGingerCrush.find({type:"normal"}).lean().then(docs=>{
 
       if(docs){
         let refNumber = docs[0].refNumber
@@ -5691,7 +5693,6 @@ router.get('/statementGenFM/',isLoggedIn,function(req,res){
   width:'30cm',
   height:'21cm',
   //height: height + 'px',
-  landscape: true,
   printBackground:true
   
   })
