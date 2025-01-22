@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var batchSchemaF = new Schema({
 
     date: {type: String },
+    endDate: {type: String },
     product: {type: String },
     ingredient:{type:String},
     quantity:{type:Number},

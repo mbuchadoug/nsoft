@@ -8,6 +8,7 @@ var userSchema = new mongoose.Schema({
     dept:{type:String},
     dispatchDate:{type:String},
     url:{type:String},
+    endDate:{type:String},
     refNo:{type:String},
     prRefNumber:{type:String},
     fullname:{type:String,required:true},

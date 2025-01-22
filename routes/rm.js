@@ -3359,7 +3359,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
   var mformat = m.format('L')
   let date6 =  moment().format('l');
   let dateValue = moment().valueOf()
-  
+  var id = req.user._id
   let date7 =  date6.replace(/\//g, "");
   
   req.check('date','Enter Date').notEmpty();
@@ -3406,7 +3406,9 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
     stock.save()
     .then(pro =>{
   
-  
+  User.findByIdAndUpdate(id,{$set:{endDate:endDate}},function(err,rocs){
+
+  })
      
       var book = new RefNo();
       book.refNumber = refNo
@@ -3469,6 +3471,7 @@ console.log(id,'fermentationPreload')
       var operator = req.body.operator
       var product = req.body.product
       var water = req.body.water
+      var endDate = req.user.endDate
   
     
     
@@ -3479,6 +3482,7 @@ console.log(id,'fermentationPreload')
     cook.batchNumber = batchNumber
     cook.quantity = quantity
     cook.date = date
+    cook.endDate = endDate
     cook.product = product
     cook.water = water
     cook.refNumber = refNumber
