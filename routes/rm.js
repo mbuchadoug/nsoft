@@ -3195,10 +3195,10 @@ Cooking.find({refNumber:refNumber},function(err,docs){
     })
 
 if(docs.length > 1){
-  if(docs[0].ingredient == "ginger" && docs[1].ingredient == "tea leaves" ||  docs[0].ingredient == "tea leaves" && docs[1].ingredient == "ginger" ){
-    finalProduct = 'ginger tea'
+  if(docs[0].ingredient == "ginger" && docs[1].ingredient == "tea" ||  docs[0].ingredient == "tea" && docs[1].ingredient == "ginger" ){
+    finalProduct = 'gingerTea'
   }
-  else if(docs[0].ingredient == "sugar" && docs[1].ingredient == "tea leaves" ||  docs[0].ingredient == "tea leaves" && docs[1].ingredient == "sugar"){
+  else if(docs[0].ingredient == "sugar" && docs[1].ingredient == "tea" ||  docs[0].ingredient == "tea" && docs[1].ingredient == "sugar"){
     finalProduct = 'colour'
   }
   else if(docs[0].ingredient == "ginger" && docs[1].ingredient == "garlic" ||  docs[0].ingredient == "garlic" && docs[1].ingredient == "ginger"){
@@ -3225,7 +3225,15 @@ else{
 }
 
     BatchCooking.findByIdAndUpdate(id,{$set:{status:"complete",finalProduct:finalProduct,quantity:number1}},function(err,locs){
+      Cooking.find({refNumber:refNumber},function(err,docs){
+        for(var i = 0;i<docs.length; i++){
 
+          let cid = docs[i]._id
+          Cooking.findByIdAndUpdate(cid,{$set:{finalProduct:finalProduct}},function(err,kocs){
+            
+          })
+          }
+        })
       Ingredients.find({item:finalProduct},function(err,toc){
         let openingBal = toc[0].massKgs + number1
         let id2 = toc[0]._id
@@ -3237,7 +3245,7 @@ else{
       })
   
 
-    /*  RawMat.find({item:finalProduct,stage:'cooking'},function(err,tocs){
+     RawMat.find({item:finalProduct,stage:'cooking'},function(err,tocs){
         let opBal = tocs[0].massKgs + number1
         let opBalTonnes = opBal / 1000
         let id4 = tocs[0]._id
@@ -3245,7 +3253,7 @@ else{
 
       })  
 
-      })*/
+      })
 
       var final = new FinalProduct()
       final.refNumber = refNumber
@@ -3550,6 +3558,56 @@ console.log(id,'fermentationPreload')
         
                       }
                   
+
+                      else if(ingredient == 'colour'){
+                        RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
+                          let opBal = tocs[0].massKgs - pro.quantity
+                          let opBalTonnes = opBal / 1000
+                          let id4 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+              
+                        })  
+              
+                        })
+        
+        
+                        RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                          let opBal2 = tocs[0].massKgs + pro.quantity
+                          let opBalTonnes2 = opBal2 / 1000
+                          let id5 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
+                  
+                        })  
+                  
+                        })
+        
+                      }
+
+                      else if(ingredient == 'gingerGarlic'){
+                        RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
+                          let opBal = tocs[0].massKgs - pro.quantity
+                          let opBalTonnes = opBal / 1000
+                          let id4 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+              
+                        })  
+              
+                        })
+        
+        
+                        RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                          let opBal2 = tocs[0].massKgs + pro.quantity
+                          let opBalTonnes2 = opBal2 / 1000
+                          let id5 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
+                  
+                        })  
+                  
+                        })
+        
+                      }
+                  
+          
           
             res.send(pro)
           
