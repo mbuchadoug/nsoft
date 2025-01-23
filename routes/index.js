@@ -74,7 +74,12 @@ const authToken = '61eb41f047d8a9d4fdf6902146abc007';
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
+const { Vonage } = require('@vonage/server-sdk')
 
+const vonage = new Vonage({
+  apiKey: "64ff8fb9",
+  apiSecret: "F4nr3GVpi9NynJSu"
+})
 const arr = {}
 const arr2 = {}
 const arrE ={}
@@ -152,23 +157,45 @@ webpush.setVapidDetails(
   privateVapidKey
 );
 
+// Find your Service Plan ID and API Token at dashboard.sinch.com/sms/api/rest
+// Find your Sinch numbers at dashboard.sinch.com/numbers/your-numbers/numbers
+const SERVICE_PLAN_ID = '21cde27897644c2bad361dc9a0b64b05';
+const API_TOKEN = '2838f794794440a5b31b0419605a1cbd';
+const SINCH_NUMBER = '+44447418630150';
+const TO_NUMBER = '+263771446827';
+const REGION ='Africa'
+const SINCH_URL= 'https://'+REGION+'.sms.api.sinch.com/xms/v1/' + SERVICE_PLAN_ID + '/batches'
 
-  
+const axios = require('axios')
+
+router.get('/text33',function(req,res){
+
+const headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + API_TOKEN}
+const payload = JSON.stringify({
+    from: SINCH_NUMBER,
+    to: [TO_NUMBER],
+    body: 'Programmers are tools for converting caffeine into code. We just got a new shipment of mugs! Check them out: https://tinyurl.com/4a6fxce7!'
+  })
+axios.post(SINCH_URL, payload, { headers })
+    .then(response =>
+        console.log(response.data)
+    ).catch(error =>
+    console.error('There was an error!', error.response)
+);
+})
   
   router.get('/txt77',isLoggedIn,function(req,res){
-    const accountSid = 'ACa80a9dbf988b2fd2438243f35d0807f3'; 
-    const authToken = '61eb41f047d8a9d4fdf6902146abc007'; 
-  const client = require('twilio')(accountSid, authToken); 
-  const alphanumeric_id = "Kambucha"; 
-   
-client.messages
-.create({
-            from: '+17855724417',
-            to: '+263781165357',
-            body: '3tonnes of Ginger Received',
-})
-.then(message => console.log(message.sid))
-.done();
+    const from = "Kambucha"
+    const to = "263771446827"
+    const text = 'Check Requisition'
+    
+    async function sendSMS() {
+        await vonage.sms.send({to, from, text})
+            .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+            .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+    }
+    
+    sendSMS();
   })
 
 
