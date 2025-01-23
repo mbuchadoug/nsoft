@@ -426,7 +426,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
 
             const from = "Kambucha"
             const to = "263771446827"
-            const text = 'Check Stock Requisition of'+' '+stockWeight+' '+item
+            const text = 'Check Stock Requisition of'+' '+item+' '+requestedMassKgs+'kgs'
             
             async function sendSMS() {
                 await vonage.sms.send({to, from, text})
