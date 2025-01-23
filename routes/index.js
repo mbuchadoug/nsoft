@@ -183,7 +183,18 @@ axios.post(SINCH_URL, payload, { headers })
     console.error('There was an error!', error.response)
 );
 })
-  
+  router.get('/txt66',function(req,res){
+    const accountSid = 'AC242271b8616514bb11c25c9513538395';
+    const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages
+        .create({
+          body:'Niyonsoft Test',
+          from: '+12194198819',
+          to: '+263781165357'
+        })
+        .then(message => console.log(message.sid));
+  })
   router.get('/txt77',isLoggedIn,function(req,res){
     const from = "Kambucha"
     const to = "263771446827"
