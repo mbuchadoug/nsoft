@@ -848,7 +848,18 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     
   
 
-
+     
+        const from = "Kambucha"
+        const to = "263771446827"
+        const text =availableMass+'kgs'+' '+' '+'of'+' '+item+' '+'Received'
+        
+        async function sendSMS() {
+            await vonage.sms.send({to, from, text})
+                .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+                .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+        }
+        
+        sendSMS();
 
   //req.flash('success', 'Goods received successfully');
   

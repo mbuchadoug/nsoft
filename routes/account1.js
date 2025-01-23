@@ -55,6 +55,12 @@ var FormData = require('form-data')
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
+const { Vonage } = require('@vonage/server-sdk')
+
+const vonage = new Vonage({
+  apiKey: "64ff8fb9",
+  apiSecret: "F4nr3GVpi9NynJSu"
+})
 
 const arr = {}
 const arr2 = {}
@@ -129,8 +135,22 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
     var id = req.params.id
     var name = req.user.fullname
 
-    StockVoucher.findByIdAndUpdate(id,{$set:{approver1:name,status2:"pending",status1:"approved"}},function(err,docs){
+    StockVoucher.findByIdAndUpdate(id,{$set:{approver1:name,status2:"pending",status1:"approved"}},function(err,doc){
 
+
+
+      
+      const from = "Kambucha"
+      const to = "263771446827"
+      const text = 'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item
+      
+      async function sendSMS() {
+          await vonage.sms.send({to, from, text})
+              .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+              .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+      }
+      
+      sendSMS();
 
     })
 
