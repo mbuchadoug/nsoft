@@ -201,7 +201,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             
             
                 
-      const from = "Kambucha"
+      /*const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -211,7 +211,19 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
+
             
             let batchId = pro._id
             
@@ -260,7 +272,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
               
                 
-      const from = "Kambucha"
+    /*  const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -270,7 +282,20 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+      
+     
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
+
           
         
         let batchId = pro._id
@@ -323,7 +348,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
     
           
                 
-              const from = "Kambucha"
+              /*const from = "Kambucha"
               const to = "263771446827"
               const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
               
@@ -333,7 +358,20 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
                       .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
               }
               
-              sendSMS();
+              sendSMS();*/
+
+              
+    
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
       
     
     let batchId = pro._id
@@ -391,7 +429,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
               
                 
-      const from = "Kambucha"
+     /* const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -401,7 +439,19 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+      
+     
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
           
         
         let batchId = pro._id
@@ -454,7 +504,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
                 
                 
-      const from = "Kambucha"
+     /* const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -464,7 +514,21 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+
+      
+     
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
+
         
         let batchId = pro._id
         
@@ -520,7 +584,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
                 
                 
-      const from = "Kambucha"
+     /* const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -530,7 +594,20 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+
+      
+     
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
         
         let batchId = pro._id
         
@@ -582,7 +659,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
               
                 
-      const from = "Kambucha"
+     /* const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -592,7 +669,19 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+      
+    
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
           
         
         let batchId = pro._id
@@ -645,7 +734,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
               
                 
-      const from = "Kambucha"
+      /*const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -655,7 +744,20 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+
+      
+     
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
           
         
         let batchId = pro._id
@@ -709,7 +811,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
               
                 
-      const from = "Kambucha"
+      /*const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -719,7 +821,20 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+
+      
+     
+      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
         
           
         
@@ -856,7 +971,93 @@ router.get('/viewPO/:id',isLoggedIn,function(req,res){
 })
 
 
+router.get('/blendingExtraDaysApproval',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+var successMsg = req.flash('success')[0];
+BlendingDays.find({status:'extra',md:"pending"},function(err,docs){
 
+    res.render('accounts3/extraDays',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+  })
+})
+
+
+
+router.get('/blendingExtraDaysApproval/:id',isLoggedIn,function(req,res){
+var id = req.params.id
+
+
+BlendingDays.findByIdAndUpdate(id,{$set:{md:'approved'}},function(err,doc){
+
+
+
+
+/*const from = "Kambucha"
+const to = "263771446827"
+const text = 'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item
+
+async function sendSMS() {
+    await vonage.sms.send({to, from, text})
+        .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+        .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+}
+
+sendSMS();*/
+
+/* const accountSid = 'AC242271b8616514bb11c25c9513538395';
+const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+const client = require('twilio')(accountSid, authToken);
+client.messages
+    .create({
+      body:'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item,
+      from: '+12194198819',
+      to: '+263781165357'
+    })
+    .then(message => console.log(message.sid));*/
+
+})
+
+res.redirect('/accounts3/blendingExtraDaysApproval')
+})
+  
+
+
+router.get('/blendingExtraDaysReject/:id',isLoggedIn,function(req,res){
+var id = req.params.id
+
+
+BlendingDays.findByIdAndUpdate(id,{$set:{md:'rejected'}},function(err,doc){
+
+
+
+
+/*const from = "Kambucha"
+const to = "263771446827"
+const text = 'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item
+
+async function sendSMS() {
+    await vonage.sms.send({to, from, text})
+        .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+        .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+}
+
+sendSMS();*/
+
+/* const accountSid = 'AC242271b8616514bb11c25c9513538395';
+const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+const client = require('twilio')(accountSid, authToken);
+client.messages
+    .create({
+      body:'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item,
+      from: '+12194198819',
+      to: '+263781165357'
+    })
+    .then(message => console.log(message.sid));*/
+
+})
+
+res.redirect('/accounts3/blendingExtraDaysApproval')
+})
+  
 
 router.get('/purchaseOrders/',isLoggedIn,function(req,res){
  

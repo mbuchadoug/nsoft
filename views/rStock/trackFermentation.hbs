@@ -309,7 +309,7 @@ ul.no-bullets {
 													
 											</div>
 											<!--end::Search-->
-											<h3>Fermentation Track</h3>
+										
 											<!--begin::Export buttons-->
 											<div id="kt_ecommerce_report_sales_export" class="d-none"></div>
 											<!--end::Export buttons-->
@@ -363,6 +363,7 @@ ul.no-bullets {
 									<!--begin::Card body-->
 									<div class="card-body pt-0">
 										<!--begin::Table-->
+											<h3>Fermentation Trail</h3>
 										<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_report_sales_table">
 											<!--begin::Table head-->
 											<thead>
@@ -414,10 +415,12 @@ ul.no-bullets {
 														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
-																<a href="/rm/trailOther/{{this.batchNumber}}/{{this.ingredient}}" class="menu-link px-3">Track Item</a>
+																<a href="/rm/trailOther/{{this.batchNumber}}/{{this.ingredient}}/{{id}}" class="menu-link px-3">Track Item</a>
 															</div>
 
-
+                                                 <div class="menu-item px-3">
+																<a href="/rm/statementGenFM/{{id}}" class="menu-link px-3">Report</a>
+															</div>
 															
 															<!--end::Menu item-->
 														</div>

@@ -140,7 +140,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
 
 
       
-      const from = "Kambucha"
+      /*const from = "Kambucha"
       const to = "263771446827"
       const text = 'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item
       
@@ -150,7 +150,18 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();
+      sendSMS();*/
+
+     /* const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+      const client = require('twilio')(accountSid, authToken);
+      client.messages
+          .create({
+            body:'Check Stock Requisition of'+' '+doc.requestedMassKgs+' '+doc.item,
+            from: '+12194198819',
+            to: '+263781165357'
+          })
+          .then(message => console.log(message.sid));*/
 
     })
 

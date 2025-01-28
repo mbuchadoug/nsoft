@@ -424,7 +424,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
         user.save()
           .then(user =>{
 
-            const from = "Kambucha"
+           /* const from = "Kambucha"
             const to = "263771446827"
             const text = 'Check Stock Requisition of'+' '+item+' '+requestedMass+'kgs'
             
@@ -434,7 +434,18 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
                     .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
             }
             
-            sendSMS();
+            sendSMS();*/
+
+          /*  const accountSid = 'AC242271b8616514bb11c25c9513538395';
+    const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages
+        .create({
+          body:'Check Stock Requisition of'+' '+item+' '+requestedMass+'kgs',
+          from: '+12194198819',
+          to: '+263781165357'
+        })
+        .then(message => console.log(message.sid));*/
 
             let nV = req.user.voucherNumber + 1
 User.findByIdAndUpdate(uid,{$set:{voucherNumber:nV}},function(err,locs){
@@ -849,7 +860,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
   
 
      
-        const from = "Kambucha"
+       /* const from = "Kambucha"
         const to = "263771446827"
         const text =availableMass+'kgs'+' '+' '+'of'+' '+item+' '+'Received'
         
@@ -859,7 +870,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
                 .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
         }
         
-        sendSMS();
+        sendSMS();*/
 
   //req.flash('success', 'Goods received successfully');
   
@@ -2009,6 +2020,7 @@ else{
           truck.qtyInMass = 0
           truck.qtyOutMass= 0
           truck.month = month
+          truck.type ='normal'
           truck.status = 'null'
           truck.year = year
          
@@ -4147,24 +4159,25 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
        router.get('/trailFermentation/:id',isLoggedIn,function(req,res){
          var id = req.params.id
         Fermentation.find({refNumber:id},function(err,docs){
-             res.render('rStock/trackFermentation',{listX:docs})
+             res.render('rStock/trackFermentation',{listX:docs,id:id})
       
             })
        })
       
 
 
-       router.get('/trailOther/:id/:id2',isLoggedIn,function(req,res){
+       router.get('/trailOther/:id/:id2/:id3',isLoggedIn,function(req,res){
         var id = req.params.id
+        var id3 = req.params.id3
         var ingredient = req.params.id2
         if(ingredient == 'ginger'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs})
+            res.render('rStock/trackCooking2',{listX:docs,id:id3})
      
            })
         }else if(ingredient == 'bananas'){
           BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs})
+            res.render('rStock/trackCrushing',{listX:docs,id:id3})
      
            })
         }
@@ -4172,35 +4185,35 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
         else if(ingredient == 'gingerGarlic'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs})
+            res.render('rStock/trackCooking2',{listX:docs,id:id3})
      
            })
         }
 
         else if(ingredient == 'colour'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs})
+            res.render('rStock/trackCooking2',{listX:docs,id:id3})
      
            })
         }
 
         else if(ingredient == 'gingerTea'){
           BatchGingerCrush.find({finalProduct:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs})
+            res.render('rStock/trackCrushing',{listX:docs,id:id3})
      
            })
         }
 
         else if(ingredient == 'honey'){
           BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs})
+            res.render('rStock/trackCrushing',{listX:docs,id:id3})
      
            })
         }
 
         else if(ingredient == 'garlic'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs})
+            res.render('rStock/trackCooking2',{listX:docs,id:id3})
      
            })
         }
@@ -4218,18 +4231,19 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       })*/
 
 
-      router.get('/trailBatch2/:id/:id2',isLoggedIn,function(req,res){
+      router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
         var id = req.params.id
         var item = req.params.id2
+        var id3  = req.params.id3
         if(item == 'ginger'){
          
         BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-          res.render('rStock/trackCrushing',{listX:docs})
+          res.render('rStock/trackCrushing',{listX:docs,id:id3})
      
            })
         }else if(item == 'bananas'){
           BatchRR.find({item:item,batchNumber:id},function(err,docs){
-            res.render('rStock/trackRaw',{listX:docs})
+            res.render('rStock/trackRaw',{listX:docs,id:id3})
      
            })
         }
@@ -4237,7 +4251,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
        else if(item == 'garlic'){
          
           BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs})
+            res.render('rStock/trackCrushing',{listX:docs,id:id3})
        
              })
             }
@@ -4246,7 +4260,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
             else if(item == 'sugar'){
          
               BatchRR.find({item:item,batchNumber:id},function(err,docs){
-                res.render('rStock/trackRaw',{listX:docs})
+                res.render('rStock/trackRaw',{listX:docs,id:id3})
            
                  })
                 }
@@ -4254,7 +4268,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
             else if(item == 'lemon'){
          
               BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-                res.render('rStock/trackCrushing',{listX:docs})
+                res.render('rStock/trackCrushing',{listX:docs,id:id3})
            
                  })
                 }
@@ -4263,7 +4277,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
                 else if(item == 'honey'){
          
                   BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-                    res.render('rStock/trackCrushing',{listX:docs})
+                    res.render('rStock/trackCrushing',{listX:docs,id:id3})
                
                      })
                     }
@@ -4274,12 +4288,13 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
 
 
-      router.get('/trailBatch3/:id/:id2',isLoggedIn,function(req,res){
+      router.get('/trailBatch3/:id/:id2/:id3',isLoggedIn,function(req,res){
         var id = req.params.id
         var item = req.params.id2
+        var id3 = req.params.id3
         if(item == 'ginger'){
         BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
-          res.render('rStock/trackWashing',{listX:docs})
+          res.render('rStock/trackWashing',{listX:docs,id:id3})
      
            })
           }else if(item == 'bananas'){
@@ -4563,7 +4578,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
   
     
     await page.setContent(content, { waitUntil: 'networkidle2'});
-  
+    
     await page.emulateMediaType('screen')
     let height = await page.evaluate(() => document.documentElement.offsetHeight);
     await page.evaluate(() => matchMedia('screen').matches);
@@ -4571,11 +4586,9 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
    
      
     let filename = 'blend'+id+'.pdf'
-    await page.pdf({
-   
+    await page.pdf({  
     path:(`./public/grv/${year}/${month}/blend${id}`+'.pdf'),
     format:"A4",
-  
     height: height + 'px',
     printBackground:true
     
@@ -4926,11 +4939,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
 
 
 
-
-
-
-
-      router.get('/statementGenGW/',isLoggedIn,function(req,res){
+      router.get('/statementGenGW/:id',isLoggedIn,function(req,res){
         //console.log(arrStatementR,'arrSingleUpdate')
         var arrStatemementR=[]
         var m = moment()
@@ -4940,6 +4949,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         var date = req.user.date
         //var receiveDate = req.user.dispatchDate
         //var code ="Tiana Madzima"
+        var id = req.params.id
        
         var arrG = []
         BatchGingerWash.find().lean().then(docs=>{
@@ -5032,6 +5042,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         repo.item = item
         repo.date = mformat
         repo.year = year;
+        repo.idNum = id
         repo.refNumber = refNumber
         
         
@@ -5060,7 +5071,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
           method: "POST",
          //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
        url: 'https://niyonsoft.org/rm/uploadStatementGW',
-       // url:'http://localhost:8000/rm/uploadStatementGW',
+        //url:'http://localhost:8000/rm/uploadStatementGW',
           headers: {
             "Content-Type": "multipart/form-data"  
           },
@@ -5165,7 +5176,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
   
   ///gingerCrushing
 
-  router.get('/statementGenGC/',isLoggedIn,function(req,res){
+  router.get('/statementGenGC/:id',isLoggedIn,function(req,res){
     //console.log(arrStatementR,'arrSingleUpdate')
     var arrStatemementR=[]
     var m = moment()
@@ -5173,6 +5184,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     var month = m.format('MMMM')
     var year = m.format('YYYY')
     var date = req.user.date
+    var id = req.params.id
     //var receiveDate = req.user.dispatchDate
     //var code ="Tiana Madzima"
    
@@ -5269,6 +5281,7 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     repo.item = item
     repo.date = mformat
     repo.year = year;
+    repo.idNum = id
     repo.refNumber = refNumber
     repo.month = month
     
@@ -5402,7 +5415,7 @@ console.log(filename,'fileId')
 
   ///cooking
   
-  router.get('/statementGenCN/',isLoggedIn,function(req,res){
+  router.get('/statementGenCN/:id',isLoggedIn,function(req,res){
     //console.log(arrStatementR,'arrSingleUpdate')
     var arrStatemementR=[]
     var m = moment()
@@ -5410,6 +5423,7 @@ console.log(filename,'fileId')
     var month = m.format('MMMM')
     var year = m.format('YYYY')
     var date = req.user.date
+    var id = req.params.id
     //var receiveDate = req.user.dispatchDate
     //var code ="Tiana Madzima"
    
@@ -5507,6 +5521,7 @@ console.log(filename,'fileId')
     repo.date = mformat
     repo.year = year;
     repo.refNumber = refNumber
+    repo.idNum = id
     repo.month = month
     
     
@@ -5534,8 +5549,8 @@ console.log(filename,'fileId')
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   //url: 'https://niyonsoft.org/rm/uploadStatementGC',
-      url:'https://niyonsoft.org/rm/uploadStatementCN',
+   url: 'https://niyonsoft.org/rm/uploadStatementGC',
+      //url:'http://localhost:8000/rm/uploadStatementCN',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
@@ -5638,7 +5653,7 @@ console.log(filename,'fileId')
 })
 
 //fermentation
-router.get('/statementGenFM/',isLoggedIn,function(req,res){
+router.get('/statementGenFM/:id',isLoggedIn,function(req,res){
   //console.log(arrStatementR,'arrSingleUpdate')
   var arrStatemementR=[]
   var m = moment()
@@ -5646,6 +5661,7 @@ router.get('/statementGenFM/',isLoggedIn,function(req,res){
   var month = m.format('MMMM')
   var year = m.format('YYYY')
   var date = req.user.date
+  var id = req.params.id
   //var receiveDate = req.user.dispatchDate
   //var code ="Tiana Madzima"
  
@@ -5742,6 +5758,7 @@ router.get('/statementGenFM/',isLoggedIn,function(req,res){
   repo.date = mformat
   repo.year = year;
   repo.refNumber = refNumber
+  repo.idNum = id
   repo.month = month
   
   
@@ -5771,6 +5788,7 @@ router.get('/statementGenFM/',isLoggedIn,function(req,res){
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
  //url: 'https://niyonsoft.org/rm/uploadStatementGC',
     url:'https://niyonsoft.org/rm/uploadStatementFM',
+  // url:'http://localhost:8000/rm/uploadStatementFM',
     headers: {
       "Content-Type": "multipart/form-data"  
     },

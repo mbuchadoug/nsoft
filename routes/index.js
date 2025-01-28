@@ -2175,6 +2175,9 @@ router.post('/', passport.authenticate('local.signin', {
   }else if(req.user.role == "adminTest"){
     res.redirect('/adminTest/batch')
   }
+  else if(req.user.role == "quality"){
+    res.redirect('/quality/blendingExtraDaysApproval')
+  }
 
 
   

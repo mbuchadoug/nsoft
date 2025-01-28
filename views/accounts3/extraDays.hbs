@@ -164,8 +164,7 @@ ul.no-bullets {
         Home
 <!----><!---->      </a>
     </li>
-    
-   
+  
 
   <ul class="nav flex-column" id="nav_accordion">
 
@@ -261,6 +260,7 @@ ul.no-bullets {
 		</ul>
 
 	</li>
+
 	
 	  <li id="ember420" class="ember-view nav-item">
       <a id="ember421" class="ember-view nav-link" href="/logout">
@@ -280,17 +280,34 @@ ul.no-bullets {
 			<!--begin::Toolbar-->
 						<div class="toolbar" id="kt_toolbar">
 							<!--begin::Container-->
-							
+								
+				
 							<!--end::Container-->
 						</div>
 						<!--end::Toolbar-->
 						<!--begin::Post-->
-						<div class="post d-flex flex-column-fluid" id="kt_post">
+						
+      		<div class="post d-flex flex-column-fluid" id="kt_post">
 							<!--begin::Container-->
+	
+				
 							<div id="kt_content_container" class="container-xxl">
 								<!--begin::Products-->
 								<div class="card card-flush">
 									<!--begin::Card header-->
+									<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" {{#if noMessages}}hidden{{/if}}>
+            {{ successMsg }}
+     
+        </div>
+    </div>
+						
+		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="danger" class="alert alert-danger" {{#if noMessages2}}hidden{{/if}}>
+            {{ errorMsg }}
+     
+        </div>
+    </div>	
 									<div class="card-header align-items-center py-5 gap-2 gap-md-5">
 										<!--begin::Card title-->
 										<div class="card-title">
@@ -307,7 +324,6 @@ ul.no-bullets {
 												<input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search Report" />
 											</div>
 											<!--end::Search-->
-										
 											<!--begin::Export buttons-->
 											<div id="kt_ecommerce_report_sales_export" class="d-none"></div>
 											<!--end::Export buttons-->
@@ -363,19 +379,17 @@ ul.no-bullets {
 										<!--begin::Table-->
 										<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_report_sales_table">
 											<!--begin::Table head-->
-												<h3>Crushing Trail</h3>
 											<thead>
 												<!--begin::Table row-->
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-													        <th class="min-w-100px">Ref Number</th>
-															  <th class="min-w-100px">Batch Number</th>
-												         	<th class="text-end min-w-75px">Item</th>
-															<th class="text-end min-w-75px">Qty In</th>
-															<th class="text-end min-w-75px">Qty Out</th>
-														    <th class="text-end min-w-75px">Variance</th>
-															<th class="text-end min-w-75px">Date</th>
-															<th class="text-end min-w-75px">Month</th>
-															<th class="text-end min-w-75px">Year</th>
+													        <th class="min-w-100px">Product</th>
+															 <th class="min-w-100px">Reason</th>
+												         	<th class="text-end min-w-75px">Date</th>
+															<th class="text-end min-w-75px">Tank Number</th>
+								
+															<th class="text-end min-w-75px">Status	</th>
+															<th class="text-end min-w-75px">Batch Number</th>
+															
 															<!--<th class="text-end min-w-75px">Year</th>-->
 														
 															<th class="text-end min-w-75px">Actions</th>
@@ -391,17 +405,17 @@ ul.no-bullets {
 												{{#each listX}}
 												<tr>
 													<!--begin::Date=-->
-													<td>{{this.refNumber}}</td>
+													<td>{{this.product}}</td>
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
-													<td class="text-end pe-0">{{this.batchNumber}}</td>
-															<td class="text-end pe-0">{{this.item}}</td>
-                                                    <td class="text-end pe-0">{{this.qtyInMass}}kgs</td>  
-													<td class="text-end pe-0">{{this.qtyOutMass}}kgs</td>
-													<td class="text-end pe-0">{{this.variance}}kgs</td>
+													<td >{{this.reason}}</td>
+
 													<td class="text-end pe-0">{{this.date}}</td>
-													<td class="text-end pe-0">{{this.month}}</td>
-													<td class="text-end pe-0">{{this.year}}</td>
+                                                    <td class="text-end pe-0">{{this.tankNumber}}</td>  
+												
+													<td class="text-end pe-0">{{this.qualityAssurance}}</td>
+													<td class="text-end pe-0">{{this.refNumber}}</td>
+													
 													<!--<td class="text-end pe-0">{{this.year}}</td>-->
 													
 													<!--begin::Products sold=-->
@@ -418,14 +432,18 @@ ul.no-bullets {
 														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
-																<a href="/rm/trailBatch3/{{this.batchNumber}}/{{this.item}}/{{id}}" class="menu-link px-3">Track Batch</a>
+																<a href="/accounts3/blendingExtraDaysApproval/{{this._id}}" class="menu-link px-3">Approve</a>
 															</div>
 
-                                                         <div class="menu-item px-3">
-																<a href="/rm/statementGenGC/{{id}}" class="menu-link px-3">Report</a>
-															</div>
 
+														<div class="menu-item px-3">
+																<a href="/accounts3/blendingExtraDaysReject/{{this._id}}" class="menu-link px-3">Reject</a>
+															</div>
+															<!--end::Menu item-->
+															<!--begin::Menu item-->
 															
+															<!--end::Menu item-->
+																
 															<!--end::Menu item-->
 														</div>
 														<!--end::Menu-->
