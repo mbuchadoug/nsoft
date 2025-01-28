@@ -389,7 +389,7 @@ ul.no-bullets {
 													</svg>
 												</span>
 
-                <a href="/receiver/folderFiles/{{month}}">Open Files</a>
+                <a href="/receiver/folderFiles/{{refNumber}}">Open Files</a>
 												<!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
 												
 												<!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
@@ -419,8 +419,8 @@ ul.no-bullets {
 															<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_file_manager_list .form-check-input" value="1" />
 														</div>
 													</th>
-													<th class="min-w-250px">GRV #</th>
-													<th class="min-w-10px">Batch #</th>
+													<th class="min-w-250px">Ref #</th>
+													<th class="min-w-10px">Type</th>
 													<th class="min-w-125px">Date </th>
 													<th class="w-125px"></th>
 												</tr>
@@ -449,12 +449,12 @@ ul.no-bullets {
 																</svg>
 															</span>
 															<!--end::Svg Icon-->
-															<a href="/rm/batchFiles/{{this._id}}" class="text-gray-800 text-hover-primary">{{this.refNumber}}</a>
+															<a href="/dispatch/openStatement/{{this.fileId}}" class="text-gray-800 text-hover-primary">{{this.idNum}}</a>
 														</div>
 													</td>
 													<!--end::Name=-->
 													<!--begin::Size-->
-													<td>{{this.batchNumber}}</td>
+													<td>{{this.type}}</td>
 													<!--end::Size-->
 													<!--begin::Last modified-->
 													<td>{{this.date}}</td>

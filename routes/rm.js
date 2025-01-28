@@ -5911,7 +5911,7 @@ console.log(files[0])
   
     })
   
-    Month.find({}).sort({num:1}).then(docs=>{
+    BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
        
             res.render('rStock/itemFilesMonthly',{pro:pro,listX:docs})
   
@@ -5926,15 +5926,15 @@ router.get('/folderFiles/:id',isLoggedIn,function(req,res){
   
   var errorMsg = req.flash('danger')[0];
   var successMsg = req.flash('success')[0];
-   var term = req.user.term
+
    var m = moment()
    var pro = req.user
    
    var year = m.format('YYYY')
-   var month = req.params.id
+   var refNumber = req.params.id
 
    var date = req.user.invoCode
- BatchRR.find({year:year,month:month},function(err,docs){
+ RepoFiles.find({idNum:refNumber},function(err,docs){
      if(docs){
  
    console.log(docs,'docs')
@@ -5945,7 +5945,7 @@ router.get('/folderFiles/:id',isLoggedIn,function(req,res){
       }
  
  
- res.render('rStock/itemFiles',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+ res.render('rStock/itemFiles',{listX:arr,refNumber:refNumber,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
  }
  })
     

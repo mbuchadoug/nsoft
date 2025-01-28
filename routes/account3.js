@@ -213,7 +213,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
       
       sendSMS();*/
 
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -222,7 +222,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
 
             
             let batchId = pro._id
@@ -285,7 +285,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
       sendSMS();*/
       
      
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -294,7 +294,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
 
           
         
@@ -362,7 +362,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
 
               
     
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -371,7 +371,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
       
     
     let batchId = pro._id
@@ -429,7 +429,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
         
               
                 
-     /* const from = "Kambucha"
+     const from = "Kambucha"
       const to = "263771446827"
       const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
       
@@ -439,10 +439,10 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
               .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
       }
       
-      sendSMS();*/
+      sendSMS();
       
      
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -451,7 +451,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
           
         
         let batchId = pro._id
@@ -518,7 +518,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
 
       
      
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -527,7 +527,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
 
         
         let batchId = pro._id
@@ -598,7 +598,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
 
       
      
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -607,7 +607,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
         
         let batchId = pro._id
         
@@ -672,7 +672,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
       sendSMS();*/
       
     
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -681,7 +681,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
           
         
         let batchId = pro._id
@@ -748,7 +748,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
 
       
      
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -757,7 +757,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
           
         
         let batchId = pro._id
@@ -825,7 +825,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
 
       
      
-      /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
+      const accountSid = 'AC242271b8616514bb11c25c9513538395';
       const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
       const client = require('twilio')(accountSid, authToken);
       client.messages
@@ -834,7 +834,7 @@ router.get('/approve/:id',isLoggedIn,function(req,res){
             from: '+12194198819',
             to: '+263781165357'
           })
-          .then(message => console.log(message.sid));*/
+          .then(message => console.log(message.sid));
         
           
         
