@@ -436,7 +436,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
             
             sendSMS();*/
 
-          /*  const accountSid = 'AC242271b8616514bb11c25c9513538395';
+           const accountSid = 'AC242271b8616514bb11c25c9513538395';
     const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
     const client = require('twilio')(accountSid, authToken);
     client.messages
@@ -445,7 +445,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
           from: '+12194198819',
           to: '+263781165357'
         })
-        .then(message => console.log(message.sid));*/
+        .then(message => console.log(message.sid));
 
             let nV = req.user.voucherNumber + 1
 User.findByIdAndUpdate(uid,{$set:{voucherNumber:nV}},function(err,locs){
