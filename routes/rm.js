@@ -482,13 +482,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   })
     
   
-  router.get('/grvList',isLoggedIn,function(req,res){
-    BatchRR.find({status:"complete"},function(err,docs){
-      res.render('rStock/grvList',{listX:docs})
-    })
-  })
-  
-
+ 
 
 
 
@@ -1112,6 +1106,14 @@ router.get('/send-notification/:id/:id2', async (req, res) => {
   })
 
 })*/
+
+
+router.get('/grvList',isLoggedIn,function(req,res){
+  BatchRR.find({status:"complete"},function(err,docs){
+    res.render('rStock/grvList',{listX:docs})
+  })
+})
+
 
 
 router.get('/viewGRV/:id',isLoggedIn,function(req,res){
@@ -4159,7 +4161,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
        router.get('/trailFermentation/:id',isLoggedIn,function(req,res){
          var id = req.params.id
         Fermentation.find({refNumber:id},function(err,docs){
-             res.render('rStock/trackFermentation',{listX:docs,id:id})
+             res.render('rStock/trackFermentation',{listX:docs,refNumber:id})
       
             })
        })
@@ -4170,14 +4172,15 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         var id = req.params.id
         var id3 = req.params.id3
         var ingredient = req.params.id2
+        console.log(id3,'id3')
         if(ingredient == 'ginger'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs,id:id3})
+            res.render('rStock/trackCooking2',{listX:docs,idNum:id3})
      
            })
         }else if(ingredient == 'bananas'){
           BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs,id:id3})
+            res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
      
            })
         }
@@ -4185,35 +4188,36 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
         else if(ingredient == 'gingerGarlic'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs,id:id3})
+            res.render('rStock/trackCooking2',{listX:docs,idNum:id3})
      
            })
         }
 
         else if(ingredient == 'colour'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs,id:id3})
+    
+            res.render('rStock/trackCooking2',{listX:docs,idNum:id3})
      
            })
         }
 
         else if(ingredient == 'gingerTea'){
           BatchGingerCrush.find({finalProduct:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs,id:id3})
+            res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
      
            })
         }
 
         else if(ingredient == 'honey'){
           BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs,id:id3})
+            res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
      
            })
         }
 
         else if(ingredient == 'garlic'){
           Cooking.find({refNumber:id},function(err,docs){
-            res.render('rStock/trackCooking2',{listX:docs,id:id3})
+            res.render('rStock/trackCooking2',{listX:docs,idNum:id3})
      
            })
         }
@@ -4238,12 +4242,12 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         if(item == 'ginger'){
          
         BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-          res.render('rStock/trackCrushing',{listX:docs,id:id3})
+          res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
      
            })
         }else if(item == 'bananas'){
           BatchRR.find({item:item,batchNumber:id},function(err,docs){
-            res.render('rStock/trackRaw',{listX:docs,id:id3})
+            res.render('rStock/trackRaw',{listX:docs,idNum:id3})
      
            })
         }
@@ -4251,7 +4255,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
        else if(item == 'garlic'){
          
           BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-            res.render('rStock/trackCrushing',{listX:docs,id:id3})
+            res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
        
              })
             }
@@ -4260,7 +4264,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
             else if(item == 'sugar'){
          
               BatchRR.find({item:item,batchNumber:id},function(err,docs){
-                res.render('rStock/trackRaw',{listX:docs,id:id3})
+                res.render('rStock/trackRaw',{listX:docs,idNum:id3})
            
                  })
                 }
@@ -4268,7 +4272,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
             else if(item == 'lemon'){
          
               BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-                res.render('rStock/trackCrushing',{listX:docs,id:id3})
+                res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
            
                  })
                 }
@@ -4277,7 +4281,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
                 else if(item == 'honey'){
          
                   BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
-                    res.render('rStock/trackCrushing',{listX:docs,id:id3})
+                    res.render('rStock/trackCrushing',{listX:docs,idNum:id3})
                
                      })
                     }
@@ -5070,8 +5074,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
         await Axios({
           method: "POST",
          //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-       url: 'https://niyonsoft.org/rm/uploadStatementGW',
-        //url:'http://localhost:8000/rm/uploadStatementGW',
+       //url: 'https://niyonsoft.org/rm/uploadStatementGW',
+        url:'http://localhost:8000/rm/uploadStatementGW',
           headers: {
             "Content-Type": "multipart/form-data"  
           },
@@ -5310,8 +5314,8 @@ router.get('/closeBlending',isLoggedIn,function(req,res){
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   url: 'https://niyonsoft.org/rm/uploadStatementGC',
-      //url:'http://localhost:8000/rm/uploadStatementGC',
+   //url: 'https://niyonsoft.org/rm/uploadStatementGC',
+      url:'http://localhost:8000/rm/uploadStatementGC',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
@@ -5549,8 +5553,8 @@ console.log(filename,'fileId')
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   url: 'https://niyonsoft.org/rm/uploadStatementGC',
-      //url:'http://localhost:8000/rm/uploadStatementCN',
+   //url: 'https://niyonsoft.org/rm/uploadStatementGC',
+      url:'http://localhost:8000/rm/uploadStatementCN',
       headers: {
         "Content-Type": "multipart/form-data"  
       },
@@ -5661,7 +5665,8 @@ router.get('/statementGenFM/:id',isLoggedIn,function(req,res){
   var month = m.format('MMMM')
   var year = m.format('YYYY')
   var date = req.user.date
-  var id = req.params.id
+  var idNum = req.params.id
+  console.log(idNum,'idNum')
   //var receiveDate = req.user.dispatchDate
   //var code ="Tiana Madzima"
  
@@ -5758,7 +5763,7 @@ router.get('/statementGenFM/:id',isLoggedIn,function(req,res){
   repo.date = mformat
   repo.year = year;
   repo.refNumber = refNumber
-  repo.idNum = id
+  repo.idNum = idNum
   repo.month = month
   
   
@@ -5787,8 +5792,8 @@ router.get('/statementGenFM/:id',isLoggedIn,function(req,res){
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
  //url: 'https://niyonsoft.org/rm/uploadStatementGC',
-    url:'https://niyonsoft.org/rm/uploadStatementFM',
-  // url:'http://localhost:8000/rm/uploadStatementFM',
+    //url:'https://niyonsoft.org/rm/uploadStatementFM',
+  url:'http://localhost:8000/rm/uploadStatementFM',
     headers: {
       "Content-Type": "multipart/form-data"  
     },
@@ -5890,6 +5895,231 @@ console.log(files[0])
 //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
 })
 
+
+/////////////////
+
+
+
+
+
+router.get('/grvFileRM/:id/:id2',isLoggedIn,function(req,res){
+
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  var date = req.user.date
+  var refNumber = req.params.id2
+  let batchId = req.user.batchId
+  var idNum = req.params.id
+
+  BatchRR.find({refNumber:refNumber}).lean().then(docs=>{
+
+
+ 
+
+
+  
+  const compile = async function (templateName,docs ){
+  const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+  
+  const html = await fs.readFile(filePath, 'utf8')
+  
+  return hbs.compile(html)(docs)
+  
+  };
+  
+  
+  
+  
+  (async function(){
+  
+  try{
+
+  const browser = await puppeteer.launch({
+  headless: true,
+  args: [
+  "--disable-setuid-sandbox",
+  "--no-sandbox",
+  "--single-process",
+  "--no-zygote",
+  ],
+  executablePath:
+  process.env.NODE_ENV === "production"
+    ? process.env.PUPPETEER_EXECUTABLE_PATH
+    : puppeteer.executablePath(),
+  });
+  
+  const page = await browser.newPage()
+  
+  
+  
+  //const content = await compile('report3',arr[uid])
+  const content = await compile('grv',docs)
+  
+
+  
+  await page.setContent(content, { waitUntil: 'networkidle2'});
+
+  await page.emulateMediaType('screen')
+  let height = await page.evaluate(() => document.documentElement.offsetHeight);
+  await page.evaluate(() => matchMedia('screen').matches);
+  await page.setContent(content, { waitUntil: 'networkidle0'});
+ 
+   
+  let filename = 'grv'+refNumber+'.pdf'
+  await page.pdf({
+ 
+  path:(`./public/grv/${year}/${month}/grv${refNumber}`+'.pdf'),
+  format:"A4",
+
+  height: height + 'px',
+  printBackground:true
+  
+  })
+  
+ 
+  res.redirect('/rm/openFileRM/'+refNumber)
+
+
+  var repo = new RepoFiles();
+  
+  repo.filename = filename;
+  repo.fileId = "null";
+  repo.status = 'RM'
+  repo.type = 'Raw'
+  repo.date = mformat
+  repo.year = year;
+  repo.refNumber = refNumber
+  repo.idNum = idNum
+  repo.month = month
+  
+  
+  console.log('done')
+  
+  repo.save().then(poll =>{
+  
+  })
+  
+  
+  
+ 
+ 
+  const file = await fs.readFile(`./public/grv/${year}/${month}/grv${refNumber}`+'.pdf');
+  const form = new FormData();
+  form.append("file", file,filename);
+  
+  await Axios({
+    method: "POST",
+   //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+     //url: 'https://niyonsoft.org/uploadStatementDispatch',
+    // url:'https://niyonsoft.org/rm/uploadGrvRM',
+     url:'localhost:8000/rm/uploadGrvRM',
+    headers: {
+      "Content-Type": "multipart/form-data"  
+    },
+    data: form
+  });
+  
+  
+  //res.redirect('/rm/fileIdGrv/'+filename);
+ // res.redirect('/rm/openFile/'+batchNumber)
+  
+  
+  }catch(e) {
+  
+  console.log(e)
+  
+  
+  }
+  
+
+  
+  }) ()
+  
+  
+  
+})
+  
+  
+
+  
+  })
+
+router.get('/openFileRM/:id',isLoggedIn,function(req,res){
+var refNumber = req.params.id
+
+var m = moment()
+var mformat = m.format('L')
+var month = m.format('MMMM')
+var year = m.format('YYYY')
+const path =`./public/grv/${year}/${month}/grv${refNumber}.pdf`
+if (fs.existsSync(path)) {
+    res.contentType("application/pdf");
+    fs.createReadStream(path).pipe(res)
+} else {
+    res.status(500)
+    console.log('File not found')
+    res.send('File not found')
+}
+
+})
+
+  router.post('/uploadGRVRM',upload.single('file'),(req,res,nxt)=>{
+    var fileId = req.file.id
+    console.log(fileId,'fileId')
+    var filename = req.file.filename
+    console.log(filename,'filename')
+  RepoFiles.find({filename:filename},function(err,docs){
+  if(docs.length>0){
+  
+  
+  //console.log(docs,'docs')
+  let id = docs[0]._id
+  RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+  
+  })
+  
+  }
+  res.redirect('/rm/fileIdGrvRM/'+filename)
+  })
+  
+  })
+
+  router.get('/fileIdGrvRM/:id',function(req,res){
+    console.log(req.params.id)
+    var id = req.params.id
+    
+    res.redirect('/rm/openGrvRM/'+id)
+    
+    })
+
+
+  router.get('/openGrvRM/:id',(req,res)=>{
+    var filename = req.params.id
+    console.log(filename,'fileId')
+      const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+      gfs.files.find({filename: filename}).toArray((err, files) => {
+      console.log(files[0])
+    
+        const readStream = bucket.openDownloadStream(files[0]._id);
+            readStream.pipe(res);
+    
+      })
+     //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+    })
+
+
+
+  
+
+
+
+
+
+
+
+
   
   ////////// folders
   router.get('/folderReg',function(req,res){
@@ -5901,7 +6131,7 @@ console.log(files[0])
 
  
 
-  router.get('/selectMonth/:id',isLoggedIn,function(req,res){
+  router.get('/selectMonth/:id/',isLoggedIn,function(req,res){
     var pro = req.user
     var product = req.params.id
     var uid = req.user._id
@@ -5913,7 +6143,7 @@ console.log(files[0])
   
     BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
        
-            res.render('rStock/itemFilesMonthly',{pro:pro,listX:docs})
+            res.render('rStock/itemFilesMonthly',{pro:pro,product:product,listX:docs})
   
     })
     
@@ -5921,7 +6151,7 @@ console.log(files[0])
 
   
 
-router.get('/folderFiles/:id',isLoggedIn,function(req,res){
+router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
   var arr = []
   
   var errorMsg = req.flash('danger')[0];
@@ -5932,7 +6162,7 @@ router.get('/folderFiles/:id',isLoggedIn,function(req,res){
    
    var year = m.format('YYYY')
    var refNumber = req.params.id
-
+   var product = req.params.id2
    var date = req.user.invoCode
  RepoFiles.find({idNum:refNumber},function(err,docs){
      if(docs){
@@ -5945,7 +6175,7 @@ router.get('/folderFiles/:id',isLoggedIn,function(req,res){
       }
  
  
- res.render('rStock/itemFiles',{listX:arr,refNumber:refNumber,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+ res.render('rStock/itemFiles',{listX:arr,product:product,refNumber:refNumber,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
  }
  })
     
