@@ -5,6 +5,7 @@ var batchSchemaBI = new Schema({
     product: {type: String },
     batchNumber:{type:String},
     litres: {type: Number },
+    nLitres: {type: Number },
     blendingTank: {type: Number },
     tanks: {type: Number },
     status: {type: String },

@@ -42,6 +42,7 @@ var schemaV = new Schema({
     subCategory: { type: String},
     lot:{type:Number},
     refNumber:{type:String},
+    batchNumber:{type:String},
     location:{type:String},
     expiryDate: {type: String },
     mformat: {type: String },

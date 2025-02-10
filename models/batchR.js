@@ -19,6 +19,7 @@ var batchSchemaV = new Schema({
     closingBalX: {type: Number },
     expiryDate: {type: String },
     refNumber:{type:String, required:true},
+    batchNumber:{type:String, required:true},
     mformat: {type: String },
     dateValue: {type: Number },
     pallet: {type: Number },

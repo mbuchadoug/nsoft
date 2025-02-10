@@ -2143,7 +2143,7 @@ router.post('/', passport.authenticate('local.signin', {
   failureFlash: true
 }), function (req, res, next) {
   if(req.user.role == "receiver"){
-    res.redirect("/receiver/batch");
+    res.redirect("/receiver/batchPackagingList");
   }else if(req.user.role == "receiverTest"){
     res.redirect('/receiverTest/batch')
   }

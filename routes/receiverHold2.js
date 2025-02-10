@@ -756,69 +756,19 @@ router.get('/warehouseUpdate',function(req,res){
 
 router.get('/batchPackagingList',isLoggedIn,function(req,res){
   BatchPackaging.find(function(err,docs){
-    res.render('receiver/packagingList',{listX:docs})
+    res.render('kambucha/packagingList')
   })
 })
 
 
-router.get('/update/:id',isLoggedIn,function(req,res){
-  var pro = req.user
-  var id = req.params.id
-  //console.log(id,'idPrice')
-  BatchPackaging.findById(id,function(err,doc){
-    let refNumber = doc.refNumber
-    let product = doc.product
-  
-  res.render('receiver/update',{pro:pro,id:id,refNumber:refNumber,product:product})
-  
-  })
-  })
-  
-
-
-
-router.post('/update/:id',isLoggedIn,function(req,res){
-  var id = req.params.id
-  var cases = req.body.cases
-
-  
-var errors = req.validationErrors();
- 
-if (errors) {
- 
- req.session.errors = errors;
- req.session.success = false;
- console.log( req.session.errors[0].msg)
- req.flash('danger', req.session.errors[0].msg);
-      
-       
- res.redirect('/receiver/update/'+id);
-
-}
-
-else{
-
-  
-
-  BatchPackaging.findByIdAndUpdate(id,{$set:{totalCases:cases}},function(err,docs){
-
-  })
-
-  res.redirect('/receiver/batchPackagingList/')
-}
-})
-
-
-
-  router.get('/batch/:id',isLoggedIn,function(req,res){
+  router.get('/batch',isLoggedIn,function(req,res){
     var pro = req.user
-    var id = req.params.id
-    res.render('receiver/batch',{pro:pro,refNumber:id})
+    res.render('receiver/batch',{pro:pro})
   })
 
 
 
-  router.post('/batch/:id',isLoggedIn,function(req,res){
+  router.post('/batch',isLoggedIn,function(req,res){
 
     //var refNumber = req.body.referenceNumber
     var date = req.body.date
@@ -827,8 +777,7 @@ else{
     var product = req.body.product
     var expiryDate = req.body.expiryDate
     let refNo
-    var batchNumber = req.params.id
-   //var lotNumber = req.body.lotNumber
+   // var lotNumber = req.body.lotNumber
     //var location = req.body.location
   
     let date6 =  moment().format('l');
@@ -865,7 +814,6 @@ else{
       truck.warehouse = warehouse
       truck.product = product
       truck.refNumber = refNo
-      truck.batchNumber = batchNumber
       truck.expiryDate = expiryDate
       truck.cases = 0
       truck.status = 'received'
@@ -878,7 +826,7 @@ else{
 
 
       var id = req.user._id
-      User.findByIdAndUpdate(id,{$set:{date:date,batchNumber:batchNumber, shift:shift, warehouse:warehouse,currentPallet:1,
+      User.findByIdAndUpdate(id,{$set:{date:date, shift:shift, warehouse:warehouse,currentPallet:1,
       product:product,refNumReceive:refNumReceive,refNumber:refNo,batchId:pro._id,mformat:date6,dateValue:dateValue, expiryDate:expiryDate,
       expiryDateValue:expiryDateValue,expiryMformat:expiryMformat,countSize:0}},function(err,docs){
   
@@ -920,12 +868,11 @@ else{
     var warehouse = req.user.warehouse
     var product = req.user.product
     var refNumber = req.user.refNumber
-    var batchNumber = req.user.batchNumber
     var pro = req.user
     var date = req.user.date
     var id = req.params.id
     Product.find(function(err,docs){
-     res.render('receiver/addStock2',{listX:docs,date:date,shift:shift,batchNumber:batchNumber,
+     res.render('receiver/addStock2',{listX:docs,date:date,shift:shift,
     product:product,refNumber:refNumber,warehouse:warehouse,pro:pro,id:id,date:date})
     })
   
@@ -973,7 +920,6 @@ else{
     //let palletNum = req.user.palletNum + 1
     var countSizeV = req.user.countSize
     var refNumber = req.user.refNumber
-    let batchNumber = req.user.batchNumber
     var location = req.user.location
     var warehouse = req.user.warehouse
    var arr = []
@@ -1108,7 +1054,7 @@ StockV.find({refNumber:refNumber},function(err,zocs){
       let countSize = req.user.countSize + 1
     console.log(countSize,'countSize')
         
-      StockV.findByIdAndUpdate(sId,{$set:{name:product,mformat:mformat,refNumber:refNumber,batchNumber:batchNumber,
+      StockV.findByIdAndUpdate(sId,{$set:{name:product,mformat:mformat,refNumber:refNumber,
         warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",pallet:palletNum,
         cases:0,prPallet:prPallet,preRefNumber:prRefNumber,refCases:size,date:date2,casesReceived:casesReceived,availableCases:hoc.cases,
         shift:shift,year:year,month:month,countSize:countSize,refNumReceive:refNumReceive,receiver:receiver,dateValue:dateValue,
@@ -1232,7 +1178,6 @@ var casesReceived = 1
 var lot = req.user.lot
 let palletNum = req.user.palletNum 
 var refNumber = req.user.refNumber
-var batchNumber = req.user.batchNumber
 var refNumReceive = req.user.refNumReceive
 var location = req.user.location
 var warehouse = req.user.warehouse
@@ -1319,7 +1264,7 @@ var idU = req.user._id
                             let subCategory = hoc.subCategory
                            
                           
-                            StockV.findByIdAndUpdate(objId,{$set:{name:product,refNumber:refNumber,mformat:mformat,batchNumber:batchNumber,
+                            StockV.findByIdAndUpdate(objId,{$set:{name:product,refNumber:refNumber,mformat:mformat,
                               warehouse:warehouse,status:"received",status2:"dispatch",statusCheck2:"scannedLoop",pallet:palletNum,
                               cases:0,prPallet:prPallet,preRefNumber:id,refCases:size,date:date2,casesReceived:casesReceived,availableCases:availableCases,
                               shift:shift,year:year,month:month,refNumReceive:refNumReceive,receiver:receiver,dateValue:dateValue,
@@ -1511,7 +1456,7 @@ let cases = docs.length
       }
     }
   
-    res.redirect('/receiver/batchPackagingList')
+    res.redirect('/receiver/batch')
     //console.log('done')
 
   })

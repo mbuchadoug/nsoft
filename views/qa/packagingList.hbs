@@ -164,8 +164,9 @@ ul.no-bullets {
         Home
 <!----><!---->      </a>
     </li>
-    
-    
+  
+   
+
   <ul class="nav flex-column" id="nav_accordion">
 
 
@@ -353,11 +354,10 @@ ul.no-bullets {
 											<thead>
 												<!--begin::Table row-->
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-													        <th class="min-w-100px">Product</th>
-												         	<th class="text-end min-w-75px">Ref Number</th>
-															<th class="text-end min-w-75px">Tanks</th>
-															<th class="text-end min-w-75px">Operator</th>
-							
+													        <th class="min-w-100px">Ref Number</th>
+												         	<th class="text-end min-w-75px">Product</th>
+															<th class="text-end min-w-75px">Total Cases</th>
+																<th class="text-end min-w-75px">Volume (litres)</th>
 															<th class="text-end min-w-75px">Date</th>
 															<th class="text-end min-w-75px">Month</th>
 															<th class="text-end min-w-75px">Year</th>
@@ -376,13 +376,12 @@ ul.no-bullets {
 												{{#each listX}}
 												<tr>
 													<!--begin::Date=-->
-													<td>{{this.product}}</td>
+													<td>{{this.refNumber}}</td>
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
-						
-                                                    <td class="text-end pe-0">{{this.refNumber}}</td>  
-													<td class="text-end pe-0">{{this.tanks}}</td>
-													<td class="text-end pe-0">{{this.operator}}</td>
+													<td class="text-end pe-0">{{this.product}}</td>
+                                                    <td class="text-end pe-0">{{this.totalCases}}</td>  
+                                                     <td class="text-end pe-0">{{this.volume}}</td>  
 													<td class="text-end pe-0">{{this.date}}</td>
 													<td class="text-end pe-0">{{this.month}}</td>
 													<td class="text-end pe-0">{{this.year}}</td>
@@ -402,9 +401,14 @@ ul.no-bullets {
 														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
-																<a href="/rm/draining/{{this.refNumber}}/{{this.product}}/{{this.tanks}}" class="menu-link px-3">Drain Tanks</a>
+																<a href="/quality/refresh/{{this._id}}" class="menu-link px-3">Refresh</a>
 															</div>
 
+                                                 <div class="menu-item px-3">
+																<a href="/quality/trailFermentation/{{this.refNumber}}" class="menu-link px-3">Trail Batch</a>
+															</div>
+													
+															
 
 															
 															<!--end::Menu item-->
