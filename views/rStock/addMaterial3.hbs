@@ -726,7 +726,7 @@ this.firstElementChild.select();
           <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
-      <a  class="btn btn-primary ember-view" href="/rm/closeBatchOut/{{batchId}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm/closeBatchOut/{{batchId}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
