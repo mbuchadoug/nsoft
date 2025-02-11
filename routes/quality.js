@@ -2126,13 +2126,13 @@ console.log(files[0])
 
 
 
-router.get('/packagingBatch',isLoggedIn,function(req,res){
+router.get('/packagingBatchList',isLoggedIn,function(req,res){
   res.render('qa/packagingBatch')
 })
 
 
 
-router.post('/packagingBatch',isLoggedIn,function(req,res){
+router.post('/packagingBatchList',isLoggedIn,function(req,res){
   var date = req.body.date
   var shift = req.body.shift
   var product = req.body.product
@@ -2158,7 +2158,7 @@ router.post('/packagingBatch',isLoggedIn,function(req,res){
     req.flash('danger', req.session.errors[0].msg);
 
 
-    res.redirect('/quality/packagingBatch');
+    res.redirect('/quality/packagingBatchList');
   
 }
 else{
