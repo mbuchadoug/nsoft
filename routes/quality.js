@@ -2460,6 +2460,81 @@ res.redirect('/quality/warehouseStock')
 
 
 
+ //Autocomplete for Crush
+ router.get('/autocompleteTank/',isLoggedIn, function(req, res, next) {
+  var id = req.user._id
+  var customer = req.user.autoCustomer
+
+    var regex= new RegExp(req.query["term"],'i');
+   
+    var itemFilter =BlendingTanks.find({ tankNumber:regex},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+  
+    
+    itemFilter.exec(function(err,data){
+   
+ 
+  console.log('data',data)
+  
+  var result=[];
+  
+  if(!err){
+     if(data && data.length && data.length>0){
+       data.forEach(shop=>{
+ 
+
+ 
+     
+  
+          
+         let obj={
+           id:shop._id,
+           label: shop.tankNumber
+
+       
+     
+       
+         
+          
+  
+           
+         };
+        
+         result.push(obj);
+      
+        })
+    
+  
+     }
+   
+     res.jsonp(result);
+
+    }
+  
+  })
+ 
+  });
+
+
+//this route shop
+  router.post('/autoTank',isLoggedIn,function(req,res){
+      var code = req.body.code
+
+
+  
+      
+     
+      BlendingTanks.find({tankNumber:code},function(err,docs){
+     if(docs == undefined){
+       res.redirect('/')
+     }else
+
+        res.send(docs[0])
+      })
+    
+    
+    })
+
+
 
 
 

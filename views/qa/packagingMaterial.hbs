@@ -577,7 +577,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: '/rm/packagingMat/',
+                url: '/quality/packagingMat/',
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -825,7 +825,7 @@ link.classList.add('text-end','pe-0')*/
     source: function(req,res){
 
       $.ajax({
-        url:"/rm/autocompleteTank/",
+        url:"/quality/autocompleteTank/",
         dataType:"jsonp",
         type:"GET",
         data:req,
@@ -850,7 +850,7 @@ link.classList.add('text-end','pe-0')*/
                     
                 },
                 type: 'POST',
-                url: "/rm/autoTank",
+                url: "/quality/autoTank",
                 success: function(data) {
                
                 
