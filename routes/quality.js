@@ -2125,6 +2125,344 @@ console.log(files[0])
 
 
 
+
+router.get('/packagingBatch',isLoggedIn,function(req,res){
+  res.render('qa/packagingBatch')
+})
+
+
+
+router.post('/packagingBatch',isLoggedIn,function(req,res){
+  var date = req.body.date
+  var shift = req.body.shift
+  var product = req.body.product
+
+
+  let id = req.user._id
+  let m = moment()
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  req.check('date','Enter Date').notEmpty();
+  //req.check('name','Enter Name').notEmpty();
+  req.check('shift','Enter Shift').notEmpty();
+  req.check('product','Enter Product').notEmpty();
+  
+
+  
+  var errors = req.validationErrors();
+
+  if (errors) {
+    
+    req.session.errors = errors;
+    req.session.success = false;
+    req.flash('danger', req.session.errors[0].msg);
+
+
+    res.redirect('/quality/packagingBatch');
+  
+}
+else{
+
+
+let date6 =  moment().format('l');
+let dateValue = moment().valueOf()
+
+let date7 =  date6.replace(/\//g, "");
+
+
+ 
+
+
+
+    RefNo.find({date:date,type:"packaging"},function(err,docs){
+      let size = docs.length + 1
+     refNo = date7+'B'+size+'P'
+      console.log(refNo,'refNo')
+  
+      
+      var truck = new BatchPackaging()
+      truck.date = date
+      truck.mformat = date6
+      truck.dateValue = dateValue
+      truck.shift = shift
+      truck.batchNumber = refNo
+      truck.product = product
+      /*truck.volume = volume
+      truck.taste = taste*/
+      truck.month = month
+      truck.year = year
+ 
+     
+
+     
+      
+     
+  
+      truck.save()
+          .then(pro =>{
+  
+            User.findByIdAndUpdate(id,{$set:{product:product,shift:shift,date:date,batchId:pro._id}},function(err,vocs){
+
+            })
+            var book = new RefNo();
+            book.refNumber = refNo
+            book.date = date
+            book.type = 'Packaging'
+            book.save()
+            .then(prod =>{
+        
+             
+              res.redirect('/quality/packaging/'+pro._id)
+        
+            })
+
+          })
+
+        })
+
+     
+  //res.redirect('/rm/gingerWash2')
+}
+})
+
+
+
+
+router.get('/packaging/:id',isLoggedIn,function(req,res){
+
+  var id = req.params.id
+  BatchPackaging.findById(id,function(err,doc){
+  let date = doc.date
+  let shift = doc.shift
+  let product = doc.product
+ 
+    res.render('qa/packagingMaterial',{product:product,
+    shift:shift,date:date,id:id})
+  })
+  })
+  
+
+  router.post('/packagingMat/',isLoggedIn,function(req,res){
+
+    var product = req.body.product
+    var batchNumber = req.body.batchNumber
+    var volume = req.body.volume
+    var taste = req.body.taste
+    var label = req.body.label
+    var time = req.body.time
+    var date = req.body.date
+    var batchId = req.body.batchId
+    var tank = req.body.tank
+    //var refNumber = req.body.refNumber
+    var shift = req.body.shift
+   // var operator = req.body.operator
+    //var teamLeader = req.body.teamLeader
+  
+  
+    console.log(product,'product')
+  
+  
+  var cook = new Packaging()
+  cook.product = product
+  cook.volume = volume
+  cook.batchNumber = batchNumber
+  cook.taste = taste
+  cook.label = label
+  cook.tank = tank
+  cook.time = time
+  cook.date = date
+  cook.shift = shift
+  cook.batchId = batchId
+
+  
+  cook.save()
+        .then(pro =>{
+        
+          res.send(pro)
+        
+        })
+    
+  
+  
+  
+  
+  
+  })
+
+
+  router.get('/closePackagingBatch/:id',isLoggedIn,function(req,res){
+    var id = req.params.id
+    let arrV = []
+    let number1 
+    var m = moment()
+    var month = m.format('MMMM')
+    var year = m.format('YYYY')
+    var mformat = m.format('L')
+    let total
+
+    Packaging.find({batchId:id},function(err,docs){
+      
+let refNumber = docs[0].batchNumber
+      for(var i = 0;i<docs.length; i++){
+           
+        arrV.push(docs[i].volume)
+          }
+          //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+         console.log(arrV,'arrV')
+        
+        //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+        number1=0;
+        for(var z in arrV) { number1 += arrV[z]; }
+        total = number1
+   
+        BatchPackaging.findByIdAndUpdate(id,{$set:{volume:number1,refNumber:refNumber}},function(err,locs){
+
+        })
+
+        for(var i = 0;i<docs.length; i++){
+           
+      let refNumber = docs[i].batchNumber
+      let tank = docs[i].tank
+      let litres = docs[i].volume
+            
+        BlendedItems.find({refNumber:refNumber,blendingTank:tank},function(err,focs){
+
+let nVolume = litres - focs[0].litres
+let bId = focs[0]._id
+
+if(nVolume > 0){
+BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:nVolume}},function(err,tocs){
+
+})
+}else{
+  BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:0,status:"emptied"}},function(err,tocs){
+
+  })
+}
+        })
+
+      }
+
+
+
+
+
+
+      for(var i = 0;i<docs.length; i++){
+           
+        let refNumber = docs[i].batchNumber
+        let tank = docs[i].tank
+        let litres = docs[i].volume
+              
+          BlendingTanks.find({refNumber:refNumber,tankNumber:tank},function(err,focs){
+  
+  let nVolume =  focs[0].litres - litres
+  let bId = focs[0]._id
+  
+  if(nVolume > 0){
+  BlendingTanks.findByIdAndUpdate(bId,{$set:{litres:nVolume}},function(err,tocs){
+  
+  })
+  }else{
+    BlendingTanks.findByIdAndUpdate(bId,{$set:{litres:0,product:"null",refNumber:"null"}},function(err,tocs){
+  
+    })
+  }
+          })
+  
+        }
+  
+
+
+res.redirect('/quality/warehouseStock')
+
+    })
+
+  })
+  
+  
+  
+  //Autocomplete for Crush
+  router.get('/autocompleteBatchNumber/',isLoggedIn, function(req, res, next) {
+    var id = req.user._id
+
+
+      var regex= new RegExp(req.query["term"],'i');
+     
+      var itemFilter =BlendedItems.find({ refNumber:regex,status:'null'}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+    
+      
+      itemFilter.exec(function(err,data){
+     
+   
+    console.log('data',data)
+    
+    var result=[];
+    
+    if(!err){
+       if(data && data.length && data.length>0){
+         data.forEach(shop=>{
+   
+
+   
+       
+    
+            
+           let obj={
+             id:shop._id,
+             label: shop.refNumber
+  
+         
+       
+         
+           
+            
+    
+             
+           };
+          
+           result.push(obj);
+        
+          })
+      
+    
+       }
+     
+       res.jsonp(result);
+  
+      }
+    
+    })
+   
+    });
+  
+ 
+//this route shop
+    router.post('/autoBatchNumber',isLoggedIn,function(req,res){
+        var code = req.body.code
+  
+
+    
+        
+       
+        BlendedItems.find({refNumber:code},function(err,docs){
+       if(docs == undefined){
+         res.redirect('/')
+       }else
+
+          res.send(docs[0])
+        })
+      
+      
+      })
+ 
+
+
+
+
+
+
+
    
 function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);  

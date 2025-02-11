@@ -2178,6 +2178,9 @@ router.post('/', passport.authenticate('local.signin', {
   else if(req.user.role == "quality"){
     res.redirect('/quality/blendingExtraDaysApproval')
   }
+  else if(req.user.role == "production"){
+    res.redirect('/production/batch')
+  }
 
 
   
