@@ -851,7 +851,7 @@ this.firstElementChild.select();
     source: function(req,res){
 
       $.ajax({
-        url:"/rm/autocompleteTank/",
+        url:"/production/autocompleteTank/",
         dataType:"jsonp",
         type:"GET",
         data:req,
@@ -876,7 +876,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "/rm/autoTank",
+                url: "/production/autoTank",
                 success: function(data) {
                
                 console.log(data.litres,'skinny')

@@ -417,13 +417,13 @@ else{
 
       
     })
-    res.redirect('/rm/gingerWash2')
+    res.redirect('/production/gingerWash2')
   }
   })
 
 
   router.get('/gingerWash2',isLoggedIn,function(req,res){
-    res.redirect('/rm/gingerWash')
+    res.redirect('/production/gingerWash')
   })
 
 
@@ -436,7 +436,7 @@ var refNumber = req.user.refNumber
 var availableMass = req.user.availableMass
 var batchId = req.user.batchId
 
-res.render('rStock/addMaterial2',{supplier:supplier,batchNumber:batchNumber,
+res.render('production/addMaterial2',{supplier:supplier,batchNumber:batchNumber,
 refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId})
 
     
@@ -587,7 +587,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
               }) 
             })*/
           })
-          res.redirect('/rm/batchList')
+          res.redirect('/production/batchList')
         })
       
        
@@ -606,7 +606,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
       arr.push(docs[i])
     }
   
-    res.render('rStock/batchList',{listX:arr})
+    res.render('production/batchList',{listX:arr})
   
   })
   
@@ -635,7 +635,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
       let availableMass = doc.qtyInMass
    
     
-    res.render('rStock/addMaterial3',{supplier:supplier,batchNumber:batchNumber,
+    res.render('production/addMaterial3',{supplier:supplier,batchNumber:batchNumber,
     refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId})
     
   })
@@ -801,7 +801,7 @@ let item = docs[0].item
           })
 
         })
-          res.redirect('/rm/batchList')
+          res.redirect('/production/batchList')
         })
       
        
@@ -834,7 +834,7 @@ let item = docs[0].item
       //arr=docs
      // console.log(docs[0],'docs')
     console.log(arr,'arr')
-      res.render('rStock/batchCrushing',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
+      res.render('production/batchCrushing',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
       })
       })
       })
@@ -866,7 +866,7 @@ let item = docs[0].item
       req.flash('danger', req.session.errors[0].msg);
 
 
-      res.redirect('/rm/crushBatch');
+      res.redirect('/production/crushBatch');
     
 }
 else{
@@ -996,7 +996,7 @@ else{
             })    
         }
 
-        res.redirect('/rm/crush2')
+        res.redirect('/production/crush2')
     })
   
   }
@@ -1006,7 +1006,7 @@ else{
 
   
   router.get('/crush2',isLoggedIn,function(req,res){
-    res.redirect('/rm/crush')
+    res.redirect('/production/crush')
   })
 
 
@@ -1019,7 +1019,7 @@ var refNumber = req.user.refNumber
 var availableMass = req.user.availableMass
 var batchId = req.user.batchId
 
-res.render('rStock/addMaterialCrush',{batchNumber:batchNumber,
+res.render('production/addMaterialCrush',{batchNumber:batchNumber,
 refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId})
 
     
@@ -1466,7 +1466,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
 
 
           })
-          res.redirect('/rm/batchListCrush')
+          res.redirect('/production/batchListCrush')
         })
       
        
@@ -1485,7 +1485,7 @@ router.get('/batchListCrush',function(req,res){
       arr.push(docs[i])
     }
   
-    res.render('rStock/batchListCrush',{listX:arr})
+    res.render('production/batchListCrush',{listX:arr})
   
   })
   
@@ -1519,7 +1519,7 @@ console.log(id,'id')
       let availableMass = doc.qtyInMass
    
     
-    res.render('rStock/addMaterialCrush2',{batchNumber:batchNumber,
+    res.render('production/addMaterialCrush2',{batchNumber:batchNumber,
     refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId})
     
   })
@@ -1689,7 +1689,7 @@ if(item == 'ginger'){
           })
 
         })
-        res.redirect('/rm/batchListCrush')
+        res.redirect('/production/batchListCrush')
 
       }else if(item == 'bananas'){
         for(var i = 0;i<docs.length; i++){
@@ -1738,7 +1738,7 @@ if(item == 'ginger'){
       
             final.save().then(pro =>{
       
-              res.redirect('/rm/batchListCrush')
+              res.redirect('/production/batchListCrush')
             })
 
 
@@ -1797,7 +1797,7 @@ if(item == 'ginger'){
       
             final.save().then(pro =>{
       
-              res.redirect('/rm/batchListCrush')
+              res.redirect('/production/batchListCrush')
             })
 
 
@@ -1855,7 +1855,7 @@ if(item == 'ginger'){
       
             final.save().then(pro =>{
       
-              res.redirect('/rm/batchListCrush')
+              res.redirect('/productionbatchListCrush')
             })
 
 
@@ -1912,7 +1912,7 @@ if(item == 'ginger'){
       
             final.save().then(pro =>{
       
-              res.redirect('/rm/batchListCrush')
+              res.redirect('/production/batchListCrush')
             })
 
 
@@ -1929,7 +1929,7 @@ if(item == 'ginger'){
 
 
 router.get('/cooking',isLoggedIn,function(req,res){
-  res.render('rStock/cookingBatch')
+  res.render('production/cookingBatch')
 })
 
 
@@ -1963,7 +1963,7 @@ if (errors) {
   req.flash('danger', req.session.errors[0].msg);
 
 
-  res.redirect('/rm/cooking');
+  res.redirect('/production/cooking');
 
 }
 else{
@@ -1996,7 +1996,7 @@ else{
     book.save()
     .then(prod =>{
 
-      res.redirect('/rm/cooking/'+pro._id)
+      res.redirect('/production/cooking/'+pro._id)
      
 
     })
@@ -2022,7 +2022,7 @@ let shift = doc.shift
 let operator = doc.operator
 let teamLeader = doc.teamLeader
 let date = doc.date
-  res.render('rStock/cookingMaterial',{refNumber:refNumber,
+  res.render('production/cookingMaterial',{refNumber:refNumber,
   shift:shift,operator:operator,date:date,id:id,teamLeader:teamLeader})
 })
 })
@@ -2299,7 +2299,7 @@ else{
 
 })
 
-res.redirect('/rm/batchListIngredients')
+res.redirect('/production/batchListIngredients')
 
 
 })
@@ -2318,7 +2318,7 @@ router.get('/batchListIngredients',function(req,res){
       arr.push(docs[i])
     }
   
-    res.render('rStock/batchListIngredients',{listX:arr})
+    res.render('production/batchListIngredients',{listX:arr})
   
   })
   
@@ -2331,7 +2331,7 @@ router.get('/batchListIngredients',function(req,res){
 
 
 router.get('/batchFermentation',isLoggedIn,function(req,res){
-  res.render('rStock/batchFermentation')
+  res.render('production/batchFermentation')
 })
 
 
@@ -2367,7 +2367,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
     req.flash('danger', req.session.errors[0].msg);
   
   
-    res.redirect('/rm/batchFermentation');
+    res.redirect('/production/batchFermentation');
   
   }
   else{
@@ -2405,7 +2405,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
       book.save()
       .then(prod =>{
   
-        res.redirect('/rm/fermentation/'+pro._id)
+        res.redirect('/production/fermentation/'+pro._id)
        
   
       })
@@ -2434,7 +2434,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
     let water = doc.water
     
     /*let date = doc.date*/
-      res.render('rStock/fermentation',{refNumber:refNumber,
+      res.render('production/fermentation',{refNumber:refNumber,
       product:product,operator:operator,date:date,id:id,water:water,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
     })
@@ -2718,7 +2718,7 @@ console.log(id,'fermentationPreload')
           req.flash('danger', "Enter Tank");
         
         
-          res.redirect('/rm/fermentation/'+id);
+          res.redirect('/production/fermentation/'+id);
         
         }
         else{   
@@ -2764,7 +2764,7 @@ BatchFermentation.findByIdAndUpdate(id,{$set:{tanks:tanks}},function(err,gocs){
 
 router.get('/draining',isLoggedIn,function(req,res){
   BatchFermentation.find({status:"null"},function(err,docs){
-       res.render('rStock/draining',{listX:docs})
+       res.render('production/draining',{listX:docs})
 
       })
  })
@@ -2776,7 +2776,7 @@ var id = req.params.id
 var product = req.params.id2
 var availableTanks = req.params.id3
 var litres = availableTanks * 1000
-  res.render('rStock/drain',{id:id,product:product,availableTanks:availableTanks,litres:litres})
+  res.render('production/drain',{id:id,product:product,availableTanks:availableTanks,litres:litres})
  })
         
 
@@ -3014,7 +3014,7 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 
 router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
-  res.redirect('/rm/draining')
+  res.redirect('/production/draining')
 })
 
  
@@ -3104,7 +3104,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateStockBFI')
+          res.redirect('/production/updateStockBFI')
         })
       })
       
@@ -3120,7 +3120,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateBBC')
+          res.redirect('/production/updateBBC')
         })
       })
 
@@ -3133,7 +3133,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateBRR')
+          res.redirect('/production/updateBRR')
         })
       })
       
@@ -3147,7 +3147,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateBGC')
+          res.redirect('/production/updateBGC')
         })
       })
 
@@ -3160,7 +3160,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateBGW')
+          res.redirect('/production/updateBGW')
         })
       })
   
@@ -3172,7 +3172,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateGW')
+          res.redirect('/production/updateGW')
         })
       })
   
@@ -3184,7 +3184,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateGC')
+          res.redirect('/production/updateGC')
         })
       })
 
@@ -3197,7 +3197,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateC')
+          res.redirect('/production/updateC')
         })
       })
 
@@ -3211,7 +3211,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateFP')
+          res.redirect('/production/updateFP')
         })
       })
 
@@ -3223,7 +3223,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateBI')
+          res.redirect('/production/updateBI')
         })
       })
 
@@ -3237,7 +3237,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateSV')
+          res.redirect('/production/updateSV')
         })
       })
 
@@ -3250,7 +3250,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateSRM')
+          res.redirect('/production/updateSRM')
         })
       })
 
@@ -3263,7 +3263,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/rm/updateRM')
+          res.redirect('/production/updateRM')
         })
       })
 
@@ -3275,7 +3275,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
           })
           }
-          res.redirect('/rm/updateIngredients')
+          res.redirect('/production/updateIngredients')
         })
       })
 
@@ -3290,7 +3290,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
           })
           }
-          res.redirect('/rm/updateCrushedItems')
+          res.redirect('/production/updateCrushedItems')
         })
       })
 
@@ -3303,7 +3303,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
           })
           }
-          res.redirect('/rm/updateBT')
+          res.redirect('/production/updateBT')
         })
       })
 
@@ -3317,7 +3317,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
           })
           }
-          res.redirect('/rm/warehouseStock')
+          res.redirect('/production/warehouseStock')
         })
       })
 
@@ -3418,7 +3418,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         })
         
         //res.redirect('/rm/fileIdGW/'+filename)
-        res.redirect('/quality/openFileGW/'+seqNum)
+        res.redirect('/production/openFileGW/'+seqNum)
         var repo = new RepoFiles();
         
         repo.filename = filename;
@@ -3456,7 +3456,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         await Axios({
           method: "POST",
          //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-       url: 'https://niyonsoft.org/rm/uploadStatementGW',
+       url: 'https://niyonsoft.org/production/uploadStatementGW',
         //url:'http://localhost:8000/rm/uploadStatementGW',
           headers: {
             "Content-Type": "multipart/form-data"  
@@ -3530,7 +3530,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
   
   }
   //res.redirect('/receiver/fileId/'+filename)
-  res.redirect('/quality/fileIdGW/'+filename)
+  res.redirect('/production/fileIdGW/'+filename)
   })
   
   })
@@ -3540,7 +3540,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
     console.log(req.params.id)
     var id = req.params.id
     
-    res.redirect('/rm/openGW/'+id)
+    res.redirect('/production/openGW/'+id)
     
     })
   
@@ -3657,7 +3657,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
     })
     
     //res.redirect('/rm/fileIdGC/'+filename)
-    res.redirect('/rm/openFileGC/'+seqNum)
+    res.redirect('/production/openFileGC/'+seqNum)
     var repo = new RepoFiles();
     
     repo.filename = filename;
@@ -3696,7 +3696,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   url: 'https://niyonsoft.org/rm/uploadStatementGC',
+   url: 'https://niyonsoft.org/production/uploadStatementGC',
       //url:'http://localhost:8000/rm/uploadStatementGC',
       headers: {
         "Content-Type": "multipart/form-data"  
@@ -3770,7 +3770,7 @@ RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
 
 }
 //res.redirect('/receiver/fileId/'+filename)
-res.redirect('/rm/fileIdGC/'+filename)
+res.redirect('/production/fileIdGC/'+filename)
 })
 
 })
@@ -3780,7 +3780,7 @@ router.get('/fileIdGC/:id',function(req,res){
 console.log(req.params.id)
 var id = req.params.id
 
-res.redirect('/rm/openGC/'+id)
+res.redirect('/production/openGC/'+id)
 
 })
 
@@ -3896,7 +3896,7 @@ console.log(filename,'fileId')
     })
     
     //res.redirect('/rm/fileIdGC/'+filename)
-    res.redirect('/rm/openFileCN/'+seqNum)
+    res.redirect('/production/openFileCN/'+seqNum)
     var repo = new RepoFiles();
     
     repo.filename = filename;
@@ -3935,7 +3935,7 @@ console.log(filename,'fileId')
     await Axios({
       method: "POST",
      //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-   url: 'https://niyonsoft.org/rm/uploadStatementGC',
+   url: 'https://niyonsoft.org/production/uploadStatementGC',
       //url:'http://localhost:8000/rm/uploadStatementCN',
       headers: {
         "Content-Type": "multipart/form-data"  
@@ -4009,7 +4009,7 @@ RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
 
 }
 //res.redirect('/receiver/fileId/'+filename)
-res.redirect('/rm/fileIdCN/'+filename)
+res.redirect('/production/fileIdCN/'+filename)
 })
 
 })
@@ -4019,7 +4019,7 @@ router.get('/fileIdCN/:id',function(req,res){
 console.log(req.params.id)
 var id = req.params.id
 
-res.redirect('/rm/openCN/'+id)
+res.redirect('/production/openCN/'+id)
 
 })
 
@@ -4134,7 +4134,7 @@ router.get('/statementGenFM/:id',isLoggedIn,function(req,res){
   })
   
   //res.redirect('/rm/fileIdGC/'+filename)
-  res.redirect('/rm/openFileFM/'+seqNum)
+  res.redirect('/production/openFileFM/'+seqNum)
   var repo = new RepoFiles();
   
   repo.filename = filename;
@@ -4174,7 +4174,7 @@ router.get('/statementGenFM/:id',isLoggedIn,function(req,res){
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
  //url: 'https://niyonsoft.org/rm/uploadStatementGC',
-    url:'https://niyonsoft.org/rm/uploadStatementFM',
+    url:'https://niyonsoft.org/production/uploadStatementFM',
   //url:'http://localhost:8000/rm/uploadStatementFM',
     headers: {
       "Content-Type": "multipart/form-data"  
@@ -4248,7 +4248,7 @@ RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
 
 }
 //res.redirect('/receiver/fileId/'+filename)
-res.redirect('/rm/fileIdFM/'+filename)
+res.redirect('/production/fileIdFM/'+filename)
 })
 
 })
@@ -4258,7 +4258,7 @@ router.get('/fileIdFM/:id',function(req,res){
 console.log(req.params.id)
 var id = req.params.id
 
-res.redirect('/rm/openFM/'+id)
+res.redirect('/production/openFM/'+id)
 
 })
 
@@ -4361,7 +4361,7 @@ router.get('/grvFileRM/:id/:id2',isLoggedIn,function(req,res){
   })
   
  
-  res.redirect('/rm/openFileRM/'+refNumber)
+  res.redirect('/production/openFileRM/'+refNumber)
 
 
   var repo = new RepoFiles();
@@ -4395,7 +4395,7 @@ router.get('/grvFileRM/:id/:id2',isLoggedIn,function(req,res){
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
      //url: 'https://niyonsoft.org/uploadStatementDispatch',
-     url:'https://niyonsoft.org/rm/uploadGrvRM',
+     url:'https://niyonsoft.org/production/uploadGrvRM',
      //url:'localhost:8000/rm/uploadGrvRM',
     headers: {
       "Content-Type": "multipart/form-data"  
@@ -4463,7 +4463,7 @@ if (fs.existsSync(path)) {
   })
   
   }
-  res.redirect('/rm/fileIdGrvRM/'+filename)
+  res.redirect('/production/fileIdGrvRM/'+filename)
   })
   
   })
@@ -4472,7 +4472,7 @@ if (fs.existsSync(path)) {
     console.log(req.params.id)
     var id = req.params.id
     
-    res.redirect('/rm/openGrvRM/'+id)
+    res.redirect('/production/openGrvRM/'+id)
     
     })
 
@@ -4500,7 +4500,7 @@ if (fs.existsSync(path)) {
 
 
 router.get('/packagingBatch',isLoggedIn,function(req,res){
-  res.render('rStock/packagingBatch')
+  res.render('production/packagingBatch')
 })
 
 
@@ -4531,7 +4531,7 @@ router.post('/packagingBatch',isLoggedIn,function(req,res){
     req.flash('danger', req.session.errors[0].msg);
 
 
-    res.redirect('/rm/packagingBatch');
+    res.redirect('/production/packagingBatch');
   
 }
 else{
@@ -4585,7 +4585,7 @@ let date7 =  date6.replace(/\//g, "");
             .then(prod =>{
         
              
-              res.redirect('/rm/packaging/'+pro._id)
+              res.redirect('/production/packaging/'+pro._id)
         
             })
 
@@ -4609,7 +4609,7 @@ router.get('/packaging/:id',isLoggedIn,function(req,res){
   let shift = doc.shift
   let product = doc.product
  
-    res.render('rStock/packagingMaterial',{product:product,
+    res.render('production/packagingMaterial',{product:product,
     shift:shift,date:date,id:id})
   })
   })
@@ -4747,7 +4747,7 @@ BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:nVolume}},function(err,tocs){
   
 
 
-res.redirect('/rm/warehouseStock')
+res.redirect('/production/warehouseStock')
 
     })
 
@@ -4836,7 +4836,7 @@ res.redirect('/rm/warehouseStock')
   ////////// folders
   router.get('/folderReg',function(req,res){
     Product.find({}).then(docs=>{
-    res.render('rStock/itemFolder',{listX:docs})
+    res.render('production/itemFolder',{listX:docs})
 
     })
   })
@@ -4855,7 +4855,7 @@ res.redirect('/rm/warehouseStock')
   
     BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
        
-            res.render('rStock/itemFilesMonthly',{pro:pro,product:product,listX:docs})
+            res.render('production/itemFilesMonthly',{pro:pro,product:product,listX:docs})
   
     })
     
@@ -4887,7 +4887,7 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
       }
  
  
- res.render('rStock/itemFiles',{listX:arr,product:product,refNumber:refNumber,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+ res.render('production/itemFiles',{listX:arr,product:product,refNumber:refNumber,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
  }
  })
     
@@ -4895,122 +4895,6 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
 
  /*8888*/
  
- router.get('/selectMonthDispatch/',isLoggedIn,function(req,res){
-  var pro = req.user
-  var id = req.params.id
-  var uid = req.user._id
-  var arr = []
-  var year = 2024
-  User.findByIdAndUpdate(uid,{$set:{year:year}},function(err,locs){
-
-  })
-
-  Month.find({}).sort({num:1}).then(docs=>{
-     
-          res.render('receiver/itemFilesMonthlyDispatch',{pro:pro,listX:docs,id:id})
-
-  })
-  
-})
-
-
-
-router.get('/folderFilesDispatch/:id',isLoggedIn,function(req,res){
-var arr = []
-
-var errorMsg = req.flash('danger')[0];
-var successMsg = req.flash('success')[0];
- var term = req.user.term
- var m = moment()
- var pro = req.user
- 
- var year = m.format('YYYY')
- var month = req.params.id
-
- var date = req.user.invoCode
-RepoFiles.find({year:year,month:month,status:'dispatch'},function(err,docs){
-   if(docs){
-
- console.log(docs,'docs')
-    let arr=[]
-    for(var i = docs.length - 1; i>=0; i--){
-
-      arr.push(docs[i])
-    }
-
-
-res.render('receiver/itemFilesDispatch',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
-}
-})
-  
-})
-
- 
-
-
-/*********Dispatch */
-router.get('/folderRegDispatch',function(req,res){
-res.render('receiver/itemFolderDispatch')
-})
-
-
-/*8888*/
-
-router.get('/selectMonthDispatchV/',isLoggedIn,function(req,res){
-var pro = req.user
-var id = req.params.id
-var uid = req.user._id
-var arr = []
-var year = 2024
-User.findByIdAndUpdate(uid,{$set:{year:year}},function(err,locs){
-
-})
-
-Month.find({}).sort({num:1}).then(docs=>{
- 
-      res.render('receiver/itemFilesMonthlyDispatchV',{pro:pro,listX:docs,id:id})
-
-})
-
-})
-
-
-
-router.get('/folderFilesDispatchV/:id',isLoggedIn,function(req,res){
-var arr = []
-
-var errorMsg = req.flash('danger')[0];
-var successMsg = req.flash('success')[0];
-var term = req.user.term
-var m = moment()
-var pro = req.user
-
-var year = m.format('YYYY')
-var month = req.params.id
-
-var date = req.user.invoCode
-RepoFiles.find({year:year,month:month,status:'dispatch'},function(err,docs){
-if(docs){
-
-console.log(docs,'docs')
-let arr=[]
-for(var i = docs.length - 1; i>=0; i--){
-
-  arr.push(docs[i])
-}
-
-
-res.render('receiver/itemFilesDispatchV',{listX:arr,month:month,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
-}
-})
-
-})
-
-
-
-
-
-
 
 
   
