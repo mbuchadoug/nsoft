@@ -1987,7 +1987,7 @@ printBackground:true
 })
 
 
-res.redirect('/qualityopenFileRM/'+refNumber)
+res.redirect('/quality/openFileRM/'+refNumber)
 
 
 var repo = new RepoFiles();
