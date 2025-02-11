@@ -578,7 +578,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: '/rm/fermentationMat/',
+                url: '/production/fermentationMat/',
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -679,11 +679,11 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
                     
                 },
                 type: 'POST',
-                url: "/rm/closeFermentationBatch/"+id,
+                url: "/production/closeFermentationBatch/"+id,
                 success: function(data) {
 
                 console.log(data,'success')
-                 window.location='https://niyonsoft.org/rm/draining'
+                 window.location='https://niyonsoft.org/production/draining'
                 // window.location='http://localhost:8000/rm/draining'
                 }
 
