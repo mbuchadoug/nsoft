@@ -1280,7 +1280,15 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
     
   
  
-
+  router.get('/purchaseOrders',isLoggedIn,function(req,res){
+    var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+    BatchRR.find({},function(err,docs){
+  
+      res.render('rStock/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+    })
+  })
+    
 
 
 //////////////////
@@ -2145,9 +2153,103 @@ if (fs.existsSync(path)) {
     })
     
 
+  router.get('/cancel/:id',function(req,res){
+    var voucherNumber = req.params.id
+let arrV=[]
+let number1, massKgs
+    StockRM.find({voucherNumber:voucherNumber},function(err,docs){
+
+      if(docs){
+
+      
+let item = docs[0].item
+      for(var i = 0;i<docs.length; i++){
+       // console.log(docs[i].newMass,'serima')
+      arrV.push(docs[i].newMass)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+       //console.log(arrV,'arrV')
+      
+      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+      number1=0;
+      for(var z in arrV) { number1 += arrV[z]; }
+      number1.toFixed(2)
+ 
+      
+      //let total5 = massNum + number1
+      massNum =  number1.toFixed(2)
+
+      RawMat.find({item:item,stage:'raw'},function(err,hocs){
+     
+      if(hocs[0].massKgs > massNum){
+        
+         massKgs = hocs[0].massKgs - massNum
+       
+      }else{
+         massKg = 0
+      }
+        let idRaw = hocs[0]._id
+       
+      
+        RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs}},function(err,nocs){
+      
+        })
+
+
+
+      })
+
+
+      StockRM.find({voucherNumber:voucherNumber},function(err,docs){
+
+        for(var i = 0;i<docs.length; i++){
+          // console.log(docs[i].newMass,'serima')
+        StockRM.findByIdAndRemove(docs[i]._id,function(err,tocs){
+
+        })
+           }
+      })
+    }
+    res.redirect('/rm/cancelBatch/'+voucherNumber)
+
+      })
+
+
+  })
+
   
+
+  router.get('/cancelBatch/:id',function(req,res){
+    var voucherNo = req.params.id
+
+    BatchRR.find({voucherNo:voucherNo},function(err,docs){
+      if(docs){
+        let id = docs[0]._id
+        BatchRR.findByIdAndRemove(id,function(err,locs){
+
+        })
+      }
+
+      res.redirect('/rm/cancelOrder/'+voucherNo)
+    })
+  })
   
-  
+
+  router.get('/cancelOrder/:id',function(req,res){
+    var voucherNo = req.params.id
+
+    StockVoucher.find({voucherNumber:voucherNo},function(err,docs){
+      if(docs.length > 0){
+        console.log(docs[0])
+        let id = docs[0]._id
+        StockVoucher.findByIdAndRemove(id,function(err,locs){
+
+        })
+      }
+
+      res.redirect('/rm/approvedRequisitions/')
+    })
+  })
 
       router.get('/updateStockBF',function(req,res){
         BatchFermentation.find(function(err,docs){
