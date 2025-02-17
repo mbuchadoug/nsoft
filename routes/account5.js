@@ -238,15 +238,63 @@ router.get('/supplierInvoices',isLoggedIn,function(req,res){
 let id = vocs[0]._id
   
   BatchRR.find({_id:id},function(err,docs){
-    res.render('accounts5/pdf',{listX:docs,listX2:vocs})
+    res.render('accounts5/all',{listX:docs,listX2:vocs})
   })
 
+}else{
+  res.render('accounts5/all')
+}
+  
+  })
+  })
+
+
+
+  
+router.get('/paidInvoices',isLoggedIn,function(req,res){
+ 
+  
+  
+  BatchRR.find({paymentStatus:"paid"},function(err,vocs){
+  if(vocs.length > 0){
+
+let id = vocs[0]._id
+  
+  BatchRR.find({_id:id},function(err,docs){
+    res.render('accounts5/paid',{listX:docs,listX2:vocs})
+  })
+
+}else{
+  res.render('accounts5/paid')
 }
   
   })
   })
   
+  
 
+
+  
+router.get('/unpaidInvoices',isLoggedIn,function(req,res){
+ 
+  
+  
+  BatchRR.find({paymentStatus:"unpaid"},function(err,vocs){
+  if(vocs.length > 0){
+
+let id = vocs[0]._id
+  
+  BatchRR.find({_id:id},function(err,docs){
+    res.render('accounts5/unpaid',{listX:docs,listX2:vocs})
+  })
+
+}else{
+  res.render('accounts5/unpaid')
+}
+  
+  })
+  })
+  
 /*
   router.get('/grvList',isLoggedIn,function(req,res){
     BatchRR.find({status:"complete"},function(err,docs){

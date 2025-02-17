@@ -1,0 +1,982 @@
+<html lang="en" light-mode="true" style="--primary-color: #408dfb; --primary-color-rgb: undefined;"><head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> Invoices | Kambucha App</title>
+
+   
+
+    <link href="/favicon.ico?1723196611731" rel="shortcut icon">
+
+    <!-- Google Fonts - This Stylesheet Link Referenced in Widgets too.  -->
+    <link title="zf-font-src" href="openInvoice/webfonts.zoho.com/css?display=swap&amp;family=Inter:400,500,600,700/Source+Sans+Pro:400/Open+Sans:400,600,700" rel="stylesheet" type="text/css">
+
+    
+
+<link href="openInvoice/d31g2a6snus4ly.cloudfront.net/zbooks/assets/vendor-ff62ea25e8.css" rel="stylesheet">
+    
+
+<link href="openInvoice/d31g2a6snus4ly.cloudfront.net/zbooks/assets/zb-3bf23e4fa0.css" rel="stylesheet">
+    <link rel="stylesheet" href="openInvoice/css.zohocdn.com/ichat/css/Jul_25_2024_8786041_wmsbar.css">
+    
+
+    <!-- Overwritten styles that need not to be inversed in RTL layout -->
+    <style type="text/css">
+      .ignore-rtl {
+        direction: ltr;
+      }
+      .daterangepicker.opensleft:before {
+        right: 9px;
+        left: auto;
+      }
+      .daterangepicker.opensleft:after {
+        right: 10px;
+        left: auto;
+      }
+      .daterangepicker.opensright:before {
+        left: 9px;
+        right: auto;
+      }
+      .daterangepicker.opensright:after {
+        left: 10px;
+        right: auto;
+      }
+      html[dir="rtl"] .pagination .action {
+        display: inline-block;
+        transform: rotate(180deg);
+      }
+    </style>
+
+    
+<link href="openInvoice/d31g2a6snus4ly.cloudfront.net/zbooks/assets/chunk-53387c8eb3.css" rel="stylesheet"><link href="https://js.zohocdn.com/ichat/js/e0b01191_wmsbridge.js" rel="prefetch"><script type="text/javascript" async="" id="siquts" src="https://widgets.zohosalesiq.com/app.js?widgetcode=dc7881da190f2b0e48e30a1af330a54862aab282c997ca29fd191e24a5c8925e449d06c7990bc53a44db3198beb02cef"></script><script defer="" type="text/javascript" src="https://js.zohocdn.com/zohosearch/h1/js/gshandler.js?_T=1723196621042"></script><link rel="stylesheet" href="https://css.zohocdn.com/salesiq/styles/floatbutton1_0uA5KIDjSJBNGPeiRDI3YtNcjWJ9mZsPq48NM5iMzp7_jWYVkIHbMtgrDX_xil60_.css" integrity="sha384-0uA5KIDjSJBNGPeiRDI3YtNcjWJ9mZsPq48NM5iMzp7/jWYVkIHbMtgrDX/xil60" crossorigin="anonymous"><script src="https://js.zohocdn.com/salesiq/js/floatbutton1_JVTqY3SXZSy8xVYpBshYqJ8sA1DJAPTvPv5QOh4dQESwi8FkcoJvBKfqdKL50xdN_.js" integrity="sha384-JVTqY3SXZSy8xVYpBshYqJ8sA1DJAPTvPv5QOh4dQESwi8FkcoJvBKfqdKL50xdN" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" integrity="sha384-Mw/XS/WHLkgrzf3S222TxL5hVidI1kRW7VN96t3nz/4d/QAbqqyCnGZMa221hwHT" crossorigin="anonymous" href="https://static.zohocdn.com/zohosearch/Aug_06_2024_1/css/gsresult.a4a860effeb921bcf77e4dff285f82c0.css"><script type="text/javascript" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous" src="https://static.zohocdn.com/zohosearch/Aug_06_2024_1/js/jquery-3.6.0.min.8fb8fee4fcc3cc86ff6c724154c49c42.js"></script><script type="text/javascript" integrity="sha384-DkQeek83VXBVvQUTzDntKtTr00Z1bSMs+SdZquh15mCIuOF6v2Q4OJvCVA4BaLyf" crossorigin="anonymous" src="https://static.zohocdn.com/zohosearch/Aug_06_2024_1/js/en.ac705116986d385d57c3e795f76f7321.js"></script><script type="text/javascript" integrity="sha384-vdJsaPBPnNcL6JVQgAzJi+yINPRQ0k7TTITJ6A4JwYgYFNHfPO+NPYjxXbK2+ff9" crossorigin="anonymous" src="https://static.zohocdn.com/zohosearch/Aug_06_2024_1/js/gsresult.f2e9ea2a6bf0e184374757277ae563b2.js"></script><link type="text/css" rel="stylesheet" href="//static.zohocdn.com/chat/source/officechat/styles/media/avcliq-mediacomponents-min.daf16a5d90076842aa41bdad8686f4d7.css"><script defer="" type="text/javascript" src="//static.zohocdn.com/chat/source/officechat/js/avcliq-mediacomponents-min.c70e6d2abe90f173188299b23c148db1.js"></script></head><body class="ember-application">
+<div id="mics_tipDiv" class="micshide"></div><div id="micsbackdrop" class="micshide"></div><div id="mics_tpDiv" class="micshide"></div>
+    
+
+  
+    
+
+      
+      
+  
+
+<script type="text/javascript" src="#"></script><div class="zread_strip" id="annmsgstrip" style="z-index: 999;"><div class="zread_olymn" id="wmsannmsg" style="display: none; z-index: 999;"><span id="annmsg"></span><div id="hideinfo" class="zchdr_arw"></div><a id="clearannmsg" style="text-decoration:underline; float:right; font-size: 11px; margin: 2px 25px 0px 0px">Don't show again</a></div></div><style type="text/css">#wmstoolbar *::-webkit-scrollbar, #zchhis *::-webkit-scrollbar, #wms_fork_container *::-webkit-scrollbar{ height:8px; width:8px } #wmstoolbar *::-webkit-scrollbar-thumb, #zchhis *::-webkit-scrollbar-thumb, #wms_fork_container *::-webkit-scrollbar-thumb{ background-color: #dcdcdc }</style>
+
+<iframe id="pconnect" name="wmspconnect" src="#" style="display: none;"></iframe><div class="ember-view  finance-app"><div id="tooltip-popover-wrapper"></div> <!----><div class="product    "><!----><!----><div><ul id="ember3" class="dropdown ember-view nav skip-to"><button id="ember4" class="dropdown-toggle ember-view dropdown-toggle btn">Navigate To <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs"><path d="M2.157 159.57c0 13.773 5.401 27.542 16.195 38.02l198.975 192.867c21.411 20.725 55.94 20.725 77.34 0L493.63 197.59c21.508-20.846 21.637-54.778.269-75.773-21.35-20.994-56.104-21.098-77.612-.26L256.004 276.93 95.721 121.562c-21.528-20.833-56.268-20.734-77.637.26C7.472 132.261 2.157 145.923 2.157 159.57z"></path></svg></button> <div class="dropdown-menu   skip-to-dropdown-menu"><button class="dropdown-item skip-to-dropdown">Main Content</button> <button class="dropdown-item skip-to-dropdown">Left Sidebar</button> <button class="dropdown-item skip-to-dropdown">Top Bar</button></div></ul></div> <header class="top-band unified-top-band d-print-none" id="top-band"><div class=" logo-container  "><div class="logo-collapse d-flex align-items-center cursor-pointer "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xlg app-logo"><path d="M361 502.5H24.5c-8 0-14.4-6.5-14.4-14.4V365.8c0-26.7 17-50.5 42.2-59.2l373-128c29-10 48.6-37.3 48.6-68 0-39.6-32.3-71.9-71.9-71.9H39v238.1c0 8-6.5 14.4-14.4 14.4S10 284.9 10 276.9V24.3c0-8 6.5-14.4 14.4-14.4h377.5c55.6 0 100.8 45.2 100.8 100.8 0 43-27.3 81.3-68.1 95.3l-373 128a33.72 33.72 0 00-22.7 31.9v107.8H361c30.1 0 58.5-11.7 79.8-33a112 112 0 0033-79.8c0-21.3-6-42.1-17.4-60.1a113.42 113.42 0 00-46.1-41.3 14.41 14.41 0 01-6.7-19.3c3.5-7.2 12.1-10.2 19.3-6.7 23.8 11.5 43.8 29.5 58 51.9 14.3 22.6 21.8 48.8 21.8 75.6 0 37.8-14.7 73.4-41.5 100.2A141.24 141.24 0 01361 502.5z"></path><path d="M172.4 211.9c-31.8 0-57.7-25.9-57.7-57.7s25.9-57.7 57.7-57.7 57.7 25.9 57.7 57.7-25.9 57.7-57.7 57.7zm0-86.6c-15.9 0-28.9 13-28.9 28.9s13 28.9 28.9 28.9 28.9-13 28.9-28.9-13-28.9-28.9-28.9zm144.7 290.4c-31.8 0-57.7-25.9-57.7-57.7s25.9-57.7 57.7-57.7 57.7 25.9 57.7 57.7-25.8 57.7-57.7 57.7zm0-86.6c-15.9 0-28.9 13-28.9 28.9s13 28.9 28.9 28.9 28.9-13 28.9-28.9-12.9-28.9-28.9-28.9z"></path></svg> <span class="top-item font-xlarge lh-100 app-logo-title text-white">Books</span></div></div> <div id="left-topband" class="d-flex align-items-center flex-grow-1 top-item"><div id="ember5" class="float-start dropdown recent-activities top-item-icon-spaced ember-view"><div id="ember6" class="dropdown ember-view rounded"><div id="ember7" class="dropdown-toggle no-caret ember-view cursor-pointer"><span id="recent-activities"><div id="e206b8a7-4369-48c8-a590-b4e30209aaa6" tabindex="0" aria-labelledby="c61a9017-1c2a-41c9-817b-8b4158a9076e "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-middle unified-icon-fill"><path d="M15.1.2c-.3 0-.5.2-.5.5v2.5C13.2 1.2 10.9.1 8.4 0c-2.1 0-4 .8-5.5 2.2C1.4 3.7.5 5.6.5 7.7c-.1 4.3 3.4 7.9 7.7 8h.1c2.9 0 5.6-1.6 7-4.2.1-.2 0-.5-.2-.7-.2-.1-.5 0-.7.2-1.2 2.3-3.6 3.8-6.2 3.7-3.8-.1-6.8-3.2-6.7-6.9 0-1.8.8-3.5 2.1-4.8 1.3-1.3 3-2 4.9-1.9 2.3 0 4.4 1.2 5.7 3.2l.6.9c.1.2.3.3.6.2.2-.1.4-.3.4-.5V.7c-.2-.3-.4-.5-.7-.5z"></path><path d="M7.8 4.7c-.3 0-.5.2-.5.5V9c0 .2.1.3.2.4l1.9 1.3c.1.1.2.1.3.1.2 0 .3-.1.4-.2.2-.2.1-.5-.1-.7L8.3 8.8V5.2c0-.3-.3-.5-.5-.5z"></path></svg></div> <!----></span></div> <div class="dropdown-menu   mt-4"><div class="m-4 px-3"><div class="text-center"><span class="font-xs text-muted text-uppercase letter-space-1">Recent Activities</span> <img src="https://d31g2a6snus4ly.cloudfront.net/zbooks/assets/images/empty-recent-activities-f1db317262.png" class="img-fluid p-4"> Your activities in Zoho Books will show up here!</div> <hr class="bdr-light"> <p class="text-muted font-small">Create your first transaction to get started with Zoho Books.</p> <div class="mb-3"><a id="ember8" class="ember-view" href="#/invoices/new"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 417.4 512" class="icon icon-sm align-middle"><g id="Layer_1-2"><path d="M161.4 330.1h-47.1c-11 0-20 9-20 20s9 20 20 20h47.1c11 0 20-9 20-20s-9-20-20-20z"></path><path d="M394.2 129.9L287.5 23.3C272.5 8.2 252.6 0 231.4 0H100C44.9 0 0 44.9 0 100v312c0 55.1 44.9 100 100 100h217.4c55.1 0 100-44.9 100-100V186c0-21.2-8.3-41.1-23.2-56.1zm-28.3 28.3c2.3 2.3 4.3 4.9 6 7.6H305c-25.6 0-46.4-20.8-46.4-46.4V51l.6.6 106.7 106.6zm-48.5 313.9H100c-33.1 0-60-26.9-60-60V100c0-33.1 26.9-60 60-60h118.6v79.4c0 47.6 38.7 86.4 86.4 86.4h72.4V412c0 33.1-26.9 60-60 60z"></path></g></svg> &nbsp;Create Invoice</a></div><!----><div class="mb-3"><a id="ember9" class="ember-view" href="#/expenses/new"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 423.7 512" class="icon icon-sm align-middle"><g id="Layer_1-2"><path d="M323.7 0H100C44.9 0 0 44.9 0 100v378c0 11.1 6 21.4 15.6 26.9s21.5 5.5 31.1 0l62.5-36.3c4.2-2.4 9.3-2.4 13.5 0l62.4 36.2c8.3 4.8 17.5 7.2 26.8 7.2s18.5-2.4 26.8-7.2l62.4-36.2c4.2-2.4 9.3-2.4 13.5 0l62.5 36.3c9.6 5.6 21.5 5.6 31.1 0 9.6-5.5 15.6-15.9 15.6-26.9V100c0-55.1-44.9-100-100-100zm60 462.5L334.6 434c-16.5-9.6-37.1-9.6-53.6 0l-62.4 36.2c-4.2 2.4-9.3 2.4-13.5 0L142.7 434c-8.3-4.8-17.5-7.2-26.8-7.2s-18.5 2.4-26.8 7.2L40 462.5V100c0-33.1 26.9-60 60-60h223.7c33.1 0 60 26.9 60 60v362.5z"></path><path d="M262.8 145.3H161c-11 0-20 9-20 20s9 20 20 20h101.8c11 0 20-9 20-20s-9-20-20-20zM235.5 255.6h-47.3c-11 0-20 9-20 20s9 20 20 20h47.3c11 0 20-9 20-20s-9-20-20-20z"></path></g></svg> &nbsp;Create Expense</a></div></div></div></div></div> <div id="ember10" class="search-field global-search top-item-spaced ember-view"><div id="quick-search"><div id="ember11" class="dropdown show ac-dropdown ember-view"><div class="input-group btn-group"><div id="ember12" class="dropdown ember-view input-group-prepend w-100"><span id="ember13" class="dropdown-toggle ember-view input-group-text cursor-pointer"><svg id="Search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-bottom search-icon"><path d="M15.85 15.14l-4.59-4.59a6.365 6.365 0 001.54-4.16C12.8 2.87 9.93 0 6.4 0S0 2.87 0 6.4s2.87 6.4 6.4 6.4c1.59 0 3.04-.58 4.16-1.54l4.59 4.59a.485.485 0 00.7 0c.2-.2.2-.51 0-.71zM1 6.4C1 3.42 3.42 1 6.4 1s5.4 2.42 5.4 5.4-2.42 5.4-5.4 5.4S1 9.38 1 6.4z"></path></svg> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon icon-xxs align-middle arrow-down fill-theme-blue"><path d="M15.6 3.9c-.4-.4-1-.4-1.4 0L8 10 1.9 3.9c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l6.9 6.9c.2.2.4.3.7.3s.5-.1.7-.3l6.9-6.9c.3-.4.3-1-.1-1.4z"></path></svg></span> <div class="auto-select ac-selected w-100 d-flex" tabindex="-1"><input aria-label="Search in Invoices ( / )" placeholder="Search in Invoices ( / )" id="app-quick-search-field" class="ember-text-field ember-view form-control" type="text"> <!----></div> <!----> <div class="dropdown-menu   scrollmenu"><div><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-16="16">Customers <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-18="18">Items <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-20="20">Price Lists <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-22="22">Banking <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-24="24">Quotes <!----></button><button class="dropdown-item pe-7 selected-option" type="button" data-ember-action="" data-ember-action-26="26">Invoices <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.93 274.82" class="icon icon-ok icon-xs"><path d="M130.88 274.82c-10.23 0-20.46-3.9-28.26-11.7l-90.88-90.75c-15.63-15.61-15.65-40.94-.04-56.57 15.61-15.63 40.94-15.65 56.57-.04l62.61 62.53L297.67 11.7c15.63-15.61 40.96-15.6 56.57.03 15.61 15.63 15.6 40.96-.03 56.57L159.15 263.12c-7.81 7.8-18.04 11.7-28.27 11.7z" id="Layer_1-2"></path></svg></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-28="28">Sales Receipt <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-30="30">Credit Notes <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-32="32">Vendors <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-34="34">Expenses <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-36="36">Chart of Accounts <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-38="38">Documents <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-40="40">Tasks <!----></button></div> <div class="position-sticky bottom-0 bg-white"><li class="adv-search dropdown-item d-flex align-items-center m-0 rounded-0 border-top" data-ember-action="" data-ember-action-41="41"><span class="text-black cursor-pointer flex-grow-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon fill-theme-blue align-text-bottom"><path d="M455.2 419.8L385.3 350c25.6-33.5 39.1-74.4 38.2-117.1-1-48.5-20.4-94.1-54.7-128.4-35.3-35.3-82.2-54.7-132.2-54.7h-.2c-50 0-97 19.6-132.3 55-72.5 72.8-72.5 191.2.1 264 24.8 24.8 55.9 42.1 90 50 33.1 7.7 67.6 6.2 99.9-4.2 13.1-4.2 20.3-18.3 16.1-31.5-4.2-13.1-18.3-20.3-31.5-16.1-49.3 15.9-102.6 3.1-139.1-33.5-53.2-53.3-53.3-140-.1-193.4 25.9-25.9 60.3-40.3 96.9-40.3h.1c36.6 0 71 14.2 96.8 40.1 25.1 25.1 39.4 58.5 40.1 94.1.7 35.4-12.1 69.3-36 95.3l-.1.1c-11.6 12.8-11.2 32.3 1 44.5l81.4 81.4c4.9 4.9 11.3 7.3 17.7 7.3 6.4 0 12.8-2.4 17.7-7.3 9.8-9.9 9.8-25.7.1-35.5z"></path></svg>&nbsp;Advanced Search</span>  <em class="px-2 py-1 rounded-md fst-normal">Alt&nbsp;+&nbsp;/</em></li> <li class="zia-search dropdown-item d-flex align-items-center m-0 rounded-0 border-top" data-ember-action="" data-ember-action-42="42"><span class="text-black cursor-pointer flex-grow-1"><img src="https://d31g2a6snus4ly.cloudfront.net/zbooks/assets/images/ziasearch-4d77ef63db.png" width="14" height="14" class="mt-n2 ms-1">&nbsp;Search across Zoho</span> <em class="px-2 py-1 rounded-md fst-normal">Ctrl&nbsp;+&nbsp;/</em></li></div></div></div></div></div></div> <!----></div></div> <!----> <div class="dropdown top-item-icon-spaced pt-3 cursor-pointer"><span id="de363ac7-6635-461a-837f-6b9bf27f6b2d" class="d-block over-flow top-item-upgrade-msg top-item font-xs " tabindex="0" aria-describedby="ca176191-77f2-415c-aafc-aeb752d24d65 ">You are currently in the Free plan.</span> <!----></div><span class="top-upgrade-button-item top-item-spaced mt-1 mx-0 font-xs text-blue cursor-pointer">Upgrade</span> <div id="right-topband" class="d-flex align-items-center"><div class="dropdown orglist-topband orglist-title top-item-fixed-width"><div class="cursor-pointer d-flex align-items-center" data-ember-action="" data-ember-action-43="43"><span class="org-name-section font-normal over-flow" title="Trade Centre "><!----> Trade Centre </span> &nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon icon-xxs align-top "><path d="M15.6 3.9c-.4-.4-1-.4-1.4 0L8 10 1.9 3.9c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l6.9 6.9c.2.2.4.3.7.3s.5-.1.7-.3l6.9-6.9c.3-.4.3-1-.1-1.4z"></path></svg></div> <!----></div> <div><div id="ember44" class="dropdown ember-view top-item-spaced quik-add multi-col-dropdown rounded ms-0"><button id="ember45" class="dropdown-toggle no-caret ember-view btn p-0 no-box-shadow"><span id="quick-create"><span id="fc717e34-0d78-475d-92ae-6ca5763b6297" class="quick-add-icon" tabindex="0" aria-labelledby="fbaed837-905e-41a9-8919-0dbe1b8c7a14 "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="icon align-middle unified-icon-fill"><rect width="32" height="32" rx="4" ry="4"></rect><path fill="#fff" d="M23.53 15.53h-7.06V8.47a.47.47 0 10-.94 0v7.06H8.47a.47.47 0 100 .94h7.06v7.06a.47.47 0 10.94 0v-7.06h7.06a.47.47 0 100-.94z"></path></svg></span> <!----></span></button> <div class="dropdown-menu   mt-2 dropdown-menu-center"><!----></div></div></div> <!----> <!----> <div id="ember46" class="dropdown top-item-icon-spaced user-notification ember-view cursor-pointer"><span class="cursor-pointer float-end" id="notification-bar"><div id="f7a68e0d-cfc1-4044-8347-f23105490a2a" class="position-relative" tabindex="0" aria-labelledby="ea798387-41e4-446f-8cac-a8531109f284 "><!----> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-top unified-icon-fill "><path d="M14.44 8.73l-1.29-1.29a.51.51 0 01-.15-.35V5c0-2.76-2.24-5-5-5S3 2.24 3 5v2.09c0 .13-.05.26-.15.35L1.56 8.73c-.36.36-.56.84-.56 1.35v.41c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-.41c0-.51-.2-.99-.56-1.35zM14 10.5c0 .28-.22.5-.5.5h-11c-.28 0-.5-.22-.5-.5v-.41c0-.25.09-.47.27-.65l1.29-1.29c.28-.28.44-.67.44-1.06V5c0-2.21 1.79-4 4-4s4 1.79 4 4v2.09c0 .39.16.78.44 1.06l1.29 1.29c.17.17.27.4.27.65v.41zM10 13c-.28 0-.5.22-.5.5 0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5c0-.28-.22-.5-.5-.5s-.5.22-.5.5a2.5 2.5 0 005 0c0-.28-.22-.5-.5-.5z"></path></svg></div> <!----></span><!----> <!----></div> <div id="ember47" class="dropdown top-item-icon-spaced ember-view cursor-pointer "><span id="settings-dropdown"><span id="e600a20b-4fb8-4d24-b0c3-43bdc43bc369" tabindex="0" aria-labelledby="e72b237c-65ab-4188-b792-286ef5cdb285 "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon cursor-pointer align-text-top unified-icon-fill"><path d="M8 5C6.35 5 5 6.35 5 8s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3zm0 5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path><path d="M13.99 8.28v-.56l1.15-1.3c.43-.48.5-1.18.18-1.75l-.78-1.35c-.32-.56-.96-.85-1.6-.72l-1.7.35c-.16-.1-.32-.19-.49-.28l-.55-1.65C10 .41 9.43 0 8.78 0H7.22C6.57 0 6 .41 5.8 1.03l-.55 1.65c-.17.09-.33.18-.49.28l-1.7-.35c-.63-.13-1.28.16-1.6.72L.68 4.68c-.32.56-.25 1.26.18 1.75l1.15 1.3v.56L.86 9.59c-.43.48-.5 1.19-.18 1.75l.78 1.35c.32.56.97.85 1.6.72l1.7-.35c.16.1.32.19.49.28l.55 1.65c.21.61.78 1.02 1.42 1.02h1.56c.65 0 1.22-.41 1.42-1.03l.55-1.65c.17-.09.33-.18.49-.28l1.7.35c.63.13 1.27-.16 1.6-.72l.78-1.35c.32-.56.25-1.26-.18-1.75l-1.15-1.3zm.46 2.54l-.78 1.35c-.11.19-.32.28-.53.24l-1.9-.39c-.13-.03-.27 0-.39.08-.22.15-.46.29-.72.41-.12.06-.22.16-.26.29l-.62 1.85c-.07.21-.26.34-.47.34H7.22c-.22 0-.41-.14-.47-.34l-.62-1.85a.469.469 0 00-.26-.29c-.26-.12-.5-.26-.72-.41a.476.476 0 00-.29-.09h-.1l-1.9.39a.484.484 0 01-.53-.24l-.78-1.35a.497.497 0 01.06-.58L2.9 8.77c.09-.1.13-.24.12-.37-.01-.14-.02-.28-.02-.42s0-.28.02-.42a.49.49 0 00-.12-.37L1.61 5.74a.499.499 0 01-.06-.58l.78-1.35c.11-.19.32-.28.53-.24l1.9.39c.13.03.27 0 .39-.08.22-.15.46-.29.72-.41.12-.06.22-.16.26-.29l.62-1.85c.07-.2.26-.34.47-.34h1.56c.22 0 .41.14.47.34l.62 1.85c.04.13.14.24.26.29.26.12.5.26.72.41.11.08.25.11.39.08l1.9-.39c.21-.04.42.05.53.24l.78 1.35c.11.19.08.42-.06.58L13.1 7.2c-.09.1-.14.24-.12.37s.02.28.02.42 0 .28-.02.41.03.27.12.37l1.29 1.46c.14.16.17.4.06.58z"></path></svg></span> <!----></span> <!----></div></div> <div class="d-flex align-items-center"><div class="top-item-fixed-width position-relative" id="profile-section"><span class="cursor-pointer" data-ember-action="" data-ember-action-48="48"><img class="float-start rounded-circle" alt="inhari" src="https://contacts.zoho.com/file?t=user&amp;ID=772539688&amp;fs=thumb"></span> <!----></div></div> <div class="products-menu-addon-container"><div class="text-center cursor-pointer zohoapps position-relative "><div class="zohoapps__candybox"><div class="zohoapps__candybox__dots"><span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span></div> <div class="zohoapps__candybox__z-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 100 100"><path class="zohoapps__candybox__z-icon__path1" d="M50 50l1.8-4.5 3.5-8.6c1.3-3.3-1.1-6.9-4.6-6.9H9c-3.6 0-6-3.7-4.6-6.9l6.8-16C12 5.2 13.8 4 15.8 4h51.9c14.1 0 23.7 14.2 18.6 27.2l-8.7 22.3"></path><path class="zohoapps__candybox__z-icon__path2" d="M22.4 46.4l-8.7 22.3C8.6 81.8 18.2 96 32.3 96h51.9c2 0 3.8-1.2 4.6-3.1l6.8-16c1.4-3.3-1-6.9-4.6-6.9H49.4c-3.5 0-6-3.6-4.6-6.9l3.7-9.3L50 50"></path></svg></div></div> <!----></div> <!----></div></header><!----><!----> <!----> <div id="flyout-with-topbar" class="d-print-none"><div class="  slide-sidebar-right"><!----><!----></div><div class=" slide-sidebar slide-sidebar-right"><!----><!----></div><div class="  slide-sidebar-right"><!----><!----></div></div> <div class="product-wrapper"><nav id="main-nav-tab" class="noscroll-x tab-column main-tab-column d-print-none scrollbar-thin ember-view  "><!----><ul class="nav nav-pills fill nav-bottom-spacing flex-column"><!----><li id="ember347" class="ember-view nav-item">
+       <a id="ember280" class="ember-view nav-link" href="/accounts5/dashboard">
+<!---->          
+              <span id="f1d3be1f-ecab-462c-82f4-bf55c4276689" class="position-relative" tabindex="0" aria-describedby="ef29e000-0303-4f0b-b619-cbab7fefb3e9">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 514 458.5" class="icon lpanel"><path d="M507 185.7L315.7 20.9C283.6-6.7 236.8-7 204.3 20.2L7.2 185.5c-8.5 7.1-9.6 19.7-2.5 28.2 4 4.7 9.6 7.2 15.3 7.2s9.1-1.5 12.8-4.7l25.6-21.4v165.4c.9 54.4 45.4 98.4 100 98.4h197.2c54.6 0 99.1-44 100-98.4V194.3l25.4 21.8c8.4 7.2 21 6.3 28.2-2.1 7.2-8.4 6.3-21-2.1-28.2zM298.7 418.5h-83.5v-65.7c0-23 18.7-41.8 41.8-41.8s41.8 18.7 41.8 41.8v65.7zm116.8-60c0 33.1-26.9 60-60 60h-16.8v-65.7c0-45.1-36.7-81.8-81.8-81.8s-81.8 36.7-81.8 81.8v65.7h-16.8c-33.1 0-60-26.9-60-60V161.2L230 50.9c17.4-14.6 42.4-14.4 59.6.4l126 108.5v198.7z" id="Layer_1-2"></path></svg>
+              </span>
+             <!---->
+        Home
+<!----><!---->      </a>
+    </li>
+    
+   <li class="divider"></li> 
+     
+   <ul class="nav flex-column" id="nav_accordion">
+
+
+
+
+  
+    <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/accounts5/grvList">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon lpanel"><path d="M412 0H100C44.9 0 0 44.9 0 100v312c0 55.1 44.9 100 100 100h312c55.1 0 100-44.9 100-100V100C512 44.9 467.1 0 412 0zm-70.8 209.7c11.6 0 21 9.4 21 21V241c0 53.6-43.6 97.2-97.2 97.2h-5.5c-1.2-.2-2.3-.3-3.5-.3s-2.4.1-3.5.3H247c-53.6 0-97.2-43.6-97.2-97.2v-10.3c0-11.6 9.4-21 21-21h170.5zM472 412c0 33.1-26.9 60-60 60H276v-94.2c70.6-5.6 126.3-64.8 126.3-136.8v-10.3c0-33.7-27.4-61-61-61h-6.4v-55.3c0-11-9-20-20-20s-20 9-20 20v55.3h-77.6v-55.3c0-11-9-20-20-20s-20 9-20 20v55.3h-6.5c-33.7 0-61 27.4-61 61V241c0 72 55.7 131.2 126.3 136.8V472H100c-33.1 0-60-26.9-60-60V100c0-33.1 26.9-60 60-60h312c33.1 0 60 26.9 60 60v312z" id="Layer_1-2"></path></svg>
+              </span>
+             <!---->
+       Grvs
+<!----><!---->      </a>
+    </li>
+
+   
+    <li id="ember426" class="ember-view nav-item">
+      <a id="ember427" class="ember-view nav-link" href="/accounts5/supplierInvoices">
+<!---->          
+              <span id="f8acc720-241a-4e63-a91d-d33bc5de12c8" class="position-relative" tabindex="0" aria-describedby="fb8b764d-b3bb-4de1-b13d-5afa94b364a3">
+<!---->                <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 490" class="icon lpanel"><path d="M492.4 192.6c-5.4-6.5-11.7-11.7-18.5-15.6v-29.9c0-43.4-35.3-78.7-78.7-78.7H270.3c-3.5 0-6.9-1.5-9.3-4.2l-40.8-45.6C209.7 6.8 194.4 0 178.5 0h-62C73.1 0 37.8 35.3 37.8 78.7v98.5c-6.7 3.8-12.8 9-18.2 15.4-16.1 19.1-22.8 46.5-18.1 73.2l26.1 147.8c3.7 20.9 13.1 39.9 26.5 53.6C68.5 481.9 86.9 490 106 490h299.9c19 0 37.4-8.1 51.8-22.8 13.6-13.9 22.8-32.4 26.6-53.5l26.3-147.8c4.7-26.7-2-54.1-18.1-73.3zM116.5 40h62c4.6 0 8.9 2 12 5.3l40.8 45.6c10 11.1 24.2 17.5 39.1 17.5h124.9c21.3 0 38.7 17.3 38.7 38.7v22.2H77.8V78.6c0-21.3 17.3-38.7 38.7-38.7zm354.6 218.9l-26.3 147.8c-4.5 25.1-20.9 43.3-39 43.3H106c-18.2 0-34.6-18.2-39-43.3L40.9 258.9c-2.6-14.9 1-30.5 9.4-40.5 3.4-4.1 9.1-8.9 16.7-8.9h378.1c7.6 0 13.3 4.9 16.7 8.9 8.4 10.1 12 25.6 9.4 40.6z" id="Layer_1-2"></path></svg>
+              </span>
+             <!---->
+Invoices
+<!----><!---->      </a>
+    </li>
+
+	
+
+	  <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/logout">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="uploads/logout.png" alt="" class="icon lpanel">
+              </span>
+             <!---->
+      Logout
+<!----><!---->      </a>
+    </li>
+
+    
+  </ul><!----></nav>
+     <main id="ember162" class="ember-view product-content-container"> <div class="column list-column d-print-none overflow-initial"><div class="fill list-header topgrad d-print-none"><!---->
+     <div class="list-filter white-bg"><!----> 
+     <div class="btn-toolbar float-end align-items-center "><!----><!----><!---->
+     
+      <div id="ember263" class="dropdown ember-view btn-group"><button class="btn btn-primary" id="eaf00a80-4cba-40a9-9a19-a974976c6bb1" data-ember-action="" data-ember-action-264="264" tabindex="0" aria-describedby="c5ebc228-de27-4f80-8aaa-59b9300d3f7d "><svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xs"><path d="M479.84 255.81a30 30 0 01-30 30H286v163.84a30 30 0 01-60 0V285.81H62.18a30 30 0 010-60H226V62a30 30 0 0160 0v163.81h163.84a30 30 0 0130 30z"></path><path fill="none" d="M0 0h512v512H0z"></path></svg> New</button> <!----> 
+      
+      <button id="ember265" class="dropdown-toggle ember-view btn btn-primary dropdown-toggle-split"></button> 
+      
+      <div class="dropdown-menu  dropdown-menu-right"><!---->
+      
+       <button class="font-small dropdown-item" type="button" data-ember-action="" data-ember-action-266="266">New Invoice</button> <!----><!---->
+       
+       <div class="dropdown-divider"></div><a id="ember267" class="ember-view dropdown-item" href="#/recurringinvoices/new">New Recurring Invoice</a>
+       <button class="font-small dropdown-item" type="button" data-ember-action="" data-ember-action-268="268">New Credit Note</button> <!----><!----><!----></div></div> <!----> <div id="ember269" class="dropdown ember-view btn-group list-sorter"><button id="ember270" class="dropdown-toggle no-caret ember-view btn btn-secondary"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 4 16" xml:space="preserve" class="icon icon-sm align-text-top"><g id="Page-1"><g id="_x30_4_x5F_template-pages" transform="translate(-1379 -181)"><g id="Group-10" transform="translate(439 114)"><g id="Group-13" transform="translate(940 67)" fill-rule="evenodd" clip-rule="evenodd"><circle id="Oval" cx="2" cy="2" r="2"></circle><circle id="Oval_00000116957107014575672480000012724141595583201177_" cx="2" cy="8" r="2"></circle><circle id="Oval_00000040546887160477519110000016335264596464450209_" cx="2" cy="14" r="2"></circle></g></g></g></g></svg></button> <div class="dropdown-menu  dropdown-menu-right multi-level"><div id="ember271" class="dropdown ember-view dropdown-submenu"><div id="ember272" class="dropdown-toggle no-caret ember-view cursor-pointer mx-n3 px-3"><div class="align-items-center dropdown-item d-flex"><div>Sort by</div> <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs ms-auto"><path d="M158.747 512c13.885 0 27.778-5.45 38.345-16.335L391.6 294.999c20.898-21.591 20.898-56.406 0-77.971L197.092 16.35c-21.023-21.693-55.245-21.818-76.413-.268-21.17 21.53-21.283 56.578-.26 78.271l156.688 161.646-156.688 161.642c-21.018 21.703-20.905 56.748.26 78.301C131.207 506.64 144.979 512 158.747 512z"></path></svg></div></div>
+        <div class="dropdown-menu   multi-level-submenu dropdown-menu-right"><button class="dropdown-item d-flex align-items-center sortable desc active" type="button" data-ember-action="" data-ember-action-274="274">Created Time <span class="column d-print-none ps-2"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.98 227.51" class="icon icon-xxxs sort-up-caret rotate-180"><path d="M187.46 227.51c-10.23 0-20.46-3.9-28.27-11.71L11.73 68.45C-3.9 52.83-3.91 27.51 11.71 11.88c15.62-15.63 40.94-15.64 56.57-.02l119.18 119.09L306.69 11.72c15.62-15.62 40.95-15.62 56.57 0 15.62 15.62 15.62 40.95 0 56.57L215.75 215.8c-7.81 7.81-18.05 11.72-28.28 11.72z" id="Layer_1-2"></path></svg> <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374.98 227.51" class="icon icon-xxxs sort-down-caret"><path d="M187.46 227.51c-10.23 0-20.46-3.9-28.27-11.71L11.73 68.45C-3.9 52.83-3.91 27.51 11.71 11.88c15.62-15.63 40.94-15.64 56.57-.02l119.18 119.09L306.69 11.72c15.62-15.62 40.95-15.62 56.57 0 15.62 15.62 15.62 40.95 0 56.57L215.75 215.8c-7.81 7.81-18.05 11.72-28.28 11.72z" id="Layer_1-2"></path></svg></span></button>
+        <button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-276="276">Last Modified Time <!----></button>
+        <button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-278="278">Date <!----></button><button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-280="280">Invoice# <!----></button>
+        <button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-282="282">Order Number <!----></button><button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-284="284">Customer Name <!----></button>
+        <button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-286="286">Due Date <!----></button>
+        <button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-288="288">Amount <!----></button>
+        <button class="dropdown-item d-flex align-items-center sortable desc " type="button" data-ember-action="" data-ember-action-290="290">Balance Due <!----></button></div></div> <div class="dropdown-divider"></div> 
+        <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-291="291"><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon align-text-top"><path d="M447.6 270.8c-8.8 0-15.9 7.1-15.9 15.9v142.7H80.4V286.8c0-8.8-7.1-15.9-15.9-15.9s-15.9 7.1-15.9 15.9v158.6c0 8.8 7.1 15.9 15.9 15.9h383.1c8.8 0 15.9-7.1 15.9-15.9V286.8c0-8.8-7.1-16-15.9-16z"></path><path d="M244.7 328.4c.4.4.8.7 1.2 1.1.2.1.4.3.5.4.2.2.5.4.7.5.2.1.4.3.7.4.2.1.4.3.7.4.2.1.5.2.7.3.2.1.5.2.7.3.2.1.5.2.7.3.3.1.5.2.8.3.2.1.5.1.7.2.3.1.5.1.8.2.3.1.6.1.8.1.2 0 .5.1.7.1.5.1 1 .1 1.6.1s1 0 1.6-.1c.2 0 .5-.1.7-.1.3 0 .6-.1.8-.1.3-.1.5-.1.8-.2.2-.1.5-.1.7-.2.3-.1.5-.2.8-.3.2-.1.5-.2.7-.3.2-.1.5-.2.7-.3.2-.1.5-.2.7-.3.2-.1.5-.3.7-.4.2-.1.4-.3.7-.4.3-.2.5-.4.7-.5.2-.1.4-.3.5-.4.4-.3.8-.7 1.2-1.1l95-95c6.2-6.2 6.2-16.3 0-22.5-6.2-6.2-16.3-6.2-22.5 0L272 278.7v-212c0-8.8-7.1-15.9-15.9-15.9s-15.9 7.1-15.9 15.9v212l-67.8-67.8c-6.2-6.2-16.3-6.2-22.5 0-6.2 6.2-6.2 16.3 0 22.5l94.8 95z"></path></svg></i> Import Invoices</button><!---->
+        <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-292="292"><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon align-text-top"><path d="M356 169.2c-3.1 3.1-7.2 4.7-11.3 4.7-4.1 0-8.2-1.6-11.3-4.7L272 107.8v205c0 8.8-7.2 16-16 16s-16-7.2-16-16v-205l-61.4 61.4c-6.2 6.2-16.4 6.2-22.6 0-6.2-6.2-6.2-16.4 0-22.6l88.7-88.7c6.2-6.2 16.4-6.2 22.6 0l88.7 88.7c6.3 6.2 6.3 16.3 0 22.6z"></path><path d="M423 463.6H89c-44.9 0-81.4-39.8-81.4-88.7v-97.3c0-8.8 7.2-16 16-16s16 7.2 16 16v97.3c0 31.3 22.2 56.7 49.4 56.7h334c27.2 0 49.4-25.4 49.4-56.7v-98.5c0-8.8 7.2-16 16-16s16 7.2 16 16v98.5c0 48.9-36.5 88.7-81.4 88.7z"></path></svg></i> Export Invoices</button> <!---->
+        
+        <div class="dropdown-divider"></div> <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-293="293"><i><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon align-text-top"><path d="M356 169.2c-3.1 3.1-7.2 4.7-11.3 4.7-4.1 0-8.2-1.6-11.3-4.7L272 107.8v205c0 8.8-7.2 16-16 16s-16-7.2-16-16v-205l-61.4 61.4c-6.2 6.2-16.4 6.2-22.6 0-6.2-6.2-6.2-16.4 0-22.6l88.7-88.7c6.2-6.2 16.4-6.2 22.6 0l88.7 88.7c6.3 6.2 6.3 16.3 0 22.6z"></path><path d="M423 463.6H89c-44.9 0-81.4-39.8-81.4-88.7v-97.3c0-8.8 7.2-16 16-16s16 7.2 16 16v97.3c0 31.3 22.2 56.7 49.4 56.7h334c27.2 0 49.4-25.4 49.4-56.7v-98.5c0-8.8 7.2-16 16-16s16 7.2 16 16v98.5c0 48.9-36.5 88.7-81.4 88.7z"></path></svg></i> Export Current View</button><!----><!---->
+        <div class="dropdown-divider"></div> <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-294="294"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500.6 512" class="icon icon-sm align-text-top"><g id="Layer_1-2"><path d="M469.1 275.1a34.85 34.85 0 010-38.2l28.3-43c4.2-6.3 4.4-14.4.6-21l-51.9-89.8c-3.8-6.5-10.9-10.4-18.5-10l-51.4 3c-13.9.8-26.8-6.7-33.1-19.1L320 11c-3.4-6.8-10.3-11-17.9-11H198.4c-7.6 0-14.5 4.3-17.9 11l-23.1 46c-6.2 12.4-19.2 19.9-33.1 19.1l-51.4-3c-7.6-.5-14.7 3.4-18.5 10L2.7 172.9c-3.8 6.5-3.5 14.7.6 21l28.3 43c7.6 11.6 7.6 26.6 0 38.2l-28.3 43c-4.2 6.3-4.4 14.4-.6 21l51.9 89.8c3.8 6.5 10.9 10.4 18.5 10l51.4-3c13.9-.8 26.8 6.7 33.1 19.1l23.1 46c3.4 6.8 10.3 11 17.9 11h103.7c7.6 0 14.5-4.3 17.9-11l23.1-46c6.2-12.4 19.2-19.9 33.1-19.1l51.4 3c7.6.5 14.7-3.4 18.5-10l51.9-89.8c3.8-6.5 3.5-14.7-.6-21l-28.3-43zm-51.4 123.1l-39.1-2.3a74.7 74.7 0 00-71.1 41.1l-17.6 35h-79.1l-17.6-35a74.7 74.7 0 00-71.1-41.1L83 398.2l-39.5-68.5L65 297c16.4-25 16.4-57.2 0-82.1l-21.5-32.7L83 113.7l39.1 2.3a74.7 74.7 0 0071.1-41.1l17.6-35h79.1l17.6 35c12.7 25.4 38.6 41.2 66.8 41.2 1.5 0 2.9 0 4.4-.1l39.1-2.3 39.5 68.5-21.5 32.7c-16.4 25-16.4 57.2 0 82.1l21.5 32.7-39.5 68.5z"></path><path d="M250.3 174.3c-45.1 0-81.7 36.7-81.7 81.7s36.7 81.7 81.7 81.7S332 301 332 256s-36.7-81.7-81.7-81.7zm0 123.5c-23 0-41.7-18.7-41.7-41.7s18.7-41.7 41.7-41.7 41.7 18.7 41.7 41.7-18.7 41.7-41.7 41.7z"></path></g></svg>&nbsp;&nbsp; Preferences</button>
+         <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-438="438"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 468.46 383.01" class="icon icon-sm align-middle"><path d="M387.46 331.75h-13.52c-11.6 0-21-9.4-21-21s9.4-21 21-21h13.52c21.5 0 39-17.5 39-39V132.27c0-21.5-17.5-39-39-39h-13.68c-11.6 0-21-9.4-21-21s9.4-21 21-21h13.68c44.66 0 81 36.34 81 81v118.48c0 44.66-36.34 81-81 81zm-182.12 0H81c-44.66 0-81-36.34-81-81V131.27c0-44.12 35.89-80 80-80h125.02c11.6 0 21 9.4 21 21s-9.4 21-21 21H80c-20.95 0-38 17.05-38 38v119.48c0 21.5 17.5 39 39 39h124.34c11.6 0 21 9.4 21 21s-9.4 21-21 21zm145.61 30.26c0 11.6-9.4 21-21 21h-80.71c-11.6 0-21-9.4-21-21s9.4-21 21-21h19.36V42h-19.36c-11.6 0-21-9.4-21-21s9.4-21 21-21h80.71c11.6 0 21 9.4 21 21s-9.4 21-21 21H310.6v299.01h19.35c11.6 0 21 9.4 21 21z"></path></svg>&nbsp;&nbsp; Manage Custom Fields</button><a id="ember295" class="ember-view dropdown-item" href="#/settings/onlinepayments/customer-onlinepayments"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-sm align-text-top"><path d="M511.9 142c0-10.1-3.9-19.5-11-26.6s-16.6-11-26.6-11H223.4c-20.7 0-37.6 16.9-37.6 37.6v133c0 20.7 16.9 37.6 37.6 37.6H474c20.7 0 37.8-16.8 37.8-37.5V142h.1zm-288.5-5.7h250.8c2 0 3.4 1 4 1.7.6.6 1.7 2 1.6 4v21h-262v-21c0-3.2 2.5-5.7 5.6-5.7zM474 280.5H223.4c-3.1 0-5.6-2.5-5.6-5.6v-80h262l-.1 80c0 3.1-2.6 5.6-5.7 5.6z"></path><path d="M423.8 351.2c-8.8 0-16 7.2-16 16v5c0 6.5-5.3 11.7-11.9 11.7H54.4c-12.2 0-22.2-9.8-22.2-21.9V54.3c0-12.1 9.9-21.9 22.2-21.9h339.1c7.9 0 14.3 6.3 14.3 14.1 0 8.8 7.2 16 16 16s16-7.2 16-16c0-25.4-20.7-46-46.2-46H54.4C24.6.3.3 24.5.3 54.2v307.7c0 29.7 24.3 53.9 54.1 53.9h168.7v63.9h-54.6c-8.8 0-16 7.2-16 16s7.2 16 16 16h141c8.8 0 16-7.2 16-16s-7.2-16-16-16H255v-63.9h140.8c24.2 0 43.8-19.6 43.8-43.7v-5c.1-8.7-7-15.9-15.8-15.9z"></path></svg>&nbsp;&nbsp; Online Payments</a>
+          <div class="dropdown-divider"></div> <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-296="296"><i><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm align-text-bottom"><path d="M417.1 509.3h-.4c-3.5-.3-6.5-1.8-8.7-4.3-2.2-2.6-3.3-5.8-3.1-9.3v-.2l6.3-49.2C366.1 485.4 308.4 507 248.5 507c-9.7 0-19.7-.6-29.4-1.8-65.8-7.9-124.6-40.9-165.5-93.1C14.1 361.7-3.9 297.6 3 231.7c.1-1.3.3-2.6.4-3.9.3-3 1.4-5.6 3-8 3.4-5 8.9-7.9 14.9-7.9.7 0 1.5 0 2.2.1 4.8.5 9.1 3 12.1 6.8 3 3.7 4.2 8.4 3.8 13v.3c-.1 1.1-.2 2.2-.4 3.3-5.9 56.5 9.4 111.4 43.1 154.3 35 44.5 85.2 72.8 141.5 79.5 8.4 1 16.8 1.5 25.2 1.5 51.4 0 100.9-18.6 139.5-52.3 1.6-1.4 3.1-2.7 4.7-4.1l-60.6-1.5h-.2c-4.5-.3-8.8-2.3-11.4-5.3-1.8-2.1-2.7-4.8-2.4-7.4v-.2l.2-5.4v-.4c.3-2.1 1.1-4.1 2.3-5.9 2.6-3.8 7.1-6.2 11.6-6.2h.5l96.1 2.6h.4l6.3.3c3.6.2 6.8 1.7 9.1 4.4 2.3 2.6 3.4 6 3.1 9.6l-.6 6.3-.1.4-11.6 93.7c-.2 2.2-1 4.2-2.1 5.8-2.2 3.3-6 5.2-10.6 5.2h-1l-4.9-1zm75.2-210.7c-.7 0-1.5 0-2.1-.1-9.7-1.2-16.8-10-15.8-19.8v-.3c.1-1 .2-2 .3-3.1 5.8-55.1-9.9-109.4-44.2-153.1-35-44.5-85.2-72.8-141.4-79.5-8.9-1.1-17.8-1.6-26.5-1.6-20.6 0-41 3-60.7 8.8-28.4 8.5-54.1 22.6-76.5 42.1-5 4.3-9.7 8.9-14.3 13.6l61.4 1.5h.2c4.2.3 8.4 2.3 10.9 5.3 2.5 2.9 2.9 5.8 2.6 7.8v.3l.1 5-.1.6c-.3 2-1.1 4-2.2 5.7-2.6 3.8-7.1 6.2-11.6 6.2h-.6l-96.1-2.6h-.3l-6.5-.3c-3.6-.2-6.8-1.7-9.1-4.4-2.3-2.6-3.4-6-3.1-9.6l.6-6.3.1-.4L69 20.7c.2-2.2 1.1-4.3 2.3-6.1 2.5-3.7 6.7-6 11.1-6.2h1.1l5 1.2h.4c2.9.2 5.3 1.6 7.3 3.8 2.4 2.9 3.8 7.2 3.5 11.2v.3l-6 47.3c2.6-2.5 5.3-5 7.9-7.3C127.9 42 158 25.4 191.2 15.4 214.3 8.5 238.3 5 262.5 5c10.2 0 20.6.6 30.9 1.9C359.2 14.7 418 47.8 458.9 100c40.1 51.1 58.5 114.6 51.7 179.1-.1 1.3-.3 2.4-.4 3.7-.3 2.9-1.4 5.6-3 8-3.4 4.8-9 7.8-14.9 7.8z"></path></svg></i> Refresh List</button> <button class="dropdown-item" type="button" data-ember-action="" data-ember-action-297="297"><i><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm align-text-bottom"><path d="M426.5 80.4C377.8 31.9 313.3 5.2 244.7 5.2c-66.3 0-129.8 25.6-177.3 71L64 34.3c-1.1-13.8-13.1-24-26.9-23-13.8 1.1-24 13.2-23 26.9l8.2 101.9c.5 6.7 3.7 12.9 8.8 17.2 4.5 3.8 10.2 5.9 16.2 5.9.5 0 1.4 0 2.5-.2l101.5-8.2c6.6-.5 12.7-3.6 17-8.7 4.3-5.1 6.4-11.5 5.9-18.2-.5-6.6-3.6-12.7-8.7-17-5.1-4.3-11.5-6.5-18.2-5.9l-41.4 3.3c37.9-34.2 87.3-53.4 138.7-53.4 55.3 0 107.3 21.5 146.4 60.7 39.1 39.1 60.7 91.1 60.7 146.4 0 55.3-21.5 107.3-60.7 146.4-39.1 39.1-91.1 60.7-146.4 60.7-39.9 0-78.5-11.3-111.8-32.8-32.5-20.9-58.5-50.3-75-85-2.9-6-7.9-10.6-14.2-12.8-6.3-2.2-13.1-1.9-19.1 1-6 2.9-10.6 7.9-12.8 14.2-2.2 6.3-1.9 13.1 1 19.1 20.6 43.1 52.8 79.6 93.2 105.5 41.5 26.6 89.5 40.7 138.9 40.7 68.6 0 133.2-26.8 181.8-75.3 48.6-48.6 75.3-113.1 75.3-181.8-.2-68.5-27-132.9-75.4-181.5z"></path></svg></i> Reset Column Width</button></div></div></div> <!----> <!----><div id="ember299" class="dropdown ember-view clearfix list-title"><a id="ember300" class="dropdown-toggle no-caret ember-view icon-position "><!---->
+          
+          <span class="filter-title over-flow " style="color: #212529;">All Invoices</span> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-xsmall fill-dropdown-blue mb-1"><path d="M492.9 211.6c-25.5-25.7-67.1-25.8-92.8-.3L256 354.2l-144.1-143c-25.7-25.5-67.3-25.4-92.8.3s-25.4 67.2.3 92.7L209.8 493c25.6 25.4 66.9 25.4 92.5 0l190.4-188.8c12.9-12.8 19.4-29.7 19.4-46.5-.1-16.6-6.5-33.4-19.2-46.1z"></path></svg> <!----></a> <div class="dropdown-menu   scrollmenu listview-filter p-0 "><!---->
+           <div id="ember301" class="ember-view scroll-content border-bottom"><!----><div id="ember302" class="ember-view"><!----> 
+           <div id="ember303" class="ember-view collapse show" style="">
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-304="304"><span>All</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-305="305"><span>Draft</span> <!----></button><button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-306="306"><span>Locked</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-307="307"><span>Pending Approval</span> <!----></button><button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-308="308"><span>Approved</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-309="309"><span>Customer Viewed</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-310="310"><span>Partially Paid</span> <!----></button><button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-311="311"><span>Unpaid</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-312="312"><span>Overdue</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-313="313"><span>Payment Initiated</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-314="314"><span>Paid</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-315="315"><span>Void</span> <!----></button>
+             <button class="dropdown-item d-flex justify-content-between gap-10  " type="button" data-ember-action="" data-ember-action-316="316"><span>Write Off</span> <!----></button></div></div><!----><!----><!----><!----><!----><!----></div> 
+             <div class="p-1"><a id="ember439" class="ember-view d-flex align-items-center p-2 ms-1 w-100 text-charcoal" href="#/customviews/new?entity_type=invoice"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-md me-2 mb-1 text-blue"><path d="M255.8 40.8c-118.9 0-215.4 96.5-215.4 215.4s96.5 215.4 215.4 215.4 215.4-96.4 215.4-215.4S374.7 40.8 255.8 40.8zm94.5 237h-72.9v72.9c-.3 11.9-10.1 21.4-22.1 21.2-11.6-.2-20.9-9.6-21.2-21.2v-72.9h-72.9c-11.9 0-21.6-9.7-21.6-21.6s9.7-21.6 21.6-21.6h72.9v-72.9c.3-11.9 10.1-21.4 22.1-21.2 11.6.2 20.9 9.6 21.2 21.2v72.9h72.9c11.9 0 21.6 9.7 21.6 21.6 0 12-9.7 21.6-21.6 21.6z"></path></svg> New Custom View</a></div> </div></div></div>
+              <div id="ember317" class="ember-view">
+               <div id="ember318" class="ember-view"></div></div></div>
+                <div class="fill body list-body d-flex scroll-y"> <div class="erp-adv-search "><!----></div>
+                 <div class="scroll-y w-100 scrollbox ">
+                   <div id="ember319" class="ember-view"><!----></div><!----><!----><!----> <div class="table-responsive overflow-initial customviews-table  ">
+                     <table id="vertically-scrolled-table" class="table zi-table table-hover      header-fixed"><!----> 
+
+                     {{#each listX2}}
+                     <tbody>
+                      
+                            
+        <tr tabindex="-1" id="4424081000000107001" class="ember-view  ">
+        <td class="   bulk-selection-cell cursor-pointer text-end" style="width: 38px;min-width: 38px;max-width: 38px;">
+          <input aria-label="Select Invoice INV-000001" id="ember343" class="ember-checkbox ember-view cursor-pointer align-middle" type="checkbox"></td>
+         <td class="ps-1 pe-3">
+          <div class="list-primary"><span class="float-end amount">USD {{this.total}}</span>
+           <div id="dc77b2e0-c0a5-4b14-a6ba-5d1523837ba8" class="name">{{this.supplier}}</div> <!----></div>
+            <div class="list-secondary">
+            <div class="d-flex flex-wrap align-items-center">
+      <a id="ember344" class="ember-view text-regular" href="/accounts5/supplierInvoice/{{this._id}}"><span class="text-dark-shade-blue">{{this.refNumber}}</span> <!----> <!----></a>
+       <span class="dot-seperator mx-3 mt-1"></span> <span class="text-dark-shade-blue me-3">{{this.date}}</span> <!----></div>
+        <div class="mt-2"><!---->
+         <!--<span class="stat text-accepted">Paid</span>-->
+          <span><!----></span></div></div></td></tr> <!----></tbody>
+         {{/each}}
+         </table> <!----></div>
+          <div showpagelengthoption="" showtotalcount="" id="ember345" class="pagination-bar ember-view">
+            <div id="pagination" class="pagination d-flex align-items-center flex-wrap d-print-none mb-3 justify-content-between  "><!----></div><!----></div><!----></div></div></div> <!----><!----> 
+            <div class="column content-column" id="invoice-details-content"><!----> 
+            <div class="fill header d-flex justify-content-between px-4 d-print-none"><div class="font-xlarge align-self-center"><!----> <div class="d-inline-block"><!----> <span class="page-header-title">INV-{{listX.0.invoiceNumber}}</span> <!----><!----></div></div> <div class="cursor-pointer font-small align-self-center "><!----><span class="position-relative"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 214.31 468.1" class="icon icon-sm mt-1 align-top text-blue" style="transform: rotate(30deg)"><path d="M107.84 468.1h-.97C47.94 468.1 0 420.16 0 361.23c0-11.6 9.4-21 21-21s21 9.4 21 21c0 35.77 29.1 64.87 64.87 64.87h.97c35.55 0 64.47-28.92 64.47-64.47V106.47c0-35.55-28.92-64.47-64.47-64.47h-.97C71.1 42 42 71.1 42 106.87v153.88c0 12.36 10.06 22.42 22.42 22.42s22.42-10.06 22.42-22.42v-97.98c0-11.6 9.4-21 21-21s21 9.4 21 21v97.98c0 35.52-28.9 64.42-64.42 64.42S0 296.27 0 260.75V106.87C0 47.94 47.94 0 106.87 0h.97c58.71 0 106.47 47.76 106.47 106.47v255.16c0 58.71-47.76 106.47-106.47 106.47z"></path></svg> <span class="pe-2">Attach Files</span></span></span> <div id="ember442" class="popover-container ember-view d-inline"><div id="ember443" class="popover position-absolute d-none bs-popover-bottom mt-2 ember-view pop-over-div details-popover"><!----></div></div> <span class="px-3 separationline linked-text"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 449.014 428.618" class="icon mt-1 icon-xs align-text-top icon-xs align-text-top "><path d="M28.362 428.618c-3.885 0-7.796-.796-11.483-2.431A28.395 28.395 0 010 400.245V81C0 36.336 36.337 0 81 0h287.076c44.629 0 80.938 36.308 80.938 80.937V280.49c0 44.664-36.337 81-81 81H115.272a4.955 4.955 0 00-3.334 1.287l-64.502 58.489a28.386 28.386 0 01-19.074 7.352zM81 42c-21.505 0-39 17.495-39 39v288.5l41.727-37.837a46.876 46.876 0 0131.546-12.173h252.741c21.505 0 39-17.495 39-39V80.937c0-21.47-17.468-38.937-38.938-38.937H81z"></path></svg> &nbsp; <span>Comments &amp; History</span></span> <!---->  <button class="icon-button close-entity close-details close-details-right pt-1 separationline" aria-label="Close" type="button"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-xs" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button></div></div> <div id="ember444" class="ember-view"><div id="ember445" class="ember-view"><div id="ember446" class="ember-view"></div></div></div> <ul class="details-menu-bar actions-menu font-small nav flex-nowrap d-print-none"><li><span id="c9836213-680e-487e-8a88-1eeb2cad6aaa" class="nav-item overflow-hidden" tabindex="0" aria-describedby="c76217d5-6493-4849-be2b-e2a8fb2cbe12 "><button class="details-menu-item text-center nav-link over-flow  " type="button"><span><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 512" class="icon mt-1 align-top icon-s"><g id="Layer_2-2"><path d="M50.3 512c-13.04 0-25.74-5.08-35.2-14.35C3.47 486.27-1.93 469.88.64 453.82l16.9-105.61c3.01-18.79 11.71-35.82 25.17-49.27l272.83-272.7c35.01-34.99 91.99-34.98 127.01.02l41.14 41.12c16.96 16.96 26.31 39.5 26.32 63.47 0 23.98-9.33 46.52-26.29 63.47L210.3 467.59c-12.98 12.98-29.4 21.57-47.47 24.84L59.23 511.2c-2.97.54-5.96.8-8.93.8zM379.02 39.99c-12.74 0-25.48 4.85-35.18 14.54L71 327.23c-7.46 7.45-12.28 16.9-13.95 27.31l-16.9 105.61c-.73 4.55 1.54 7.55 2.95 8.93 1.41 1.38 4.46 3.58 8.99 2.76l103.6-18.77A49.498 49.498 0 00182 439.3l273.4-273.27c9.4-9.39 14.57-21.89 14.57-35.18s-5.19-25.79-14.59-35.19l-41.14-41.12c-9.71-9.71-22.47-14.56-35.22-14.56z"></path><path transform="rotate(-45.01 331.896 178.02)" d="M311.84 79.14h40.01v197.75h-40.01z"></path></g></svg></span> <span class="ps-1">Edit</span> <!----></button></span> <!----></li> <div class="separationline ps-0"></div><!----> <li id="ember447" class="dropdown ember-view nav-item overflow-hidden"><button id="ember448" class="dropdown-toggle no-caret ember-view details-menu-item nav-link over-flow " type="button"><span><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 446" class="icon align-text-top icon-s"><g id="Layer_1-2"><path d="M412 0H100C44.86 0 0 44.86 0 100v246c0 55.14 44.86 100 100 100h312c55.14 0 100-44.86 100-100V100C512 44.86 467.14 0 412 0zm60 346c0 33.08-26.92 60-60 60H100c-33.08 0-60-26.92-60-60V100c0-33.08 26.92-60 60-60h312c33.08 0 60 26.92 60 60v246z"></path><path d="M387.16 112.78l-107.98 76.47c-13.84 9.8-32.44 9.8-46.28 0l-107.97-76.47c-9.01-6.38-21.5-4.25-27.88 4.76-6.38 9.01-4.25 21.5 4.76 27.88l107.97 76.47c13.84 9.8 30.05 14.7 46.26 14.7s32.43-4.9 46.26-14.7l107.98-76.47c9.01-6.38 11.15-18.87 4.76-27.88-6.38-9.01-18.87-11.15-27.88-4.76z"></path></g></svg></span><span class="ps-1">Send</span> <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xxs align-text-middle ms-1"><path d="M481.6 74.4H30.4c-9.6 0-15.3 10.6-10 18.6l223.3 339.2c4.7 7.2 15.2 7.2 20 .1 39.5-58.8 184.2-274.2 227.8-339.2 5.4-7.9-.3-18.7-9.9-18.7z"></path></svg></span></button> <div class="dropdown-menu   multi-level"><span id="df8e1810-cdc2-4901-9ffa-1236cbb070fa" tabindex="0" aria-describedby="d6b4aafd-00ee-4edf-8df8-73851e721ca7 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 446" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M412 0H100C44.86 0 0 44.86 0 100v246c0 55.14 44.86 100 100 100h312c55.14 0 100-44.86 100-100V100C512 44.86 467.14 0 412 0zm60 346c0 33.08-26.92 60-60 60H100c-33.08 0-60-26.92-60-60V100c0-33.08 26.92-60 60-60h312c33.08 0 60 26.92 60 60v246z"></path><path d="M387.16 112.78l-107.98 76.47c-13.84 9.8-32.44 9.8-46.28 0l-107.97-76.47c-9.01-6.38-21.5-4.25-27.88 4.76-6.38 9.01-4.25 21.5 4.76 27.88l107.97 76.47c13.84 9.8 30.05 14.7 46.26 14.7s32.43-4.9 46.26-14.7l107.98-76.47c9.01-6.38 11.15-18.87 4.76-27.88-6.38-9.01-18.87-11.15-27.88-4.76z"></path></g></svg> &nbsp;  Send Mail</button></span> <!----><span id="c1b4e82e-7c81-4d47-b430-df995a0776a0" tabindex="0" aria-describedby="c8c2936d-cd0e-4cbd-bd4b-f8f371ac4173 "><button class="dropdown-item" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 499.98" class="icon icon-md align-text-bottom"><path d="M477.83 328.52l-130.39-72.88c-19.59-10.95-42.75-9.18-60.45 4.61-17.7 13.79-25.08 35.82-19.26 57.48l15.13 56.3-15.77 56.12c-6.07 21.6 1.06 43.71 18.6 57.7 10.07 8.03 21.98 12.12 34.03 12.12 8.94 0 17.96-2.25 26.36-6.82l131.22-71.39a53.242 53.242 0 00.53-93.25zm-23.12 51.73l-131.22 71.39c-3.65 1.98-6.55.7-8.34-.73s-3.69-3.97-2.57-7.97l12.66-45.04 36.34.21h.14c12.99 0 23.55-10.49 23.63-23.5.07-13.05-10.44-23.69-23.5-23.77l-36.34-.21-12.14-45.18c-1.08-4.01.85-6.53 2.66-7.94 1.13-.88 2.68-1.7 4.58-1.7 1.14 0 2.4.3 3.77 1.06l130.39 72.88c2.55 1.42 3.07 3.64 3.06 5.26 0 1.61-.56 3.82-3.12 5.22z"></path><path d="M219.12 440.39c-42.03-8.35-80.35-31.22-107.9-64.41C83.33 342.37 67.96 299.76 67.96 256c0-103.66 84.34-188 188-188s188 84.34 188 188c0 13.05 10.58 23.63 23.63 23.63s23.63-10.58 23.63-23.63c0-62.84-24.47-121.92-68.91-166.35-44.43-44.44-103.51-68.91-166.35-68.91S134.04 45.21 89.61 89.65C45.17 134.08 20.7 193.16 20.7 256c0 54.76 19.23 108.09 54.15 150.16 34.46 41.52 82.42 70.14 135.06 80.59 1.55.31 3.1.46 4.63.46 11.05 0 20.92-7.79 23.15-19.03 2.54-12.8-5.77-25.24-18.58-27.78zM40.34 107.57l67.23-67.23c9.23-9.23 9.23-24.19 0-33.42s-24.19-9.23-33.42 0L6.92 74.15c-9.23 9.23-9.23 24.19 0 33.42 4.61 4.61 10.66 6.92 16.71 6.92s12.1-2.31 16.71-6.92zm464.74-33.42L437.85 6.92c-9.23-9.23-24.19-9.23-33.42 0s-9.23 24.19 0 33.42l67.23 67.23c4.61 4.61 10.66 6.92 16.71 6.92s12.1-2.31 16.71-6.92c9.23-9.23 9.23-24.19 0-33.42z"></path></svg> &nbsp;  Schedule Email</button></span> <!----></div></li> <div class="separationline ps-0"></div><li><span id="fd5aac70-beba-4597-a9e2-ff5b8d6f9842" class="nav-item overflow-hidden" tabindex="0" aria-describedby="d1b67fc9-c7a0-4240-827c-3bdb9c70027c "><button class="details-menu-item text-center nav-link over-flow  " type="button"><span><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon mt-1 align-top icon-s"><g id="Layer_1-2"><path d="M492 246.21c-11.05 0-20 8.95-20 20V412c0 33.08-26.92 60-60 60H100c-33.08 0-60-26.92-60-60V100c0-33.08 26.92-60 60-60h153.57c11.05 0 20-8.95 20-20s-8.96-20-20-20H100C44.86 0 0 44.86 0 100v312c0 55.14 44.86 100 100 100h312c55.14 0 100-44.86 100-100V266.21c0-11.05-8.95-20-20-20z"></path><path d="M395.8 35.1l45.76 39.73C257.57 95.32 202.09 227.85 185.42 309.47c-2.21 10.82 4.77 21.39 15.6 23.6 1.35.28 2.69.41 4.02.41 9.31 0 17.64-6.53 19.57-16 11.26-55.15 33.97-100.31 67.49-134.22 37.97-38.41 89.6-61.41 153.86-68.63l-41.21 47.46c-7.24 8.34-6.35 20.97 1.99 28.21 3.79 3.29 8.46 4.9 13.1 4.9 5.59 0 11.16-2.33 15.11-6.89l72.12-83.06s.07-.1.11-.14c.3-.35.58-.72.86-1.1.12-.16.25-.32.37-.49.25-.37.48-.75.71-1.13.11-.19.23-.37.34-.56.2-.37.38-.75.56-1.12.1-.21.21-.42.31-.64.16-.36.28-.73.42-1.1.09-.25.19-.49.27-.74.11-.34.19-.69.28-1.04.08-.29.16-.57.22-.86.07-.31.11-.63.16-.94.06-.34.12-.68.15-1.02.03-.28.04-.57.06-.86.03-.38.05-.76.06-1.14 0-.08.01-.16.01-.24 0-.21-.02-.41-.03-.62-.01-.37-.02-.74-.06-1.11-.03-.31-.07-.62-.11-.93-.04-.33-.09-.67-.15-1-.06-.32-.13-.64-.21-.96-.07-.32-.15-.63-.24-.94-.09-.31-.19-.61-.29-.91-.11-.32-.22-.64-.35-.96-.11-.27-.23-.54-.35-.8a14.867 14.867 0 00-.86-1.68c-.2-.34-.4-.68-.62-1.02-.13-.2-.27-.4-.42-.6-.23-.33-.47-.65-.73-.97-.16-.2-.33-.39-.49-.58-.26-.3-.51-.59-.79-.87-.2-.2-.41-.39-.61-.59-.2-.19-.38-.38-.58-.56L422.02 4.9c-8.34-7.24-20.97-6.35-28.21 1.99-7.24 8.34-6.35 20.97 1.99 28.21z"></path></g></svg></span> <span class="ps-1">Share</span> <!----></button></span> <!----></li> 
+            <div class="separationline ps-0"></div><!---->
+             <li id="ember449" class="dropdown ember-view nav-item overflow-hidden">
+               <button id="ember450" class="dropdown-toggle no-caret ember-view details-menu-item nav-link over-flow " type="button"><span><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 512" class="icon align-text-top icon-s"><g id="Layer_1-2"><path d="M329.86 512H100.14C44.92 512 0 467.14 0 412V100C0 44.86 44.92 0 100.14 0h139.17c24.06 0 46.69 9.36 63.71 26.34L403.6 126.72c17.03 17 26.41 39.61 26.41 63.66V412c0 55.14-44.92 100-100.14 100zM100.14 40c-33.13 0-60.08 26.92-60.08 60v312c0 33.08 26.95 60 60.08 60h229.73c33.13 0 60.08-26.92 60.08-60V190.38c0-13.36-5.21-25.92-14.67-35.36L274.7 54.64C265.24 45.2 252.67 40 239.31 40H100.14z"></path>
+               <path d="M103.23 382.57c-5.43 0-10.83-2.19-14.77-6.49-7.24-7.89-6.98-20.08.61-27.65 3.32-3.32 6.73-6.52 10.23-9.62 8.78-8.81 22.9-24.28 37.22-45.44 21.13-31.22 47.12-81.75 51.01-145.16.63-10.33 9.06-18.48 19.42-18.77 10.37-.29 19.24 7.36 20.46 17.64.03.25 3.75 29.46 19.16 61.19 19.64 40.44 48.42 66.13 85.55 76.38 10.6 2.93 16.86 13.85 14.01 24.46-2.85 10.61-13.74 16.94-24.39 14.17-.26-.07-31.08-7.78-71.85-4.73-48.43 3.62-89.68 20.13-122.83 49.13-6.42 6.39-10.53 9.86-10.95 10.21a19.941 19.941 0 01-12.86 4.68zm109.08-153.25c-6.84 20.88-15.84 41.32-26.9 61.02 19.43-6.15 40.01-10.07 61.51-11.68-13.38-13.85-25-30.36-34.62-49.34z"></path></g></svg></span>
+               <span class="ps-1"><a href="/accounts5/statementGen/{{listX.0._id}}"> PDF/Print </a></span> <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xxs align-text-middle ms-1"><path d="M481.6 74.4H30.4c-9.6 0-15.3 10.6-10 18.6l223.3 339.2c4.7 7.2 15.2 7.2 20 .1 39.5-58.8 184.2-274.2 227.8-339.2 5.4-7.9-.3-18.7-9.9-18.7z"></path></svg></span></button> 
+               <div class="dropdown-menu   multi-level"><span id="f0362291-cf33-4f92-8083-745543ab907c" tabindex="0" aria-describedby="c9415a58-06e1-46d1-8dfe-8caa6a8ac934 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 512" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M329.86 512H100.14C44.92 512 0 467.14 0 412V100C0 44.86 44.92 0 100.14 0h139.17c24.06 0 46.69 9.36 63.71 26.34L403.6 126.72c17.03 17 26.41 39.61 26.41 63.66V412c0 55.14-44.92 100-100.14 100zM100.14 40c-33.13 0-60.08 26.92-60.08 60v312c0 33.08 26.95 60 60.08 60h229.73c33.13 0 60.08-26.92 60.08-60V190.38c0-13.36-5.21-25.92-14.67-35.36L274.7 54.64C265.24 45.2 252.67 40 239.31 40H100.14z"></path><path d="M103.23 382.57c-5.43 0-10.83-2.19-14.77-6.49-7.24-7.89-6.98-20.08.61-27.65 3.32-3.32 6.73-6.52 10.23-9.62 8.78-8.81 22.9-24.28 37.22-45.44 21.13-31.22 47.12-81.75 51.01-145.16.63-10.33 9.06-18.48 19.42-18.77 10.37-.29 19.24 7.36 20.46 17.64.03.25 3.75 29.46 19.16 61.19 19.64 40.44 48.42 66.13 85.55 76.38 10.6 2.93 16.86 13.85 14.01 24.46-2.85 10.61-13.74 16.94-24.39 14.17-.26-.07-31.08-7.78-71.85-4.73-48.43 3.62-89.68 20.13-122.83 49.13-6.42 6.39-10.53 9.86-10.95 10.21a19.941 19.941 0 01-12.86 4.68zm109.08-153.25c-6.84 20.88-15.84 41.32-26.9 61.02 19.43-6.15 40.01-10.07 61.51-11.68-13.38-13.85-25-30.36-34.62-49.34z"></path></g></svg> &nbsp;  PDF</button></span> <!----><span id="d09d7b59-6223-49ff-ad9a-37633a83b85a" tabindex="0" aria-describedby="dde52763-6769-46c7-848f-172127ca9fb8 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 496" class="icon icon-md align-text-bottom"><path d="M432 118.84h-41.49V59.93c0-33.04-26.92-59.93-60-59.93H181.49c-33.08 0-60 26.88-60 59.93v58.91H80c-44.11 0-80 35.85-80 79.91V348.7c0 44.06 35.89 79.9 80 79.9h41.49v7.47c0 33.04 26.92 59.93 60 59.93h149.02c33.08 0 60-26.88 60-59.93v-7.47H432c44.11 0 80-35.84 80-79.9V198.75c0-44.06-35.89-79.9-80-79.9zM161.49 59.93c0-11.01 8.97-19.98 20-19.98h149.02c11.03 0 20 8.96 20 19.98v58.91H161.49V59.93zm189.02 376.14c0 11.01-8.97 19.98-20 19.98H181.49c-11.03 0-20-8.96-20-19.98v-27.33-.12-61.9h189.02v89.34zM472 348.7c0 22.03-17.94 39.95-40 39.95h-41.49V346.7c10.76-.33 19.38-9.12 19.38-19.94s-8.95-19.98-20-19.98H122.11c-11.05 0-20 8.94-20 19.98s8.62 19.62 19.38 19.94v41.95H80c-22.06 0-40-17.92-40-39.95V198.75c0-22.03 17.94-39.95 40-39.95h352c22.06 0 40 17.92 40 39.95V348.7z" id="Layer_1-2"></path></svg> &nbsp;  Print</button></span> <!----><span id="c9eb5dec-c9bc-4d94-843b-398fb9bc28c1" tabindex="0" aria-describedby="e88fb1e0-f112-437c-b4ec-4d7ab368d462 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 484" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M90.17 85.73c0-25.24 20.55-45.77 45.8-45.77h130.94v78.46c0 47.27 38.49 85.72 85.81 85.72h71.64v203.71h40v-223.5c0-21.03-8.2-40.81-23.1-55.7L335.47 23.02C320.59 8.16 300.8-.02 279.77-.02h-143.8c-47.31.02-85.8 38.47-85.8 85.75v322.14h40V85.73zm322.81 71.2c2.22 2.22 4.13 4.65 5.72 7.26h-65.98c-25.26 0-45.81-20.53-45.81-45.76v-67.4l.29.29 105.78 105.62z"></path><path d="M156.9 235.88c-11.05 0-20 8.95-20 19.98s8.95 19.98 20 19.98h55.37c11.05 0 20-8.95 20-19.98s-8.95-19.98-20-19.98H156.9zM500.51 445.94a19.87 19.87 0 00-8.51-1.9H20c-3.04 0-5.92.68-8.5 1.9C4.71 449.13 0 456.02 0 464.02 0 475.05 8.96 484 20 484h472c11.05 0 20-8.95 20-19.98 0-8-4.7-14.9-11.49-18.08z"></path></g></svg> &nbsp;  Print Delivery Note</button></span> <!----><span id="f9d7bc44-5968-4cf2-b8b0-e3496744429c" tabindex="0" aria-describedby="cba14b46-b965-4515-b6e2-78554373a23a "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 509.44" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M445.86 0H66.14C29.67 0 0 29.67 0 66.14V217.5c0 36.47 29.67 66.14 66.14 66.14h23.62v145.8c0 44.11 35.89 80 80 80h172.48c44.11 0 80-35.89 80-80v-145.8h23.63c36.47 0 66.14-29.67 66.14-66.14V66.14C512.01 29.67 482.34 0 445.87 0zM342.23 469.44H169.75c-22.06 0-40-17.94-40-40V263.71v-.07-128h252.48v293.8c0 22.06-17.94 40-40 40zM471.99 217.5c0 14.41-11.72 26.14-26.14 26.14h-23.63v-108h11.16c11.05 0 20-8.95 20-20s-8.95-20-20-20H78.6c-11.05 0-20 8.95-20 20s8.95 20 20 20h11.16v108H66.14C51.73 243.64 40 231.92 40 217.5V66.14C40 51.73 51.72 40 66.14 40h379.73c14.41 0 26.14 11.72 26.14 26.14V217.5z"></path><path d="M325.76 368.4H186.24c-11.05 0-20 8.95-20 20s8.95 20 20 20h139.52c11.05 0 20-8.95 20-20s-8.95-20-20-20zM222.93 328.68h66.13c11.05 0 20-8.95 20-20s-8.95-20-20-20h-66.13c-11.05 0-20 8.95-20 20s8.95 20 20 20z"></path></g></svg> &nbsp;  Print Packing Slip</button></span> <!----></div></li> <div class="separationline ps-0"></div><li><span id="dfdc5034-9803-42ce-9ac4-e3ca0e20a5a6" class="nav-item overflow-hidden" tabindex="0" aria-describedby="dd3e2412-ff3b-4eb9-836c-43ff2eb8f325 "><button class="details-menu-item text-center nav-link over-flow  " type="button"><span><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 509.5" class="icon mt-1 align-top icon-s"><g id="Layer_1-2"><path d="M80 414.5c8.8-6.7 10.5-19.2 3.8-28-31.3-41.2-46.7-92.5-43.4-144.4 3.4-52.4 25.7-101.7 62.8-138.9C144 62.4 198.2 40 255.9 40c57.7 0 111.9 22.5 152.7 63.3 37.2 37.2 59.5 86.5 62.8 138.9 3.3 51.9-12.1 103.2-43.4 144.4-6.7 8.8-5 21.3 3.8 28 3.6 2.8 7.9 4.1 12.1 4.1 6 0 12-2.7 15.9-7.9 37.1-48.8 55.4-109.6 51.5-171.1-4-62.1-30.4-120.6-74.4-164.6C388.7 26.6 324.4 0 256 0S123.3 26.6 75 75C31 119 4.5 177.5.5 239.5-3.4 301 14.8 361.8 52 410.6c6.7 8.8 19.2 10.5 28 3.8zM480.9 469.5H31.1c-11 0-20 9-20 20s9 20 20 20h449.8c11 0 20-9 20-20s-9-20-20-20z"></path><path d="M259.7 110.3c-11 0-20 9-20 20v201.9l-56.9-56.9c-7.8-7.8-20.5-7.8-28.3 0s-7.8 20.5 0 28.3l91.1 91.1c3.9 3.9 9 5.9 14.1 5.9s10.2-2 14.1-5.9l91.1-91.1c7.8-7.8 7.8-20.5 0-28.3s-20.5-7.8-28.3 0l-56.9 56.9V130.3c0-11-9-20-20-20z"></path></g></svg></span> <span class="ps-1">Record Payment</span> <!----></button></span> <!----></li> <div class="separationline ps-0"></div><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----> <li id="ember451" class="dropdown ember-view nav-item overflow-hidden"><button id="ember452" class="dropdown-toggle no-caret ember-view details-menu-item nav-link  " type="button"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 4 16" xml:space="preserve" class="icon icon-sm align-middle"><g id="Page-1"><g id="_x30_4_x5F_template-pages" transform="translate(-1379 -181)"><g id="Group-10" transform="translate(439 114)"><g id="Group-13" transform="translate(940 67)" fill-rule="evenodd" clip-rule="evenodd"><circle id="Oval" cx="2" cy="2" r="2"></circle><circle id="Oval_00000116957107014575672480000012724141595583201177_" cx="2" cy="8" r="2"></circle><circle id="Oval_00000040546887160477519110000016335264596464450209_" cx="2" cy="14" r="2"></circle></g></g></g></g></svg></button> <div class="dropdown-menu  dropdown-menu-right multi-level"><span id="f4256f2f-6c03-4088-8f88-5ba3bdda47bf" tabindex="0" aria-describedby="f2149df9-bf5d-46c4-a3ce-3bf7addab96f "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 446" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M373.87 446c-5.3 0-10.39-2.11-14.14-5.86l-49.05-49.05c-7.81-7.81-7.81-20.47 0-28.28 7.81-7.81 20.47-7.81 28.28 0l34.91 34.91 103.99-103.99c7.81-7.81 20.47-7.81 28.28 0s7.81 20.47 0 28.28L388.01 440.14a20.006 20.006 0 01-14.14 5.86z"></path><path d="M245.74 446H100C44.86 446 0 400.66 0 344.92V101.08C0 45.34 44.86 0 100 0h312c55.14 0 100 45.34 100 101.08v102.87c0 11.05-8.95 20-20 20s-20-8.95-20-20V101.08C472 67.4 445.08 40 412 40H100c-33.08 0-60 27.4-60 61.08v243.84C40 378.6 66.92 406 100 406h145.74c11.05 0 20 8.95 20 20s-8.95 20-20 20z"></path><path d="M256.04 239.33c-16.22 0-32.43-4.9-46.27-14.72L101.8 148.06c-9.01-6.39-11.14-18.87-4.75-27.88 6.39-9.01 18.87-11.14 27.88-4.75l107.97 76.55c13.84 9.81 32.43 9.81 46.27 0l107.98-76.55c9.01-6.39 21.49-4.26 27.88 4.75s4.26 21.49-4.75 27.88L302.3 224.61c-13.84 9.81-30.05 14.71-46.27 14.71z"></path></g></svg> &nbsp;  Mark as Sent</button></span> <!----><div class="dropdown-divider"></div><span id="c7e56c01-ac52-43ee-b29c-715da82864c5" tabindex="0" aria-describedby="d59b555e-3e0e-4e97-8119-5b7978f68da6 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 505" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M442.7 134.14H492c11.05 0 20-8.95 20-19.99s-8.95-19.99-20-19.99h-97.56c-.67 0-1.35.03-2.02.1-.24.02-.47.07-.71.1-.41.06-.82.11-1.23.19-.3.06-.59.14-.88.22-.34.08-.68.16-1.02.26-.29.09-.58.2-.87.3-.33.12-.66.22-.98.36-.27.11-.53.25-.79.37-.33.15-.66.3-.98.47-.25.13-.49.29-.74.43-.32.19-.63.37-.94.57-.27.18-.52.38-.78.57-.26.2-.53.38-.79.59-.45.37-.88.77-1.3 1.18-.05.05-.11.09-.16.14-.04.04-.07.08-.11.12-.42.43-.83.87-1.21 1.34-.2.24-.37.5-.56.75-.2.27-.42.54-.61.82-.19.29-.36.59-.54.89-.16.26-.32.52-.47.79-.16.3-.3.61-.44.91-.13.29-.28.57-.4.86-.12.29-.22.6-.33.89-.11.32-.24.63-.33.95-.09.29-.15.59-.23.89-.08.34-.18.67-.25 1.01-.07.34-.11.68-.15 1.01-.04.31-.1.61-.13.92-.06.6-.09 1.21-.09 1.82v97.7c0 11.04 8.95 19.99 20 19.99s20-8.95 20-19.99v-49.29l28.76 28.75c33.85 33.84 33.85 88.9 0 122.74l-125.8 125.75c-33.85 33.84-88.93 33.84-122.78 0-7.81-7.81-20.47-7.81-28.29 0-7.81 7.81-7.81 20.47 0 28.27 24.72 24.72 57.2 37.07 89.68 37.07s64.95-12.36 89.68-37.07l125.8-125.75c49.45-49.43 49.45-129.86 0-179.29l-28.75-28.74zM137.59 389.81v-96.29c0-11.04-8.95-19.99-20-19.99s-20 8.95-20 19.99v49.17l-28.8-28.79c-33.85-33.84-33.85-88.9 0-122.74l125.8-125.75c16.4-16.39 38.2-25.42 61.39-25.42s44.99 9.03 61.39 25.42c7.81 7.81 20.48 7.81 28.28 0 7.81-7.81 7.81-20.47 0-28.27C321.7 13.19 289.86 0 255.98 0s-65.72 13.19-89.68 37.13L40.5 162.88c-49.45 49.43-49.45 129.86 0 179.29l28.91 28.9H20c-11.05 0-20 8.95-20 19.99s8.95 19.99 20 19.99h97.59c5.54 0 10.55-2.25 14.17-5.89.01 0 .02-.02.03-.03.35-.35.66-.72.98-1.08.08-.1.18-.19.26-.29 3.34-4.02 4.86-9.03 4.56-13.97z"></path><path d="M234.43 114.4l-23.37 23.36c-7.81 7.81-7.81 20.47 0 28.27 3.91 3.9 9.02 5.86 14.14 5.86s10.24-1.95 14.14-5.86l23.37-23.36c7.81-7.81 7.81-20.47 0-28.27s-20.47-7.81-28.28 0z"></path></g></svg> &nbsp;  Make Recurring</button></span> <!----><span id="f8be3f31-131e-40aa-b9e0-e047be3055b4" tabindex="0" aria-describedby="dde8865a-191b-4715-8e4e-176382cb6456 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M372 0H140C62.8 0 0 62.8 0 140v232c0 77.2 62.8 140 140 140h232c77.2 0 140-62.8 140-140V140C512 62.8 449.2 0 372 0zM40 372V140C40 84.86 84.86 40 140 40h232c55.14 0 100 44.86 100 100v162.2c-26.59 2.71-60.63 10.71-91.74 31.72-43.61 29.45-69.59 75.89-77.28 138.09H140c-55.14 0-100-44.86-100-100zm332 100h-28.66c6.91-47.73 26.83-83 59.31-104.94 22.96-15.5 48.47-22.06 69.35-24.62v29.55c0 55.14-44.86 100-100 100z"></path><path d="M317.11 273.69c11.05 0 20-8.95 20-20s-8.95-20-20-20H194.9c-11.05 0-20 8.95-20 20s8.95 20 20 20h122.21z"></path></g></svg> &nbsp;  Create Credit Note</button></span> <!----><span id="fc4582e2-1eb2-456b-834b-15300cbdb985" tabindex="0" aria-describedby="c084e47d-f1db-4ec5-a257-92ff1ddb9eff "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508 512" class="icon icon-md align-text-bottom"><path d="M408.11 83.2h-63.9C336.29 36.04 295.24 0 245.92 0H99.67C44.71 0 0 44.76 0 99.78v154.26c0 51.54 39.24 94.08 89.38 99.25v58.72c0 55.14 44.81 100 99.89 100h218.84c55.08 0 99.89-44.86 99.89-100v-228.8c0-55.14-44.81-100-99.89-100zM39.96 254.03V99.78C39.96 66.82 66.75 40 99.67 40h146.25c27.18 0 50.16 18.28 57.36 43.2H189.27c-55.08 0-99.89 44.86-99.89 100v129.71c-28.04-4.9-49.42-29.42-49.42-58.87zM468.05 412c0 33.08-26.89 60-59.93 60H189.28c-33.05 0-59.93-26.92-59.93-60v-58.19h15.62c2.2.83 4.56 1.31 7.05 1.31h134.83l-30.12 30.22c-7.79 7.82-7.78 20.48.03 28.28 3.9 3.9 9.01 5.84 14.11 5.84s10.24-1.96 14.14-5.87l64.13-64.35c7.79-7.82 7.78-20.48-.03-28.28l-64.27-64.2c-7.81-7.8-20.46-7.79-28.25.03-7.79 7.82-7.78 20.48.03 28.28l30.08 30.04H155.16a19.84 19.84 0 00-7.05-1.31h-18.75V183.18c0-33.08 26.89-60 59.93-60h218.84c33.05 0 59.93 26.92 59.93 60v228.8z" id="Layer_1-2"></path></svg> &nbsp;  Clone</button></span> <!----><span id="ce5466ff-33c1-4e66-ab44-80891c52aab7" tabindex="0" aria-describedby="f22dd516-c49f-4444-bba4-16ab265037bf "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-md align-text-bottom"><path d="M437.02 74.98C388.67 26.63 324.38 0 256 0S123.33 26.63 74.98 74.98 0 187.62 0 256s26.63 132.67 74.98 181.02C123.33 485.37 187.62 512 256 512s132.67-26.63 181.02-74.98C485.37 388.67 512 324.38 512 256s-26.63-132.67-74.98-181.02zm-333.75 28.28C144.07 62.46 198.31 40 256 40c50.95 0 99.2 17.53 137.89 49.73L89.73 393.89C57.53 355.21 40 306.95 40 256c0-57.7 22.47-111.94 63.27-152.74zm305.47 305.47c-40.8 40.8-95.04 63.26-152.74 63.26-51 0-99.29-17.57-138-49.82L422.18 118C454.43 156.7 472 205 472 256c0 57.7-22.47 111.94-63.26 152.74z" id="Layer_1-2"></path></svg> &nbsp;  Void</button></span> <!----><div class="dropdown-divider"></div><span id="ee1746d2-ce50-4c5c-af8d-eba6fb2e846c" tabindex="0" aria-describedby="f232bf11-208e-415c-b845-346c1b713df9 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 428.79 512" class="icon icon-md align-text-bottom"><path d="M428.78 19.82c0-.62-.03-1.23-.09-1.84 0-.04-.01-.08-.02-.12-.06-.53-.14-1.06-.24-1.59-.03-.16-.06-.33-.1-.49-.11-.51-.24-1.01-.39-1.5l-.18-.57c-.13-.38-.26-.75-.41-1.12-.07-.18-.14-.37-.22-.54-.19-.44-.4-.87-.62-1.29-.1-.18-.2-.37-.3-.55-.23-.41-.47-.81-.73-1.2-.09-.14-.19-.28-.29-.42-.25-.36-.52-.72-.79-1.06-.11-.14-.22-.28-.34-.42-.34-.4-.69-.79-1.06-1.16-.1-.1-.2-.19-.3-.29-.31-.3-.62-.58-.95-.86l-.4-.34c-.39-.31-.79-.61-1.2-.9-.17-.12-.35-.23-.53-.35-.3-.19-.6-.37-.9-.55-.25-.14-.49-.28-.74-.41a20.634 20.634 0 00-1.79-.82c-.32-.13-.65-.25-.98-.36-.33-.11-.66-.21-1-.31-.31-.09-.62-.17-.94-.24-.24-.05-.47-.11-.71-.16-.48-.09-.97-.17-1.46-.22l-.64-.06c-.46-.04-.91-.06-1.37-.07-.1 0-.2-.02-.3-.02H87.76c-3.87 0-7.71.34-11.34 1.01-3.68.66-7.3 1.63-10.77 2.91-.11.04-.21.08-.32.12l-.26.1c-.25.1-.51.19-.76.29-.96.37-1.93.77-3.02 1.28-1.84.83-3.68 1.77-5.54 2.83-1.69.97-3.41 2.08-5.12 3.28-.1.07-.19.14-.29.21l-.83.61c-.06.04-.12.09-.18.13-.87.65-1.71 1.31-2.5 1.97C32 27 23.5 45.05 23.5 64.28v163.75h-3.49c-11.05 0-20 8.95-20 20s8.95 20 20 20h3.49v96.48h-3.49c-11.05 0-20 8.95-20 20s8.95 20 20 20h3.49v21.08c0 47.64 38.76 86.41 86.41 86.41H342.4c47.64 0 86.41-38.76 86.41-86.41V129.85v-.06c0-.6-.03-1.2-.09-1.8-.01-.13-.02-.25-.04-.37-.06-.57-.15-1.13-.26-1.69-.03-.13-.06-.25-.09-.37-.1-.45-.21-.89-.34-1.33-.05-.16-.09-.32-.14-.48-.14-.43-.29-.85-.45-1.27l-.57-1.44c-11.99-30.19-11.81-63.38.49-93.44.19-.47.36-.95.52-1.43.05-.15.09-.31.14-.46.16-.52.3-1.05.41-1.58.01-.05.02-.1.03-.16.11-.56.2-1.13.26-1.7.01-.11.03-.22.04-.33.06-.6.09-1.2.09-1.79v-.12-.18zM98.41 40.01h283.28a163.822 163.822 0 000 69.84H98.41c-19.25 0-34.92-15.67-34.92-34.92s15.67-34.92 34.92-34.92zM342.38 472H109.89c-25.59 0-46.41-20.82-46.41-46.41v-21.08h25.88c11.05 0 20-8.95 20-20s-8.95-20-20-20H63.48v-96.48h25.88c11.05 0 20-8.95 20-20s-8.95-20-20-20H63.48v-86.85a74.462 74.462 0 0034.92 8.66h290.38v275.75c0 25.59-20.82 46.41-46.41 46.41z" id="Layer_1-2"></path></svg> &nbsp;  View Journal</button></span> <!----><span id="d009caa6-8af8-4137-af82-e676f76a2747" tabindex="0" aria-describedby="d57b23e7-6d55-4667-97d4-465462178ae6 "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 418 512" class="icon icon-md align-text-bottom"><path d="M397.98 80.58H302.24V53.83C302.24 24.15 278.07 0 248.37 0h-78.75c-29.71 0-53.88 24.15-53.88 53.83v26.75H20.02C8.96 80.58 0 89.53 0 100.58s8.96 20 20.02 20H37.4l17.4 310.45c2.54 45.4 40.19 80.97 85.71 80.97h137c45.52 0 83.16-35.57 85.71-80.97l17.4-310.45H398c11.06 0 20.02-8.95 20.02-20s-8.96-20-20.02-20zm-242.2-26.75c0-7.63 6.21-13.83 13.84-13.83h78.75c7.63 0 13.83 6.2 13.83 13.83v26.75H155.77V53.83zM323.23 428.8c-1.36 24.23-21.45 43.2-45.73 43.2h-137c-24.29 0-44.38-18.98-45.73-43.2L77.5 120.58h263.01L323.24 428.8z" id="Layer_1-2"></path></svg> &nbsp;  Delete</button></span> <!----><div class="dropdown-divider"></div><span id="d3bd518e-020e-4404-811b-e26d5ff42f34" tabindex="0" aria-describedby="edeb5263-cfe3-48ce-89d6-6ca97161f2af "><button class="dropdown-item" type="button"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 454 512" class="icon icon-md align-text-bottom"><g id="Layer_1-2"><path d="M91.14 207.74h186.33c18.06 12.18 39.8 19.3 63.17 19.3 62.51 0 113.36-50.93 113.36-113.52S403.15 0 340.64 0c-26.92 0-51.67 9.45-71.13 25.2H91.14C40.89 25.2 0 66.14 0 116.47s40.89 91.27 91.14 91.27zM340.64 40c40.48 0 73.42 32.98 73.42 73.52s-32.94 73.52-73.42 73.52-73.42-32.98-73.42-73.52S300.16 40 340.64 40zM91.14 65.2h146.93c-6.92 14.67-10.8 31.05-10.8 48.32 0 19.62 5 38.1 13.79 54.22H91.14c-28.23 0-51.2-23-51.2-51.27S62.91 65.2 91.14 65.2zM362.86 310.15H184.49c-19.46-15.75-44.21-25.2-71.13-25.2C50.85 284.95 0 335.88 0 398.47s50.85 113.52 113.36 113.52c23.37 0 45.11-7.12 63.17-19.3h186.32c50.26 0 91.14-40.94 91.14-91.27s-40.89-91.27-91.14-91.27zM113.37 472c-40.48 0-73.42-32.98-73.42-73.52s32.94-73.52 73.42-73.52 73.42 32.98 73.42 73.52S153.85 472 113.37 472zm249.49-19.3H212.94c8.79-16.12 13.79-34.6 13.79-54.22 0-17.27-3.88-33.65-10.8-48.32h146.93c28.23 0 51.2 23 51.2 51.27s-22.97 51.27-51.2 51.27z"></path></g></svg> &nbsp;  Invoice Preferences</button></span> <!----></div></li> <div class="separationline ps-0"></div><li class="nav-item ms-auto"><ul class="nav flex-nowrap h-100"><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></li> <div class="separationline ps-0"></div></ul> <div class="scroll-y noscroll-x fill body scrollbox txn-details-with-menubar"><div><!----> <!----><!----><!----> <div class="mx-n5"><!----><!----> <!----> <!----> <div class="border rounded-lg m-5 bl-4"><div class="p-4"><!----><!----> <div class="d-flex align-items-center flex-wrap"><div class="d-flex"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" class="icon icon-md me-2"><defs><path id="a" d="M29.9 1h452.2v510H29.9z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><g clip-path="url(#b)"><linearGradient id="c" gradientUnits="userSpaceOnUse" x1="256.003" y1="-1" x2="256.003" y2="509" gradientTransform="translate(0 2)"><stop offset="0" stop-color="#3381f6"></stop><stop offset="1" stop-color="#e960ff"></stop></linearGradient><path fill="url(#c)" d="M277.6 47.3c13.4 0 22.7 9.5 23.5 21.7 2.3 34 11.3 66.1 29.2 95.3 20.8 33.7 50.9 54.3 89.6 62.6 13.2 2.8 26.5 4 40 4 10.3 0 18.6 6.4 21.4 16.1 3.9 13.8-6 27.6-20.4 28.1-24.6.9-48.2 6.2-70.7 16.1-43.5 19.1-70 52-79.6 98.5-2.8 13.6-3.9 27.4-4 41.2-.1 11.6-8.2 20.7-19.8 22-11.4 1.3-22.6-7.9-23.6-19.3-2.3-28.6-9.8-55.7-23.4-80.9-21.2-39.2-53.8-63.6-97.4-73.1-14.4-3.1-28.9-4.4-43.6-4.5-11.6-.1-20.5-7.9-22.1-19.1-1.9-13.1 8-24.6 21.3-25.1 28.3-1 55.2-7.5 80.5-20.1 40.3-20.1 64.9-52.5 74.5-96.5 3.1-14.4 4.5-28.9 4.5-43.6 0-6.9 2.1-12.9 7.2-17.6 4.1-3.9 9-5.7 12.9-5.8zM88.1 1c8.4 0 14.6 6.4 15.5 15.3.4 4.2 1.4 8.5 2.9 12.5 3.8 10 11.4 14.9 22 15.1 5.7.1 10.6 1.6 14.2 6.3 3.8 5 4.3 10.5 1.7 16.1-2.6 5.5-7.2 8.6-13.3 8.9-4.9.3-9.5 1.3-13.9 3.4-7.6 3.5-11.2 9.7-12.1 17.8-.3 2.8-.2 5.7-.8 8.4-1.7 7.5-8.7 12.8-15.9 12.2-8-.6-13.9-6.8-14.6-15-.8-8.4-3.5-16-10.4-21.5-5.1-4.1-11.2-5.2-17.5-5.2-4.7-.1-8.8-1.7-11.9-5.3-4.3-4.9-5.3-10.5-2.8-16.4 2.6-6.1 7.5-9 14.1-9.8 4.6-.6 9.3-1.6 13.6-3.3 8.6-3.4 12.4-10.5 13.3-19.4.3-3 .3-6.2 1-9.1 1.9-6.6 8-11 14.9-11zm18 510c-3.7 0-6.7-2.4-7.6-5.9-.3-1.2-.3-2.5-.6-3.7-1.6-7.4-5.8-10.8-13.9-11.3-5.4-.3-8.8-4.9-7.4-10 .9-3 3.4-5.2 6.6-5.6 1.1-.1 2.1-.3 3.2-.4 7.2-1.2 10.8-5.3 11.1-12.7.2-4.8 2.9-8 7.1-8.4 4.4-.4 7.9 2.6 8.4 7 .1 1 .3 2 .4 2.9 1.5 7.6 5.2 11 12.9 11.5 4 .3 6.5 2.2 7.6 5.6 1.4 4.6-1.8 9.4-6.6 9.9-1.7.2-3.5.4-5.1.9-5.5 1.6-7.9 4.7-8.3 10.4-.1 1.1-.2 2.2-.4 3.2-.3 1.8-1.2 3.4-2.6 4.5-1.3 1.4-3 2.1-4.8 2.1z"></path></g><path fill="none" d="M0 0h512v512H0V0z"></path></svg> <div class="font-xs text-semibold text-primary-black">WHAT'S NEXT?</div></div> <div class="my-auto d-flex align-items-center ms-2"><p class="font-small text-primary-black me-3 mb-0">Send this Invoice to your customer or mark it as Sent. <!----><!----><!----><!----><!----></p> <span id="db988eb1-08b7-4ff0-9df5-dd8908bcb9b7" tabindex="0" aria-describedby="cd248e16-dc9f-42c8-b62d-c6792712825d "><button id="ember453" class="btn btn-primary ember-view btn-sm font-xs over-flow me-2" type="submit"><!----> Send Invoice</button></span> <!----> <span id="f88d8a18-b59e-47c6-972b-602cdbf5e8df" tabindex="0" aria-describedby="da2eda61-870d-4e4e-8e52-4415b4f58baa "><button id="ember454" class="btn btn-secondary ember-view btn btn-outline font-xs ms-2 over-flow btn-sm" type="button"><!----> Mark as Sent</button></span> <!----></div></div><!----></div> <!----></div><!----></div> <!----> <!----> <!----> <!----> <!----><!----> <div class="details-page mt-7"><!----> <!----> <!----> <div id="ember455" class="mb-7 ember-view"><!----></div> <!----><!----><!----><!----> <!----> 
+            <div class="details-container clearfix " style="max-width: 8.27in;margin-left:auto;margin-right:auto;"><div class="ribbon text-ellipsis" id="fcd5ee60-10dd-425a-8c88-85386a7bfddf" tabindex="0" aria-describedby="cbbf304b-be0e-4dc1-bd93-83eba5ff7674 "><div class="ribbon-inner ribbon-draft ">{{listX.0.paymentStatus}}  <!----></div></div> <!----> <div id="ember457" class="ember-view"><div class="orgdetails-update-frmtxndetails"><div id="ember458" class="dropdown ember-view btn-group fw-normal"><button id="ember459" class="dropdown-toggle ember-view btn btn-primary"><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500.6 512" class="icon icon-xs align-text-bottom" style="margin-bottom: 2px;"><g id="Layer_1-2"><path d="M469.1 275.1a34.85 34.85 0 010-38.2l28.3-43c4.2-6.3 4.4-14.4.6-21l-51.9-89.8c-3.8-6.5-10.9-10.4-18.5-10l-51.4 3c-13.9.8-26.8-6.7-33.1-19.1L320 11c-3.4-6.8-10.3-11-17.9-11H198.4c-7.6 0-14.5 4.3-17.9 11l-23.1 46c-6.2 12.4-19.2 19.9-33.1 19.1l-51.4-3c-7.6-.5-14.7 3.4-18.5 10L2.7 172.9c-3.8 6.5-3.5 14.7.6 21l28.3 43c7.6 11.6 7.6 26.6 0 38.2l-28.3 43c-4.2 6.3-4.4 14.4-.6 21l51.9 89.8c3.8 6.5 10.9 10.4 18.5 10l51.4-3c13.9-.8 26.8 6.7 33.1 19.1l23.1 46c3.4 6.8 10.3 11 17.9 11h103.7c7.6 0 14.5-4.3 17.9-11l23.1-46c6.2-12.4 19.2-19.9 33.1-19.1l51.4 3c7.6.5 14.7-3.4 18.5-10l51.9-89.8c3.8-6.5 3.5-14.7-.6-21l-28.3-43zm-51.4 123.1l-39.1-2.3a74.7 74.7 0 00-71.1 41.1l-17.6 35h-79.1l-17.6-35a74.7 74.7 0 00-71.1-41.1L83 398.2l-39.5-68.5L65 297c16.4-25 16.4-57.2 0-82.1l-21.5-32.7L83 113.7l39.1 2.3a74.7 74.7 0 0071.1-41.1l17.6-35h79.1l17.6 35c12.7 25.4 38.6 41.2 66.8 41.2 1.5 0 2.9 0 4.4-.1l39.1-2.3 39.5 68.5-21.5 32.7c-16.4 25-16.4 57.2 0 82.1l21.5 32.7-39.5 68.5z"></path><path d="M250.3 174.3c-45.1 0-81.7 36.7-81.7 81.7s36.7 81.7 81.7 81.7S332 301 332 256s-36.7-81.7-81.7-81.7zm0 123.5c-23 0-41.7-18.7-41.7-41.7s18.7-41.7 41.7-41.7 41.7 18.7 41.7 41.7-18.7 41.7-41.7 41.7z"></path></g></svg> <span class="font-xs">Customize</span></button> <div class="dropdown-menu  dropdown-menu-right"><div class="fltheader" style="text-transform: none; font-size: 13px;">Minimalist</div> <div id="ember460" class="ember-view dropdown-item cursor-pointer"><div data-ember-action="" data-ember-action-461="461">Change Template</div><!----></div> <div class="dropdown-item cursor-pointer" data-ember-action="" data-ember-action-462="462">Edit Template</div> <div class="dropdown-divider"></div><div class="dropdown-item cursor-pointer" data-ember-action="" data-ember-action-463="463">Update Logo &amp; Address</div><div class="dropdown-item cursor-pointer" data-ember-action="" data-ember-action-464="464">Manage Custom Fields</div><div class="dropdown-item cursor-pointer" data-ember-action="" data-ember-action-465="465">Terms &amp; Conditions</div><!----></div></div></div></div> <div id="ember466" class="ember-view"><style media="all" type="text/css">
+	
+
+  @font-face {
+    font-family: 'WebFont-Open Sans';
+    src: local(Open Sans), url(https://fonts.gstatic.com/s/opensans/v14/K88pR3goAWT7BTt32Z01m4X0hVgzZQUfRDuZrPvH3D8.woff2);
+  }
+
+  .pcs-template {
+  	font-family: Open Sans, 'WebFont-Open Sans';
+    font-size: 10pt;
+    color: #818285;
+      background:  #ffffff ;
+  }
+
+  .pcs-header-content {
+    font-size: 10pt;
+	color: #818285;
+	background-color: #ffffff;
+  }
+  .pcs-template-body {
+  	padding: 0 0.400000in 0 0.550000in;
+  }
+  .pcs-template-footer {
+  	height: 0.700000in;
+	font-size: 7pt;
+	color: #333333;
+	padding: 0 0.400000in 0 0.550000in;
+	background-color: #ffffff;
+  }
+  .pcs-footer-content {
+  word-wrap: break-word;
+  color: #333333;
+      border-top: 1px solid #e3e3e3;
+  }
+
+  .pcs-label {
+    color: #cc2026;
+  }
+  .pcs-entity-title {
+    font-size: 23pt;
+    color: #cc2026;
+  }
+  .pcs-orgname {
+    font-size: 7pt;
+    color: #000000;
+  }
+  .pcs-customer-name {
+    font-size: 10pt;
+    color: #818285;
+  }
+  .pcs-eori-number {
+    color: #333;
+    margin: 0;
+    padding-top: 10px;
+  }
+ .pcs-itemtable-header {
+    font-size: 10pt;
+    color: #cc2026;
+    background-color: #ffffff;
+  }
+  .pcs-itemtable-breakword {
+    word-wrap: break-word;
+  }
+  .pcs-taxtable-header {
+    font-size: 10pt;
+    color: #cc2026;
+    background-color: #ffffff;
+  }
+  .breakrow-inside {
+    page-break-inside: avoid;
+  }
+  .breakrow-after {
+    page-break-after:auto;
+  }
+  .pcs-item-row {
+    font-size: 10pt;
+    border-bottom: 1px solid #e3e3e3;
+    background-color: #ffffff;
+    color: #333333;
+  }
+  .pcs-img-fit-aspectratio {
+    object-fit: contain;
+    object-position: top;
+  }
+  .pcs-img-border {
+    border: 1px solid #f5f4f3;
+  }
+  .pcs-item-sku, .pcs-item-hsn, .pcs-item-coupon, .pcs-item-serialnumber, .pcs-item-unitcode {
+    margin-top: 2px;
+  	font-size: 10px;
+  	color: #444444;
+  }
+  .pcs-item-desc {
+      color: #8e8e8e;
+      font-size: 8pt;
+   }
+  .pcs-balance {
+    background-color: #cc2026;
+    font-size: 10pt;
+    color: #ffffff;
+  }
+  .pcs-savings {
+  font-size: 0pt;
+  color: ;
+  background-color: ;
+  }
+  .pcs-totals {
+    font-size: 9pt;
+    color: #333333;
+    background-color: #f7f6f5;
+  }
+  .pcs-notes {
+    font-size: 8pt;
+  }
+  .pcs-terms {
+    font-size: 8pt;
+  }
+  .pcs-header-first {
+	background-color: #ffffff;
+	font-size: 10pt;
+	color: #818285;
+      height: auto;
+	}
+
+ .pcs-status {
+ 	color: ;
+	font-size: 15pt;
+	border: 3px solid ;
+	padding: 3px 8px;
+ }
+ .billto-section {
+     padding-top: 0mm;
+     padding-left: 0mm;
+   }
+   .shipto-section {
+     padding-top: 0mm;
+     padding-left: 0mm;
+   }
+
+ @page :first {
+ 	@top-center {
+		content: element(header);
+	}
+    margin-top: 0.700000in;
+  }
+
+  .pcs-template-header {
+	padding: 0 0.400000in 0 0.550000in;
+    height: 0.700000in;
+  }
+
+  .pcs-template-fill-emptydiv {
+    display: table-cell;
+    content: " ";
+    width: 100%;
+  }
+
+
+/* Additional styles for RTL compat */
+
+/* Helper Classes */
+
+.inline {
+  display: inline-block;
+}
+.v-top {
+  vertical-align: top;
+}
+.text-align-right {
+  text-align: right;
+}
+.rtl .text-align-right {
+  text-align: left;
+}
+.text-align-left {
+  text-align: left;
+}
+.rtl .text-align-left {
+  text-align: right;
+}
+.float-section-right {
+  float: right;
+}
+.rtl .float-section-right{
+  float: left;
+}
+.float-section-left {
+  float: left;
+}
+.rtl .float-section-left{
+  float: right;
+}
+
+/* Helper Classes End */
+
+.item-details-inline {
+  display: inline-block;
+  margin: 0 10px;
+  vertical-align: top;
+  max-width: 70%;
+}
+
+.total-in-words-container {
+  width: 100%;
+  margin-top: 10px;
+}
+.total-in-words-label {
+  vertical-align: top;
+  padding: 0 10px;
+}
+.total-in-words-value {
+  width: 170px;
+}
+.total-section-label {
+  padding: 5px 10px 5px 0;
+  vertical-align: middle;
+}
+.total-section-value {
+  width: 120px;
+  vertical-align: middle;
+  padding: 10px 10px 10px 5px;
+}
+.rtl .total-section-value {
+  padding: 10px 5px 10px 10px;
+}
+
+.tax-summary-description {
+  color: #727272;
+  font-size: 8pt;
+}
+
+.bharatqr-bg {
+  background-color: #f4f3f8;
+}
+
+/* Overrides/Patches for RTL compat */
+  .rtl th {
+    text-align: inherit; /* Specifically setting th as inherit for supporting RTL */
+  }
+/* Overrides/Patches End */
+
+
+/* Subject field styles */
+.subject-block {
+    margin-top: 20px;
+}
+.subject-block-value {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 14pt;
+    margin-top:5px;
+}
+/* Subject field styles End*/
+
+.pcs-sub-label {
+  color: #666;
+  font-size: 10px;
+}
+.pcs-hsnsummary-compact {
+  padding: 0;
+  margin-top: 3px;
+}
+.pcs-hsnsummary-label-compact {
+  margin-bottom: 3px;
+  font-weight:600;
+  padding-left: 3px;
+  font-size: 9pt;
+}
+.pcs-hsnsummary-header-compact {
+  text-align:right;
+  padding: 5px 7px 2px 7px;
+  word-wrap: break-word;
+  width: 17%;
+  height: 32px;
+  border-right: 1px solid #9E9E9E;
+  font-size: 8pt;
+  font-weight: 600;
+}
+.pcs-hsnsummary-body-compact, .pcs-hsnsummary-total-compact {
+  text-align:right;
+  word-wrap: break-word;
+  font-size: 7pt;
+  padding: 4px 10px;
+}
+.pcs-hsnsummary-total-compact {
+  border-top: 1px solid #e3e3e3;
+}
+.pcs-ukvat-summary {
+  margin-top:50px;
+  clear: both;
+  width: 100%;
+}
+.pcs-ukvat-summary-header {
+  padding:5px 10px 5px 5px;
+}
+.pcs-ukvat-summary-header:first-child {
+  padding-left: 10px;
+}
+.pcs-ukvat-summary-label {
+  font-size: 10pt;
+}
+.pcs-ukvat-summary-table {
+  margin-top: 10px;
+  width: 100%;
+  table-layout: fixed;
+}
+.pcs-ukvat-summary-body, .pcs-ukvat-summary-total {
+  padding: 10px 10px 5px 10px;
+}
+.pcs-ukvat-summary-body:first-child {
+  padding-bottom: 10px;
+  padding-right: 0;
+}
+.pcs-payment-block {
+  margin-top: 20px;
+}
+.pcs-payment-block-inner {
+  margin-top: 10px;
+}
+
+.pcs-entity-label-section {
+  padding:5px 10px 5px 0px;
+  font-size: 10pt;
+ }
+
+.pcs-colon {
+  width: 3%;
+}
+.retention-block-label {
+  padding: 5px 10px 5px 0;
+}
+.retention-block-value {
+  padding: 10px 10px 10px 5px;
+}
+
+.pcs-d-inline {
+    display: inline;
+}
+.bank-details-section {
+  margin-top:10px;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+	
+
+
+.pcs-w-100 {
+  width: 100%;
+}
+
+.pcs-h-10px {
+  height: 10px;
+}
+.pcs-w-120px {
+  width: 120px;
+}
+.pcs-w-110px {
+  width: 110px;
+}
+.pcs-w-50 {
+  width: 50%;
+}
+
+
+
+
+
+
+.pcs-d-table-cell {
+  display: table-cell;
+}
+
+
+
+
+
+.pcs-talign-center {
+  text-align: center;
+}
+.pcs-wordwrap-bw {
+  word-wrap: break-word;
+}
+.pcs-whitespace-pw {
+  white-space: pre-wrap;
+}
+.pcs-fw-600 {
+  font-weight: 600;
+}
+.pcs-text-uppercase {
+  text-transform: uppercase;
+}
+
+.pcs-text-underline {
+  text-decoration: underline;
+}
+.pcs-text-red {
+  color: red;
+}
+.pcs-dark-grey {
+  color: #666;
+}
+.pcs-fs-10 {
+  font-size: 10px;
+}
+
+
+
+
+.pcs-table-fixed {
+  table-layout:fixed;
+}
+
+
+
+
+
+.pcs-valign-middle {
+  vertical-align: middle;
+}
+
+
+
+.pcs-clearfix {
+  clear: both;
+}
+.pcs-pb-0 {
+  padding-bottom: 0px;
+}
+.pcs-pb-5 {
+  padding-bottom: 5px;
+}
+.pcs-pb-2 {
+  padding-bottom: 2px;
+}
+.pcs-pt-20 {
+  padding-top: 20px;
+}
+.pcs-pt-5 {
+  padding-top: 5px;
+}
+.pcs-pt-10 {
+  padding-top: 10px;
+}
+.pcs-pt-3 {
+  padding-top: 3px;
+}
+.pcs-pt-0 {
+  padding-top: 0px;
+}
+
+.pcs-px-10 {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.pcs-py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.pcs-mt-5 {
+  margin-top: 5px;
+}
+
+    .pcs-itemtable-header {
+		border-bottom: 1px solid #e3e3e3;
+	}
+	.pcs-border {
+		border: 1px solid #cc2026;
+	}
+	.pcs-totalband {
+		background-color: #f7f6f5;
+	}
+	.invoice-details-label {
+		padding: 5px 10px 5px 0px;
+	}
+	.rtl .invoice-details-label {
+		padding: 5px 0px 5px 10px;
+	}
+	.address-block {
+		float: left;
+		width: 50%;
+	}
+	.rtl .address-block {
+		float: right;
+	}
+	.lineitem-header {
+		padding: 5px 10px 5px 5px;
+		word-wrap: break-word;
+	}
+	.rtl .lineitem-header {
+		padding: 5px 5px 5px 10px;
+	}
+	.lineitem-column {
+		padding: 15px 10px 20px 5px;
+		word-wrap: break-word;
+		vertical-align: top;
+	}
+	.rtl .lineitem-column {
+		padding: 15px 5px 20px 10px;
+	}
+	.balance-due-block {
+		vertical-align: top;
+		font-size:12pt;
+		padding: 7px 10px 7px 0;
+	}
+	.rtl .balance-due-block {
+		padding: 7px 0 7px 10px;
+	}
+	.bharatqr-bg {
+	  background-color: inherit;
+	}
+	.subject-block {
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+</style>
+
+
+
+
+<div class="pcs-template">
+	  <div class="pcs-template-header pcs-header-content" id="header">
+    
+
+    
+    <div class="pcs-template-fill-emptydiv"></div>
+
+  </div>
+
+	
+
+
+
+	<div class="pcs-template-body">
+		<table cellspacing="0" cellpadding="0" style="width:100%;table-layout: fixed;"><tbody>
+	<tr>
+		<td style="padding: 0 0 15px 10px;width:60%;word-wrap: break-word;">
+<div class="address-block"><span class="pcs-label" id="tmp_billing_address_label">Suppliers Invoice</span><br>
+				<span style="white-space: pre-wrap;" id="tmp_billing_address"><strong><span class="pcs-customer-name" id="zb-pdf-customer-detail"><a href="#/contacts/4424081000000078384">{{listX.0.supplier}}</a></span></strong>
+{{listX.0.address}}
+Harare
+Zimbabwe</span>
+			</div>
+	 </td>
+	 <td valign="bottom" style="padding: 0 0 15px 0px;" class="text-align-right">
+    
+		<span class="pcs-entity-title">FISCAL TAX INVOICE:</span><br>
+		<span id="tmp_entity_number">{{listX.0.invoiceNumber}}</span>
+	 </td>
+   </tr>
+   <tr style="height:20px;">
+	<td rowspan="2" style="padding-top:15px;padding-left: 10px;border-bottom:none;border-right: none;border-left:none;" class="pcs-border">
+		<table style="width: 100%;table-layout: fixed;word-wrap: break-word;" border="0" cellspacing="0" cellpadding="0"><tbody>
+			<tr>
+				<td style="padding:5px 10px 5px 0px;" class="pcs-label invoice-details-label"><span>Invoice Date</span></td>
+				<td><span id="tmp_entity_date">{{listX.0.date}}</span></td>
+			</tr>
+
+			<tr>
+				<td style="padding:5px 10px 5px 0px;" class="pcs-label invoice-details-label"><span>Terms</span></td>
+				<td><span id="tmp_payment_terms">Net 30</span></td>
+			</tr>
+
+			<tr>
+				<td style="padding:5px 10px 5px 0px;" class="pcs-label invoice-details-label"><span>Due Date</span></td>
+				<td><span id="tmp_due_date">08 Feb 2025</span></td>
+			</tr>
+	 </tbody></table>
+	</td>
+
+	<td class="pcs-border text-align-right balance-due-block">
+			<span class="pcs-label"><b>Balance Due </b></span><span><b>USD {{listX.0.subtotal}}</b></span>
+	</td>
+
+ </tr>
+ <tr>
+	<td style="border-left:1px solid transparent;vertical-align:bottom;" class="text-align-right">&nbsp;
+		
+	</td>
+ </tr>
+</tbody></table>
+
+
+<table class="pcs-itemtable" style="width:100%;margin-top:30px;table-layout:fixed;" border="0" cellspacing="0" cellpadding="0">
+    <thead>
+			<tr style="height:32px;">
+			 	    <td style="padding: 5px 0px 5px 5px;width: 5%;text-align: center;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
+      #
+    </td>
+    <td style="padding: 5px 5px 5px 10px;width: ;text-align: left;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
+      Item &amp; Description
+    </td>
+    <td style="padding: 5px 5px 5px 10px;width: ;text-align: left;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
+      GRV No
+    </td>
+    <td style="padding: 5px 10px 5px 5px;width: 13%;text-align: right;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
+    Mass (kgs)
+    </td>
+    <td style="padding: 5px 10px 5px 5px;width: 13%;text-align: right;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
+      Rate
+    </td>
+    <td style="padding: 5px 10px 5px 5px;width: 15%;text-align: right;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
+      Amount
+    </td>
+
+		 	</tr>
+     </thead>
+     <tbody class="itemBody">
+      
+	   <tr class="breakrow-inside breakrow-after">
+            <td rowspan="1" valign="top" style="padding: 15px 0 20px 5px;text-align: center;word-wrap: break-word;" class="pcs-item-row">
+              1
+            </td>
+		<td rowspan="1" valign="top" style="padding: 15px 0px 20px 10px;" class="pcs-item-row">
+								<div>
+							<div>
+										<span style="word-wrap: break-word;" id="tmp_item_name">{{listX.0.item}}</span><br>
+									
+									<span style="white-space: pre-wrap;word-wrap: break-word;" class="pcs-item-desc" id="tmp_item_description"></span>
+									
+									
+					</div>
+				</div>
+		</td>
+
+
+
+
+
+  <td rowspan="1" valign="top" style="padding: 15px 10px 20px 10px;word-wrap: break-word;" class="pcs-item-row ">
+      <span id="tmp_item_qty">{{listX.0.refNumber}}</span>
+    </td>
+
+
+
+    <td rowspan="1" valign="top" style="padding: 15px 10px 20px 10px;word-wrap: break-word;" class="pcs-item-row text-align-right">
+      <span id="tmp_item_qty">{{listX.0.receivedKgs}}</span>
+    </td>
+		<td rowspan="1" valign="top" style="padding: 15px 10px 20px 10px;word-wrap: break-word;" class="pcs-item-row text-align-right"><span id="tmp_item_rate"> ${{listX.0.price}}</span></td>
+
+		<td rowspan="1" class="pcs-item-row lineitem-column text-align-right"><span id="tmp_item_amount">${{listX.0.subtotal}}</span></td>
+	  </tr>
+      
+
+      
+      <tr>
+      	<td></td>
+      	
+      	
+				
+        
+        
+      </tr>
+      
+    </tbody>
+</table>
+<div style="margin-top: 140px;margin-left: -0.550000in;margin-right: -0.400000in;" class="pcs-totalband">
+	<div style="padding-left: 0.550000in;padding-right: 0.400000in;">
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;table-layout: fixed;"><tbody>
+			<tr>
+			<!--	<td style="width:60%;padding: 10px 5px 5px 10px;" valign="top">
+    								<div class="bank-details-section">
+      								<font size="1">Bank - FBC</font><div><font size="1">Branch - Nelson Mandela</font></div><div><font size="1">Branch Code - 2345</font></div><div><font size="1">Account Name - Trade Centre Pvt Ltd</font></div><div><font size="1">Account No. - 5689 0021 2398 4532</font></div>
+    								</div>
+
+										
+
+						<span style="white-space: pre-wrap;word-wrap: break-word;" class="pcs-notes">Thanks for your business.</span>
+   			</td>-->
+   			<td style="padding: 10px 5px 10px 10px;" class="pcs-totals" valign="top">
+   					<table style="float:right;width:100%;" align="right" cellspacing="0" border="0">
+        			<tbody>
+          			<tr>
+                            <td valign="middle" style="padding: 5px 10px 5px 0;" class="pcs-label text-align-right">Sub Total</td>
+                            <td id="tmp_subtotal" class="text-align-right total-section-value">${{listX.0.subtotal}}</td>
+
+          			</tr>
+
+			        
+
+
+
+
+                    
+          			<tr>
+            			<td valign="middle" style="padding: 5px 10px 5px 0;" class="text-align-right pcs-label"><b>Total</b></td>
+            			<td id="tmp_total" class="text-align-right total-section-value"><b>$ {{listX.0.subtotal}}</b></td>
+          			</tr>
+
+          			<tr style="height:40px;" class="pcs-balance">
+            			<td valign="middle" style="padding:5px 10px 5px 0;" class="text-align-right"><b>Balance Due</b></td>
+            			<td id="tmp_balance_due" class="text-align-right total-section-value"><strong>${{listX.0.subtotal}}</strong></td>
+          			</tr>
+        		</tbody>
+      			</table>
+   			</td>
+   		</tr>
+   	</tbody>
+   </table>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <div style="page-break-inside: avoid;">
+</div>
+
+  
+  
+    
+	</div>
+		<div style="right:0;bottom:0;position:running(footer);" class="pcs-template-footer">
+<div class="pcs-footer-content">
+    
+	<table style="width: 100%;"><tbody>
+		<tr>
+			<td valign="middle" style="width:110px;padding:5px 5px 0 0;">
+				<img src="https://books.zoho.com/ZFInvoiceLogo.zbfs?logo_id=6b59e63c9b25b714a262b6d698c356cf" style="width:90px;height:90px;display: table-cell;" id="logo_content" loading="lazy">
+			</td>
+			
+			<td valign="bottom" style="text-align:right;width:10%;padding-top:5px;" id="pageNumber"></td>
+        </tr>
+    </tbody></table>
+</div>
+</div>
+</div>
+</div> <!----></div> <div class="row"><div class="col-lg-12"><div id="ember467" class="ember-view float-end">Template : 'Minimalist' <a href="#" class="text-dodgerblue" data-ember-action="" data-ember-action-468="468">Change</a><!----></div></div></div> <div class="pmt-info"><h4>More Information</h4> <!----><!----><!----><!----><div class="row info-row"><label class="text-muted col-lg-3">
+    Selected Emails
+    
+        <span id="cdfaec4d-26e0-4ba9-8763-42171d845bc0" class="cursor-pointer" tabindex="0" aria-labelledby="d7f42480-e6ee-446b-a630-c9f1443efd59 ">
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm align-text-top"><path d="M256 172.3c-11.3 0-20.4 9.2-20.4 20.4v195.9c0 11.3 9.2 20.4 20.4 20.4s20.4-9 20.4-20.4V192.7c0-11.4-9.2-20.4-20.4-20.4z"></path><path d="M256 0C114.9 0 0 114.9 0 256s114.8 256 256 256c141.1 0 256-114.9 256-256S397.1 0 256 0zm0 471.3c-118.7 0-215.3-96.6-215.3-215.3S137.3 40.7 256 40.7 471.3 137.3 471.3 256 374.7 471.3 256 471.3z"></path><circle cx="256.4" cy="121.7" r="21.9"></circle></svg>
+        </span>
+       <!---->
+  </label> <div class="col-lg-9">
+  
+  </div></div></div> <!----> <!----></div> <!----> <!----> <!---->
+   <div class="px-2"><div class="sub-tab"><ul class="nav nav-tabs nav-tabs-dashed"><li class="font-small nav-item"><button class="text-dodgerblue nav-link bg-transparent no-outline active">Journal</button></li> <!----> <!----> <!----> <!----></ul></div> <div class="tab-content pt-3" id="associatedTxn"><div class="tab-pane active"><div><div id="ember472" class="ember-view"><div id="ember473" class="ember-view"><p class="text-muted pt-2 ">Journal entries will not be available for Invoices in the Draft state.</p></div></div></div></div> <div class="tab-pane "><!----><!----></div> <div class="tab-pane "><div id="ember474" class="ember-view"><!----><!----></div></div> <div class="tab-pane "><div><ul id="storage-section" class="ember-view list-unstyled show-storages show-batches"><!----></ul></div></div> <div class="tab-pane "><div><div id="ember475" class="ember-view"><div class="txn-list"><div id="ember476" class="ember-view"><!----></div></div></div></div></div></div></div></div></div><!----></div> <div id="ember477" class="ember-view"><div id="ember478" class="ember-view"></div></div> <!----><!----><!----><!----><!----> <!----><!----> <!----><!----></main> <div id="pagetips-container" class="position-relative"></div>  <div class="widgets column"><div class="body mt-2  "><!----><!----></div></div> <div class="widgets-app d-none"><div class="widget-header"><h5> <button class="icon-button close-details" type="button" data-ember-action="" data-ember-action-164="164"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-xs" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button> <div class="font-large"></div></h5></div> <div class="body"></div></div></div></div> <!----> <div id="full-screen-outlet"></div> <!----> <div><!----></div><!----> <!----> <div class="chat-button cursor-pointer  "><div id="contact-support"><div class="d-flex p-2" data-ember-action="" data-ember-action-440="440"><div class="chat-button-icon  rounded-md"><!----> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon icon-xlg align-middle mb-2"><path d="M403.1 213h-1.2v119.4c0 15.8-12.8 28.6-28.6 28.6H178.9c-15.2 0-30.2 5-42.4 14.1L103 400.3V182.7c0-15.8 12.8-28.6 28.6-28.6H326c-1.8-6.7-2.8-13.8-2.8-21.1 0-7.2 1-14.3 2.8-20.9H131.6c-38.9 0-70.6 31.7-70.6 70.6v226.5c0 14.3 8 27.2 20.8 33.6 5.4 2.7 11.1 4 16.8 4 8 0 15.8-2.6 22.5-7.6l40.7-30.5c4.9-3.7 11-5.7 17.2-5.7h194.4c38.9 0 70.6-31.7 70.6-70.6V201.8c-12.1 7.1-26 11.2-40.9 11.2z"></path><path d="M451 133.1c0-10.8-3.5-20.7-9.5-28.7-4.6-6.2-10.6-11.2-17.6-14.5-2.1-1-4.3-1.9-6.5-2.6-4.5-1.4-9.3-2.2-14.3-2.2s-9.7.8-14.3 2.2c-2.3.7-4.4 1.6-6.5 2.6-1 .5-1.9 1-2.8 1.5-.8.5-1.7 1-2.5 1.5-.5.3-1 .7-1.5 1-1 .7-2 1.4-2.9 2.2-3.6 2.9-6.7 6.4-9.3 10.2-.9 1.3-1.7 2.6-2.4 4-.3.6-.7 1.3-1 1.9-1.4 2.8-2.5 5.8-3.3 9-1 3.8-1.5 7.8-1.5 12 0 4.1.5 8.1 1.5 12 .8 3.2 2 6.2 3.4 9.1 7.6 15.6 23.4 26.4 41.8 26.8h1.3c15.4 0 29.1-7.3 37.8-18.5 6.3-8.2 10.1-18.4 10.1-29.5z"></path></svg></div> <div class="chat-button-title px-3"><div class="text-medium">Have questions? Ask away!</div> <!----></div></div></div></div> <!----> <div id="ember166" class="notification-message text-center zf-notification-container ember-view" style="transform: translateY(-100%); opacity: 1;"><!----></div> <div id="floating-notification"></div> <!----> <!----> <!----> <!----> <div id="ember167" class="ember-view"></div> <div id="ember168" class="ember-view"><!----></div> <!----> <!----><!----> <div id="modal-wrapper" class="d-print-none"></div></div><script type="text/javascript" src="https://js.zohocdn.com/ichat/js/resource/05088312_en.js"></script><div class="wms-mainui" id="wmstoolbar" style="z-index: 999; display: none;"><div id="wms-pasteCapture" class="wms-pastediv" contenteditable="true"></div><div id="wms-menucontainer" class="wms-menucontainer"><div id="wms_menu" class="wms-menu"><div id="wms_menu_header" class="wms_menuheader"><span id="wms_menu_userstatusiconwrapper" class="wms_menu_userstatusiconwrapper wms_badge_statusicon_available"><img src="https://contacts.zoho.com/file?fs=thumb&amp;nocache=1723196621004"></span><div id="wms_menu_username" class="wms_menu_username wms-truncate-ellipsis" title="inhari">inhari</div><span data-minimize="true" class="wms_minimizeicon wms_menu_minimize"></span><div id="wms_menu_userstatus" data-statuseditor="false" class="wms_menu_userstatus wms-truncate-ellipsis" title="Available">Available</div><span id="wms_settings_dropdownicon" class="wms_settings" data-settings="true"></span></div><div id="wms_menu_settingsdropdown" data-settingsdropdown="true" class="wms_menu_settingsdropdown"></div><div id="wms_cstatus" data-showstatus="false" class="wmspd1" style="display:none; overflow-x: hidden;"></div><div id="wms_menu_searchcontainer" class="wms_menu_searchcontainer"><span class="wms_menu_searchicon wms_searchicon"></span><input id="wms_menu_search" type="text" class="wms_menu_searchinput" autocomplete="off" placeholder="Search Contacts, Chats &amp; Channels"></div><div id="wms_settingscontainer" style="display:none" data-showsettings="false"><div id="wms_settings_header" class="wms_settings_header"><span id="wms_settingsnavigator" data-navigator="settings" class="wms_settingsnavigator wms_menu_floatl"></span><span class="wms_settings_menu">Settings</span></div><div id="wms_settings_general" class="wms_settings_general"><span class="wms_settings_header">General</span><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_pausechat">Pause chat here</label><label class="wms_toggle_switch"><input id="wms_settings_pausechat" type="checkbox"><span data-type="custom" class="wms_settings_togglebutton"></span></label></div></div><div id="wms_settings_soundnotification" class="wms_settings_general" data-global-sound="enabled"><div class="wms_settings_header"><span>Sound Notification</span><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_global" data-setting="globalsoundnotify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_list" data-expanded="true"><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_mymsg">One - One Chats</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_mymsg" data-setting="mymsgsoundnotify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_mention">Mention</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_mention" data-setting="mentionsoundnotify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_groupmsg">Group Chats</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_groupmsg" data-setting="groupmessage_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_channelmsg">Channels</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_channelmsg" data-setting="channelmessage_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_pinnedchats">Pinned Chats</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_pinnedchats" data-setting="pinnedchats_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_reminders">Reminder Messages</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_reminders" data-setting="reminders_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_botmsg">Bot Messages</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_botmsg" data-setting="botmessage_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_avcalls">Audio &amp; Video Calls</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_avcalls" data-setting="av_call_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx wms_sound_setting"><label class="wms_settings_label" for="wms_settings_sound_screenshare">Screen Share</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_sound_screenshare" data-setting="screen_call_sound_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div></div></div><div id="wms_settings_visualnotification" class="wms_settings_general"><span class="wms_settings_header">Desktop Notification</span><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_mymsg">One - One Chats</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_mymsg" data-setting="vmymessage" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_mentionmsg">Mention</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_mentionmsg" data-setting="vmention" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_groupmsg">Group Chats</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_groupmsg" data-setting="groupmessage_visual_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_channelmsg">Channels</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_channelmsg" data-setting="channelmessage_visual_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_pinnedchats">Pinned Chats</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_pinnedchats" data-setting="pinnedchats_visual_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_reminders">Reminder Messages</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_reminders" data-setting="reminders_visual_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_botmsg">Bot Messages</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_visual_botmsg" data-setting="botmessage_visual_notify" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_visual_statuschange">Change of user status</label><label class="wms_toggle_switch"><input id="wms_settings_visual_statuschange" data-setting="vustatus" type="checkbox"><span data-type="custom" class="wms_settings_togglebutton"></span></label></div></div><div id="wms_settings_readreceipt" class="wms_settings_general"><span class="wms_settings_header">Read Receipt</span><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_read_receipt">Enable read receipt for conversations</label><label class="wms_toggle_switch"><input checked="" id="wms_settings_read_receipt" data-setting="read_receipt" type="checkbox"><span data-type="custom" class="wms_settings_togglebuttonsel"></span></label></div></div><div id="wms_settings_lastseen" class="wms_settings_general"><span class="wms_settings_header">Last seen </span><div class="wms_settings_chckbx"><label class="wms_settings_label" for="wms_settings_show_lastseen">If disabled, you'll not be able to see the last seen of any of your contacts.</label><label class="wms_toggle_switch"><input id="wms_settings_show_lastseen" data-setting="show_lastseen" type="checkbox"><span data-type="custom" class="wms_settings_togglebutton"></span></label></div></div><div id="wms_settings_translation" class="wms_settings_general" data-translation-feature="enabled" style="display: none"><div class="wms_settings_header"><span>Language Translation</span><label class="wms_toggle_switch"><input id="wms_settings_showtranslation" data-setting="messagetranslation" type="checkbox"><span data-type="custom" class="wms_settings_togglebutton"></span></label></div><div class="wms_translation_settings" data-expanded="false"><div class="wms_select_translation" style=""><select class="wms_translation_select" id="translationpermission" data-select="translationpermission"><option id="wms_settings_manualtranslation" value="1" data-value="1" name="translation" data-setting="manual_translation">Manual Translation</option><option id="wms_settings_autotranslation" name="translation" data-setting="auto_translation" value="2" data-value="2">Automated Translation</option></select><span class="wms_settings_openicon"></span></div></div></div><div id="zoho_links_privacy" class="wms_settings_general"><span class="wms_settings_header">Configure privacy for zoho links</span><div id="wms_zoholinks_settings" class="wms_zoholinks_settings"><div id="zoholinks_loading_div" class="wms_loading_div"></div></div></div></div><div id="wms_menu_listcontainer" class="wms_menu_listcontainer"><div data-menuname="chat" id="wms_menu_chatlist"><div id="wms_menu_chatlist_def" class="wms_menu_chatlist_def"><div id="wms_menu_recentchats" class="wms_menu_recentchats" data-menu="recentchats" undefined=""><div id="wms_menu_heading_recentchats" class="wms_menu_subheading" data-heading="recentchats" data-uctype="unmuted"><span>Recent Chats</span><div class="wms_menu_filter_icon" title="View unread chats"></div></div><div id="wms_menu_chatlist_recentchats" class="wms_menu_chatlist_recentchats"><div class="wms_menu_item" data-id="CT_2243214955849740826_794742604-B1" data-dname="Taz" data-type="2"><span class="wms_badge_imgwrapper wms_badge_statusicon_"><div class="wms_menu_item_img wms_contacticon" data-imgid="undefined" data-originalsrc=""></div><span class="wms_badge_statusicon__cutout wms_badge_img_cutout" data-cutouticon="true"></span></span><div class="wms_menu_item_name wms-truncate-ellipsis" title="Taz">Taz</div><span class="wms_menu_item_time" title="16 Jul 03:06 PM">16 Jul</span><div class="wms_menu_item_msg wms-truncate-ellipsis"><span class="wmsgrey">Taz: </span>Hey there! How you doing? </div><span style="display:flex" class="wms_menu_item_count" data-unreadcount="true" title="1">1</span></div></div></div></div><div id="wms_menu_chatlist_searchres" class="wms_menu_chatlist_searchres"></div></div><div data-menuname="channel" id="wms_menu_grouplist"><div id="wms_menu_grouplist_def" class="wms_menu_grouplist_def"><div class="wms-welcome-img wms-welcome-channelsimg wms-halign"></div><div class="wms-welcome-msg wms-halign">Channels are meant for enhanced collaboration in your organization. All the channels you're a part of will be listed here. <a class="wms_welcome_msg_href" target="blank" href="https://cliq.zoho.com/officechat/index.do#createchannel">Create a channel</a> or join existing channel by searching its name to start the conversation.</div></div><div id="wms_menu_grouplist_searchres" class="wms_menu_grouplist_searchres"></div></div><div data-menuname="contact" id="wms_menu_contactlist"><div id="wms_menu_contactlist_def" class="wms_menu_contactlist_def"><div class="wms-welcome-img wms-welcome-contactsimg wms-halign"></div><div class="wms-welcome-msg wms-halign">All your contacts will be listed here. Enter email addresses of users in the search box to invite them here.</div></div><div id="wms_menu_contactlist_searchres" class="wms_menu_contactlist_searchres"></div></div><div data-menuname="customcontact" id="wms_menu_customcontactlist"><div id="wms_menu_customcontactlist_def" class="wms_menu_customcontactlist_def"><div class="wms-welcome-img wms-welcome-contactsimg wms-halign"></div><div class="wms-welcome-msg wms-halign">All your contacts will be listed here. Enter email addresses of users in the search box to invite them here.</div></div><div id="wms_menu_customcontactlist_searchres" class="wms_menu_customcontactlist_searchres"></div></div></div></div><div id="wms_menubar" class="wms_menubar"><span data-menuname="chat" class="wms-menubutton wms_chatsicon" data-title="Unread Chats" title="Unread Chats" data-uc="true"><span id="wms_menu_unreadchats_cnt" class="wms_menu_chat_unreadcnt" title="1" style="display: flex;">1</span></span><span data-menuname="channel" class="wms-menubutton wms_groupicon" data-title="Channels" title="Channels"></span><span data-menuname="contact" class="wms-menubutton wms_contacticon" data-title="Contacts" title="Contacts"><span id="wms_menu_invitations_cnt" class="wms_menu_chat_unreadcnt" style="display: none;"></span></span></div></div><div id="wmsnotificationholder" class="wms-nh"></div><div id="wmsglobalsearch" title="Search across Apps" class="wms-gssearch" style="display: block;"><span class="wms_searchicon"></span></div><div id="wms_notebook_icon" class="wms_notebook_icon" data-notebook-icon="true" data-shown="false" style=" display: none "><div id="wms_notebook_container" class="wms_notebook_container" style="z-index: 1000"><div class="wms_notebook_header"><span class="wms_notebook_widget_heading">Zoho Notebook</span><div class="wms_notebook_widget_button" data-action="close"></div></div><div class="wms_notebook_loader wms-hvalign" id="wms_notebook_loader"></div></div></div><div id="wmsstatusbar" class="wmsstatusbar"><div id="zb-wmsstatusbar"></div></div><div class="wms-turnoffinfo" id="chatturnoffinfo" style="display: none;">You've paused chat here. <a style="cursor: pointer;" data-unpausechat="true">Click to unpause</a></div><div id="wms_incomingcall" class="wms_incomingcall"><div id="wms_caller_container" class="wms_caller_container"><img id="wms_callerimg" class="wms_caller_img"><span id="wms_calltype" class="wms_calltype wms-halign"></span><span id="wms_callername" class="wms_callername wms-halign"></span><div class="wms_videocall_buttons_list wms_incomingcall_buttons"><div id="wms_answercall_button" class="wms_videocall_button wms_answercall_button" call-action="acceptcall" title="Accept call"></div><div class="wms_videocall_button wms_replymsg_button" call-action="replycall" style="display: none;"></div><div id="wms_rejectcall_button" class="wms_videocall_button wms_rejectcall_button" call-action="rejectcall" title="Reject call"></div></div></div></div><div class="wms-chatwindowcontainer" id="wms-chatwindowcontainer"><span class="wms_bar_movablehint" id="wmsbarmovablehint" style="">Here is your Smart Chat (Ctrl+Space)</span></div></div><div class="zsiq_floatmain zsiq_theme1 siq_bR" data-id="zsalesiq" style="visibility: hidden; display: none;"><div id="zsiq_float" class="zsiq_float " style="font-family:inherit"><div class="zsiq_flt_rel"><em id="zsiq_agtpic" class="zsiq_user siqicon siqico-chat"></em><div id="titlediv" class="zsiq_cnt"><div id="zsiq_maintitle" class="zsiq_ellips" title="We're Online!">We're Online!</div><p id="zsiq_byline" class="zsiq_ellips" title="How may I help you today?">How may I help you today?</p><em class="siqico-close"></em></div><em id="zsiq_unreadcnt" class="zsiq_unrdcnt" style="display: none;"></em><em id="zsiq_avcall" class="zsiqmin_unrdcnt zsiq_unrdcnt siqico-mincall" style="display: none;"></em></div></div></div><style id="zsiqcustomcss" data-id="zsalesiq">.zsiq_flt_rel{ background-color:#0066cc !important;} .zsiq_seasonal .st2 { fill: #0066cc !important;}</style><div tabindex="5" id="zgs20_globalsearch" class="zgs19_direction zgs19_globalsearch zgs19_globalsearch_position zgs19_gsDisplayNone zgs19_ltr zgs19_gsOtherTheme" gs="globalsearch" style="direction: ltr;"><div id="zgs20_gsOverlay" gs="gsoverlay" class="zgs19_gsOverlay zgs19_globalsearch_position"></div><div id="zgs20_gsHolder" class="zgs19_gsHolder zgs19_gsOldUI" tabindex="5">
+                                    <div id="zgs20_gsSearchTopBandHolder" class="zgs19_gsSearchTopBandHolder">
+                                        <div id="zgs20_gsSearchBoxLeft" class="zgs19_gsSearchBoxLeft zgs19_gsServicesPaneWid zgs19_gsCurPointer" gs="clearAndDisplayHomePage" gsa="smallerUI_search_button">
+                                            <span class="zgs19_gsSearchIcon zgs18_searchLogo"></span>
+                                            <span class="zgs19_gsZSearchTxt zgs19_gsDisplayNone">Zia Search</span>
+                                            <span class="zgs18_gsLHSMenu zgs19_gsDisplayNone" gs="showSVLHSServices"></span>
+                                        </div><div id="zgs20_gsSearchBoxRight" class="zgs19_gsSearchBoxRight zgs19_gsBorderBox">
+                                        <div class="zgs19_searchBoxFocusedChild zgs19_gsfl"><div gsfocusedouter="zgs19_searchBoxFocusedParent" id="zgs20_gsQueryBoxHolder" class="zgs19_gsQueryBoxHolder zgs19_gsfl">
+                                    <div class="zgs19_gsqryinnerdiv">
+                                          <div id="zgs20_gsQuerySpanBox" tabindex="0" class="zgs19_gsSearchQueryBox zgs19_gsBorderBox zgs19_gsBoxshadow"></div>
+                                          <input id="zgs20_gsQueryBox" tabindex="0" autocomplete="off" spellcheck="false" class="zgs19_gsSearchQueryBox zgs19_gsBorderBox zgs19_gsBoxshadow" placeholder="Search across Apps"><div id="zgs20_gsSuggestionDiv" class="zgs19_gsQueryDiv zgs19_gsBorderBox zgs19_gsBoxshadow zgs19_gsuserselnone zgs19_gsOverflow"></div>
+                                <div id="zgs20_gsQueryCloseBox" class="zgs19_gsQueryCloseBox zgs19_gsBorderBox zgs19_gsCurPointer zgs19_gsfl zgs19_gsDisplayNone" style="display: none;"><span class="zgs18_gsQueryCloseIcon zgs19_gsCurPointer"></span></div><div id="zgs20_gsFilterIconHolder" class="zgs19_gsFilterIconHolder zgs19_gsfl" gs="newfilterActions" actiontype="newFilterClick" viewtype="search"><span class="zgs18_gsNewFilterIcon" gs="newfilterActions" actiontype="newFilterClick" viewtype="search"></span></div></div><div id="zgs20_gsQuerySugg" class="zgs19_gsQuerySugg zgs19_gsBorderBox zgs19_gsOverflow zgs19_gsDisplayNone"></div></div></div></div>
+                                    </div>
+                                    <div id="zgs20_gsSearchResultLeft" class="zgs19_gsSearchResultLeft zgs19_gsServicesPaneWid zgs19_isPanelHidden" gs="serviceLeftPanel" rkey="refresh">
+                                        <div class="zgs19_gsServicesPaneWid zgs19_gsSkeletonLoading"></div>
+                                    </div>
+                                    <div id="zgs20_gsOverlayDialog" class="zgs19_gsOverlayDialog zgs19_gsDisplayNone"></div>
+                                   <div id="zgs20_gsSearchResultsArea" class="zgs19_gsSearchResultsArea" tabindex="5">
+                                <div id="zgs20_gsProgressLoader" class="zgs19_gsProgressLoader zgs19_gsDisplayNone"><div class="zgs19_gsProgressLoadera"></div>
+                                 <div class="zgs19_gsProgressLoaderb"></div>
+                                 <div class="zgs19_gsProgressLoaderc"></div>
+                                 <div class="zgs19_gsProgressLoaderd"></div></div>
+                                <div id="zgs20_gsResultsHolder" class="zgs19_gsSearchResultAreaChild zgs19_gsw100h100 zgs19_gsDisplayNone zgs19_gsfl" style="border: none; display: block;" domselector="previewbody"><div id="zgs20_gsHideScrollPage" class="zgs19_gsHideScroll zgs19_gsServicesPaneLeft zgs19_gsDisplayNone" style="display: block;"><div id="zgs20_gsWelcomePage" class="zgs19_gsWelcomePage"><div id="zgs20_gsWelcomeHeaderScroll" class="zgs19_gsWelcomeHeaderScroll"><div class="zgs19_gsWelcomeHeader">
+                                  
+                               <div id="zgs20_gsSearchResultMiddle" class="zgs19_gsResultsHolderChild zgs19_gsSearchResultMiddle zgs19_gsDisplayNone zgs19_isPanelHidden" domselector="resultpreview"><div id="zgs20_gsAllSearchResultPage" class="zgs19_gsSearchResultPage zgs19_gsOverflowAuto zgs19_gsDisplayNone" gs="AllSearchPage"></div><div id="zgs20_gsMultiSearchResultPage" class="zgs19_gsSearchResultPage zgs19_gsDisplayNone"></div><div id="zgs20_gsModuleSearchResultPage" class="zgs19_gsSearchResultPage zgs19_gsDisplayNone"></div><div id="zgs20_gsBackToTop" class="zgs19_gsBackToTop zgs19_gsDisplayNone zgs19_gsCurPointer" gstitle="Back to top" gs="backToTop"></div></div><div id="zgs20_gsSearchResultRight" class="zgs19_gsResultsHolderChild zgs19_gsSearchResultRight zgs19_gsDisplayNone" domselector="calloutpreview"></div><div id="zgs20_gsSettingsPages" class="zgs19_gsSettingsPages zgs19_gsDisplayNone"></div><div id="zgs20_gsHomeIcon" class="zgs18_gsHomeIcon zgs19_gsDisplayNone zgs19_gsCurPointer" gstitle="Home" gs="backToHome"></div></div>
+                                <div id="zgs20_gsCardsPage" class="zgs19_gsCardsPage zgs19_gsDisplayNone"></div>
+                                <div id="zgs20_gsDashboardhome" class="zgs19_gsDashboardhome zgs19_gsDisplayNone"></div>
+                                <div id="zgs20_cloudIntegration" class="zgs19_cloudIntegration zgs19_gsSettingsPages zgs19_gsDisplayNoneImp"></div>
+                                <div id="zgs20_gsbannertip" class="zgs19_gsbannertip zgs19_gsBoxShadowPopup zgs19_gsDisplayNone">
+                                <div id="zgs20_gsbannertipicon" class="zgs19_gsbannertipicon zgs19_gsfl"></div>
+                                <div id="zgs20_gsbannertiptext" class="zgs19_gsbannertiptext zgs19_gsfl"></div>
+                                </div>
+                            </div>
+                            <div id="zgs20_gstootltip" class="zgs19_gstootltip zgs19_gsTipBoxShadow zgs19_gsBorderBox zgs19_gsDisplayNone"><div id="zgs20_gstoolarrow" class="zgs19_gsBorderBox"></div></div></div></div>
+                            
+                            </body></html>
