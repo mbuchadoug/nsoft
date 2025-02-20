@@ -3,11 +3,13 @@ var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
+var InvoPayments = require('../models/invoPayments');
 var Ware = require('../models/ware');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
 var BatchRR = require('../models/batchRR');
+var BatchInvoPayments = require('../models/batchInvoPayments');
 var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var RtnsSubBatch= require('../models/rtnsSubBatch');
 var SaleStock = require('../models/salesStock');
@@ -294,6 +296,191 @@ let id = vocs[0]._id
   
   })
   })
+
+
+  router.get('/batch',isLoggedIn,function(req,res){
+
+  var pro = req.user
+ 
+
+
+
+  res.render('accounts5/batch',{pro:pro,user:req.query})
+  
+
+  })
+
+router.post('/batch',isLoggedIn,function(req,res){
+  let m = moment()
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  let date6 =  moment().format('l');
+  let date7 =  date6.replace(/\//g, "");
+  let uid = req.user._id
+  var amount = req.body.amount
+  RefNo.find({type:'invoicePayments'},function(err,docs){
+    let size = docs.length + 1
+   refNo = date7+'I'+size+'P'
+  
+
+
+   var invoice = new BatchInvoPayments()
+   invoice.date = date6
+   invoice.amount = amount
+   invoice.remainingAmount = 0
+   invoice.month = month
+   invoice.year = year
+
+   invoice.save()
+   .then(pro =>{
+
+    User.findByIdAndUpdate(uid,{$set:{batchId:pro._id,refNumber:refNo, amount:amount
+}},function(err,docs){
+  
+      })
+
+    var book = new RefNo();
+    book.refNumber = refNo
+    book.date = date6
+    book.type = 'invoicePayments'
+    book.save()
+    .then(pro =>{
+
+      console.log('success')
+      res.redirect('/accounts5/payments/')
+
+    })
+
+
+   })
+
+  })
+})
+
+  
+  
+router.get('/payments',isLoggedIn,function(req,res){
+ 
+  let batchId = req.user.batchId
+  let refNumber = req.user.refNumber
+  let amount = req.user.amount
+  //paymentStatus:"unpaid"
+  BatchRR.find({paymentStatus:"unpaid"},function(err,vocs){
+  if(vocs.length > 0){
+
+let id = vocs[0]._id
+  
+  BatchRR.find({_id:id},function(err,docs){
+    res.render('accounts5/all33',{listX:docs,listX2:vocs,batchId:batchId,refNumber:refNumber,amount:amount})
+  })
+
+}else{
+  res.render('accounts5/all33')
+}
+  
+  })
+  })
+  
+  
+
+
+  router.post('/select',function(req,res){
+    var id = req.body.code
+
+    BatchRR.findById(id,function(err,doc){
+      
+
+      res.send(doc)
+    })
+  })
+
+
+  router.post('/addInvoice',function(req,res){
+    var m = moment()
+    var mformat = m.format('L')
+    var month = m.format('MMMM')
+    var year = m.format('YYYY')
+    let dateValue = moment().valueOf()
+    let arrV = []
+    let number1, status, amountX
+    let float = req.body.float
+   let id = req.body.code
+   let amount = req.body.amount
+   let batchNumber = req.body.batchNumber
+   
+   let batchId = req.body.batchId
+    BatchRR.findById(id,function(err,docs){
+
+    
+      //console.log(docs,'docs')
+      let supplier = docs.supplier
+      let item = docs.item
+      let date = docs.date
+      let refNumber = docs.refNumber
+      let invoiceNumber = docs.invoiceNumber
+      let voucherNumber = docs.voucherNumber
+      let remainingBalance = amount - docs.subtotal
+      let remainingFloat = amount - docs.subtotal
+      let subtotal = docs.subtotal
+      let mass = docs.receivedKgs
+
+      console.log(remainingBalance,'remainingBalance')
+      if(remainingBalance <= 0){
+        status = 'unpaid'
+        amountX = amount
+      }else{
+        status = 'paid'
+        BatchRR.findByIdAndUpdate(id,{$set:{paymentStatus:"paid"}},function(err,docs){
+
+        })
+console.log(subtotal,'subtotal')
+        amount = subtotal
+        amountX = subtotal
+
+      }
+      
+   
+    
+    
+    var stock = new InvoPayments();
+    
+    stock.date =date
+    stock.item = item
+    stock.status = status
+    stock.supplier = supplier
+    stock.amountPaid = amountX
+    stock.float = float
+    stock.remainingBalance = remainingBalance
+    stock.voucherNumber = voucherNumber
+    stock.invoiceNumber = invoiceNumber
+    stock.refNumber = refNumber
+    stock.month = month
+    stock.batchNumber = batchNumber
+    stock.year = year
+    stock.batchId = batchId
+    stock.remainingFloat = remainingFloat
+    stock.mass = mass
+    stock.dateValue = dateValue
+    
+    stock.save()
+    .then(pro =>{
+    
+      res.send(pro)
+    
+    })
+    
+    
+    
+    
+    
+    })
+    })
+    
+
+
+
+
+
   
 /*
   router.get('/grvList',isLoggedIn,function(req,res){

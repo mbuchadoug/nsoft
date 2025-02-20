@@ -152,7 +152,53 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+router.get('/sms',function(req,res){
+  var https = require('follow-redirects').https;
+var fs = require('fs');
 
+var options = {
+    'method': 'POST',
+    'hostname': 'qdvdxm.api.infobip.com',
+    'path': '/sms/2/text/advanced',
+    'headers': {
+        'Authorization': 'App 2bb4cabff0c2975b2810f64e3a5c61ce-4ccf59f0-4f3b-4081-b333-3299bea3d987',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    'maxRedirects': 20
+};
+
+var req = https.request(options, function (res) {
+    var chunks = [];
+
+    res.on("data", function (chunk) {
+        chunks.push(chunk);
+    });
+
+    res.on("end", function (chunk) {
+        var body = Buffer.concat(chunks);
+        console.log(body.toString());
+    });
+
+    res.on("error", function (error) {
+        console.error(error);
+    });
+});
+
+var postData = JSON.stringify({
+    "messages": [
+        {
+            "destinations": [{"to":"263781165357"}],
+            "from": "447491163443",
+            "text": "wadii"
+        }
+    ]
+});
+
+req.write(postData);
+
+req.end();
+})
 
 router.get('/warehouseStock',isLoggedIn,function(req,res){
   var pro = req.user
