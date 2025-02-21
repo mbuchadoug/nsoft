@@ -805,7 +805,7 @@ link.classList.add('text-end','pe-0')*/
       </div>
       </form>
         <div class="btn-toolbar">
-          <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+          <button onclick="return confirm('Are you sure you want to Add This Record ?');" onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
       <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');"   href="/production/closeCookingBatch/{{id}}"> Close Batch </a>

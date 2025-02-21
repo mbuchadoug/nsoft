@@ -745,7 +745,7 @@ this.firstElementChild.select();
       </div>
       </form>
         <div class="btn-toolbar">
-          <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+          <button onclick="return confirm('Are you sure you want to Capture this Mass ?');" onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
       <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatchCrush/{{batchId}}"> Close Batch </a>
