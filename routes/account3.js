@@ -4,6 +4,10 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
+var BatchFermentationIngredients = require('../models/batchFermentationIngredients');
+var BlendingTanks = require('../models/blendingTanks');
+var BlendingDays = require('../models/blendingDays');
+var FinalProductEvaluation = require('../models/finalProductEvaluation');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
@@ -1130,23 +1134,235 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
   
   
 
-    router.get('/grvListView',isLoggedIn,function(req,res){
+    router.get('/grvList',isLoggedIn,function(req,res){
       BatchRR.find({status:"complete"},function(err,docs){
-        if(docs.length > 1){
-  
-        
-        BatchRR.find({_id:id},function(err,locs){
-          console.log(locs,'locs')
-     
-         res.render('accounts3/grv2',{listX:locs,listX2:docs})
-       })
-      }else{
-        res.render('accounts3/grvEmpty')
-      }
-      
+        res.render('accounts3/grvList',{listX:docs})
       })
     })
-  
+    
+    
+    
+    router.get('/viewGRV/:id',isLoggedIn,function(req,res){
+      var id = req.params.id
+    
+      BatchRR.find(function(err,docs){
+    
+       BatchRR.find({_id:id},function(err,locs){
+         console.log(locs,'locs')
+    
+        res.render('rStock/grv2',{listX:locs,listX2:docs})
+      })
+      })
+    
+    })
+    
+    router.get('/grvFileV/:id',function(req,res){
+    var id = req.params.id
+    res.redirect('/md/grvFile/'+id)
+    })
+    
+    
+    
+    router.get('/grvFile/:id',isLoggedIn,function(req,res){
+    
+      var m = moment()
+      var mformat = m.format('L')
+      var month = m.format('MMMM')
+      var year = m.format('YYYY')
+      var date = req.user.date
+      var refNumber = req.params.id
+      let batchId = req.user.batchId
+      var batchNumber = req.user.batchNumber
+    
+      StockRM.find({refNumber:refNumber}).lean().then(docs=>{
+    
+    
+      let size = docs.length - 1
+    
+    var arrG = []
+    arrG.push(docs[size])
+      
+      console.log(arrG,'arrG')
+      
+      const compile = async function (templateName,arrG ){
+      const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+      
+      const html = await fs.readFile(filePath, 'utf8')
+      
+      return hbs.compile(html)(arrG)
+      
+      };
+      
+      
+      
+      
+      (async function(){
+      
+      try{
+    
+      const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+      ],
+      executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+      });
+      
+      const page = await browser.newPage()
+      
+      
+      
+      //const content = await compile('report3',arr[uid])
+      const content = await compile('grv',arrG)
+      
+    
+      
+      await page.setContent(content, { waitUntil: 'networkidle2'});
+    
+      await page.emulateMediaType('screen')
+      let height = await page.evaluate(() => document.documentElement.offsetHeight);
+      await page.evaluate(() => matchMedia('screen').matches);
+      await page.setContent(content, { waitUntil: 'networkidle0'});
+     
+       
+      let filename = 'grv'+batchNumber+'.pdf'
+      await page.pdf({
+     
+      path:(`./public/grv/${year}/${month}/grv${batchNumber}`+'.pdf'),
+      format:"A4",
+    
+      height: height + 'px',
+      printBackground:true
+      
+      })
+      
+     
+      res.redirect('/rm/openFile/'+batchNumber)
+    
+    
+    
+      
+      
+      
+     
+     
+      const file = await fs.readFile(`./public/grv/${year}/${month}/grv${batchNumber}`+'.pdf');
+      const form = new FormData();
+      form.append("file", file,filename);
+      
+      await Axios({
+        method: "POST",
+       //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+         //url: 'https://niyonsoft.org/uploadStatementDispatch',
+         url:'https://niyonsoft.org/md/uploadGrv',
+         //url:'localhost:8000/rm/uploadGrv',
+        headers: {
+          "Content-Type": "multipart/form-data"  
+        },
+        data: form
+      });
+      
+      
+      //res.redirect('/rm/fileIdGrv/'+filename);
+     // res.redirect('/rm/openFile/'+batchNumber)
+      
+      
+      }catch(e) {
+      
+      console.log(e)
+      
+      
+      }
+      
+    
+      
+      }) ()
+      
+      
+      
+    })
+      
+      
+    
+      
+      })
+    
+    router.get('/openFile/:id',isLoggedIn,function(req,res){
+    var refNumber = req.params.id
+    var batchNumber = req.user.batchNumber
+    var m = moment()
+    var mformat = m.format('L')
+    var month = m.format('MMMM')
+    var year = m.format('YYYY')
+    const path =`./public/grv/${year}/${month}/grv${batchNumber}.pdf`
+    if (fs.existsSync(path)) {
+        res.contentType("application/pdf");
+        fs.createReadStream(path).pipe(res)
+    } else {
+        res.status(500)
+        console.log('File not found')
+        res.send('File not found')
+    }
+    
+    })
+    
+      router.post('/uploadGRV',upload.single('file'),(req,res,nxt)=>{
+        var fileId = req.file.id
+        console.log(fileId,'fileId')
+        var filename = req.file.filename
+        console.log(filename,'filename')
+      RepoFiles.find({filename:filename},function(err,docs){
+      if(docs.length>0){
+      
+      
+      //console.log(docs,'docs')
+      let id = docs[0]._id
+      RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+      
+      })
+      
+      }
+      res.redirect('/md/fileIdGrv/'+filename)
+      })
+      
+      })
+    
+      router.get('/fileIdGrv/:id',function(req,res){
+        console.log(req.params.id)
+        var id = req.params.id
+        
+        res.redirect('/md/openGrv/'+id)
+        
+        })
+    
+    
+      router.get('/openGrv/:id',(req,res)=>{
+        var filename = req.params.id
+        console.log(filename,'fileId')
+          const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+          gfs.files.find({filename: filename}).toArray((err, files) => {
+          console.log(files[0])
+        
+            const readStream = bucket.openDownloadStream(files[0]._id);
+                readStream.pipe(res);
+        
+          })
+         //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+        })
+    
+    
+    
+      
+    
+    
+    
+    
  
 
     router.get('/gSample',function(req,res){
@@ -1246,7 +1462,7 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       
       //res.redirect('/accounts3/openFile/'+filename)
       console.log(seqNum,'seqNum')
-      res.redirect('/accounts3/openFile/'+seqNum)
+      res.redirect('/accounts3/openFilePO/'+seqNum)
       
       var repo = new RepoFiles();
       
@@ -1282,7 +1498,7 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       await Axios({
         method: "POST",
        //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-     url: 'https://niyonsoft.org/accounts3/uploadStatement',
+     url: 'https://niyonsoft.org/accounts3/uploadStatementPO',
         //url:'http://localhost:8000/accounts3/uploadStatement',
         headers: {
           "Content-Type": "multipart/form-data"  
@@ -1318,7 +1534,7 @@ router.get('/supplierInvoice/:id',isLoggedIn,function(req,res){
       
 
       
-router.get('/openFile/:id',isLoggedIn,function(req,res){
+router.get('/openFilePO/:id',isLoggedIn,function(req,res){
   var seqNum =  req.params.id
   var batchNumber = req.user.batchNumber
   var m = moment()
@@ -1338,7 +1554,7 @@ router.get('/openFile/:id',isLoggedIn,function(req,res){
   })
   
       
-router.post('/uploadStatement',upload.single('file'),(req,res,nxt)=>{
+router.post('/uploadStatementPO',upload.single('file'),(req,res,nxt)=>{
   var fileId = req.file.id
   console.log(fileId,'fileId')
   var filename = req.file.filename
