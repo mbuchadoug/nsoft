@@ -7,6 +7,7 @@ var Ware = require('../models/ware');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
+var BatchCashRemitt = require('../models/batchCashRemitt');
 var BatchRR = require('../models/batchRR');
 var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var RtnsSubBatch= require('../models/rtnsSubBatch');
@@ -113,6 +114,224 @@ const storage = new GridFsStorage({
 
 
 const upload = multer({ storage })
+
+
+
+router.get('/batch',isLoggedIn,function(req,res){
+
+  var pro = req.user
+ 
+
+
+
+  res.render('sales/batch',{pro:pro,user:req.query})
+  
+
+  })
+
+router.post('/batch',isLoggedIn,function(req,res){
+  let m = moment()
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  let date6 =  moment().format('l');
+  let date7 =  date6.replace(/\//g, "");
+  let uid = req.user._id
+  var amount = req.body.amount
+  RefNo.find({type:'cashRemitt'},function(err,docs){
+    let size = docs.length + 1
+   refNo = date7+'C'+size+'R'
+  
+
+
+   var invoice = new BatchCashRemitt()
+   invoice.date = date6
+   invoice.amount = amount
+   invoice.month = month
+   invoice.year = year
+   invoice.refNumber = refNo
+
+   invoice.save()
+   .then(pro =>{
+
+    User.findByIdAndUpdate(uid,{$set:{batchId:pro._id,refNumber:refNo, amount:amount
+}},function(err,docs){
+  
+      })
+
+    var book = new RefNo();
+    book.refNumber = refNo
+    book.date = date6
+    book.type = 'cashRemitt'
+    book.save()
+    .then(pro =>{
+
+      console.log('success')
+      res.redirect('/sales/invoiceNumberUpdate/')
+
+    })
+
+
+   })
+
+  })
+})
+
+
+
+
+router.get('/invoiceNumberUpdate',isLoggedIn,function(req,res){
+  var id = req.user._id
+ 
+    InvoNum.find(function(err,doc){
+      let invoiceNum = doc[0].num
+      let invoId = doc[0]._id
+  
+  
+  User.findByIdAndUpdate(id,{$set:{invoiceNumber:invoiceNum}},function(err,docs){
+  
+  })
+  invoiceNum++
+  
+  InvoNum.findByIdAndUpdate(invoId,{$set:{num:invoiceNum}},function(err,tocs){
+  
+  })
+
+  res.redirect('/sales/cashRemitt')
+  
+    })
+  
+  })
+
+
+router.get('/cashRemitt',isLoggedIn,function(req,res){
+ 
+  let batchId = req.user.batchId
+  let refNumber = req.user.refNumber
+  let amount = req.user.amount
+  //paymentStatus:"unpaid"
+  BatchRR.find({paymentStatus:"unpaid"},function(err,vocs){
+  if(vocs.length > 0){
+
+let id = vocs[0]._id
+  
+  BatchRR.find({_id:id},function(err,docs){
+    res.render('sales/all33',{listX:docs,listX2:vocs,batchId:batchId,refNumber:refNumber,amount:amount})
+  })
+
+}else{
+  res.render('sales/all33')
+}
+  
+  })
+  })
+  
+  
+
+
+  /*router.post('/select',function(req,res){
+    var id = req.body.code
+
+    BatchRR.findById(id,function(err,doc){
+      
+
+      res.send(doc)
+    })
+  })*/
+
+
+  router.post('/addInvoice',function(req,res){
+    var m = moment()
+    var mformat = m.format('L')
+    var month = m.format('MMMM')
+    var year = m.format('YYYY')
+    let dateValue = moment().valueOf()
+    let arrV = []
+    let number1, status, amountX
+    let float = req.body.float
+   let id = req.body.code
+   let amount = req.body.amount
+   let refNumber = req.body.batchNumber
+   
+   let batchId = req.body.batchId
+    BatchRR.findById(id,function(err,docs){
+
+    
+      //console.log(docs,'docs')
+      let supplier = docs.supplier
+      let item = docs.item
+      let date = docs.date
+      let batchNumber = docs.refNumber
+      let invoiceNumber = docs.invoiceNumber
+      let voucherNumber = docs.voucherNumber
+      let remainingBalance = amount - docs.subtotal
+      let remainingFloat = amount - docs.subtotal
+      let subtotal = docs.subtotal
+      let mass = docs.receivedKgs
+
+      console.log(remainingBalance,'remainingBalance')
+      if(remainingBalance <= 0){
+        status = 'unpaid'
+        amountX = amount
+      }else{
+        status = 'paid'
+        BatchRR.findByIdAndUpdate(id,{$set:{paymentStatus:"paid"}},function(err,docs){
+
+        })
+console.log(subtotal,'subtotal')
+        amount = subtotal
+        amountX = subtotal
+
+      }
+      
+   
+    
+    
+    var stock = new InvoPayments();
+    
+    stock.date =date
+    stock.item = item
+    stock.status = status
+    stock.supplier = supplier
+    stock.amountPaid = amountX
+    stock.float = float
+    stock.remainingBalance = remainingBalance
+    stock.voucherNumber = voucherNumber
+    stock.invoiceNumber = invoiceNumber
+    stock.refNumber = refNumber
+    stock.month = month
+    stock.batchNumber = batchNumber
+    stock.year = year
+    stock.batchId = batchId
+    stock.remainingFloat = remainingFloat
+    stock.mass = mass
+    stock.dateValue = dateValue
+    
+    stock.save()
+    .then(pro =>{
+    
+      res.send(pro)
+    
+    })
+    
+    
+    
+    
+    
+    })
+    })
+    
+
+
+ 
+    router.get('/reloadRemitt/:id',isLoggedIn,function(req,res){
+      var id = req.params.id
+   
+       InvoPayments.find({refNumber:id},function(err,docs){
+         res.send(docs)
+       })
+    })
+
+
 
 
 router.get('/customer',function(req,res){
