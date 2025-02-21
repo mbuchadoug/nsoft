@@ -125,6 +125,16 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+router.get('/warehouseStock',isLoggedIn,function(req,res){
+  var pro = req.user
+  //res.render('admin/dash6',{pro:pro})
+  Product.find({},function(err,docs){
+ Warehouse.find({},function(err,hocs){
+  res.render('accounts3/dash7',{pro:pro,arr:docs,arr1:hocs})
+})
+  })
+})
+
 router.get('/viewGRV/:id',isLoggedIn,function(req,res){
   var id = req.params.id
 console.log('viewItem')
