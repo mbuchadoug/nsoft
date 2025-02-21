@@ -1796,7 +1796,7 @@ User.findByIdAndUpdate(uid,{$set:{batchId:batchId}},function(err,locs){
 })
 
   BatchRR.findByIdAndUpdate(batchId,{$set:{receivedKgs:weight,
-  receivedTonnes:weightTonne,receivedKgs:weight, closingWeightTonne:closingWeightTonne,
+  receivedTonnes:weightTonne,receivedKgs:weight, closingWeightTonne:closingWeightTonne,status:"complete",
 closingWeightKg:closingWeight}},function(err,vocs){
 
 })
