@@ -406,7 +406,7 @@ let id = vocs[0]._id
     let float = req.body.float
    let id = req.body.code
    let amount = req.body.amount
-   let batchNumber = req.body.batchNumber
+   let refNumber = req.body.batchNumber
    
    let batchId = req.body.batchId
     BatchRR.findById(id,function(err,docs){
@@ -416,7 +416,7 @@ let id = vocs[0]._id
       let supplier = docs.supplier
       let item = docs.item
       let date = docs.date
-      let refNumber = docs.refNumber
+      let batchNumber = docs.refNumber
       let invoiceNumber = docs.invoiceNumber
       let voucherNumber = docs.voucherNumber
       let remainingBalance = amount - docs.subtotal
@@ -478,7 +478,14 @@ console.log(subtotal,'subtotal')
     
 
 
-
+ 
+    router.get('/reloadPayment/:id',isLoggedIn,function(req,res){
+      var id = req.params.id
+   
+       InvoPayments.find({refNumber:id},function(err,docs){
+         res.send(docs)
+       })
+    })
 
 
   

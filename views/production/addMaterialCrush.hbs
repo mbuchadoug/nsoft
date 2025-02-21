@@ -346,13 +346,13 @@ ul.no-bullets {
 
 <script>
 
-var refNumber = {{{refNumber}}}
+
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-    url: "/addMaterial3/"+refNumber,
+    url:`/production/reloadGingerCrush/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    

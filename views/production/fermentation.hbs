@@ -349,13 +349,14 @@ ul.no-bullets {
 
 <script>
 
-var refNumber = {{{refNumber}}}
+
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
-	
-    url: "/rm/fermentationPreload/"+refNumber,
+
+    
+     url: `/production/fermentationPreload/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    

@@ -593,7 +593,19 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
        
       })
       
-
+      router.post('/reloadGinger/:id', (req, res) => {
+        var pro = req.user
+        var m = moment()
+        var id = req.params.id
+      
+        var mformat = m.format("L")
+        
+        GingerWash.find({refNumber:id,type:"qtyIn"},(err, docs) => {
+       console.log(docs,'docs')
+          res.send(docs)
+                  })
+      
+        }); 
   
       
  
@@ -613,6 +625,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
   
   
   })
+
 
 
 
@@ -748,6 +761,20 @@ router.get('/batchList',isLoggedIn,function(req,res){
 
 
 
+  
+      router.post('/reloadGingerOut/:id', (req, res) => {
+        var pro = req.user
+        var m = moment()
+        var id = req.params.id
+      
+        var mformat = m.format("L")
+        
+        GingerWash.find({refNumber:id,type:"qtyOut"},(err, docs) => {
+       console.log(docs,'docs')
+          res.send(docs)
+                  })
+      
+        }); 
       
       router.get('/closeBatchOut/:id',isLoggedIn,function(req,res){
         let id = req.params.id
@@ -1474,7 +1501,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       
 
   
-      
+   
  
 router.get('/batchListCrush',function(req,res){
   BatchGingerCrush.find({type:"normal"},function(err,docs){
@@ -1497,7 +1524,19 @@ router.get('/batchListCrush',function(req,res){
 
 
 
-
+  router.post('/reloadGingerCrush/:id', (req, res) => {
+    var pro = req.user
+    var m = moment()
+    var id = req.params.id
+  
+    var mformat = m.format("L")
+    
+    GingerCrush.find({refNumber:id},(err, docs) => {
+   console.log(docs,'docs')
+      res.send(docs)
+              })
+  
+    }); 
 
 
 
@@ -1628,6 +1667,24 @@ console.log(id,'id')
       
       })
       })
+
+
+      
+
+  router.post('/reloadGingerCrushOut/:id', (req, res) => {
+    var pro = req.user
+    var m = moment()
+    var id = req.params.id
+  
+    var mformat = m.format("L")
+    
+    GingerCrush.find({refNumber:id,type:"qtyOut"},(err, docs) => {
+   console.log(docs,'docs')
+      res.send(docs)
+              })
+  
+    }); 
+
 
 
 
@@ -2074,6 +2131,20 @@ cook.save()
 })
 
 
+
+router.post('/reloadCooking/:id', (req, res) => {
+  var pro = req.user
+  var m = moment()
+  var id = req.params.id
+
+  var mformat = m.format("L")
+  
+  Cooking.find({refNumber:id},(err, docs) => {
+ console.log(docs,'docs')
+    res.send(docs)
+            })
+
+  }); 
 
 
   //Autocomplete for Crush
@@ -4895,6 +4966,8 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
 
  /*8888*/
  
+
+
 
 
   

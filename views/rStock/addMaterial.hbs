@@ -278,14 +278,14 @@ ul.no-bullets {
 
 
 <script>
-
-var refNumber = {{{refNumber}}}
+console.log('reload')
+//var refNumber = {{{refNumber}}}
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-    url: "/addMaterial3/"+refNumber,
+    url: `/rm/reloadMat/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    

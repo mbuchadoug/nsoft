@@ -10,6 +10,7 @@ var Delivery = require('../models/delivery');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
+var BatchStockUpdate = require('../models/batchStockUpdate');
 var BatchSplit = require('../models/batchSplit');
 var BatchRP = require('../models/batchRP');
 var BatchRR = require('../models/batchRR');
@@ -9531,6 +9532,57 @@ router.get('/vicUpdate',function(req,res){
       refNumDispatch : "12232024B9D12212024S1B3R", mformatDispatch : "12/23/2024", casesBatch : 280}})
     }
   })
+})
+
+
+
+router.get('/salesList',isLoggedIn,function(req,res){
+  SaleStock.find(function(err,docs){
+    res.render('dispatcher/salesList',{listX:docs})
+  })
+})
+
+router.get('/updateStock/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+res.render('dispatcher/update',{id:id})
+})
+
+
+router.post('/updateStock/:id',isLoggedIn,function(req,res){
+  var m = moment()
+  var year = m.format('YYYY')
+
+  var date = m.toString()
+
+var month = m.format('MMMM')
+  var id = req.params.id
+  let openingStock, sales
+  var cases = req.body.cases
+  console.log(cases,'cases')
+  SaleStock.findById(id,function(err,doc){
+    openingStock = doc.holdingCases
+    sales = doc.holdingCases - cases
+  SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,openingBal:holdingCases}},function(err,docs){
+
+    
+  })
+
+  var batch = new BatchStockUpdate();
+
+
+    batch.date = date
+    batch.openingStock = openingStock
+    batch.closingStock = cases
+    batch.sales = sales
+    batch.month= month
+    batch.year= year
+    batch.save()
+    .then(pro =>{
+
+
+      res.redirect('/dispatch/salesList')
+      })
+})
 })
 
 

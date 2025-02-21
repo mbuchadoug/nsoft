@@ -351,13 +351,14 @@ ul.no-bullets {
 
 <script>
 
-var refNumber = {{{refNumber}}}
+
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-    url: "/addMaterial3/"+refNumber,
+  
+     url: `/production/reloadCooking/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    
@@ -372,6 +373,7 @@ $.ajax({
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
     
    
     td1.id =data[i]._id
@@ -388,12 +390,13 @@ link.className = "text-end";*/
 td5.appendChild(link);*/
 
 
-td1.innerHTML = data[i].weight;
-    td2.innerHTML = data[i].openingMass;
+td1.innerHTML = data[i].ingredient;
+    td2.innerHTML = data[i].batchNumber;
    // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data[i].newMass ;
-    td5.innerHTML = data[i].closingMass
-    td6.innerHTML = data[i].refNumber
+    td4.innerHTML=  data[i].quantity ;
+    td5.innerHTML = data[i].potNumber
+    td6.innerHTML = data[i].time
+    td7.innerHTML = data[i].finishTime
 
     /*let link2 = "/rec/delete/"+data[i]._id
 

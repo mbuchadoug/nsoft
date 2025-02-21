@@ -1561,8 +1561,9 @@ stock.save()
 
 
 
-router.post('/addMaterial3/:id',isLoggedIn, (req, res) => {
+router.post('/reloadMat/:id',isLoggedIn, (req, res) => {
 var pro = req.user
+console.log('reload')
 var m = moment()
 var code = req.params.id
 var mformat = m.format("L")
