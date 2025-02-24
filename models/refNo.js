@@ -5,6 +5,8 @@ var refSchemaV = new Schema({
 
     date: {type: String },
     type: {type: String },
+    product: {type: String },
+    item: {type: String },
     refNumber:{type:String, required:true},
 
    

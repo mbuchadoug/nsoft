@@ -373,6 +373,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     var description = req.body.description
     var unit = req.body.unit
     var uid = req.user._id
+    var prefix = req.body.prefix
     var year = 2025
     let requestedMassTonnes,requestedMassKgs
     let date6 = moment().format('l');
@@ -449,6 +450,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
         user.date4 = "null";
         user.status4 = "null";
         user.month = month
+        user.prefix = prefix
         user.purchaseOrderNum = purchaseOrder
         user.unit = unit
         user.year = year
@@ -512,20 +514,22 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
       if(!err){
           console.log(docs,'docsV')
+          let batchNumber
           let stocKgs = docs.currentMassKgs
           let stockTonnes = docs.currentMassTonnes
           let item = docs.item
           let month = docs.month
           let year = docs.year
           let date = docs.date
+          let prefix = docs.prefix
           let voucherNo = docs.voucherNumber
           let dateValue = docs.dateValue
           let requestedMassTonnes = docs.requestedMassTonnes
           let requestedMassKgs = docs.requestedMassKgs
-          RefNo.find({date:date},function(err,docs){
+          RefNo.find({date:date,item:item,type:"receiving material"},function(err,docs){
               let size = docs.length + 1
-             refNo = date7+'B'+size+'RM'
-              console.log(refNo,'refNo')
+             batchNumber = date7+prefix+'B'+size+'RM'
+            
           if(item == 'ginger'){
               var truck = new BatchRR()
               truck.date = date
@@ -533,9 +537,11 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               truck.paymentStatus = 'unpaid'
               truck.priceStatus = 'null'
               truck.stage = 'wash'
+              truck.prefix = prefix
               truck.dateValue = dateValue
               truck.item = item
-              truck.refNumber = refNo
+              truck.refNumber = voucherNo
+              truck.batchNumber = batchNumber
               truck.month = month
               truck.openingWeightKg = stocKgs
               truck.openingWeightTonne = stockTonnes
@@ -584,7 +590,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           let batchId = pro._id
           
               var book = new RefNo();
-            book.refNumber = refNo
+              book.refNumber = batchNumber
+              book.item = item
             book.date = date
             book.type = 'receiving material'
             book.save()
@@ -608,10 +615,12 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.paymentStatus = 'unpaid'
           truck.priceStatus = 'null'
           truck.stage = 'cooking'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
@@ -662,7 +671,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+          book.refNumber = batchNumber
+          book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -684,12 +694,14 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       var truck = new BatchRR()
       truck.date = date
       truck.mformat = date6
+      truck.prefix = prefix
       truck.dateValue = dateValue
       truck.item = item
       truck.paymentStatus = 'unpaid'
       truck.priceStatus = 'null'
       truck.stage = 'crush'
-      truck.refNumber = refNo
+      truck.refNumber = voucherNo
+      truck.batchNumber = batchNumber
       truck.month = month
       truck.openingWeightKg = stocKgs
       truck.openingWeightTonne = stockTonnes
@@ -740,7 +752,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
   let batchId = pro._id
   
       var book = new RefNo();
-    book.refNumber = refNo
+      book.refNumber = batchNumber
+      book.item = item
     book.date = date
     book.type = 'receiving material'
     book.save()
@@ -769,10 +782,12 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.paymentStatus = 'unpaid'
           truck.priceStatus = 'null'
           truck.stage = 'cooking'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
@@ -822,7 +837,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+          book.refNumber = batchNumber
+          book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -845,9 +861,11 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.stage = 'crush'
           truck.priceStatus = 'null'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.paymentStatus = 'unpaid'
           truck.openingWeightKg = stocKgs
@@ -900,7 +918,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+          book.refNumber = batchNumber
+          book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -927,9 +946,11 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.stage = 'cooking'
           truck.priceStatus = 'null'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.paymentStatus = 'unpaid'
           truck.openingWeightKg = stocKgs
@@ -981,7 +1002,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+          book.refNumber = batchNumber
+          book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -1005,8 +1027,10 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.stage = 'crush'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.paymentStatus = 'unpaid'
           truck.priceStatus = 'null'
@@ -1058,7 +1082,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+          book.refNumber = batchNumber
+          book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -1082,9 +1107,11 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.stage = 'crush'
           truck.priceStatus = 'null'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.paymentStatus = 'unpaid'
           truck.openingWeightKg = stocKgs
@@ -1136,7 +1163,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+        book.refNumber = batchNumber
+        book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -1162,10 +1190,12 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
+          truck.prefix = prefix
           truck.paymentStatus = 'unpaid'
           truck.priceStatus = 'null'
           truck.stage = 'crush'
-          truck.refNumber = refNo
+          truck.refNumber = voucherNo
+          truck.batchNumber = batchNumber
           truck.month = month
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
@@ -1216,7 +1246,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       let batchId = pro._id
       
           var book = new RefNo();
-        book.refNumber = refNo
+        book.refNumber = batchNumber
+        book.item = item
         book.date = date
         book.type = 'receiving material'
         book.save()
@@ -1346,9 +1377,10 @@ BatchRR.findById(id,function(err,doc){
   let voucherNo = doc.voucherNo
   let refNumber = doc.refNumber
   let item = doc.item
+  let prefix = doc.prefix
   let openingWeightTonnes = doc.openingWeightTonne
   let requestedMassTonnes = doc.requestedMassTonnes
-res.render('rStock/rcvBatch',{pro:pro,id:id,refNumber:refNumber,item:item,
+res.render('rStock/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
 openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,voucherNo:voucherNo})
 
 })
@@ -1364,6 +1396,7 @@ var mformat = m.format('L')
 var month = m.format('MMMM')
 var year = m.format('YYYY')
 var id = req.params.id
+let prefix = req.body.prefix
 var date = req.body.date
 var address = req.body.address
 var regNumber = req.body.regNumber
@@ -1381,18 +1414,18 @@ let date7 =  date6.replace(/\//g, "");
 
 BatchRR.find({year:year},function(err,docs){
   let size = docs.length + 1
-  let  batchNumber = date7+item+size
+  let  grvNumber = date7+prefix+'B'+size+'GRV'
 
 
 
 BatchRR.findByIdAndUpdate(id,{$set:{supplier:supplier,mobile:mobile,
-driver:driver,address:address,regNumber:regNumber,trailer:trailer,batchNumber:batchNumber}},function(err,docs){
+driver:driver,address:address,regNumber:regNumber,trailer:trailer,grvNumber:grvNumber}},function(err,docs){
 
 
 
 
 let uid = req.user._id
-User.findByIdAndUpdate(uid,{$set:{refNumber:refNo,batchId:id,batchNumber:batchNumber }},function(err,docs){
+User.findByIdAndUpdate(uid,{$set:{refNumber:refNo,batchId:id,grvNumber:grvNumber }},function(err,docs){
 
 })
 
@@ -1449,9 +1482,10 @@ BatchRR.findById(id,function(err,docs){
   let refNumber = docs.refNumber
   let mass = docs.requestedMassKgs
   let batchNumber = docs.batchNumber
+  let grvNumber = docs.grvNumber
 
  res.render('rStock/addMaterial',{date:date,supplier:supplier,mass:mass,
-item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber})
+item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 })
 
@@ -1469,8 +1503,8 @@ let number1
 console.log('postMass')
 let mass = req.body.code
 let massTonne
-let refNumber = req.body.refNumber
-BatchRR.find({refNumber:refNumber},function(err,docs){
+let grvNumber = req.body.grvNumber
+BatchRR.find({grvNumber:grvNumber},function(err,docs){
   console.log(docs,'docs','receiveMass')
   let supplier = docs[0].supplier
   let item = docs[0].item
@@ -1481,6 +1515,7 @@ BatchRR.find({refNumber:refNumber},function(err,docs){
   let trailer = docs[0].trailer
   let address = docs[0].address
   let batchNumber = docs[0].batchNumber
+  let refNumber = docs[0].refNumber
   let idNumber = docs[0].idNumber
   let voucherNumber = docs[0].voucherNo
   let dateValue = docs[0].dateValue
@@ -1525,6 +1560,7 @@ stock.supplier = supplier
 stock.driver = driver
 stock.voucherNumber = voucherNumber
 stock.batchNumber = batchNumber
+stock.grvNumber = grvNumber
 stock.idNumber = idNumber
 stock.trailer = trailer
 stock.voucherNumber = voucherNumber
@@ -1595,14 +1631,14 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     let item = vocs.item
     let month = vocs.month
     let year = vocs.year
- 
+    let prefix = vocs.prefix
     let supplier = vocs.supplier
     let availableMass = vocs.closingWeightKg
-    let refNumber = vocs.refNumber
+    let voucherNo = vocs.voucherNo
     console.log(availableMass,'availableMass333')
     RawMat.find({item:item},function(err,docs){
       console.log(docs,'letu')
-      if(docs[0].item == 'sugar'){
+      if(docs[0].item == 'sugar' || docs[0].item == 'bananas'){
         console.log('true')
         let date =  moment().format('l');
   let date6 =  moment().format('l');
@@ -1617,9 +1653,9 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       
 
 
-     RefNo.find({date:date,type:"crush"},function(err,docs){
+     RefNo.find({date:date,type:"crush",item:item},function(err,docs){
       let size = docs.length + 1
-     refNo = date7+'B'+size+item+'crush'
+     refNo = date7+prefix+'B'+size+'CRS'
       console.log(refNo,'refNo')
   
       var truck = new BatchGingerCrush()
@@ -1628,9 +1664,10 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       truck.dateValue = dateValue
       truck.item = item
       truck.type ='ingredient'
-      truck.refNumber = refNumber
-      truck.refNumber2 = refNo
-      truck.batchNumber = batchNumber
+      truck.voucherNo = voucherNo
+      truck.refNumber = batchNumber
+     
+      truck.batchNumber = refNo
       truck.month = month
       truck.nxtStage='cooking'
       truck.qtyInMass = closingMass
@@ -1649,6 +1686,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
 
             var book = new RefNo();
             book.refNumber = refNo
+            book.item = item
             book.date = date
             book.type = 'crush'
             book.save()
@@ -1963,6 +2001,32 @@ router.get('/send-notification/:id/:id2', async (req, res) => {
 router.get('/grvList',isLoggedIn,function(req,res){
   BatchRR.find({status:"complete"},function(err,docs){
     res.render('rStock/grvList',{listX:docs})
+  })
+})
+
+
+router.get('/grvWeights/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  StockRM.find({batchNumber:id},function(err,docs){
+    if(docs){
+console.log(docs,'docs')
+      let supplier = docs[0].supplier
+      let item = docs[0].item
+      let date = docs[0].date
+      let refNumber = docs[0].refNumber
+      let driver = docs[0].driver
+      let regNumber = docs[0].regNumber
+      let orderNumber = docs[0].voucherNo
+      let batchNumber = docs[0].batchNumber
+      let grvNumber = docs[0].grvNumber
+      let requestedMass = docs[0].requestedMassKgs
+    
+    res.render('rStock/grvWeights',{supplier:supplier,
+    item:item,date:date,refNumber:refNumber,driver:driver,regNumber:regNumber,
+  orderNumber:orderNumber,batchNumber,grvNumber:grvNumber,
+requestedMass:requestedMass})
+
+    }
   })
 })
 

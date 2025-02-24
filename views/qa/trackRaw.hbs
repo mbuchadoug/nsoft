@@ -386,14 +386,15 @@ ul.no-bullets {
 												<!--begin::Table row-->
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 													        <th class="min-w-100px">Item</th>
-															  <th class="min-w-100px">Batch #</th>
-												         	<th class="text-end min-w-75px">Ref #</th>
+															  <th class="min-w-100px">GRV #</th>
+												         	<th class="text-end min-w-75px">Purchase Order</th>
+															 <th class="text-end min-w-75px">Order #</th>
 															<th class="text-end min-w-75px">Qty</th>
-															<th class="text-end min-w-75px">Voucher #</th>
+															
 														    <th class="text-end min-w-75px">Supplier</th>
-															<th class="text-end min-w-75px">Supplier Address</th>
-															<th class="text-end min-w-75px">Supplier Mobile #</th>
-															<th class="text-end min-w-75px">Supplier Car Reg#</th>
+															<th class="text-end min-w-75px">Address</th>
+															<th class="text-end min-w-75px"> Mobile #</th>
+															<th class="text-end min-w-75px"> Car Reg#</th>
 															<th class="text-end min-w-75px">Date</th>
 															<!--<th class="text-end min-w-75px">Year</th>-->
 						
@@ -413,10 +414,11 @@ ul.no-bullets {
 													<td>{{this.item}}</td>
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
+													<td class="text-end pe-0">{{this.grvNumber}}</td>
 													<td class="text-end pe-0">{{this.batchNumber}}</td>
-															<td class="text-end pe-0">{{this.refNumber}}</td>
-                                                    <td class="text-end pe-0">{{this.receivedKgs}}kgs</td>  
 													<td class="text-end pe-0">{{this.voucherNo}}</td>
+                                                    <td class="text-end pe-0">{{this.receivedKgs}}kgs</td>  
+										
 													<td class="text-end pe-0">{{this.supplier}}</td>
 													<td class="text-end pe-0">{{this.address}}</td>
 													<td class="text-end pe-0">{{this.mobile}}</td>

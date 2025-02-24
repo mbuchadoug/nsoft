@@ -491,13 +491,15 @@ this.firstElementChild.select();
   <script>
 
             function add() {
+                  if(confirm('Are you sure your want to Capture Mass?'))
+   {
        let mass = document.getElementById('mass').value 
-       let refNumber = document.getElementById('refNumber').value      
+       let refNumber = document.getElementById('grvNumber').value      
             $.ajax({
                 dataType: 'json',
                 data: {
                     code: mass,
-                    refNumber:refNumber,
+                    grvNumber:refNumber,
                     
                 },
                 type: 'POST',
@@ -545,7 +547,7 @@ link.classList.add('text-end','pe-0')*/
    // td3.innerHTML = data.casesReceived;
     td4.innerHTML=  data.newMass ;
     td5.innerHTML = data.closingMass
-    td6.innerHTML = data.refNumber
+    td6.innerHTML = data.grvNumber
     
     //let link2 = "/rec/delete/"+data._id
 
@@ -572,6 +574,7 @@ link.classList.add('text-end','pe-0')*/
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
 			
+            }
         </script>
 
               <form class="zb-txn-form"  name="sample">
@@ -603,8 +606,14 @@ link.classList.add('text-end','pe-0')*/
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Vehicle Reg#</label> 
     <input  id="regNumber" name="regNumber" class="ember-text-field ember-view form-control" type="text"  value="{{regNumber}}" readonly></div>
-         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Batch Number</label> 
+
+    <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Order Number</label> 
+    <input  id="orderNumber" name="orderNumber" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
+         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">PO Number</label> 
     <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text"  value="{{batchNumber}}" readonly></div>
+
+     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">GRV Number</label> 
+    <input  id="grvNumber" name="grvNumber" class="ember-text-field ember-view form-control" type="text"  value="{{grvNumber}}" readonly></div>
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Requested Mass (kgs)</label> 
     <input  id="reqMass" name="reqMass" class="ember-text-field ember-view form-control" type="text"  value="{{mass}}" readonly></div>
@@ -657,7 +666,7 @@ link.classList.add('text-end','pe-0')*/
 	<!--<th>Cases Received</th>-->
 	<th>New Mass</th>
   <th>Closing Mass</th>
-   <th>Ref Number</th>
+   <th>GRV Number</th>
 
 
                               </tr>
@@ -690,7 +699,7 @@ link.classList.add('text-end','pe-0')*/
       </div>
       </form>
         <div class="btn-toolbar">
-          <button onclick="return confirm('Are you sure you want to Capture this Mass ?');" onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+          <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
       <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm/closeBatchRM/{{refNumber}}"> Close Batch </a>

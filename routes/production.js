@@ -153,6 +153,29 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 
 
+router.get('/prefix',function(req,res){
+  let prefix
+  Product.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      if(docs[i].name == 'kambucha No1'){
+        prefix = 'NO1'
+      }else if(docs[i].name == 'kambucha No2'){
+        prefix = 'NO2'
+      }else if(docs[i].name == 'kambucha No3'){
+        prefix = 'NO3'
+      }else if(docs[i].name == 'kambucha lite'){
+        prefix = 'LTE'
+      }else if(docs[i].name == 'manyuchi'){
+        prefix = 'MNC'
+      }
+
+      Product.findByIdAndUpdate(id,{$set:{prefix:prefix}},function(err,tocs){
+
+      })
+    }
+  })
+})
 
 router.get('/warehouseStock',isLoggedIn,function(req,res){
   var pro = req.user
@@ -286,8 +309,8 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
 
 
     router.post('/batchAuto',function(req,res){
-      var batchNumber = req.body.code
-      BatchRR.find({status:"complete",batchNumber:batchNumber},function(err,docs){
+      var grvNumber = req.body.code
+      BatchRR.find({status:"complete",grvNumber:grvNumber},function(err,docs){
         res.send(docs)
       })
     })
@@ -300,11 +323,13 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   var pro = req.user
   var readonly = 'hidden'
   var read =''
-
+  let prefix = ''
   BatchRR.find({status:'complete',stage:"wash"}).lean().then(docs=>{
   var arr = docs
-
-  res.render('production/batch',{arr:arr,pro:pro,user:req.query,readonly:readonly,read:read})
+   if(docs.length >0){
+     prefix = docs[0].prefix
+   }
+  res.render('production/batch',{arr:arr,prefix:prefix,pro:pro,user:req.query,readonly:readonly,read:read})
   })
 
   })
@@ -313,10 +338,11 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   router.post('/batch',isLoggedIn,function(req,res){
     var date = req.body.date
     var shift = req.body.shift
-    var batchNumber = req.body.batchNumber
+    var prefix = req.body.prefix
+    var grvNumber = req.body.grvNumber
 
 
-    console.log(batchNumber,'batchNumber666')
+    //console.log(batchNumber,'batchNumber')
     let id = req.user._id
     let m = moment()
     var month = m.format('MMMM')
@@ -324,7 +350,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
     req.check('date','Enter Date').notEmpty();
     //req.check('name','Enter Name').notEmpty();
     req.check('shift','Enter Shift').notEmpty();
-    req.check('batchNumber','Enter BatchNumber').notEmpty();
+    req.check('grvNumber','Enter GRVNumber').notEmpty();
     
 
     
@@ -337,7 +363,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
       req.flash('danger', req.session.errors[0].msg);
 
 
-      res.redirect('/rm/batch');
+      res.redirect('/production/batch');
     
 }
 else{
@@ -348,18 +374,19 @@ else{
 
   let date7 =  date6.replace(/\//g, "");
   
-    BatchRR.find({batchNumber:batchNumber},function(err,docs){
+    BatchRR.find({grvNumber:grvNumber},function(err,docs){
       if(docs){
         let item = docs[0].item
         let supplier = docs[0].supplier
         let availableMass = docs[0].closingWeightKg
         let refNumber = docs[0].refNumber
-
+        let batchNumber = docs[0].batchNumber
+       
     RawMat.find({item:item,stage:'raw'},function(err,noc){
 
     let avbMass = noc[0].massKgs
 
-      User.findByIdAndUpdate(id,{$set:{item:item,supplier:supplier,date:date,availableMass:avbMass,refNumber:refNumber,batchNumber:batchNumber}},function(err,vocs){
+      User.findByIdAndUpdate(id,{$set:{item:item,supplier:supplier,date:date,availableMass:avbMass,refNumber:grvNumber}},function(err,vocs){
 
       })
 
@@ -368,9 +395,9 @@ else{
 
 
 
-      RefNo.find({date:date,type:"gingerWash"},function(err,docs){
+      RefNo.find({date:date,type:"gingerWash",item:item},function(err,docs){
         let size = docs.length + 1
-       refNo = date7+'B'+size+'GW'
+       refNo = date7+prefix+'B'+size+'WSH'
         console.log(refNo,'refNo')
     
         var truck = new BatchGingerWash()
@@ -378,10 +405,11 @@ else{
         truck.mformat = date6
         truck.dateValue = dateValue
         truck.item = item
+        truck.prefix = prefix
         truck.status2 = "null"
-        truck.refNumber = refNo
-        truck.refNumber2 = refNumber
-        truck.batchNumber = batchNumber
+        truck.refNumber = grvNumber
+        truck.voucherNo = refNumber
+        truck.batchNumber = refNo
         truck.month = month
         truck.qtyInMass = 0
         truck.qtyOutMass= 0
@@ -395,11 +423,12 @@ else{
         truck.save()
             .then(pro =>{
     
-              User.findByIdAndUpdate(id,{$set:{refNumber:refNo,batchId:pro._id}},function(err,vocs){
+              User.findByIdAndUpdate(id,{$set:{batchNumber:refNo,batchId:pro._id,prefix:prefix}},function(err,vocs){
 
               })
               var book = new RefNo();
               book.refNumber = refNo
+              book.item = item
               book.date = date
               book.type = 'gingerWash'
               book.save()
@@ -431,18 +460,18 @@ else{
 var supplier = req.user.supplier
 var item = req.user.item
 var date = req.user.date
+var prefix = req.user.prefix
 var batchNumber = req.user.batchNumber
 var refNumber = req.user.refNumber
 var availableMass = req.user.availableMass
 var batchId = req.user.batchId
 
 res.render('production/addMaterial2',{supplier:supplier,batchNumber:batchNumber,
-refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId})
+refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId,prefix:prefix})
 
     
     
     })
-    
 
 
     router.post('/qtyInGingerWash',function(req,res){
@@ -453,12 +482,14 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       let dateValue = moment().valueOf()
       let arrV = []
       let number1
-      let refNo = req.user.refNumber
+      //let refNo = req.user.refNumber
+      let refNumber = req.user.refNumber
       let batchId = req.user.batchId
       let mass = req.body.code
       let massTonne
+
       let batchNumber = req.body.batchNumber
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      BatchRR.find({grvNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
         let supplier = docs[0].supplier
         let item = docs[0].item
@@ -468,11 +499,12 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
         let mobile = docs[0].mobile
         let trailer = docs[0].trailer
         let address = docs[0].address
-        let batchNumber = docs[0].batchNumber
-        let refNumber2 = docs[0].refNumber2
+        //let batchNumber = docs[0].batchNumber
+        let grvNumber = docs[0].grvNumber
         let idNumber = docs[0].idNumber
         let voucherNumber = docs[0].voucherNumber
         let dateValue = docs[0].dateValue
+        let prefix = docs[0].prefix
         let openingWeightKg = docs[0].openingWeightKg
         let openingWeightTonne = docs[0].openingWeightTonne
         let newMassNum = 0
@@ -515,9 +547,10 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.voucherNumber = voucherNumber
       stock.batchNumber = batchNumber
       stock.trailer = trailer
-      stock.voucherNumber = voucherNumber
-      stock.refNumber = refNo
-      stock.refNumber2 = refNumber2
+      stock.prefix = prefix
+      stock.voucherNo = voucherNumber
+      //stock.batchNumber = refNo
+      stock.refNumber =refNumber
       stock.mobile = mobile
       stock.month = month
       stock.year = year
@@ -666,13 +699,13 @@ router.get('/batchList',isLoggedIn,function(req,res){
       let dateValue = moment().valueOf()
       let arrV = []
       let number1
-      let refNo = req.body.refNumber
+      let refNumber = req.body.refNumber
       let batchId = req.body.batchId
       let availableMass = req.body.availableMass
       let mass = req.body.code
       let massTonne, totalMass
       let batchNumber = req.body.batchNumber
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      BatchRR.find({grvNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
         let supplier = docs[0].supplier
         let item = docs[0].item
@@ -682,7 +715,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
         let mobile = docs[0].mobile
         let trailer = docs[0].trailer
         let address = docs[0].address
-        let batchNumber = docs[0].batchNumber
+        //let batchNumber = docs[0].batchNumber
         let idNumber = docs[0].idNumber
         let voucherNumber = docs[0].voucherNumber
         let dateValue = docs[0].dateValue
@@ -727,11 +760,10 @@ router.get('/batchList',isLoggedIn,function(req,res){
       stock.supplier = supplier
       stock.driver = driver
       stock.type = 'qtyOut'
-      stock.voucherNumber = voucherNumber
+      stock.voucherNo = voucherNumber
       stock.batchNumber = batchNumber
       stock.trailer = trailer
-      stock.voucherNumber = voucherNumber
-      stock.refNumber = refNo
+      stock.refNumber = refNumber
       stock.mobile = mobile
       stock.month = month
       stock.year = year
@@ -872,7 +904,7 @@ let item = docs[0].item
   router.post('/crushBatch',isLoggedIn,function(req,res){
     var date = req.body.date
     var shift = req.body.shift
-    var batchNumber = req.body.batchNumber
+    var refNumber = req.body.batchNumber
     let id = req.user._id
     let m = moment()
     var month = m.format('MMMM')
@@ -904,14 +936,15 @@ else{
 
   let date7 =  date6.replace(/\//g, "");
   
-    BatchGingerWash.find({batchNumber:batchNumber},function(err,docs){
+    BatchGingerWash.find({batchNumber:refNumber},function(err,docs){
       if(docs.length > 0){
         let item = docs[0].item
      
         let availableMass = docs[0].qtyOutMass
         let refNumber = docs[0].refNumber
-
-      User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+        let gingerBatch = docs[0].batchNumber
+        let prefix = docs[0].prefix
+      User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:refNumber,batchNumber:gingerBatch}},function(err,vocs){
 
       })
       
@@ -920,7 +953,7 @@ else{
 
       RefNo.find({date:date,type:"crush"},function(err,docs){
         let size = docs.length + 1
-       refNo = date7+'B'+size+item+'crush'
+       refNo = date7+prefix+'B'+size+'CRS'
         console.log(refNo,'refNo')
     
         var truck = new BatchGingerCrush()
@@ -928,10 +961,10 @@ else{
         truck.mformat = date6
         truck.dateValue = dateValue
         truck.item = item
-        truck.refNumber = refNumber
-        truck.refNumber2 = refNo
+        truck.refNumber = gingerBatch
+        //truck.refNumber2 = refNo
         truck.type ='normal'
-        truck.batchNumber = batchNumber
+        truck.batchNumber = refNo
         truck.month = month
         truck.qtyInMass = 0
         truck.qtyOutMass= 0
@@ -945,11 +978,12 @@ else{
         truck.save()
             .then(pro =>{
     
-              User.findByIdAndUpdate(id,{$set:{batchNumber:batchNumber,refNumber:refNo,batchId:pro._id}},function(err,vocs){
+              User.findByIdAndUpdate(id,{$set:{batchNumber:refNo,refNumber:gingerBatch,batchId:pro._id}},function(err,vocs){
 
               })
               var book = new RefNo();
               book.refNumber = refNo
+              book.item = item
               book.date = date
               book.type = 'crush'
               book.save()
@@ -964,13 +998,15 @@ else{
           })
 
         }else{
-          BatchRR.find({batchNumber:batchNumber},function(err,docs){
+          BatchRR.find({batchNumber:refNumber},function(err,docs){
           let item = docs[0].item
      
           let availableMass = docs[0].closingWeightKg
           let refNumber = docs[0].refNumber
+          let grvNumber = docs[0].grvNumber
+          let prefix = docs[0].prefix
   
-        User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+        User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:grvNumber}},function(err,vocs){
   
         })
         
@@ -979,7 +1015,7 @@ else{
   
         RefNo.find({date:date,type:"crush"},function(err,docs){
           let size = docs.length + 1
-         refNo = date7+'B'+size+item+'crush'
+         refNo = date7+prefix+'B'+size+'CRS'
           console.log(refNo,'refNo')
       
           var truck = new BatchGingerCrush()
@@ -987,9 +1023,9 @@ else{
           truck.mformat = date6
           truck.dateValue = dateValue
           truck.item = item
-          truck.refNumber = refNumber
-          truck.refNumber2 =refNo
-          truck.batchNumber = batchNumber
+          truck.refNumber = grvNumber
+          
+          truck.batchNumber = refNo
           truck.month = month
           truck.qtyInMass = 0
           truck.qtyOutMass= 0
@@ -1004,11 +1040,12 @@ else{
           truck.save()
               .then(pro =>{
       
-                User.findByIdAndUpdate(id,{$set:{batchNumber:batchNumber,refNumber:refNo,batchId:pro._id}},function(err,vocs){
+                User.findByIdAndUpdate(id,{$set:{batchNumber:refNo,refNumber:grvNumber,batchId:pro._id}},function(err,vocs){
   
                 })
                 var book = new RefNo();
                 book.refNumber = refNo
+                book.item = item
                 book.date = date
                 book.type = 'crush'
                 book.save()
@@ -1063,22 +1100,23 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       let dateValue = moment().valueOf()
       let arrV = []
       let number1
-      let refNo = req.user.refNumber
+      let refNumber = req.user.refNumber
       let batchId = req.user.batchId
       let mass = req.body.code
       let massTonne
       var item = req.user.item
       let batchNumber = req.body.batchNumber
+      //let refNumber = req.body.refNumber
       console.log(batchNumber,'batchNumber666')
 
       if(item == 'ginger'){
-      BatchGingerWash.find({batchNumber:batchNumber},function(err,docs){
+      BatchGingerWash.find({batchNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
       
         let item = docs[0].item
         let date = docs[0].date
        // let refNo = docs[0].refNumber
-        let batchNumber = docs[0].batchNumber
+        let batchWashNumber = docs[0].batchNumber
        
         let dateValue = docs[0].dateValue
         let openingMass= docs[0].qtyOutMass
@@ -1117,7 +1155,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.status = "ready"
       stock.type = 'qtyIn'
       stock.batchNumber = batchNumber
-      stock.refNumber = refNo
+      stock.refNumber = batchWashNumber
       stock.month = month
       stock.year = year
       stock.batchId = batchId
@@ -1142,13 +1180,13 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       })
     }else if(item == 'bananas'){
 
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      BatchRR.find({grvNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
       
         let item = docs[0].item
         let date = docs[0].date
        // let refNo = docs[0].refNumber
-        let batchNumber = docs[0].batchNumber
+        let grvNumber = docs[0].grvNumber
        
         let dateValue = docs[0].dateValue
         
@@ -1190,7 +1228,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.status = "ready"
       stock.type = 'qtyIn'
       stock.batchNumber = batchNumber
-      stock.refNumber = refNo
+      stock.refNumber = grvNumber
       stock.month = month
       stock.year = year
       stock.batchId = batchId
@@ -1221,13 +1259,13 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
 
     else if(item == 'lemon'){
 
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      BatchRR.find({batchNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
       
         let item = docs[0].item
         let date = docs[0].date
        // let refNo = docs[0].refNumber
-        let batchNumber = docs[0].batchNumber
+        let grvNumber = docs[0].grvNumber
        
         let dateValue = docs[0].dateValue
         
@@ -1269,7 +1307,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.status = "ready"
       stock.type = 'qtyIn'
       stock.batchNumber = batchNumber
-      stock.refNumber = refNo
+      stock.refNumber = grvNumber
       stock.month = month
       stock.year = year
       stock.batchId = batchId
@@ -1303,13 +1341,13 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
     
     else if(item == 'honey'){
 
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      BatchRR.find({batchNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
       
         let item = docs[0].item
         let date = docs[0].date
        // let refNo = docs[0].refNumber
-        let batchNumber = docs[0].batchNumber
+        let grvNumber = docs[0].grvNumber
        
         let dateValue = docs[0].dateValue
         
@@ -1351,7 +1389,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.status = "ready"
       stock.type = 'qtyIn'
       stock.batchNumber = batchNumber
-      stock.refNumber = refNo
+      stock.refNumber = grvNumber
       stock.month = month
       stock.year = year
       stock.batchId = batchId
@@ -1374,20 +1412,19 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       })
       
       })
-
 
 
     }
 
     else if(item == 'garlic'){
 
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      BatchRR.find({batchNumber:refNumber},function(err,docs){
         //console.log(docs,'docs')
       
         let item = docs[0].item
         let date = docs[0].date
        // let refNo = docs[0].refNumber
-        let batchNumber = docs[0].batchNumber
+        let grvNumber = docs[0].grvNumber
        
         let dateValue = docs[0].dateValue
         
@@ -1429,7 +1466,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.status = "ready"
       stock.type = 'qtyIn'
       stock.batchNumber = batchNumber
-      stock.refNumber = refNo
+      stock.refNumber = grvNumber
       stock.month = month
       stock.year = year
       stock.batchId = batchId
@@ -1452,7 +1489,6 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       })
       
       })
-
 
 
     }
@@ -1575,16 +1611,17 @@ console.log(id,'id')
       var year = m.format('YYYY')
       let dateValue = moment().valueOf()
       let arrV = []
+      var item = req.body.item
       let number1
-      let refNo = req.body.refNumber
+      let refNumber = req.body.refNumber
       let batchId = req.body.batchId
       let availableMass = req.body.availableMass
       let mass = req.body.code
       let massTonne
       let batchNumber = req.body.batchNumber
-      BatchRR.find({batchNumber:batchNumber},function(err,docs){
+      //BatchRR.find({batchNumber:batchNumber},function(err,docs){
         //console.log(docs,'docs')
-        let supplier = docs[0].supplier
+      /*  let supplier = docs[0].supplier
         let item = docs[0].item
         let date = docs[0].date
         let driver = docs[0].driver
@@ -1598,7 +1635,7 @@ console.log(id,'id')
         let dateValue = docs[0].dateValue
         let openingWeightKg = docs[0].openingWeightKg
         let openingWeightTonne = docs[0].openingWeightTonne
-        let newMassNum = 0
+        let newMassNum = 0*/
       
       let number2
       
@@ -1630,19 +1667,16 @@ console.log(id,'id')
       var stock = new GingerCrush();
       stock.weight = weight
       stock.date =mformat
-      stock.address = address
-      stock.regNumber = regNumber
+
       stock.item = item
       stock.status = "ready"
-      stock.supplier = supplier
-      stock.driver = driver
+
       stock.type = 'qtyOut'
-      stock.voucherNumber = voucherNumber
+   
       stock.batchNumber = batchNumber
-      stock.trailer = trailer
-      stock.voucherNumber = voucherNumber
-      stock.refNumber = refNo
-      stock.mobile = mobile
+
+      stock.refNumber = refNumber
+
       stock.month = month
       stock.year = year
       stock.batchId = batchId
@@ -1665,7 +1699,7 @@ console.log(id,'id')
       
       })
       
-      })
+      //})
       })
 
 
@@ -1702,7 +1736,7 @@ console.log(id,'id')
         let batchId = req.user.batchId
         let variance
         console.log(id,batchId,'id')
-        GingerCrush.find({batchId:batchId,refNumber:refNumber,type:'qtyOut'},function(err,docs){
+        GingerCrush.find({batchId:batchId,type:'qtyOut'},function(err,docs){
 let item = docs[0].item
 if(item == 'ginger'){
           for(var i = 0;i<docs.length; i++){
@@ -1762,6 +1796,7 @@ if(item == 'ginger'){
 
           BatchGingerCrush.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
+            let batchNumber = doc.batchNumber
             variance = number1 - qtyInMass
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
  RawMat.find({item:item,stage:'raw'},function(err,tocs){
@@ -1785,7 +1820,7 @@ if(item == 'ginger'){
             })
 
             var final = new FinalProduct()
-            final.refNumber = refNumber
+            final.refNumber = batchNumber
             final.quantity = number1
             final.date = mformat
             final.ingredient = item
@@ -1821,6 +1856,7 @@ if(item == 'ginger'){
 
           BatchGingerCrush.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
+            let batchNumber = doc.batchNumber
             variance = number1 - qtyInMass
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
  RawMat.find({item:item,stage:'raw'},function(err,tocs){
@@ -1844,7 +1880,7 @@ if(item == 'ginger'){
             })
 
             var final = new FinalProduct()
-            final.refNumber = refNumber
+            final.refNumber = batchNumber
             final.quantity = number1
             final.date = mformat
             final.ingredient = item
@@ -1879,7 +1915,9 @@ if(item == 'ginger'){
 
           BatchGingerCrush.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
+            let batchNumber = doc.batchNumber
             variance = number1 - qtyInMass
+
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
  RawMat.find({item:item,stage:'raw'},function(err,tocs){
               let opBal = tocs[0].massKgs - qtyInMass
@@ -1902,7 +1940,7 @@ if(item == 'ginger'){
             })
 
             var final = new FinalProduct()
-            final.refNumber = refNumber
+            final.refNumber = batchNumber
             final.quantity = number1
             final.date = mformat
             final.ingredient = item
@@ -1936,6 +1974,7 @@ if(item == 'ginger'){
 
           BatchGingerCrush.findById(batchId,function(err,doc){
             let qtyInMass= doc.qtyInMass
+            let batchNumber = doc.batchNumber
             variance = number1 - qtyInMass
           BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'cooking'}},function(err,vocs){
  RawMat.find({item:item,stage:'raw'},function(err,tocs){
@@ -1959,7 +1998,7 @@ if(item == 'ginger'){
             })
 
             var final = new FinalProduct()
-            final.refNumber = refNumber
+            final.refNumber = batchNumber
             final.quantity = number1
             final.date = mformat
             final.ingredient = item
@@ -2028,7 +2067,7 @@ else{
 
   RefNo.find({date:date,type:"cooking"},function(err,docs){
     let size = docs.length + 1
-   refNo = date7+'B'+size+'CK'
+   refNo = date7+'B'+size+'CKN'
     console.log(refNo,'refNo')
 
   var stock = new BatchCooking();
@@ -2037,7 +2076,7 @@ else{
   stock.shift = shift
   stock.teamLeader = teamLeader
   stock.quantity = 0
-  stock.refNumber=refNo
+  stock.batchNumber=refNo
   stock.month = month
   stock.year = year
   
@@ -2074,12 +2113,12 @@ router.get('/cooking/:id',isLoggedIn,function(req,res){
 
 var id = req.params.id
 BatchCooking.findById(id,function(err,doc){
-let refNumber = doc.refNumber
+let batchNumber = doc.batchNumber
 let shift = doc.shift
 let operator = doc.operator
 let teamLeader = doc.teamLeader
 let date = doc.date
-  res.render('production/cookingMaterial',{refNumber:refNumber,
+  res.render('production/cookingMaterial',{batchNumber:batchNumber,
   shift:shift,operator:operator,date:date,id:id,teamLeader:teamLeader})
 })
 })
@@ -2235,10 +2274,10 @@ var mformat = m.format('L')
 let total
 
 BatchCooking.findById(id,function(err,doc){
-  let refNumber = doc.refNumber
+  let batchNumber = doc.batchNumber
   let finalProduct
 
-Cooking.find({refNumber:refNumber},function(err,docs){
+Cooking.find({batchNumber:batchNumber},function(err,docs){
 
   for(var i = 0;i<docs.length; i++){
            
@@ -2285,8 +2324,10 @@ else{
 }
 }
 
+console.log(finalProduct,'finalProduct33')
+
     BatchCooking.findByIdAndUpdate(id,{$set:{status:"complete",finalProduct:finalProduct,quantity:number1}},function(err,locs){
-      Cooking.find({refNumber:refNumber},function(err,docs){
+      Cooking.find({batchNumber:batchNumber},function(err,docs){
         for(var i = 0;i<docs.length; i++){
 
           let cid = docs[i]._id
@@ -2317,7 +2358,7 @@ else{
       })
 
       var final = new FinalProduct()
-      final.refNumber = refNumber
+      final.refNumber = batchNumber
       final.quantity = number1
       final.date = mformat
       final.ingredient = finalProduct
@@ -2330,7 +2371,7 @@ else{
       
       })
 
-      Cooking.find({refNumber:refNumber},function(err,docs){
+      Cooking.find({batchNumber:batchNumber},function(err,docs){
 
         for(var i = 0;i<docs.length; i++){
 
@@ -2410,6 +2451,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
   var date = req.body.date
   var product = req.body.product
   var operator = req.body.operator
+  let prefix
   var water = req.body.water
   var endDate = req.body.endDate
   var m = moment()
@@ -2443,10 +2485,14 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
   }
   else{
   
+  Product.find({name:product},function(err,loc){
+    if(loc){
+     prefix = loc[0].prefix
+    }
   
     RefNo.find({date:date,type:"fermentation"},function(err,docs){
       let size = docs.length + 1
-     refNo = date7+'B'+size+'FM'
+     refNo = date7+prefix+'B'+size+'FM'
       console.log(refNo,'refNo')
   
     var stock = new BatchFermentation();
@@ -2458,7 +2504,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
     stock.tanksDrained = 0
     stock.quantity = 0
     stock.status ='null'
-    stock.refNumber=refNo
+    stock.batchNumber=refNo
     stock.month = month
     stock.year = year
     
@@ -2471,6 +2517,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
      
       var book = new RefNo();
       book.refNumber = refNo
+      book.product = product
       book.date = date
       book.type = 'fermentation'
       book.save()
@@ -2481,7 +2528,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
   
       })
     })
-  
+    })
     })
   }
   
@@ -2498,14 +2545,14 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
   
     var id = req.params.id
     BatchFermentation.findById(id,function(err,doc){
-    let refNumber = doc.refNumber
+    let batchNumber = doc.batchNumber
     let product = doc.product
     let date = doc.date
     let operator = doc.operator
     let water = doc.water
     
     /*let date = doc.date*/
-      res.render('production/fermentation',{refNumber:refNumber,
+      res.render('production/fermentation',{batchNumber:batchNumber,
       product:product,operator:operator,date:date,id:id,water:water,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
     })
@@ -2513,7 +2560,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
 router.get('/fermentationPreload/:id',isLoggedIn,function(req,res){
   var id = req.params.id
 console.log(id,'fermentationPreload')
-   Fermentation.find({refNumber:id},function(err,docs){
+   Fermentation.find({batchNumber:id},function(err,docs){
      res.send(docs)
    })
 })
@@ -2550,7 +2597,7 @@ console.log(id,'fermentationPreload')
     cook.save()
           .then(pro =>{
 
-            BatchFermentationIngredients.find({refNumber:refNumber,batchNumber:batchNumber,ingredient:ingredient},function(err,docs){
+            BatchFermentationIngredients.find({batchNumber:batchNumber,ingredient:ingredient},function(err,docs){
               if(docs.length == 0){
                  var user = new BatchFermentationIngredients();
                   user.ingredient = ingredient;
@@ -2862,7 +2909,7 @@ router.post('/draining/',isLoggedIn,function(req,res){
     var month = m.format('MMMM')
       var receivedBy = req.body.receivedBy
       var date = req.body.date
-      var refNumber = req.body.refNumber
+      var batchNumber = req.body.batchNumber
       var blendingTank = req.body.blendingTank
       var tanks= req.body.tanks
       var product = req.body.product
@@ -2886,7 +2933,7 @@ router.post('/draining/',isLoggedIn,function(req,res){
     cook.tanks= tanks
     cook.litres = tanks * 1000
     cook.status = 'null'
-    cook.refNumber = refNumber
+    cook.refNumber = batchNumber
     //cook.operator = operator
     
     cook.save()
@@ -2898,14 +2945,14 @@ BlendingTanks.find({tankNumber:blendingTank},function(err,toc){
   let litresDrained = tanks * 1000
   let opLitres = toc[0].litres + litresDrained
   let maseId = toc[0]._id
-  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:refNumber}},function(err,focs){
+  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:batchNumber}},function(err,focs){
 
 
   })
 
 }
 
-BatchFermentationIngredients.find({refNumber:refNumber},function(err,nocs){
+BatchFermentationIngredients.find({refNumber:batchNumber},function(err,nocs){
   for(var i = 0;i<nocs.length;i++){
     let quantity = nocs[i].quantity / nocs[i].tanks
     let nQty =  quantity * tanks
@@ -2953,7 +3000,7 @@ BatchFermentationIngredients.find({refNumber:refNumber},function(err,nocs){
   
   }
   })     
-BatchFermentation.find({refNumber:refNumber},function(err,docs){
+BatchFermentation.find({batchNumber:batchNumber},function(err,docs){
 let avTanks = docs[0].tanksDrained + pro.tanks
 let remainingTanks = docs[0].tanks - avTanks
 let id2 = docs[0]._id
@@ -2966,7 +3013,7 @@ BatchFermentation.findByIdAndUpdate(id2,{$set:{tanksDrained:avTanks,remainingTan
 
 })
 
-BatchFermentationIngredients.find({refNumber:refNumber},function(err,socs){
+BatchFermentationIngredients.find({batchNumber:batchNumber},function(err,socs){
 for(var i = 0; i<socs.length;i++){
   let sId = socs[i]._id
   BatchFermentationIngredients.findByIdAndUpdate(sId,{$set:{status:'complete'}},function(err,fox){

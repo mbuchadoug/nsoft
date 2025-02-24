@@ -6,6 +6,7 @@ var batchSchemaF = new Schema({
     date: {type: String },
     endDate: {type: String },
     product: {type: String },
+    prefix:{type:String},
     ingredient:{type:String},
     quantity:{type:Number},
     refNumber: {type: String },

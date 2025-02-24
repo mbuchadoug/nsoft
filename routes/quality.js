@@ -769,7 +769,7 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
 
  router.get('/trailFermentation/:id',isLoggedIn,function(req,res){
    var id = req.params.id
-  Fermentation.find({refNumber:id},function(err,docs){
+  Fermentation.find({batchNumber:id},function(err,docs){
        res.render('qa/trackFermentation',{listX:docs,refNumber:id})
 
       })
@@ -783,12 +783,12 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
   var ingredient = req.params.id2
   console.log(id3,'id3')
   if(ingredient == 'ginger'){
-    Cooking.find({refNumber:id},function(err,docs){
+    Cooking.find({batchNumber:id3},function(err,docs){
       res.render('qa/trackCooking2',{listX:docs,idNum:id3})
 
      })
   }else if(ingredient == 'bananas'){
-    BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
+    BatchGingerCrush.find({item:ingredient,batchNumber:id3},function(err,docs){
       res.render('qa/trackCrushing',{listX:docs,idNum:id3})
 
      })
@@ -796,14 +796,14 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
 
 
   else if(ingredient == 'gingerGarlic'){
-    Cooking.find({refNumber:id},function(err,docs){
+    Cooking.find({batchNumber:id3},function(err,docs){
       res.render('qa/trackCooking2',{listX:docs,idNum:id3})
 
      })
   }
 
   else if(ingredient == 'colour'){
-    Cooking.find({refNumber:id},function(err,docs){
+    Cooking.find({batchNumber:id3},function(err,docs){
 
       res.render('qa/trackCooking2',{listX:docs,idNum:id3})
 
@@ -818,14 +818,14 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
   }
 
   else if(ingredient == 'honey'){
-    BatchGingerCrush.find({item:ingredient,refNumber:id},function(err,docs){
+    BatchGingerCrush.find({item:ingredient,batchNumber:id3},function(err,docs){
       res.render('qa/trackCrushing',{listX:docs,idNum:id3})
 
      })
   }
 
   else if(ingredient == 'garlic'){
-    Cooking.find({refNumber:id},function(err,docs){
+    Cooking.find({batchNumber:id3},function(err,docs){
       res.render('qa/trackCooking2',{listX:docs,idNum:id3})
 
      })
@@ -850,12 +850,12 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
   var id3  = req.params.id3
   if(item == 'ginger'){
    
-  BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+  BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
     res.render('qa/trackCrushing',{listX:docs,idNum:id3})
 
      })
   }else if(item == 'bananas'){
-    BatchRR.find({item:item,batchNumber:id},function(err,docs){
+    BatchRR.find({item:item,batchNumber:id3},function(err,docs){
       res.render('qa/trackRaw',{listX:docs,idNum:id3})
 
      })
@@ -863,7 +863,7 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
 
  else if(item == 'garlic'){
    
-    BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+    BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
       res.render('qa/trackCrushing',{listX:docs,idNum:id3})
  
        })
@@ -872,7 +872,7 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
 
       else if(item == 'sugar'){
    
-        BatchRR.find({item:item,batchNumber:id},function(err,docs){
+        BatchRR.find({item:item,batchNumber:id3},function(err,docs){
           res.render('qa/trackRaw',{listX:docs,idNum:id3})
      
            })
@@ -880,7 +880,7 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
 
       else if(item == 'lemon'){
    
-        BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+        BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
           res.render('qa/trackCrushing',{listX:docs,idNum:id3})
      
            })
@@ -889,7 +889,7 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
 
           else if(item == 'honey'){
    
-            BatchGingerCrush.find({item:item,batchNumber:id},function(err,docs){
+            BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
               res.render('qa/trackCrushing',{listX:docs,idNum:id3})
          
                })
@@ -906,19 +906,19 @@ router.get('/trailBatch3/:id/:id2/:id3',isLoggedIn,function(req,res){
   var item = req.params.id2
   var id3 = req.params.id3
   if(item == 'ginger'){
-  BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+  BatchGingerWash.find({item:item,batchNumber:id3},function(err,docs){
     res.render('qa/trackWashing',{listX:docs,id:id3})
 
      })
     }else if(item == 'bananas'){
-      BatchRR.find({item:item,batchNumber:id},function(err,docs){
+      BatchRR.find({item:item,grvNumber:id3},function(err,docs){
         res.render('qa/trackRaw',{listX:docs})
  
        })
     }
 
     if(item == 'garlic'){
-      BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+      BatchRR.find({item:item,grvNumber:id3},function(err,docs){
         res.render('qa/trackWashing',{listX:docs})
    
          })
@@ -926,7 +926,7 @@ router.get('/trailBatch3/:id/:id2/:id3',isLoggedIn,function(req,res){
 
 
         if(item == 'honey'){
-          BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+          BatchRR.find({item:item,grvNumber:id3},function(err,docs){
             res.render('qa/trackWashing',{listX:docs})
        
              })
@@ -934,7 +934,7 @@ router.get('/trailBatch3/:id/:id2/:id3',isLoggedIn,function(req,res){
 
 
             if(item == 'lemon'){
-              BatchGingerWash.find({item:item,batchNumber:id},function(err,docs){
+              BatchRR.find({item:item,grvNumber:id3},function(err,docs){
                 res.render('qa/trackWashing',{listX:docs})
            
                  })
@@ -945,7 +945,7 @@ router.get('/trailBatch3/:id/:id2/:id3',isLoggedIn,function(req,res){
 router.get('/trailBatch4/:id/:id2',isLoggedIn,function(req,res){
   var id = req.params.id
   var item = req.params.id2
-  BatchRR.find({item:item,batchNumber:id},function(err,docs){
+  BatchRR.find({item:item,grvNumber:id},function(err,docs){
     res.render('qa/trackRaw',{listX:docs})
 
    })

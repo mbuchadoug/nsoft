@@ -558,6 +558,9 @@ this.firstElementChild.select();
   <script>
 
             function add() {
+
+                       if(confirm('Are you sure your want to Capture Mass?'))
+   {
        let mass = document.getElementById('mass').value 
        let batchNumber = document.getElementById('batchNumber').value      
             $.ajax({
@@ -621,6 +624,8 @@ this.firstElementChild.select();
                
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
+            }
+
             }
 			
         </script>
@@ -745,7 +750,7 @@ this.firstElementChild.select();
       </div>
       </form>
         <div class="btn-toolbar">
-          <button onclick="return confirm('Are you sure you want to Capture this Mass ?');" onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+          <button  onclick="add()" class="btn btn-primary ember-view" > Receive </button>
         <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
       <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatchCrush/{{batchId}}"> Close Batch </a>

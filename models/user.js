@@ -36,6 +36,7 @@ var userSchema = new mongoose.Schema({
     warehouse:{type:String, required:true},
     product:{type:String, required:true},
     batchId:{type:String},
+    grvNumber:{type:String},
     batchNumber:{type:String},
     currentBatchCount:{type:Number},
     batchCount:{type:Number},

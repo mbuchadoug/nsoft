@@ -5,6 +5,7 @@ var batchSchemaCooking = new Schema({
 
     date: {type: String },
     mformat: {type: String },
+    prefix:{type:String},
     finalProduct:{type:String},
     shift:{type:String},
     nxtStage:{type:String},

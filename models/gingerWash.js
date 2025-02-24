@@ -8,6 +8,7 @@ var batchSchemaGW = new Schema({
     batchId:{type:String},
     weight:{type:String},
     type:{type:String},
+    prefix:{type:String},
     openingBatchWeightKg:{type:Number},
     closingBatchWeightKg:{type:Number},
     openingMass:{type:Number},

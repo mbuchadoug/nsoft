@@ -15,6 +15,7 @@ var stockVoucher = new Schema({
     status4: {type: String },
     approver1: {type: String },
     date1:{type:String},
+    prefix:{type:String},
     approver2: {type: String },
     date2:{type:String},
     approver3: {type: String },

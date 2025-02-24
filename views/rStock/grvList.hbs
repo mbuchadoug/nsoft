@@ -350,7 +350,7 @@ ul.no-bullets {
 													<!--begin::Date=-->
 													<td>{{this.voucherNo}}</td>
 													<!--end::Date=-->
-														<td>{{this.refNumber}}</td>
+														<td>{{this.grvNumber}}</td>
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.item}}</td>
                                                     <td class="text-end pe-0">{{this.requestedMassTonnes}}</td>  
@@ -376,6 +376,10 @@ ul.no-bullets {
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
 																<a href="/rm/grvFile/{{this.refNumber}}" class="menu-link px-3">View GRV</a>
+															</div>
+
+															<div class="menu-item px-3">
+																<a href="/rm/grvWeights/{{this.batchNumber}}" class="menu-link px-3">Weights</a>
 															</div>
 
 

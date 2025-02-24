@@ -336,6 +336,7 @@ ul.no-bullets {
   <div class="scroll-y noscroll-x fill body scrollbox">
 <form method="POST" action="/production/batch" class="item-creation">
 
+<input type="hidden" name="prefix" id="prefix" value="{{prefix}}">
 
   <div class="zb-txn-form overflow-container w-100">
 <div tabindex="-1" id="ember370" class="no-outline ember-view"><!----></div> 
@@ -363,11 +364,11 @@ ul.no-bullets {
     </div></div>
     <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Select Batch</label> 
 <div class="col-lg-4">
-   <select class="form-select form-select-solid {{readF2}}"  name="batchNumber" id="batchNumber" onchange="changeProduct(this.value)" value="{{user.refNumber}}">
+   <select class="form-select form-select-solid {{readF2}}"  name="grvNumber" id="grvNumber" onchange="changeProduct(this.value)" value="{{user.refNumber}}">
 
                                                                 <option value=""></option> 
                                                               {{#each arr}}
-                                                               <option value="{{this.batchNumber}}">{{this.batchNumber}}||{{this.closingWeightTonne}}tonnes</option>
+                                                               <option value="{{this.grvNumber}}">{{this.grvNumber}}||{{this.closingWeightTonne}}tonnes</option>
                                                                      {{/each}}
     </select>  </div></div>
  
@@ -421,8 +422,8 @@ select.innerHTML = ''
 for (var i = 0; i < data.length; i++) {
   var optco = data[i];
   var opt = document.createElement('option');
-  opt.textContent = optco.batchNumber || optco.closingWeightTonne + 'tonnes'   /*+'Cases:'+''+optco.closingWeightTonne+'| '+optco.warehouse;*/
-  opt.value = optco.batchNumber;
+  opt.textContent = optco.grvNumber || optco.closingWeightTonne + 'tonnes'   /*+'Cases:'+''+optco.closingWeightTonne+'| '+optco.warehouse;*/
+  opt.value = optco.grvNumber;
   select.appendChild(opt);
 
   // loop for grabbing each country name and displaying it in the drop-down

@@ -385,8 +385,8 @@ ul.no-bullets {
 											<thead>
 												<!--begin::Table row-->
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-													        <th class="min-w-100px">Ref Number</th>
-															  <th class="min-w-100px">Batch Number</th>
+													        <th class="min-w-100px">Batch Number</th>
+															  <th class="min-w-100px">Ref Number</th>
 												         	<th class="text-end min-w-75px">Ingredient</th>
 															<th class="text-end min-w-75px">Pot #</th>
 															<th class="text-end min-w-75px">Start Time</th>
@@ -411,10 +411,10 @@ ul.no-bullets {
 												{{#each listX}}
 												<tr>
 													<!--begin::Date=-->
-													<td>{{this.refNumber}}</td>
+													<td>{{this.batchNumber}}</td>
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
-													<td class="text-end pe-0">{{this.batchNumber}}</td>
+													<td class="text-end pe-0">{{this.refNumber}}</td>
 															<td class="text-end pe-0">{{this.ingredient}}</td>
                                                     <td class="text-end pe-0">{{this.potNumber}}</td>  
 													<td class="text-end pe-0">{{this.time}}</td>
@@ -440,7 +440,7 @@ ul.no-bullets {
 														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 															<!--begin::Menu item-->
 															<div class="menu-item px-3">
-																<a href="/quality/trailBatch2/{{this.batchNumber}}/{{this.ingredient}}/{{../idNum}}" class="menu-link px-3">Track Batch</a>
+																<a href="/quality/trailBatch2/{{this.batchNumber}}/{{this.ingredient}}/{{refNumber}}" class="menu-link px-3">Track Batch</a>
 															</div>
 
 															<div class="menu-item px-3">

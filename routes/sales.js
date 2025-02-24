@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var InvoiceSubFile = require('../models/invoiceSubFile');
+var InvoPayments = require('../models/salesInvoPayments');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var Ware = require('../models/ware');
@@ -115,7 +116,16 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+router.get('/salesUpdate',function(req,res){
+  SaleStock.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      SaleStock.findByIdAndUpdate(id,{$set:{openingStock:0,closingStock:0}},function(err,locs){
 
+      })
+    }
+  })
+})
 
 router.get('/batch',isLoggedIn,function(req,res){
 
@@ -208,22 +218,15 @@ router.get('/cashRemitt',isLoggedIn,function(req,res){
   let batchId = req.user.batchId
   let refNumber = req.user.refNumber
   let amount = req.user.amount
+  let invoiceNumber = req.user.invoiceNumber
   //paymentStatus:"unpaid"
-  BatchRR.find({paymentStatus:"unpaid"},function(err,vocs){
-  if(vocs.length > 0){
-
-let id = vocs[0]._id
-  
-  BatchRR.find({_id:id},function(err,docs){
-    res.render('sales/all33',{listX:docs,listX2:vocs,batchId:batchId,refNumber:refNumber,amount:amount})
+ 
+    res.render('sales/all33',{invoiceNumber:invoiceNumber,batchId:batchId,refNumber:refNumber,amount:amount})
   })
 
-}else{
-  res.render('sales/all33')
-}
   
-  })
-  })
+  
+  
   
   
 
@@ -239,72 +242,125 @@ let id = vocs[0]._id
   })*/
 
 
-  router.post('/addInvoice',function(req,res){
+  router.post('/addInvoice',isLoggedIn,function(req,res){
     var m = moment()
     var mformat = m.format('L')
     var month = m.format('MMMM')
     var year = m.format('YYYY')
     let dateValue = moment().valueOf()
     let arrV = []
-    let number1, status, amountX
-    let float = req.body.float
-   let id = req.body.code
-   let amount = req.body.amount
-   let refNumber = req.body.batchNumber
+    let arrD={}
+    let arr= []
+    let arrE = []
+    let number1, status, amountX, number2
+    let salesPerson = req.user.fullname
+    let date = req.body.date
+    let invoiceNumber = req.body.invoiceNumber
+    let customer = req.body.customer
+    let customerAddress = req.body.customerAddress
+    let customerMobile = req.body.customerMobile
+    let product = req.body.product
+    let priceText = req.body.price
+    let openingStockText = req.body.openingStock
+    let closingStockAfterSalesText = req.body.closingStock
+    let casesText = req.body.cases
+    let unitsText = req.body.units
+    let paymentMethod = req.body.paymentMethod
+    let amountText = req.body.amount
+    let refNumber = req.body.refNumber
+    let expSales = req.body.expSales
+    let batchId = req.body.batchId
+    let missingBalance
    
-   let batchId = req.body.batchId
-    BatchRR.findById(id,function(err,docs){
+    let reg = /\d+\.*\d*/g;
+let price1 = priceText.match(reg)
+let price = Number(price1)
 
-    
-      //console.log(docs,'docs')
-      let supplier = docs.supplier
-      let item = docs.item
-      let date = docs.date
-      let batchNumber = docs.refNumber
-      let invoiceNumber = docs.invoiceNumber
-      let voucherNumber = docs.voucherNumber
-      let remainingBalance = amount - docs.subtotal
-      let remainingFloat = amount - docs.subtotal
-      let subtotal = docs.subtotal
-      let mass = docs.receivedKgs
+let op1 = openingStockText.match(reg)
+let openingStock = Number(op1)
 
-      console.log(remainingBalance,'remainingBalance')
-      if(remainingBalance <= 0){
-        status = 'unpaid'
-        amountX = amount
-      }else{
-        status = 'paid'
-        BatchRR.findByIdAndUpdate(id,{$set:{paymentStatus:"paid"}},function(err,docs){
+let  cs1 = closingStockAfterSalesText.match(reg)
+let closingStockAfterSales = Number(cs1)
 
-        })
-console.log(subtotal,'subtotal')
-        amount = subtotal
-        amountX = subtotal
+let cases1 = casesText.match(reg)
+let cases = Number(cases1)
 
-      }
-      
+let units1 = unitsText.match(reg)
+let units = Number(units1)
+
+let amt1 = amountText.match(reg)
+let amount = Number(amt1)
+
+
+let expC = expSales.match(reg)
+let expCases = Number(expC)
+
+let unitsX = cases * 12
+
+    let totalUnits = unitsX + units
+    let subtotal = totalUnits * price 
+    let totalCases = totalUnits / 12
+    let closingStock = openingStock - totalCases
+    let unitsInSystem = closingStock * 12
+    let unitsInSystem2 = closingStockAfterSales * 12
+    let missingUnits = unitsInSystem - unitsInSystem2
+    if(missingUnits > 0){
+     missingBalance = missingUnits * price
+    }
+
    
     
+InvoPayments.find({batchId:batchId},function(err,docs){
+
+  for(var i = 0;i<docs.length; i++){
+   // console.log(docs[i].newMass,'serima')
+  arrV.push(docs[i].subtotal)
+  arr.push(docs[i].cases)
+    }
+    //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+   //console.log(arrV,'arrV')
+  
+  //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+  number1=0;
+  number2 = 0
+  for(var z in arrV) { number1 += arrV[z]; }
+  number1.toFixed(2)
+
+  for(var x in arr) { number2 += arr[x]; }
+ let num = number2.toFixed(2) + cases
+
+ if(num <= expCases){
+
+ 
+  let subtotalX = number1 + subtotal
     
     var stock = new InvoPayments();
     
     stock.date =date
-    stock.item = item
-    stock.status = status
-    stock.supplier = supplier
-    stock.amountPaid = amountX
-    stock.float = float
-    stock.remainingBalance = remainingBalance
-    stock.voucherNumber = voucherNumber
     stock.invoiceNumber = invoiceNumber
-    stock.refNumber = refNumber
-    stock.month = month
-    stock.batchNumber = batchNumber
+    stock.customer = customer
+    stock.customerAddress = customerAddress
+    stock.customerMobile = customerMobile
+    stock.product = product
+    stock.price = price
+    stock.amount = amount
+    stock.openingStock = openingStock
+    stock.closingStock = closingStock
+    stock.closingStockAfterSales = closingStockAfterSales
+    stock.cases = cases
+    stock.units = units
+    stock.paymentMethod = paymentMethod
     stock.year = year
+    stock.month = month
+    stock.totalCases = totalCases
     stock.batchId = batchId
-    stock.remainingFloat = remainingFloat
-    stock.mass = mass
+    stock.cumulativeTotal = subtotalX
+    stock.refNumber = refNumber
+    stock.missingUnits = missingUnits
+    stock.missingBalance = missingBalance
+    stock.subtotal = subtotal
     stock.dateValue = dateValue
+    stock.salesPerson = salesPerson
     
     stock.save()
     .then(pro =>{
@@ -313,11 +369,13 @@ console.log(subtotal,'subtotal')
     
     })
     
+  }else{
+  res.send(arrE)
+  }
+    
+  })
     
     
-    
-    
-    })
     })
     
 
@@ -330,6 +388,162 @@ console.log(subtotal,'subtotal')
          res.send(docs)
        })
     })
+
+
+    router.get('/autocompleteCustomer/',isLoggedIn, function(req, res, next) {
+      var id = req.user._id
+  
+  
+        var regex= new RegExp(req.query["term"],'i');
+       
+        var itemFilter =Customer.find({ fullname:regex},{'fullname':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+      
+        
+        itemFilter.exec(function(err,data){
+       
+     
+      console.log('data',data)
+      
+      var result=[];
+      
+      if(!err){
+         if(data && data.length && data.length>0){
+           data.forEach(shop=>{
+     
+  
+     
+         
+      
+              
+             let obj={
+               id:shop._id,
+               label: shop.fullname
+    
+           
+         
+           
+             
+              
+      
+               
+             };
+            
+             result.push(obj);
+          
+            })
+        
+      
+         }
+       
+         res.jsonp(result);
+    
+        }
+      
+      })
+     
+      });
+    
+   
+  //this route shop
+      router.post('/autoCustomer',isLoggedIn,function(req,res){
+          var code = req.body.code
+    
+  
+      
+          
+         
+          Customer.find({fullname:code},function(err,docs){
+         if(docs == undefined){
+           res.redirect('/')
+         }else
+  
+            res.send(docs[0])
+          })
+        
+        
+        })
+   
+
+
+        router.get('/autocompleteProduct/',isLoggedIn, function(req, res, next) {
+          var id = req.user._id
+      
+            var fullname = req.user.fullname
+            var regex= new RegExp(req.query["term"],'i');
+           
+            var itemFilter =SaleStock.find({product:regex,salesPerson:fullname},{'product':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+          
+            
+            itemFilter.exec(function(err,data){
+           
+         
+          console.log('data',data)
+          
+          var result=[];
+          
+          if(!err){
+             if(data && data.length && data.length>0){
+               data.forEach(shop=>{
+         
+      
+         
+             
+          
+                  
+                 let obj={
+                   id:shop._id,
+                   label: shop.product
+        
+               
+             
+               
+                 
+                  
+          
+                   
+                 };
+                
+                 result.push(obj);
+              
+                })
+            
+          
+             }
+           
+             res.jsonp(result);
+        
+            }
+          
+          })
+         
+          });
+        
+       
+      //this route shop
+          router.post('/autoProduct',isLoggedIn,function(req,res){
+              var code = req.body.code
+        
+              var fullname = req.user.fullname
+          
+              
+             
+              SaleStock.find({product:code,salesPerson:fullname},function(err,docs){
+             if(docs == undefined){
+               res.redirect('/')
+             }else
+      
+                res.send(docs[0])
+              })
+            
+            
+            })
+       
+    
+
+
+
+
+
 
 
 
@@ -354,6 +568,7 @@ router.get('/customer',function(req,res){
       var mobile = req.body.mobile
       var mobile2 = req.body.mobile2
       var address = req.body.address
+      var fullname = firstName+" "+lastName
       var town = req.body.town
       var city = req.body.city
       var country = req.body.country
@@ -397,7 +612,7 @@ router.get('/customer',function(req,res){
             req.flash('danger', req.session.errors[0].msg);
          
           
-            res.redirect('/customer');
+            res.redirect('/sales/customer');
     
           
         }
@@ -412,7 +627,7 @@ router.get('/customer',function(req,res){
                 
         req.flash('danger', 'Customer already exists');
     
-        res.redirect('/customer');
+        res.redirect('/sales/customer');
         }
         
         
@@ -423,6 +638,7 @@ router.get('/customer',function(req,res){
           book.salutation = salutation
           book.firstName= firstName
           book.lastName = lastName
+          book.fullname = fullname
           book.companyName = companyName
           book.email = email
           book.mobile = mobile
@@ -440,7 +656,7 @@ router.get('/customer',function(req,res){
                  
                     req.flash('success', 'Cutomer Added Successfully');
        
-                    res.redirect('/customer');
+                    res.redirect('/sales/customer');
                  
                   
                 

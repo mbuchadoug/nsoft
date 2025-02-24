@@ -15,6 +15,7 @@ var schema = new Schema({
     quantity: {type: Number},
     photo: {type: String},
     type: {type: String},
+    prefix: {type: String},
     account: {type: String},
     size: {type: Number},
     rate: {type: Number, },

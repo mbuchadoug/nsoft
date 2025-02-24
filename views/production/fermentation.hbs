@@ -561,6 +561,8 @@ this.firstElementChild.select();
   <script>
 
             function add() {
+               if(confirm('Are you sure your want to Add Record?'))
+   {
        let mass = document.getElementById('quantity').value 
        let refNumber = document.getElementById('refNumber').value
        let ingredient =   document.getElementById('ingredient').value         
@@ -603,7 +605,7 @@ this.firstElementChild.select();
 var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
-    /*var td6 = tr.appendChild(document.createElement('td'));*/
+    var td6 = tr.appendChild(document.createElement('td'));
   
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
@@ -620,9 +622,10 @@ link.classList.add('text-end','pe-0')*/
 
     td1.innerHTML = data.date;
     td2.innerHTML = data.batchNumber;
-    td3.innerHTML = data.ingredient;
-    td4.innerHTML=  data.quantity ;
-    td5.innerHTML=  data.product ;
+    td3.innerHTML = data.refNumber;
+    td4.innerHTML = data.ingredient;
+    td5.innerHTML=  data.quantity ;
+    td6.innerHTML=  data.product ;
     /*td5.innerHTML = data.time
     td6.innerHTML = data.finishTime*/
     
@@ -650,7 +653,7 @@ link.classList.add('text-end','pe-0')*/
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
-
+            }
 			
         </script>
 
@@ -658,6 +661,8 @@ link.classList.add('text-end','pe-0')*/
 
           
             function closeBatch(){
+               if(confirm('Are you sure your want to Close Batch?'))
+   {
               let tanks = document.getElementById('tanks').value
               let id = document.getElementById('id').value
 console.log(tanks,id,'tanks555')
@@ -692,6 +697,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
 
 }
             }
+            }
         </script>
 	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
         <div id="success" class="alert alert-success" style="display: none;">
@@ -716,7 +722,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
          <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
-             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="" readonly></div> </div></div>
+             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{batchNumber}}" readonly></div> </div></div>
 
 
  <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Quantity (kgs)</label> 
@@ -740,7 +746,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
   
      
       <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
-    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
+    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="" readonly></div>
 
     
          <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Operator</label> 
@@ -801,7 +807,8 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
 <thead>
 <tr>
   <th>Date</th>
-	<th>Ingredient Batch #</th>
+	<th> Batch #</th>
+  <th>Ref #</th>
 	<th>Ingredients</th>
 	<th>Quantity</th>
   <th>Product</th>
@@ -937,7 +944,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
                 
 
                    $('#ingredient').val(data.ingredient);
-                    $('#batchNumber').val(data.refNumber);
+                    $('#refNumber').val(data.refNumber);
                       $('#availableMass').val(data.quantity);
                
     

@@ -11,6 +11,7 @@ var schema = new Schema({
     salesPerson:{type:String},
     salesPersonId:{type:String},
     qty: {type: Number},
+    sales: {type: Number},
     mformat: {type: String},
     year: {type: Number},
     month: {type: String},
@@ -20,6 +21,8 @@ var schema = new Schema({
     rate: {type: Number},
     zwl: {type: Number},
     price: {type: Number},
+    openingStock: {type: Number},
+    closingStock: {type: Number},
 });
 
 module.exports = mongoose.model('SalesStock', schema);

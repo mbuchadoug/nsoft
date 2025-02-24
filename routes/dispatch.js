@@ -9562,7 +9562,7 @@ var month = m.format('MMMM')
   SaleStock.findById(id,function(err,doc){
     openingStock = doc.holdingCases
     sales = doc.holdingCases - cases
-  SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,openingBal:holdingCases}},function(err,docs){
+  SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,openingBal:openingStock,openingStock:openingStock,closingStock:cases,sales:sales}},function(err,docs){
 
     
   })
@@ -9587,6 +9587,30 @@ var month = m.format('MMMM')
 
 
 
+
+
+router.get('/salesList',isLoggedIn,function(req,res){
+  SaleStock.find(function(err,docs){
+    res.render('dispatcher/salesList2',{listX:docs})
+  })
+})
+
+router.get('/updateStock/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+res.render('dispatcher/update2',{id:id})
+})
+
+
+router.post('/updateStock/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  var cases = req.body.cases
+  console.log(cases,'cases')
+  SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,closingStock:cases}},function(err,docs){
+
+    res.redirect('/dispatch/salesList')
+  })
+
+})
 
 
 
