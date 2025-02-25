@@ -4,6 +4,8 @@ var InvoiceSubFile = require('../models/invoiceSubFile');
 var ReturnsSubFile = require('../models/returnsSubFile');
 var User = require('../models/user');
 var InvoPayments = require('../models/invoPayments');
+var SalesInvoPayments = require('../models/salesInvoPayments');
+var BatchCashRemitt = require('../models/batchCashRemitt');
 var Ware = require('../models/ware');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
@@ -1000,6 +1002,447 @@ router.get('/grvFileV/:id',function(req,res){
   
     
 
+      router.get('/batchRemitt',isLoggedIn,function(req,res){
+
+        var pro = req.user
+       
+      
+        SalesList.find(function(err,nocs){
+      
+        res.render('accounts5/batchR',{pro:pro,user:req.query,arr1:nocs})
+        })
+      
+        })
+      
+      router.post('/batchRemitt',isLoggedIn,function(req,res){
+        let m = moment()
+        var month = m.format('MMMM')
+        var year = m.format('YYYY')
+        let date6 =  moment().format('l');
+        let date7 =  date6.replace(/\//g, "");
+        let uid = req.user._id
+        var amount = req.body.amount
+        var salesPerson = req.body.salesPerson
+        RefNo.find({type:'cashRemitt'},function(err,docs){
+          let size = docs.length + 1
+         refNo = date7+'C'+size+'R'
+        
+      
+      
+         var invoice = new BatchCashRemitt()
+         invoice.date = date6
+         invoice.amount = amount
+         invoice.month = month
+         invoice.year = year
+         invoice.refNumber = refNo
+         invoice.salesPerson = salesPerson
+      
+         invoice.save()
+         .then(pro =>{
+      
+          User.findByIdAndUpdate(uid,{$set:{batchId:pro._id,refNumber:refNo, amount:amount,salesPerson:salesPerson,
+      }},function(err,docs){
+        
+            })
+      
+          var book = new RefNo();
+          book.refNumber = refNo
+          book.date = date6
+          book.type = 'cashRemitt'
+          book.save()
+          .then(pro =>{
+      
+            console.log('success')
+            res.redirect('/accounts5/invoiceNumberUpdateRemitt/')
+      
+          })
+      
+      
+         })
+      
+        })
+      })
+      
+      
+      
+      
+      router.get('/invoiceNumberUpdateRemitt',isLoggedIn,function(req,res){
+        var id = req.user._id
+       
+          InvoNum.find(function(err,doc){
+            let invoiceNum = doc[0].num
+            let invoId = doc[0]._id
+        
+        
+        User.findByIdAndUpdate(id,{$set:{invoiceNumber:invoiceNum}},function(err,docs){
+        
+        })
+        invoiceNum++
+        
+        InvoNum.findByIdAndUpdate(invoId,{$set:{num:invoiceNum}},function(err,tocs){
+        
+        })
+      
+        res.redirect('/accounts5/cashRemitt')
+        
+          })
+        
+        })
+      
+      
+      router.get('/cashRemitt',isLoggedIn,function(req,res){
+       
+        let batchId = req.user.batchId
+        let refNumber = req.user.refNumber
+        let amount = req.user.amount
+        let salesPerson = req.user.salesPerson
+        let invoiceNumber = req.user.invoiceNumber
+        //paymentStatus:"unpaid"
+       
+          res.render('accounts5/cashR',{invoiceNumber:invoiceNumber,batchId:batchId,refNumber:refNumber,amount:amount,salesPerson:salesPerson})
+        })
+      
+        
+        
+        
+        
+        
+      
+      
+        /*router.post('/select',function(req,res){
+          var id = req.body.code
+      
+          BatchRR.findById(id,function(err,doc){
+            
+      
+            res.send(doc)
+          })
+        })*/
+      
+      
+        router.post('/addInvoiceRemitt',isLoggedIn,function(req,res){
+          var m = moment()
+          var mformat = m.format('L')
+          var month = m.format('MMMM')
+          var year = m.format('YYYY')
+          let dateValue = moment().valueOf()
+          let arrV = []
+          let arrD={}
+          let arrCases= []
+          let arrE = []
+          let number1, status, amountX, number2
+          let salesPerson = req.user.fullname
+          let date = req.body.date
+          let invoiceNumber = req.body.invoiceNumber
+          let customer = req.body.customer
+          let customerAddress = req.body.customerAddress
+          let customerMobile = req.body.customerMobile
+          let product = req.body.product
+          let priceText = req.body.price
+          let openingStockText = req.body.openingStock
+          let closingStockAfterSalesText = req.body.closingStock
+          let casesText = req.body.cases
+          let unitsText = req.body.units
+          let paymentMethod = req.body.paymentMethod
+          let amountText = req.body.amount
+          let refNumber = req.body.refNumber
+          let expSales = req.body.expSales
+          let batchId = req.body.batchId
+          let missingBalance
+         
+          let reg = /\d+\.*\d*/g;
+      let price1 = priceText.match(reg)
+      let price = Number(price1)
+      
+      let op1 = openingStockText.match(reg)
+      let openingStock = Number(op1)
+      
+      let  cs1 = closingStockAfterSalesText.match(reg)
+      let closingStockAfterSales = Number(cs1)
+      
+      let cases1 = casesText.match(reg)
+      let cases = Number(cases1)
+      
+      let units1 = unitsText.match(reg)
+      let units = Number(units1)
+      
+      let amt1 = amountText.match(reg)
+      let amount = Number(amt1)
+      
+      
+      let expC = expSales.match(reg)
+      let expCases = Number(expC)
+      let closingStock2
+      let unitsX = cases * 12
+      
+          let totalUnits = unitsX + units
+          let subtotal = totalUnits * price 
+          let totalCases = totalUnits / 12
+          let closingStock = openingStock - totalCases
+          let unitsInSystem = closingStock * 12
+          let unitsInSystem2 = closingStockAfterSales * 12
+          let missingUnits = unitsInSystem - unitsInSystem2
+          console.log(unitsInSystem,unitsInSystem,'vvv')
+          if(missingUnits > 0){
+           missingBalance = missingUnits * price
+          }
+      
+         
+          
+      SalesInvoPayments.find({invoiceNumber:invoiceNumber},function(err,docs){
+      console.log(docs,'docsInvo')
+        for(var i = 0;i<docs.length; i++){
+         // console.log(docs[i].newMass,'serima')
+        arrV.push(docs[i].subtotal)
+       // arrCases.push(docs[i].cases)
+          }
+
+
+          for(var n = 0;n<docs.length; n++){
+            // console.log(docs[i].newMass,'serima')
+         
+           arrCases.push(docs[n].cases)
+             }
+
+         
+          //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+         //console.log(arrV,'arrV')
+        
+        //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+        number1=0;
+        number2 = 0
+        for(var z in arrV) { number1 += arrV[z]; }
+        number1.toFixed(2)
+      
+        for(var x in arrCases) { number2 += arrCases[x]; }
+        //console.log(cases,'cases')
+       let num = number2 + cases
+       
+       if(docs.length == 0){
+        closingStock = openingStock
+      }else{
+        closingStock = openingStock - number2
+      }
+
+       console.log(num,'num',closingStock,arrCases,cases,'cases',number2)
+       if(num <= expCases){
+      
+       
+        let subtotalX = number1 + subtotal
+          
+          var stock = new SalesInvoPayments();
+          
+          stock.date =date
+          stock.invoiceNumber = invoiceNumber
+          stock.customer = customer
+          stock.customerAddress = customerAddress
+          stock.customerMobile = customerMobile
+          stock.product = product
+          stock.price = price
+          stock.amount = amount
+          stock.openingStock = closingStock 
+          stock.closingStock = openingStock - num
+          stock.closingStockAfterSales = closingStockAfterSales
+          stock.cases = cases
+          stock.units = units
+          stock.paymentMethod = paymentMethod
+          stock.missingCases = openingStock - closingStock
+          stock.year = year
+          stock.month = month
+          stock.totalCases = totalCases
+          stock.batchId = batchId
+          stock.cumulativeTotal = subtotalX
+          stock.refNumber = refNumber
+          stock.missingUnits = missingUnits
+          stock.missingBalance = missingBalance
+          stock.subtotal = subtotal
+          stock.dateValue = dateValue
+          stock.salesPerson = salesPerson
+          
+          stock.save()
+          .then(pro =>{
+          
+            res.send(pro)
+          
+          })
+          
+        }else{
+        res.send(arrE)
+        }
+          
+        })
+          
+          
+          })
+          
+      
+      
+       
+          router.get('/reloadRemitt/:id',isLoggedIn,function(req,res){
+            var id = req.params.id
+         
+             SalesInvoPayments.find({refNumber:id},function(err,docs){
+               res.send(docs)
+             })
+          })
+      
+      
+          router.get('/autocompleteCustomerRemitt/',isLoggedIn, function(req, res, next) {
+            var id = req.user._id
+        
+        
+              var regex= new RegExp(req.query["term"],'i');
+             
+              var itemFilter =Customer.find({ fullname:regex},{'fullname':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+            
+              
+              itemFilter.exec(function(err,data){
+             
+           
+            console.log('data',data)
+            
+            var result=[];
+            
+            if(!err){
+               if(data && data.length && data.length>0){
+                 data.forEach(shop=>{
+           
+        
+           
+               
+            
+                    
+                   let obj={
+                     id:shop._id,
+                     label: shop.fullname
+          
+                 
+               
+                 
+                   
+                    
+            
+                     
+                   };
+                  
+                   result.push(obj);
+                
+                  })
+              
+            
+               }
+             
+               res.jsonp(result);
+          
+              }
+            
+            })
+           
+            });
+          
+         
+        //this route shop
+            router.post('/autoCustomerRemitt',isLoggedIn,function(req,res){
+                var code = req.body.code
+          
+        
+            
+                
+               
+                Customer.find({fullname:code},function(err,docs){
+               if(docs == undefined){
+                 res.redirect('/')
+               }else
+        
+                  res.send(docs[0])
+                })
+              
+              
+              })
+         
+      
+      
+              router.get('/autocompleteProductRemitt/',isLoggedIn, function(req, res, next) {
+                var id = req.user._id
+            
+                  var fullname = req.user.salesPerson
+                  var regex= new RegExp(req.query["term"],'i');
+                 
+                  var itemFilter =SaleStock.find({product:regex,salesPerson:fullname},{'product':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+                
+                  
+                  itemFilter.exec(function(err,data){
+                 
+               
+                console.log('data',data)
+                
+                var result=[];
+                
+                if(!err){
+                   if(data && data.length && data.length>0){
+                     data.forEach(shop=>{
+               
+            
+               
+                   
+                
+                        
+                       let obj={
+                         id:shop._id,
+                         label: shop.product
+              
+                     
+                   
+                     
+                       
+                        
+                
+                         
+                       };
+                      
+                       result.push(obj);
+                    
+                      })
+                  
+                
+                   }
+                 
+                   res.jsonp(result);
+              
+                  }
+                
+                })
+               
+                });
+              
+             
+            //this route shop
+                router.post('/autoProductRemitt',isLoggedIn,function(req,res){
+                    var code = req.body.code
+              
+                    var fullname = req.user.salesPerson
+                
+                    
+                   
+                    SaleStock.find({product:code,salesPerson:fullname},function(err,docs){
+                   if(docs == undefined){
+                     res.redirect('/')
+                   }else
+            
+                      res.send(docs[0])
+                    })
+                  
+                  
+                  })
+             
+          
+      
+      
+      
+      
+      
+      
+      
 
 
 

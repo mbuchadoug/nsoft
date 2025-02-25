@@ -22,6 +22,7 @@ var invoPaymentSchema = new Schema({
     closingStockAfterSales: {type: Number },
     closingStockVariance: {type: Number },
     missingUnits: {type: Number },
+    missingCases: {type: Number },
     missingBalance: {type: Number },
     customer:{type:String},
     customerMobile:{type:String},

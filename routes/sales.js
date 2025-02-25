@@ -132,10 +132,10 @@ router.get('/batch',isLoggedIn,function(req,res){
   var pro = req.user
  
 
+  SalesList.find(function(err,nocs){
 
-
-  res.render('sales/batch',{pro:pro,user:req.query})
-  
+  res.render('sales/batch',{pro:pro,user:req.query,arr1:nocs})
+  })
 
   })
 
