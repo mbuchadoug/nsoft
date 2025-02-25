@@ -1844,7 +1844,12 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let closingWeight = docs[size].openingWeightKg + docs[size].closingMass - docs[size].lossMargin
   let closingWeightTonne = closingWeight / 1000
   console.log(closingWeightTonne,'closingWeightTonne')
+for(var i =0;i<docs.length;i++){
+  let sId = docs[i]._id
+  StockRM.findByIdAndUpdate(sId,{$set:{closingMass:weight,closingMassTonne:weightTonne}},function(err,locs){
 
+  })
+}
 
 User.findByIdAndUpdate(uid,{$set:{batchId:batchId}},function(err,locs){
 
@@ -2168,8 +2173,8 @@ arrG.push(docs[size])
     method: "POST",
    //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
      //url: 'https://niyonsoft.org/uploadStatementDispatch',
-     url:'https://niyonsoft.org/rm/uploadGrv',
-     //url:'localhost:8000/rm/uploadGrv',
+    // url:'https://niyonsoft.org/rm/uploadGrv',
+     url:'localhost:8000/rm/uploadGrv',
     headers: {
       "Content-Type": "multipart/form-data"  
     },

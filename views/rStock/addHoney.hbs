@@ -491,10 +491,15 @@ this.firstElementChild.select();
   <script>
 
             function add() {
+               let lossMargin = document.getElementById('lossMargin').value 
                   if(confirm('Are you sure your want to Capture Mass?'))
    {
+
+     if(lossMargin == ""){
+ alert('Enter Number of Buckets')
+     }else{
        let mass = document.getElementById('mass').value 
-      let lossMargin = document.getElementById('lossMargin').value 
+     
        let refNumber = document.getElementById('grvNumber').value      
             $.ajax({
                 dataType: 'json',
@@ -574,7 +579,7 @@ link.classList.add('text-end','pe-0')*/
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
-			
+   }
             }
         </script>
 

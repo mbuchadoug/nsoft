@@ -20,6 +20,8 @@ var stockSchemaRM = new Schema({
     month: {type: String },
     year: {type: Number },
     lossMargin: {type: Number },
+    massAL: {type: Number },
+    massALT: {type: Number },
     openingWeightKg: {type: Number },
     openingWeightTonne: {type: Number },
     openingMass: {type: Number },
