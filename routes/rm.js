@@ -1484,9 +1484,18 @@ BatchRR.findById(id,function(err,docs){
   let batchNumber = docs.batchNumber
   let grvNumber = docs.grvNumber
 
- res.render('rStock/addMaterial',{date:date,supplier:supplier,mass:mass,
+  if(item == 'honey'){
+
+  
+
+ res.render('rStock/addhoney',{date:date,supplier:supplier,mass:mass,
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
+
+}else{
+  res.render('rStock/addMaterial',{date:date,supplier:supplier,mass:mass,
+    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+}
 })
 
 })
@@ -1504,6 +1513,11 @@ console.log('postMass')
 let mass = req.body.code
 let massTonne
 let grvNumber = req.body.grvNumber
+let lossMarginX = req.body.lossMargin
+let reg = /\d+\.*\d*/g;
+let result = lossMarginX.match(reg)
+let lossMargin = Number(result)
+
 BatchRR.find({grvNumber:grvNumber},function(err,docs){
   console.log(docs,'docs','receiveMass')
   let supplier = docs[0].supplier
@@ -1563,6 +1577,7 @@ stock.batchNumber = batchNumber
 stock.grvNumber = grvNumber
 stock.idNumber = idNumber
 stock.trailer = trailer
+stock.lossMargin = lossMargin
 stock.voucherNumber = voucherNumber
 stock.refNumber = refNumber
 stock.mobile = mobile
@@ -1623,9 +1638,10 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
  StockRM.find({refNumber:refNumber},function(err,nocs){
 
   let batchId = nocs[0].batchId
-  let closingMass = nocs[0].closingMass
+  let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+  let lossMargin = nocs[0].lossMargin
 
-  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete"}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
 
     let batchNumber= vocs.batchNumber
     let item = vocs.item
@@ -1633,7 +1649,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     let year = vocs.year
     let prefix = vocs.prefix
     let supplier = vocs.supplier
-    let availableMass = vocs.closingWeightKg
+    let availableMass = vocs.closingWeightKg - lossMargin
     let voucherNo = vocs.voucherNo
     console.log(availableMass,'availableMass333')
     RawMat.find({item:item},function(err,docs){
@@ -1808,6 +1824,7 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let supplier = docs[size].supplier
   let item = docs[size].item
   let date = docs[size].date
+  let lossMargin = docs[size].lossMargin
   let driver = docs[size].driver
   let regNumber = docs[size].regNumber
   let mobile = docs[size].mobile
@@ -1820,10 +1837,11 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let openingWeight = docs[size].openingWeight
   let openingWeightTonne = docs[size].openingWeightTonne
   console.log(openingWeightTonne,'openingWeightTonne')
-  let weight = docs[size].closingMass
-  let weightTonne = docs[size].closingMass / 1000
+  let weight = docs[size].closingMass - docs[size].lossMargin
+  //let weightTonne = docs[size].closingMass / 1000
+  let weightTonne = weight / 1000
   let dateValue = docs[size].dateValue
-  let closingWeight = docs[size].openingWeightKg + docs[size].closingMass
+  let closingWeight = docs[size].openingWeightKg + docs[size].closingMass - docs[size].lossMargin
   let closingWeightTonne = closingWeight / 1000
   console.log(closingWeightTonne,'closingWeightTonne')
 
