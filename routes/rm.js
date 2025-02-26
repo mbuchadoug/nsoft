@@ -189,9 +189,9 @@ router.get('/sms',function(req,res){
   var postData = JSON.stringify({
       "messages": [
           {
-              "destinations": [{"to":"263772219443"},{"to":"263771446827"}],
-              "from": "447491163443",
-              "text": "Niyonsoft Kambucha System Test"
+            "destinations": [{"to":"263771446827"},{"to":"263783186772"}],
+            "from": "447491163443",
+            "text": '1000'+'kgs'+' '+' '+'of'+' '+'Ginger'+' '+'Received'+' '+'https://google.com'
           }
       ]
   });
@@ -2290,6 +2290,7 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let supplier = docs[size].supplier
   let item = docs[size].item
   let date = docs[size].date
+  let refNumber = docs[size].refNumber
   let lossMargin = docs[size].lossMargin
   let driver = docs[size].driver
   let regNumber = docs[size].regNumber
@@ -2438,7 +2439,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
                             "from": "447491163443",
-                            "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'
+                            "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'+' '+ 'https://niyonsoft.org/rm/grvFile/'+refNumber
                         }
                     ]
                 });
