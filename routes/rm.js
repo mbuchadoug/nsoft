@@ -190,8 +190,8 @@ router.get('/sms',function(req,res){
       "messages": [
           {
             "destinations": [{"to":"263771446827"},{"to":"263783186772"}],
-            "from": "447491163443",
-            "text": '1000'+'kgs'+' '+' '+'of'+' '+'Ginger'+' '+'Received'+' '+'https://google.com'
+            "from": "Niyonsoft",
+            "text": 'System Test'
           }
       ]
   });
@@ -662,7 +662,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       "messages": [
           {
               "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-              "from": "447491163443",
+              "from": "Niyonsoft",
               "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
           }
       ]
@@ -785,7 +785,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -910,7 +910,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 "messages": [
                     {
                       "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                        "from": "447491163443",
+                        "from": "Niyonsoft",
                         "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                     }
                 ]
@@ -1041,7 +1041,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -1165,7 +1165,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -1294,7 +1294,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -1418,7 +1418,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -1542,7 +1542,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -1669,7 +1669,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
                     ]
@@ -2102,6 +2102,8 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
   
 
  StockRM.find({refNumber:refNumber},function(err,nocs){
+   if(nocs[0].item == 'honey'){
+
 
   let batchId = nocs[0].batchId
   let closingMass = nocs[0].closingMass - nocs[0].lossMargin
@@ -2182,40 +2184,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
 
         })
 
-      /*RefNo.find({type:item},function(err,docs){
-        let size = docs.length + 1
-       refNo = date7+'B'+size+item+'crush'
-        console.log(refNo,'refNo')*/
-    
-        /*var truck = new BatchGingerWash()
-        truck.date = date
-        truck.mformat = date6
-        truck.dateValue = dateValue
-        truck.item = item
-        truck.refNumber = refNo
-        truck.refNumber2 = refNumber
-        truck.batchNumber = batchNumber
-        truck.month = month
-        truck.qtyInMass = availableMass
-        truck.qtyOutMass= availableMass
-        truck.month = month
-        truck.type = 'null'
-        truck.status = 'null'
-        truck.status2 = 'null'
-        truck.year = year
-        truck.status = 'qtyOut'*/
-       
-      
-       
-    
-       /* truck.save()
-            .then(pro =>{
-    
-         
-             
-            })
-            })*/
-
+ 
           
       }
           })
@@ -2225,27 +2194,134 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     
   
 
-     
-       /* const from = "Kambucha"
-        const to = "263771446827"
-        const text =availableMass+'kgs'+' '+' '+'of'+' '+item+' '+'Received'
-        
-        async function sendSMS() {
-            await vonage.sms.send({to, from, text})
-                .then(resp => { console.log('Message sent successfully'); console.log(resp); })
-                .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
-        }
-        
-        sendSMS();*/
 
-  //req.flash('success', 'Goods received successfully');
+  res.redirect('/rm/stockRMFile/'+refNumber)
+      }else if(nocs[0].item == 'ginger'){
+        
+  let batchId = nocs[0].batchId
+  let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+  //let lossMargin = nocs[0].lossMargin
+  let margin = 0.02
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
+
+    let batchNumber= vocs.batchNumber
+    let item = vocs.item
+    let month = vocs.month
+    let year = vocs.year
+    let prefix = vocs.prefix
+    let supplier = vocs.supplier
+    let lossMargin = vocs.closingWeightKg * 0.02
+    let availableMass = vocs.closingWeightKg - lossMargin
+    let voucherNo = vocs.voucherNo
+    console.log(availableMass,'availableMass333')
+  
+    
+        })
+      
+    
   
 
-  //res.redirect('/rm/approvedRequisitions')
 
 
   res.redirect('/rm/stockRMFile/'+refNumber)
+      }else if(nocs[0].item == 'bananas'){
 
+
+
+          let batchId = nocs[0].batchId
+          let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+          let lossMargin = nocs[0].lossMargin
+        
+          BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
+        
+            let batchNumber= vocs.batchNumber
+            let item = vocs.item
+            let month = vocs.month
+            let year = vocs.year
+            let prefix = vocs.prefix
+            let supplier = vocs.supplier
+            let availableMass = vocs.closingWeightKg - lossMargin
+            let voucherNo = vocs.voucherNo
+            console.log(availableMass,'availableMass333')
+            RawMat.find({item:item},function(err,docs){
+              console.log(docs,'letu')
+              if(docs[0].item == 'sugar' || docs[0].item == 'bananas'){
+                console.log('true')
+                let date =  moment().format('l');
+          let date6 =  moment().format('l');
+          let dateValue = moment().valueOf()
+        
+          let date7 =  date6.replace(/\//g, "");
+          
+        
+             // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+        
+             // })
+              
+        
+        
+             RefNo.find({date:date,type:"crush",item:item},function(err,docs){
+              let size = docs.length + 1
+             refNo = date7+prefix+'B'+size+'CRS'
+              console.log(refNo,'refNo')
+          
+              var truck = new BatchGingerCrush()
+              truck.date = date
+              truck.mformat = date6
+              truck.dateValue = dateValue
+              truck.item = item
+              truck.type ='ingredient'
+              truck.voucherNo = voucherNo
+              truck.refNumber = batchNumber
+             
+              truck.batchNumber = refNo
+              truck.month = month
+              truck.nxtStage='cooking'
+              truck.qtyInMass = closingMass
+              truck.qtyOutMass= closingMass
+              truck.month = month
+              truck.status = 'null'
+              truck.year = year
+             
+              
+             
+          
+              truck.save()
+                  .then(pro =>{
+          
+                   
+        
+                    var book = new RefNo();
+                    book.refNumber = refNo
+                    book.item = item
+                    book.date = date
+                    book.type = 'crush'
+                    book.save()
+                    .then(prod =>{
+                
+                     
+                
+                    })
+        
+                  })
+        
+                })
+        
+         
+                  
+              }
+                  })
+            
+                })
+              
+            
+          
+        
+        
+          res.redirect('/rm/stockRMFile/'+refNumber)
+      }else if(nocs[0].item == ''){
+
+      }
   })
 
  
@@ -2438,7 +2514,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
                     "messages": [
                         {
                           "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
-                            "from": "447491163443",
+                            "from": "Niyonsoft",
                             "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'+' '+ 'https://niyonsoft.org/rm/grvFile/'+refNumber
                         }
                     ]
