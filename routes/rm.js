@@ -153,15 +153,65 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 
 router.get('/sms',function(req,res){
+ 
+  var https = require('follow-redirects').https;
+  var fs = require('fs');
+  
+  var options = {
+      'method': 'POST',
+      'hostname': 'lqvvzd.api.infobip.com',
+      'path': '/sms/2/text/advanced',
+      'headers': {
+          'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      'maxRedirects': 20
+  };
+  
+  var req = https.request(options, function (res) {
+      var chunks = [];
+  
+      res.on("data", function (chunk) {
+          chunks.push(chunk);
+      });
+  
+      res.on("end", function (chunk) {
+          var body = Buffer.concat(chunks);
+          console.log(body.toString());
+      });
+  
+      res.on("error", function (error) {
+          console.error(error);
+      });
+  });
+  
+  var postData = JSON.stringify({
+      "messages": [
+          {
+              "destinations": [{"to":"263772219443"},{"to":"263771446827"}],
+              "from": "447491163443",
+              "text": "Niyonsoft Kambucha System Test"
+          }
+      ]
+  });
+  
+  req.write(postData);
+  
+  req.end();
+})
+
+
+router.get('/whatsapp',function(req,res){
   var https = require('follow-redirects').https;
 var fs = require('fs');
 
 var options = {
     'method': 'POST',
-    'hostname': 'qdvdxm.api.infobip.com',
-    'path': '/sms/2/text/advanced',
+    'hostname': 'lqvvzd.api.infobip.com',
+    'path': '/whatsapp/1/message/template',
     'headers': {
-        'Authorization': 'App 2bb4cabff0c2975b2810f64e3a5c61ce-4ccf59f0-4f3b-4081-b333-3299bea3d987',
+        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     },
@@ -188,12 +238,26 @@ var req = https.request(options, function (res) {
 var postData = JSON.stringify({
     "messages": [
         {
-            "destinations": [{"to":"263781165357"}],
-            "from": "447491163443",
-            "text": "wadii"
+            "from": "447860099299",
+            
+            "to": "263771446827",
+           
+            "messageId": "4a4b42d0-1ac9-46a7-99a5-a8df6aa0dad9",
+            "content": {
+                "templateName": "test_whatsapp_template_en",
+                "templateData": {
+                    "body": {
+                        "placeholders": ["Niyonsoft"],
+                        //"text": "Niyonsoft Test"
+                    }
+                },
+                "language": "en"
+            }
         }
     ]
 });
+
+//7H6UZQJBLV6S2B7T3VP95FHB
 
 req.write(postData);
 
@@ -521,6 +585,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           let month = docs.month
           let year = docs.year
           let date = docs.date
+          let unit = docs.unit
           let prefix = docs.prefix
           let voucherNo = docs.voucherNumber
           let dateValue = docs.dateValue
@@ -561,6 +626,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                   .then(pro =>{
           
           
+  var https = require('follow-redirects').https;
+  var fs = require('fs');
+  
+  var options = {
+      'method': 'POST',
+      'hostname': 'lqvvzd.api.infobip.com',
+      'path': '/sms/2/text/advanced',
+      'headers': {
+          'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      'maxRedirects': 20
+  };
+  
+  var req = https.request(options, function (res) {
+      var chunks = [];
+  
+      res.on("data", function (chunk) {
+          chunks.push(chunk);
+      });
+  
+      res.on("end", function (chunk) {
+          var body = Buffer.concat(chunks);
+          console.log(body.toString());
+      });
+  
+      res.on("error", function (error) {
+          console.error(error);
+      });
+  });
+  
+  var postData = JSON.stringify({
+      "messages": [
+          {
+              "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+              "from": "447491163443",
+              "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+          }
+      ]
+  });
+  
+  req.write(postData);
+  
+  req.end();
           
               
     /*const from = "Kambucha"
@@ -639,7 +749,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-      
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
             
               
   /*  const from = "Kambucha"
@@ -720,6 +874,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       truck.save()
           .then(pro =>{
   
+            var https = require('follow-redirects').https;
+            var fs = require('fs');
+            
+            var options = {
+                'method': 'POST',
+                'hostname': 'lqvvzd.api.infobip.com',
+                'path': '/sms/2/text/advanced',
+                'headers': {
+                    'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                'maxRedirects': 20
+            };
+            
+            var req = https.request(options, function (res) {
+                var chunks = [];
+            
+                res.on("data", function (chunk) {
+                    chunks.push(chunk);
+                });
+            
+                res.on("end", function (chunk) {
+                    var body = Buffer.concat(chunks);
+                    console.log(body.toString());
+                });
+            
+                res.on("error", function (error) {
+                    console.error(error);
+                });
+            });
+            
+            var postData = JSON.stringify({
+                "messages": [
+                    {
+                      "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                        "from": "447491163443",
+                        "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                    }
+                ]
+            });
+            
+            req.write(postData);
+            
+            req.end();
   
         
               
@@ -806,7 +1005,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-      
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
             
               
    /*const from = "Kambucha"
@@ -886,7 +1129,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-      
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
               
               
    /* const from = "Kambucha"
@@ -971,7 +1258,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-      
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
               
               
    /* const from = "Kambucha"
@@ -1051,7 +1382,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-      
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
             
               
    /* const from = "Kambucha"
@@ -1131,7 +1506,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-      
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
             
               
     /*const from = "Kambucha"
@@ -1214,7 +1633,51 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-            
+                var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
               
     /*const from = "Kambucha"
     const to = "263771446827"
@@ -1463,7 +1926,7 @@ RawMat.find({item:item},function(err,docs){
 
 router.get('/receiveMaterialV/:id',function(req,res){
 var id = req.params.id
-
+console.log('good')
 res.redirect('/rm/receiveMaterial/'+id)
 })
 
@@ -1472,8 +1935,9 @@ router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
 
 var pro = req.user
 var id = req.params.id
+console.log(id,'idf')
 BatchRR.findById(id,function(err,docs){
-       if(docs){
+    
   let supplier = docs.supplier
   let item = docs.item
   let date = docs.date
@@ -1492,10 +1956,12 @@ BatchRR.findById(id,function(err,docs){
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
-}else{
+else{
   res.render('rStock/addMaterial',{date:date,supplier:supplier,mass:mass,
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
 }
+
+       
 })
 
 })
@@ -1934,6 +2400,53 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
         })
 
   }*/
+
+    var https = require('follow-redirects').https;
+                var fs = require('fs');
+                
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                            "from": "447491163443",
+                            "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();
+              
   
 })
 
