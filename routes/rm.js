@@ -1952,7 +1952,7 @@ BatchRR.findById(id,function(err,docs){
 
   
 
- res.render('rStock/addhoney',{date:date,supplier:supplier,mass:mass,
+ res.render('rStock/addHoney',{date:date,supplier:supplier,mass:mass,
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
