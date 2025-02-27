@@ -1950,7 +1950,7 @@ BatchRR.findById(id,function(err,docs){
 
   if(item == 'honey'){
 
-  
+  console.log(grvNumber,'grvNumber')
 
  res.render('rStock/addHoney',{date:date,supplier:supplier,mass:mass,
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
@@ -1975,10 +1975,11 @@ var year = m.format('YYYY')
 let dateValue = moment().valueOf()
 let arrV = []
 let number1
-console.log('postMass')
+
 let mass = req.body.code
 let massTonne
 let grvNumber = req.body.grvNumber
+console.log(grvNumber,'grvNumber')
 let lossMarginX = req.body.lossMargin
 let reg = /\d+\.*\d*/g;
 let result = lossMarginX.match(reg)
