@@ -672,7 +672,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
   
   req.end();
           
-            
+              
     /*const from = "Kambucha"
     const to = "263771446827"
     const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
@@ -683,7 +683,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
             .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
     }
     
-    sendSMS();
+    sendSMS();*/
 
     /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
     const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
@@ -749,7 +749,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-               var https = require('follow-redirects').https;
+                var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -806,7 +806,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
             .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
     }
     
-    sendSMS();
+    sendSMS();*/
     
    
     /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
@@ -1258,7 +1258,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-              var https = require('follow-redirects').https;
+             var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1382,7 +1382,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-               var https = require('follow-redirects').https;
+                var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1702,7 +1702,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           from: '+12194198819',
           to: '+263781165357'
         })
-        .then(message => console.log(message.sid));
+        .then(message => console.log(message.sid));*/
       
         
       
