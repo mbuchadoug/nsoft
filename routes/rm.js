@@ -672,7 +672,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
   
   req.end();
           
-              
+    */          
     /*const from = "Kambucha"
     const to = "263771446827"
     const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
@@ -683,7 +683,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
             .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
     }
     
-    sendSMS();*/
+    sendSMS();
 
     /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
     const authToken = '95d50bdc50ec268f2213a1a1634c65ea';
@@ -749,7 +749,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+               var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -793,7 +793,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
             
               
   /*  const from = "Kambucha"
@@ -806,7 +806,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
             .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
     }
     
-    sendSMS();*/
+    sendSMS();
     
    
     /*const accountSid = 'AC242271b8616514bb11c25c9513538395';
@@ -1005,7 +1005,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+              var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1129,7 +1129,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-                var https = require('follow-redirects').https;
+              var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1258,7 +1258,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-                var https = require('follow-redirects').https;
+              var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1382,7 +1382,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+               var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1633,7 +1633,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+               var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1677,7 +1677,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
     /*const from = "Kambucha"
     const to = "263771446827"
@@ -1702,7 +1702,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           from: '+12194198819',
           to: '+263781165357'
         })
-        .then(message => console.log(message.sid));*/
+        .then(message => console.log(message.sid));
       
         
       
@@ -1745,7 +1745,7 @@ var id = req.params.id
 res.redirect('/rm/viewGRV/'+id)
 })
 
-router.get('/viewGRV/:id',isLoggedIn,function(req,res){
+router.get('/viewGRV/:id',function(req,res){
 var id = req.params.id
 
 StockVoucher.find(function(err,docs){
@@ -2119,6 +2119,15 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     let supplier = vocs.supplier
     let availableMass = vocs.closingWeightKg - lossMargin
     let voucherNo = vocs.voucherNo
+
+    /*StockRM.find({refNumber:refNumber},function(err,locs){
+      for(var i = 0;i<locs.length;i++){
+        let idR = locs[i]._id
+    StockRM.findByIdAndUpdate(idR,{$set:{lossMargin:lossMargin}},function(err,hocs){
+      
+    })
+      }
+    })*/
     console.log(availableMass,'availableMass333')
     RawMat.find({item:item},function(err,docs){
       console.log(docs,'letu')
@@ -2199,22 +2208,34 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       }else if(nocs[0].item == 'ginger'){
         
   let batchId = nocs[0].batchId
-  let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+  let lossMarginG = nocs[0].closingMass * 0.025
   //let lossMargin = nocs[0].lossMargin
   let margin = 0.02
-  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete"}},function(err,vocs){
 
+    console.log(vocs,'vocs')
     let batchNumber= vocs.batchNumber
     let item = vocs.item
     let month = vocs.month
     let year = vocs.year
     let prefix = vocs.prefix
     let supplier = vocs.supplier
-    let lossMargin = vocs.closingWeightKg * 0.02
-    let availableMass = vocs.closingWeightKg - lossMargin
+    //let lossMarginG = vocs.receivedKgs * 0.025
+    console.log(lossMarginG,'lossMarginG')
+    //let availableMass = vocs.closingWeightKg - lossMargin
     let voucherNo = vocs.voucherNo
-    console.log(availableMass,'availableMass333')
+  //  console.log(availableMass,'availableMass333')
   
+
+    StockRM.find({refNumber:refNumber},function(err,locs){
+      console.log(locs,'locs55')
+      for(var i = 0;i<locs.length;i++){
+        let idR = locs[i]._id
+    StockRM.findByIdAndUpdate(idR,{$set:{lossMargin:lossMarginG}},function(err,hocs){
+
+    })
+      }
+    })
     
         })
       
@@ -2319,8 +2340,6 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
         
         
           res.redirect('/rm/stockRMFile/'+refNumber)
-      }else if(nocs[0].item == ''){
-
       }
   })
 
@@ -2360,7 +2379,7 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   console.log(id,'refNumber')
 
   StockRM.find({refNumber:id},function(err,docs){
-    if(docs.length > 0){
+    if(docs.length > 0 ){
   let size = docs.length - 1
 
   let supplier = docs[size].supplier
@@ -2381,6 +2400,8 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let openingWeightTonne = docs[size].openingWeightTonne
   console.log(openingWeightTonne,'openingWeightTonne')
   let weight = docs[size].closingMass - docs[size].lossMargin
+
+  console.log(docs[size].closingMass, docs[size].lossMargin,weight,'weight')
   //let weightTonne = docs[size].closingMass / 1000
   let weightTonne = weight / 1000
   let dateValue = docs[size].dateValue
@@ -2478,7 +2499,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
 
   }*/
 
-    var https = require('follow-redirects').https;
+   var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -2666,21 +2687,22 @@ res.redirect('/rm/grvFile/'+id)
 
 
 
-router.get('/grvFile/:id',isLoggedIn,function(req,res){
+router.get('/grvFile/:id',function(req,res){
 
   var m = moment()
   var mformat = m.format('L')
   var month = m.format('MMMM')
   var year = m.format('YYYY')
-  var date = req.user.date
+  //var date = req.user.date
   var refNumber = req.params.id
-  let batchId = req.user.batchId
-  var batchNumber = req.user.batchNumber
+  //let batchId = req.user.batchId
+  //var batchNumber = req.user.batchNumber
 
   StockRM.find({refNumber:refNumber}).lean().then(docs=>{
 
 
   let size = docs.length - 1
+  let batchNumber = docs[0].batchNumber
 
 var arrG = []
 arrG.push(docs[size])
@@ -2796,9 +2818,9 @@ arrG.push(docs[size])
   
   })
 
-router.get('/openFile/:id',isLoggedIn,function(req,res){
+router.get('/openFile/:id',function(req,res){
 var refNumber = req.params.id
-var batchNumber = req.user.batchNumber
+var batchNumber = req.params.id
 var m = moment()
 var mformat = m.format('L')
 var month = m.format('MMMM')

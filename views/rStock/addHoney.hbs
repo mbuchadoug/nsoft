@@ -491,15 +491,26 @@ this.firstElementChild.select();
   <script>
 
             function add() {
-               let lossMargin = document.getElementById('lossMargin').value 
+               let buckets = document.getElementById('buckets').value 
+               let supplier = document.getElementById('supplier').value 
+                let mass = document.getElementById('mass').value 
+               let bucketWeight = document.getElementById('bucketWeight').value
                   if(confirm('Are you sure your want to Capture Mass?'))
    {
 
-     if(lossMargin == ""){
- alert('Enter Number of Buckets')
-     }else{
-       let mass = document.getElementById('mass').value 
-     
+     if(buckets == "" || bucketWeight == "" ){
+ alert('Enter Number of Buckets Or Weight')
+     }
+     else if(supplier == ""){
+  alert('Reload Page')
+     }
+     else if(mass == ""){
+  alert('Enter Mass')
+
+     }
+     else{
+      
+      let lossMargin = buckets * bucketWeight
        let refNumber = document.getElementById('grvNumber').value      
             $.ajax({
                 dataType: 'json',
@@ -625,11 +636,12 @@ link.classList.add('text-end','pe-0')*/
     <input  id="reqMass" name="reqMass" class="ember-text-field ember-view form-control" type="text"  value="{{mass}}" readonly></div>
 
 
-    <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Enter Buckets</label> 
-    <input  id="lossMargin" name="lossMargin" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
+    <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Enter Buckets/Crates</label> 
+    <input  id="buckets" name="buckets" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
     
     
-    
+        <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">B/C Weight</label> 
+    <input  id="bucketWeight" name="bucketWeight" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
    
     
     
