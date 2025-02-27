@@ -661,7 +661,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
   var postData = JSON.stringify({
       "messages": [
           {
-              "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+              "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
               "from": "Niyonsoft",
               "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
           }
@@ -784,7 +784,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -909,7 +909,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
             var postData = JSON.stringify({
                 "messages": [
                     {
-                      "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                      "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                         "from": "Niyonsoft",
                         "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                     }
@@ -1040,7 +1040,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -1164,7 +1164,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -1293,7 +1293,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -1417,7 +1417,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -1541,7 +1541,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -1668,7 +1668,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": 'New Purchase Order '+ ' '+'of'+' '+requestedMassKgs+'kgs'+' '+item+' '+'created' 
                         }
@@ -2534,7 +2534,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'+' '+ 'https://niyonsoft.org/rm/grvFile/'+refNumber
                         }
