@@ -2168,6 +2168,9 @@ router.post('/', passport.authenticate('local.signin', {
     res.redirect('/accounts4/stockRequisitions')
   }else if(req.user.role == "production-supervisor"){
     res.redirect('/rm/voucherNumberUpdate')
+  }
+  else if(req.user.role == "production-supervisor2"){
+    res.redirect('/rm2/voucherNumberUpdate')
   }else if(req.user.role == "sales-branch"){
     res.redirect('/merch/refDispUpdate/')
   }else if(req.user.role == "admin"){

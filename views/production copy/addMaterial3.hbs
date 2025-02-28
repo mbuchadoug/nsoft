@@ -559,9 +559,7 @@ this.firstElementChild.select();
             function add() {
                        if(confirm('Are you sure your want to Capture Mass?'))
    {
-       
-       let crates = document.getElementById('crates').value 
-       let mass = crates * 31.5
+       let mass = document.getElementById('mass').value 
        let refNumber = document.getElementById('refNumber').value
        let batchId = document.getElementById('batchId').value
        let availableMass = {{{availableMass}}}
@@ -667,18 +665,6 @@ this.firstElementChild.select();
            <div class="ac-box ">
              <input  id="availableMass" name="availabaleMass" class="ember-text-field ember-view form-control" type="text" value="{{availableMass}}kgs" readonly></div> </div></div>
 
-
-              <div class="col-lg-2"><label class="col-form-label required">Number Of Crates</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="crates" name="crates" class="ember-text-field ember-view form-control" type="number" value=""></div> </div></div>
-
-
-              <div class="col-lg-2"><label class="col-form-label required">Avg Weight</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="avgWeight" name="avgWeight" class="ember-text-field ember-view form-control" type="text" value="31.5kgs" readonly></div> </div></div>
-
               
        <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
  <input type="hidden" name="batchId" id="batchId" value="{{batchId}}">     
@@ -765,8 +751,8 @@ this.firstElementChild.select();
       </div>
       </form>
         <div class="btn-toolbar">
-          <button  onclick="add()" class="btn btn-primary ember-view" > Add Weight </button>
-        <!--<button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
+          <button  onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+        <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
       <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatchOut/{{batchId}}"> Close Batch </a>
 

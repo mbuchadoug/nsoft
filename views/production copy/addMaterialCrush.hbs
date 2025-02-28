@@ -8,11 +8,11 @@
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
       <link rel="stylesheet" href="bootstrap-5.3.3/dist/css/bootstrap.min.css">
      <link href="sidebars.css" rel="stylesheet">
-      
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
    
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <!-- Tracking Load Time -->
 
           
@@ -144,7 +144,7 @@ ul.no-bullets {
 <!----><!---->      </a>
     </li>
     
-  
+ 
 
 
   <ul class="nav flex-column" id="nav_accordion">
@@ -346,12 +346,13 @@ ul.no-bullets {
 
 <script>
 
+
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-   url:`/production/reloadGingerOut/{{{refNumber}}}`,
+    url:`/production/reloadGingerCrush/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    
@@ -552,30 +553,25 @@ this.firstElementChild.select();
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Ginger Wash (Qty Out) </h3></div>
+<h3 class="over-flow">{{item}} crush (Qty In) </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
             function add() {
+
                        if(confirm('Are you sure your want to Capture Mass?'))
    {
-       
-       let crates = document.getElementById('crates').value 
-       let mass = crates * 31.5
-       let refNumber = document.getElementById('refNumber').value
-       let batchId = document.getElementById('batchId').value
-       let availableMass = {{{availableMass}}}
+       let mass = document.getElementById('mass').value 
        let batchNumber = document.getElementById('batchNumber').value      
             $.ajax({
                 dataType: 'json',
                 data: {
                     code: mass,
                     batchNumber:batchNumber,
-                    batchId:batchId,refNumber:refNumber,availableMass:availableMass
                     
                 },
                 type: 'POST',
-                url: "/production/qtyOutGingerWash",
+                url: "/production/qtyInGingerCrush",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -615,7 +611,7 @@ this.firstElementChild.select();
     
     
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#totalMass").val(data.totalMass)
+    $("#totalMass").val(data.closingMass)
      $("#mass").val('')
   
 
@@ -629,6 +625,7 @@ this.firstElementChild.select();
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
+
             }
 			
         </script>
@@ -641,8 +638,8 @@ this.firstElementChild.select();
              <div class="form-check cursor-pointer mb-2">  
          <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
          <div class="row form-group">
-        <div class="col-lg-2"><label class="col-form-label required">Supplier</label> 
-         <input  id="supplier" name="supplier" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{supplier}}" readonly></div>
+        <!--<div class="col-lg-2"><label class="col-form-label required">Batch Number</label> 
+         <input  id="batchNumber" name="batchNumber" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{batchNumber}}" readonly></div>-->
 
          <div class="col-lg-2"><label class="col-form-label required">Item</label>
           <div id="ember330" class="ember-view">
@@ -667,21 +664,9 @@ this.firstElementChild.select();
            <div class="ac-box ">
              <input  id="availableMass" name="availabaleMass" class="ember-text-field ember-view form-control" type="text" value="{{availableMass}}kgs" readonly></div> </div></div>
 
-
-              <div class="col-lg-2"><label class="col-form-label required">Number Of Crates</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="crates" name="crates" class="ember-text-field ember-view form-control" type="number" value=""></div> </div></div>
-
-
-              <div class="col-lg-2"><label class="col-form-label required">Avg Weight</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="avgWeight" name="avgWeight" class="ember-text-field ember-view form-control" type="text" value="31.5kgs" readonly></div> </div></div>
-
               
        <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
- <input type="hidden" name="batchId" id="batchId" value="{{batchId}}">     
+     
      
     
     
@@ -731,7 +716,7 @@ this.firstElementChild.select();
 	<th>Opening Mass</th>
 	<!--<th>Cases Received</th>-->
 	<th>New Mass</th>
-  <th>Variance</th>
+  <th>Closing Mass</th>
    <th>Batch Number</th>
 
 
@@ -765,10 +750,10 @@ this.firstElementChild.select();
       </div>
       </form>
         <div class="btn-toolbar">
-          <button  onclick="add()" class="btn btn-primary ember-view" > Add Weight </button>
-        <!--<button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
+          <button  onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+        <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
-      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatchOut/{{batchId}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatchCrush/{{batchId}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -781,7 +766,7 @@ this.firstElementChild.select();
 
       
        </main>
-      
+     
                             </div><div id="zgs20_gstootltip" class="zgs19_gstootltip zgs19_gsTipBoxShadow zgs19_gsBorderBox zgs19_gsDisplayNone"><div id="zgs20_gstoolarrow" class="zgs19_gsBorderBox"></div></div></div></div></body></html>
 
 
@@ -793,3 +778,4 @@ this.firstElementChild.select();
 <!--<button id="submit">Send</button>-->
 <label for="output">Mass</label><textarea id="output"></textarea>
 </div>
+

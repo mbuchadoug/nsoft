@@ -12,7 +12,11 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
    
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- Tracking Load Time -->
 
           
@@ -144,8 +148,9 @@ ul.no-bullets {
 <!----><!---->      </a>
     </li>
     
-  
 
+
+ 
 
   <ul class="nav flex-column" id="nav_accordion">
 
@@ -346,12 +351,14 @@ ul.no-bullets {
 
 <script>
 
+
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-   url:`/production/reloadGingerOut/{{{refNumber}}}`,
+  
+     url: `/production/reloadCooking/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    
@@ -366,6 +373,7 @@ $.ajax({
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
     
    
     td1.id =data[i]._id
@@ -382,12 +390,13 @@ link.className = "text-end";*/
 td5.appendChild(link);*/
 
 
-td1.innerHTML = data[i].weight;
-    td2.innerHTML = data[i].openingMass;
+td1.innerHTML = data[i].ingredient;
+    td2.innerHTML = data[i].batchNumber;
    // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data[i].newMass ;
-    td5.innerHTML = data[i].closingMass
-    td6.innerHTML = data[i].refNumber
+    td4.innerHTML=  data[i].quantity ;
+    td5.innerHTML = data[i].potNumber
+    td6.innerHTML = data[i].time
+    td7.innerHTML = data[i].finishTime
 
     /*let link2 = "/rec/delete/"+data[i]._id
 
@@ -552,30 +561,40 @@ this.firstElementChild.select();
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Ginger Wash (Qty Out) </h3></div>
+<h3 class="over-flow">Add Cooking Ingredients </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
             function add() {
-                       if(confirm('Are you sure your want to Capture Mass?'))
+              if(confirm('Are you sure your want to Capture Mass?'))
    {
-       
-       let crates = document.getElementById('crates').value 
-       let mass = crates * 31.5
+      /* Perform operations */
+  
+       let mass = document.getElementById('quantity').value 
        let refNumber = document.getElementById('refNumber').value
-       let batchId = document.getElementById('batchId').value
-       let availableMass = {{{availableMass}}}
-       let batchNumber = document.getElementById('batchNumber').value      
+       let ingredient =   document.getElementById('ingredient').value      
+       let potNumber =   document.getElementById('potNumber').value  
+       let time =   document.getElementById('time').value       
+       let finishTime =   document.getElementById('finishTime').value    
+       let shift =  document.getElementById('shift').value  
+       let operator =  document.getElementById('operator').value  
+       let date =  document.getElementById('date').value 
+      let teamLeader =  document.getElementById('teamLeader').value 
+       let batchNumber = document.getElementById('batchNumber').value
+       console.log(mass,refNumber,ingredient,potNumber,time,finishTime,
+       shift,operator,date,batchNumber,'beggin')
+      
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,
-                    batchNumber:batchNumber,
-                    batchId:batchId,refNumber:refNumber,availableMass:availableMass
+                    code: mass,batchNumber:batchNumber,
+                    refNumber:refNumber,ingredient:ingredient, potNumber:potNumber,
+                    teamLeader:teamLeader,
+                    time:time,finishTime:finishTime,shift:shift,operator:operator,date:date
                     
                 },
                 type: 'POST',
-                url: "/production/qtyOutGingerWash",
+                url: '/production/cookingMat/',
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -583,7 +602,7 @@ this.firstElementChild.select();
                
                  
                  alert('Enter Mass')
-                   $("#mass").val("")
+                   $("#quantity").val("")
                  
                  
                  
@@ -596,7 +615,7 @@ this.firstElementChild.select();
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
+var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
@@ -604,18 +623,34 @@ this.firstElementChild.select();
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
     td5.id = data._id
+/*td2.classList.add('text-end', 'pe-0')
+td3.classList.add('text-end', 'pe-0')
+td4.classList.add('text-end', 'pe-1')
+link.classList.add('text-end','pe-0')*/
+//link.setAttribute("href", "/rec/delete")
+//link.className = "text-end";
 
 
-    td1.innerHTML = data.weight;
-    td2.innerHTML = data.openingMass;
-   // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data.newMass ;
-    td5.innerHTML = data.closingMass
-    td6.innerHTML = data.batchNumber
+
+
+    td1.innerHTML = data.ingredient;
+    td2.innerHTML = data.batchNumber;
+    td3.innerHTML = data.quantity;
+    td4.innerHTML=  data.potNumber ;
+    td5.innerHTML = data.time
+    td6.innerHTML = data.finishTime
     
-    
+    //let link2 = "/rec/delete/"+data._id
+
+    //td5.innerHTML = "Delete"
+    //var linkText = 'Delete'
+    // link.appendChild(linkText);
+    //link.href="/rec/delete/"+data._id
+    //td5.innerText = 'Delete'
+    //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#totalMass").val(data.totalMass)
+    $("#totalMass").val(data.closingMass)
      $("#mass").val('')
   
 
@@ -627,27 +662,50 @@ this.firstElementChild.select();
                 }
                
             });
-                /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
-            }
+               }  /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
 			
         </script>
 
               <form class="zb-txn-form"  name="sample">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
-          <!--<fieldset role="radiogroup" class="form-group">
-              <div class="form-check cursor-pointer mb-2">  
-              <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>
-             <div class="form-check cursor-pointer mb-2">  
-         <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
+         <input type="hidden" id="id" name="id">
          <div class="row form-group">
-        <div class="col-lg-2"><label class="col-form-label required">Supplier</label> 
-         <input  id="supplier" name="supplier" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{supplier}}" readonly></div>
+        <div class="col-lg-2"><label class="col-form-label required">Ingredient</label> 
+         <input  id="ingredient" name="ingredient" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" autocomplete="off" ></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Item</label>
+         <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
-             <input  id="item" name="item" class="ember-text-field ember-view form-control" type="text" value="{{item}}" readonly></div> </div></div>
+             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{batchNumber}}" readonly></div> </div></div>
+
+
+ <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Quantity (kgs)</label> 
+    <input  id="quantity" name="quantity" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
+
+
+
+ <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Available Mass(kgs)</label> 
+    <input  id="availableMass" name="availableMass" class="ember-text-field ember-view form-control" type="number"  value="" readonly ></div>
+
+    <div class="col-lg-2"><label class="col-form-label required">Pot Number</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="potNumber" name="potNumber" class="ember-text-field ember-view form-control" type="number" value="" ></div> </div></div>
+
+
+ <div class="col-lg-2"><label class="col-form-label required">Start Time</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="time" name="time" class="ember-text-field ember-view form-control" type="time" value="" ></div> </div></div>
+
+
+
+<div class="col-lg-2"><label class="col-form-label required">Finish Time</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="finishTime" name="finishTime" class="ember-text-field ember-view form-control" type="time" value="" ></div> </div></div>
+
 
           <div class="col-lg-2"><label class="col-form-label required">Date</label>
               <div id="ember330" class="ember-view">
@@ -655,34 +713,20 @@ this.firstElementChild.select();
 
       <input  id="date" name="date" class="ember-text-field ember-view form-control" type="text" value="{{date}}" readonly>
             </div> </div></div>
-
-
- <div class="col-lg-2"><label class="col-form-label required">Batch Number</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{batchNumber}}" readonly></div> </div></div>
-
-            <div class="col-lg-2"><label class="col-form-label required">Available Mass</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="availableMass" name="availabaleMass" class="ember-text-field ember-view form-control" type="text" value="{{availableMass}}kgs" readonly></div> </div></div>
-
-
-              <div class="col-lg-2"><label class="col-form-label required">Number Of Crates</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="crates" name="crates" class="ember-text-field ember-view form-control" type="number" value=""></div> </div></div>
-
-
-              <div class="col-lg-2"><label class="col-form-label required">Avg Weight</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="avgWeight" name="avgWeight" class="ember-text-field ember-view form-control" type="text" value="31.5kgs" readonly></div> </div></div>
-
-              
-       <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
- <input type="hidden" name="batchId" id="batchId" value="{{batchId}}">     
+  
      
+      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
+    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="" readonly></div>
+
+     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Shift</label> 
+    <input  id="shift" name="shift" class="ember-text-field ember-view form-control" type="text"  value="{{shift}}" readonly></div>
+         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Operator</label> 
+    <input  id="operator" name="operator" class="ember-text-field ember-view form-control" type="text"  value="{{operator}}" readonly></div>
+
+     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Team Leader</label> 
+    <input  id="teamLeader" name="teamLeader" class="ember-text-field ember-view form-control" type="text"  value="{{teamLeader}}" readonly></div>
+
+
     
     
     
@@ -697,7 +741,7 @@ this.firstElementChild.select();
 
 
     
-    <div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
+    <!--<div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
     <table class="table table-bordered">
         <tbody><tr>
           <td>
@@ -717,7 +761,7 @@ this.firstElementChild.select();
     </tbody>
     </table>
     </div>
-    </div> 
+    </div> -->
 
      
 
@@ -727,12 +771,12 @@ this.firstElementChild.select();
       <table class="table table-bordered" id="kt_ecommerce_report_sales_table">
 <thead>
 <tr>
-  <th>Weight</th>
-	<th>Opening Mass</th>
-	<!--<th>Cases Received</th>-->
-	<th>New Mass</th>
-  <th>Variance</th>
-   <th>Batch Number</th>
+  <th>Ingredient</th>
+	<th>Batch Number</th>
+	<th>Mass (kgs)</th>
+	<th>Pot Number</th>
+  <th>Start Time</th>
+   <th>Finish Time</th>
 
 
                               </tr>
@@ -765,10 +809,10 @@ this.firstElementChild.select();
       </div>
       </form>
         <div class="btn-toolbar">
-          <button  onclick="add()" class="btn btn-primary ember-view" > Add Weight </button>
-        <!--<button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
+          <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
+        <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
 
-      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatchOut/{{batchId}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');"   href="/production/closeCookingBatch/{{id}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -792,4 +836,104 @@ this.firstElementChild.select();
 <label for="editor">TX</label><textarea id="editor"></textarea>
 <!--<button id="submit">Send</button>-->
 <label for="output">Mass</label><textarea id="output"></textarea>
+
 </div>
+
+
+
+ <script>
+      $(function(){
+    $('#ingredient').autocomplete({
+    source: function(req,res){
+
+      $.ajax({
+        url:"/production/autocompleteCrush/",
+        dataType:"jsonp",
+        type:"GET",
+        data:req,
+        success: function(data){
+          res(data)
+        
+
+        },
+        error: function(err){
+          console.log(err.status);
+        }
+      });
+    },
+
+    minLength:1,
+    select: function(event,ui){
+
+  $.ajax({
+                dataType: 'json',
+                data: {
+                    code: ui.item.label,
+                    
+                },
+                type: 'POST',
+                url: "/production/autoCrush",
+                success: function(data) {
+               
+                
+
+                   $('#ingredient').val(data.item);
+                    $('#refNumber').val(data.batchNumber);
+                     $('#availableMass').val(data.qtyOutMass);
+               
+    
+          
+                
+            
+                }
+               
+            });
+ 
+
+
+  
+    }
+
+
+
+    });
+
+      });
+      </script> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+ <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+
+
+
+
+
+
+
+
+

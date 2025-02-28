@@ -409,7 +409,7 @@ router.get('/voucherNumberUpdate',isLoggedIn,function(req,res){
   
   })
 
-  res.redirect('/rm/stockRequisition')
+  res.redirect('/rm2/stockRequisition')
   
     })
   
@@ -422,7 +422,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     var errorMsg = req.flash('danger')[0];
     var successMsg = req.flash('success')[0];
     var voucherNumber = req.user.voucherNumber
-  res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,voucherNumber:voucherNumber})
+  res.render('rStockTest/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,voucherNumber:voucherNumber})
   
   })
         
@@ -481,7 +481,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
           req.flash('danger', req.session.errors[0].msg);
   
   
-      res.redirect('/rm/stockRequisition');
+      res.redirect('/rm2/stockRequisition');
           
         
       }
@@ -554,7 +554,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
             req.flash('success', 'Request Sent');
   
   
-            res.redirect('/rm/approval/'+user._id);
+            res.redirect('/rm2/approval/'+user._id);
             
       })
   
@@ -626,7 +626,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                   .then(pro =>{
           
           
-  var https = require('follow-redirects').https;
+  /*var https = require('follow-redirects').https;
   var fs = require('fs');
   
   var options = {
@@ -670,7 +670,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
   
   req.write(postData);
   
-  req.end();
+  req.end();*/
           
               
     /*const from = "Kambucha"
@@ -711,7 +711,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               //res.redirect('/rm/viewPO3/'+id)
 
 
-              res.redirect('/rm/approvedRequisitions/')
+              res.redirect('/rm2/approvedRequisitions/')
 
            
              // res.redirect('/accounts3/grvFileV/'+id)
@@ -749,7 +749,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+              /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -793,7 +793,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
             
               
   /*  const from = "Kambucha"
@@ -837,7 +837,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -874,7 +874,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       truck.save()
           .then(pro =>{
   
-            var https = require('follow-redirects').https;
+           /* var https = require('follow-redirects').https;
             var fs = require('fs');
             
             var options = {
@@ -918,7 +918,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
             
             req.write(postData);
             
-            req.end();
+            req.end();*/
   
         
               
@@ -1005,7 +1005,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-              var https = require('follow-redirects').https;
+            /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1049,7 +1049,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
             
               
    /*const from = "Kambucha"
@@ -1091,7 +1091,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
          // res.redirect('/rm/viewPO3/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1129,7 +1129,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-              var https = require('follow-redirects').https;
+             /* var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1173,7 +1173,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
               
    /* const from = "Kambucha"
@@ -1217,7 +1217,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1258,7 +1258,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-             var https = require('follow-redirects').https;
+            /* var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1302,7 +1302,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
               
    /* const from = "Kambucha"
@@ -1345,7 +1345,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
          // res.redirect('/accounts3/grvFileV/'+id)
          //res.redirect('/rm/viewPO3/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1382,7 +1382,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+              /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1426,7 +1426,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
             
               
    /* const from = "Kambucha"
@@ -1468,7 +1468,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm/approvedRequisitions/')
+          res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1506,7 +1506,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-                var https = require('follow-redirects').https;
+              /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1551,7 +1551,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 req.write(postData);
                 
                 req.end();
-            
+            */
               
     /*const from = "Kambucha"
     const to = "263771446827"
@@ -1593,7 +1593,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm/approvedRequisitions/')
+          res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1633,7 +1633,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-               var https = require('follow-redirects').https;
+             /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1677,7 +1677,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
     /*const from = "Kambucha"
     const to = "263771446827"
@@ -1720,7 +1720,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm/approvedRequisitions/')
+          res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1753,7 +1753,7 @@ StockVoucher.find(function(err,docs){
 StockVoucher.find({_id:id},function(err,locs){
    console.log(locs,'locs')
 
-  res.render('rStock/purchaseOrder',{listX:locs,listX2:docs})
+  res.render('rStockTest/purchaseOrder',{listX:locs,listX2:docs})
 })
 })
 
@@ -1775,7 +1775,7 @@ StockVoucher.find({status:"approved"},function(err,ocs){
  // console.log(docs,'ok')
   //res.render('kambucha/pdf',{listX:docs})
 
-  res.redirect('/rm/viewPO/'+rtnsNumber)
+  res.redirect('/rm2/viewPO/'+rtnsNumber)
 })
 
 })
@@ -1796,7 +1796,7 @@ StockVoucher.find({status3:"approved"},function(err,docs){
   StockVoucher.find({_id:voucherId},function(err,locs){
 
  // console.log(docs,'ok')
-  res.render('rStock/purchaseOrder',{listX:locs,listX2:docs,id:voucherId})
+  res.render('rStockTest/purchaseOrder',{listX:locs,listX2:docs,id:voucherId})
 })
 })
 
@@ -1814,7 +1814,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({status:'pending'},function(err,docs){
   
-      res.render('rStock/vouchers',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStockTest/vouchers',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
@@ -1825,7 +1825,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({},function(err,docs){
   
-      res.render('rStock/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStockTest/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
@@ -1843,7 +1843,7 @@ BatchRR.findById(id,function(err,doc){
   let prefix = doc.prefix
   let openingWeightTonnes = doc.openingWeightTonne
   let requestedMassTonnes = doc.requestedMassTonnes
-res.render('rStock/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
+res.render('rStockTest/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
 openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,voucherNo:voucherNo})
 
 })
@@ -1898,7 +1898,7 @@ User.findByIdAndUpdate(uid,{$set:{refNumber:refNo,batchId:id,grvNumber:grvNumber
 })
 
 
-res.redirect('/rm/receiveMaterialV/'+id)
+res.redirect('/rm2/receiveMaterialV/'+id)
 })
 
 
@@ -1927,7 +1927,7 @@ RawMat.find({item:item},function(err,docs){
 router.get('/receiveMaterialV/:id',function(req,res){
 var id = req.params.id
 console.log('good')
-res.redirect('/rm/receiveMaterial/'+id)
+res.redirect('/rm2/receiveMaterial/'+id)
 })
 
 router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
@@ -1952,16 +1952,18 @@ BatchRR.findById(id,function(err,docs){
 
   console.log(grvNumber,'grvNumber')
 
- res.render('rStock/addHoney',{date:date,supplier:supplier,mass:mass,
+ res.render('rStockTest/addHoney',{date:date,supplier:supplier,mass:mass,
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
- }else if(item == 'bananas'){
-
-  res.render('rStock/addBananas',{date:date,supplier:supplier,mass:mass,
-    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
+
+ else if(item == 'bananas'){
+
+  res.render('rStockTest/addBananas',{date:date,supplier:supplier,mass:mass,
+    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+ }
 else{
-  res.render('rStock/addMaterial',{date:date,supplier:supplier,mass:mass,
+  res.render('rStockTest/addMaterial',{date:date,supplier:supplier,mass:mass,
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
 }
 
@@ -2344,7 +2346,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
           
         
         
-          res.redirect('/rm/stockRMFile/'+refNumber)
+          res.redirect('/rm2/stockRMFile/'+refNumber)
       }
   })
 
@@ -2504,7 +2506,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
 
   }*/
 
-   var https = require('follow-redirects').https;
+   /*var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -2548,7 +2550,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
   
 })
@@ -2558,7 +2560,7 @@ BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKg
 //req.flash('success', 'Goods received successfully');
 
 //res.redirect('/rm/send-notification/'+weight+'/'+item)
-res.redirect('/rm/approvedRequisitions')
+res.redirect('/rm2/approvedRequisitions')
 
     }
   })
@@ -2639,7 +2641,7 @@ router.get('/send-notification/:id/:id2', async (req, res) => {
 
 router.get('/grvList',isLoggedIn,function(req,res){
   BatchRR.find({status:"complete"},function(err,docs){
-    res.render('rStock/grvList',{listX:docs})
+    res.render('rStockTest/grvList',{listX:docs})
   })
 })
 
@@ -2660,7 +2662,7 @@ console.log(docs,'docs')
       let grvNumber = docs[0].grvNumber
       let requestedMass = docs[0].requestedMassKgs
     
-    res.render('rStock/grvWeights',{supplier:supplier,
+    res.render('rStockTest/grvWeights',{supplier:supplier,
     item:item,date:date,refNumber:refNumber,driver:driver,regNumber:regNumber,
   orderNumber:orderNumber,batchNumber,grvNumber:grvNumber,
 requestedMass:requestedMass})
@@ -2679,7 +2681,7 @@ router.get('/viewGRV/:id',isLoggedIn,function(req,res){
    BatchRR.find({_id:id},function(err,locs){
      console.log(locs,'locs')
 
-    res.render('rStock/grv2',{listX:locs,listX2:docs})
+    res.render('rStockTest/grv2',{listX:locs,listX2:docs})
   })
   })
 
@@ -2687,7 +2689,7 @@ router.get('/viewGRV/:id',isLoggedIn,function(req,res){
 
 router.get('/grvFileV/:id',function(req,res){
 var id = req.params.id
-res.redirect('/rm/grvFile/'+id)
+res.redirect('/rm2/grvFile/'+id)
 })
 
 
@@ -2773,7 +2775,7 @@ arrG.push(docs[size])
   })
   
  
-  res.redirect('/rm/openFile/'+batchNumber)
+  res.redirect('/rm2/openFile/'+batchNumber)
 
 
 
@@ -2858,7 +2860,7 @@ if (fs.existsSync(path)) {
   })
   
   }
-  res.redirect('/rm/fileIdGrv/'+filename)
+  res.redirect('/rm2/fileIdGrv/'+filename)
   })
   
   })
@@ -2867,7 +2869,7 @@ if (fs.existsSync(path)) {
     console.log(req.params.id)
     var id = req.params.id
     
-    res.redirect('/rm/openGrv/'+id)
+    res.redirect('/rm2/openGrv/'+id)
     
     })
 
@@ -2981,7 +2983,7 @@ let item = docs[0].item
         })
       }
 
-      res.redirect('/rm/cancelOrder/'+voucherNo)
+      res.redirect('/rm2/cancelOrder/'+voucherNo)
     })
   })
   
@@ -2998,7 +3000,7 @@ let item = docs[0].item
         })
       }
 
-      res.redirect('/rm/approvedRequisitions/')
+      res.redirect('/rm2/approvedRequisitions/')
     })
   })
 
@@ -3010,7 +3012,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateStockBFI')
+          res.redirect('/rm2/updateStockBFI')
         })
       })
       
@@ -3026,7 +3028,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateBBC')
+          res.redirect('/rm2/updateBBC')
         })
       })
 
@@ -3039,7 +3041,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateBRR')
+          res.redirect('/rm2/updateBRR')
         })
       })
       
@@ -3053,7 +3055,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateBGC')
+          res.redirect('/rm2/updateBGC')
         })
       })
 
@@ -3066,7 +3068,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateBGW')
+          res.redirect('/rm2/updateBGW')
         })
       })
   
@@ -3078,7 +3080,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateGW')
+          res.redirect('/rm2/updateGW')
         })
       })
   
@@ -3090,7 +3092,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateGC')
+          res.redirect('/rm2/updateGC')
         })
       })
 
@@ -3103,7 +3105,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateC')
+          res.redirect('/rm2/updateC')
         })
       })
 
@@ -3117,7 +3119,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateFP')
+          res.redirect('/rm2/updateFP')
         })
       })
 
@@ -3129,7 +3131,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateBI')
+          res.redirect('/rm2/updateBI')
         })
       })
 
@@ -3143,7 +3145,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateSV')
+          res.redirect('/rm2/updateSV')
         })
       })
 
@@ -3156,7 +3158,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateSRM')
+          res.redirect('/rm2/updateSRM')
         })
       })
 
@@ -3169,7 +3171,7 @@ let item = docs[0].item
       
            }) 
           }
-          res.redirect('/rm/updateRM')
+          res.redirect('/rm2/updateRM')
         })
       })
 
@@ -3181,7 +3183,7 @@ let item = docs[0].item
 
           })
           }
-          res.redirect('/rm/updateIngredients')
+          res.redirect('/rm2/updateIngredients')
         })
       })
 
@@ -3196,7 +3198,7 @@ let item = docs[0].item
 
           })
           }
-          res.redirect('/rm/updateCrushedItems')
+          res.redirect('/rm2/updateCrushedItems')
         })
       })
 
@@ -3209,7 +3211,7 @@ let item = docs[0].item
 
           })
           }
-          res.redirect('/rm/updateBT')
+          res.redirect('/rm2/updateBT')
         })
       })
 
@@ -3223,7 +3225,7 @@ let item = docs[0].item
 
           })
           }
-          res.redirect('/rm/warehouseStock')
+          res.redirect('/rm2/warehouseStock')
         })
       })
 

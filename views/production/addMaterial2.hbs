@@ -561,7 +561,9 @@ this.firstElementChild.select();
 
                        if(confirm('Are you sure your want to Capture Mass?'))
    {
-       let mass = document.getElementById('mass').value 
+       //let massX = document.getElementById('mass').value 
+       let numberOfBags = document.getElementById('numberOfBags').value 
+       let mass = numberOfBags * 122
        let batchNumber = document.getElementById('batchNumber').value      
             $.ajax({
                 dataType: 'json',
@@ -664,6 +666,17 @@ this.firstElementChild.select();
            <div class="ac-box ">
              <input  id="availableMass" name="availabaleMass" class="ember-text-field ember-view form-control" type="text" value="{{availableMass}}kgs" readonly></div> </div></div>
 
+              <div class="col-lg-2"><label class="col-form-label required">Number of Bags</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="numberOfBags" name="numberOfBags" class="ember-text-field ember-view form-control" type="number" value=""></div> </div></div>
+
+
+              <div class="col-lg-2"><label class="col-form-label required">Avg Weight</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="avgWeight" name="avgWeight" class="ember-text-field ember-view form-control" type="text" value="122kgs" readonly></div> </div></div>
+
               
        <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
      
@@ -750,8 +763,8 @@ this.firstElementChild.select();
       </div>
       </form>
         <div class="btn-toolbar">
-          <button  onclick="add()" class="btn btn-primary ember-view" > Receive </button>
-        <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
+          <button  onclick="add()" class="btn btn-primary ember-view" > Add Weight </button>
+        <!--<button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
       <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');" href="/production/closeBatch/{{batchId}}"> Close Batch </a>
 

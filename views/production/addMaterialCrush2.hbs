@@ -560,7 +560,8 @@ this.firstElementChild.select();
             function add() {
                        if(confirm('Are you sure your want to Capture Mass?'))
    {
-       let mass = document.getElementById('mass').value 
+      let drums = document.getElementById('drums').value 
+       let mass = drums * 197
        let refNumber = document.getElementById('refNumber').value
        let item = document.getElementById('item').value
        let batchId = document.getElementById('batchId').value
@@ -667,6 +668,22 @@ this.firstElementChild.select();
              <input  id="availableMass" name="availabaleMass" class="ember-text-field ember-view form-control" type="text" value="{{availableMass}}kgs" readonly></div> </div></div>
 
               
+
+
+<div class="col-lg-2"><label class="col-form-label required">Number Of Drums</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="drums" name="drums" class="ember-text-field ember-view form-control" type="number" value=""></div> </div></div>
+
+
+              <div class="col-lg-2"><label class="col-form-label required">Avg Weight</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="avgWeight" name="avgWeight" class="ember-text-field ember-view form-control" type="text" value="197kgs" readonly></div> </div></div>
+
+
+
+
        <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
  <input type="hidden" name="batchId" id="batchId" value="{{batchId}}">     
      

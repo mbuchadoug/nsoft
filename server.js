@@ -36,6 +36,7 @@ var indexRouteX2= require('./routes/preRcv')
 var indexRouteX3= require('./routes/account5')
 var indexRouteX4= require('./routes/quality')
 var indexRouteX5= require('./routes/production')
+var indexRouteX6= require('./routes/rm2')
 /* var recordsRoute = require('./routes/records')
  var studentRoute= require('./r./routes/preRcv
  var teacherRoute= require('./r./routes/receiver
@@ -118,6 +119,7 @@ app.use('/admin', indexRouteX2);
 app.use('/accounts5', indexRouteX3);
 app.use('/quality', indexRouteX4);
 app.use('/production', indexRouteX5);
+app.use('/rm2', indexRouteX6);
 
 
 

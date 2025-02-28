@@ -409,7 +409,7 @@ router.get('/voucherNumberUpdate',isLoggedIn,function(req,res){
   
   })
 
-  res.redirect('/rm/stockRequisition')
+  res.redirect('/rm2/stockRequisition')
   
     })
   
@@ -422,7 +422,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     var errorMsg = req.flash('danger')[0];
     var successMsg = req.flash('success')[0];
     var voucherNumber = req.user.voucherNumber
-  res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,voucherNumber:voucherNumber})
+  res.render('rStock2/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,voucherNumber:voucherNumber})
   
   })
         
@@ -481,7 +481,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
           req.flash('danger', req.session.errors[0].msg);
   
   
-      res.redirect('/rm/stockRequisition');
+      res.redirect('/rm2/stockRequisition');
           
         
       }
@@ -554,7 +554,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
             req.flash('success', 'Request Sent');
   
   
-            res.redirect('/rm/approval/'+user._id);
+            res.redirect('/rm2/approval/'+user._id);
             
       })
   
@@ -711,7 +711,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               //res.redirect('/rm/viewPO3/'+id)
 
 
-              res.redirect('/rm/approvedRequisitions/')
+              res.redirect('/rm2/approvedRequisitions/')
 
            
              // res.redirect('/accounts3/grvFileV/'+id)
@@ -837,7 +837,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -963,7 +963,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       //res.redirect('/accounts3/viewPO3/'+id)
      // res.redirect('/accounts3/grvFileV/'+id)
 
-     res.redirect('/rm/approvedRequisitions/')
+     res.redirect('/rm2/approvedRequisitions/')
   
   
     })
@@ -1954,10 +1954,6 @@ BatchRR.findById(id,function(err,docs){
 
  res.render('rStock/addHoney',{date:date,supplier:supplier,mass:mass,
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
- }else if(item == 'bananas'){
-
-  res.render('rStock/addBananas',{date:date,supplier:supplier,mass:mass,
-    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
 else{
