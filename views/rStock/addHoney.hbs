@@ -515,12 +515,12 @@ this.firstElementChild.select();
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,
+                    code: mass,buckets:buckets,
                     grvNumber:refNumber,lossMargin:lossMargin
                     
                 },
                 type: 'POST',
-                url: "/rm/receiveMass",
+                url: "/rm/receiveMassHoney",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){

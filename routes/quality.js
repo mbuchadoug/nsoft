@@ -2537,6 +2537,183 @@ res.redirect('/quality/warehouseStock')
 
 
 
+    
+
+  
+
+router.get('/blendingDays/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  BlendingTanks.findById(id,function(err,doc){
+    var tankNumber = doc.tankNumber
+    var product = doc.product
+    var litres = doc.litres
+    var refNumber = doc.refNumber
+BlendingDays.find({batchId:id},function(err,docs){
+  if(docs.length >= 2){
+    res.render('qa/blend3',{tankNumber:tankNumber,product:product,
+      litres:litres,refNumber:refNumber,id:id})
+  }else{
+    res.render('qa/blend2',{tankNumber:tankNumber,product:product,
+    litres:litres,refNumber:refNumber,id:id})
+  }
+  })
+
+})
+})
+
+
+
+router.post('/blendingDays/',isLoggedIn,function(req,res){
+ console.log('333333')
+ var id = req.body.id
+   //var batchNumber = req.body.batchNumber
+
+
+ var m = moment()
+ var month = m.format('MMMM')
+   var color = req.body.color
+   var date = req.body.date
+   var odour = req.body.odour
+   var refNumber = req.body.refNumber
+   var mouthfeel = req.body.mouthfeel
+   var taste= req.body.taste
+   var product = req.body.product
+   var afterTaste = req.body.afterTaste
+
+   var litres = req.body.litres
+   var tankNumber = req.body.tankNumber
+
+   console.log(tankNumber,'tankNumber')
+ 
+   var m = moment(date)
+
+   var year = m.format('YYYY')
+ 
+   var date = m.format('L')
+   var numDate = m.valueOf()
+
+BlendingDays.find({batchId:id},function(err,docs){
+  let size = docs.length + 1
+
+ var cook = new BlendingDays()
+ cook.product = product
+ cook.afterTaste = afterTaste
+ cook.colour = color
+ cook.date = date
+ cook.odour = odour
+ cook.month = month
+ cook.tankNumber = tankNumber
+ cook.year = year
+ cook.batchId = id
+ cook.mouthfeel = mouthfeel
+ cook.taste= taste
+ cook.batchId = id
+ cook.pos = size
+ cook.litres = litres
+ cook.status = 'normal'
+ cook.refNumber = refNumber
+ //cook.operator = operator
+ 
+ cook.save()
+       .then(pro =>{
+         console.log(pro,'pro')
+
+
+
+         
+         res.send(pro)
+       
+       })
+
+      })
+   
+})
+
+router.get('/blendingReload/:id',function(req,res){
+var id = req.params.id
+console.log(id,'id')
+BlendingDays.find({batchId:id},function(err,docs){
+  res.send(docs)
+})
+})
+
+
+
+
+
+
+
+
+router.post('/blendingExtraDays/',isLoggedIn,function(req,res){
+  console.log('333333')
+  var id = req.body.id
+    //var batchNumber = req.body.batchNumber
+  var m = moment()
+  var month = m.format('MMMM')
+    var reason = req.body.reason
+    var date = req.body.date
+   
+    var refNumber = req.body.refNumber
+    
+    var product = req.body.product
+
+    var litres = req.body.litres
+    var tankNumber = req.body.tankNumber
+  
+    var m = moment(date)
+ 
+    var year = m.format('YYYY')
+  
+    var date = m.format('L')
+    var numDate = m.valueOf()
+  var cook = new BlendingDays()
+  cook.product = product
+  cook.reason = reason
+  cook.date = date
+
+  cook.month = month
+  cook.tankNumber = tankNumber
+  cook.year = year
+  cook.qualityAssurance = 'pending'
+  cook.supervisor = 'pending'
+  cook.md = 'pending'
+  cook.batchId = id
+  cook.litres = litres
+  cook.status = 'extra'
+  cook.refNumber = refNumber
+  //cook.operator = operator
+  
+  cook.save()
+        .then(pro =>{
+          console.log(pro,'pro')
+ 
+ 
+ 
+          
+          res.send(pro)
+        
+        })
+    
+ })
+
+
+
+ router.get('/blendingExtraReload/:id',function(req,res){
+  var id = req.params.id
+  console.log(id,'id')
+  BlendingDays.find({batchId:id,status:'extra'},function(err,docs){
+    res.send(docs)
+  })
+  })
+
+
+
+router.get('/closeBlending',isLoggedIn,function(req,res){
+  res.redirect('/quality/blendingTanks')
+})
+
+
+
 
    
 function encryptPassword(password) {

@@ -8,15 +8,11 @@
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
       <link rel="stylesheet" href="bootstrap-5.3.3/dist/css/bootstrap.min.css">
      <link href="sidebars.css" rel="stylesheet">
-      
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
    
 
-
-   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- Tracking Load Time -->
 
           
@@ -122,10 +118,217 @@ ul.no-bullets {
 
       
       
+
+
+
+
+
+<body onload="reload()">
+
+  <script>
+    function reload(){
+
+var idR = document.getElementById('id').value
+console.log(idR,'idR')
+  
+    $.ajax({
+       
+        dataType: 'json',
+        type: 'GET',
+        
+        url: "/rm/blendingReload/"+idR,
+        success: function(data) {
+        console.log(data)
+       
+    
+        
+       for(var i = 0;i<data.length;i++){
+        var tr = document.createElement('tr');
+    
+        var td1 = tr.appendChild(document.createElement('td'));
+        var td2 = tr.appendChild(document.createElement('td'));
+          var td3 = tr.appendChild(document.createElement('td'));
+        var td4 = tr.appendChild(document.createElement('td'));
+        var td5 = tr.appendChild(document.createElement('td'));
+        var td6 = tr.appendChild(document.createElement('td'));
+        
+       
+        td1.id =data[i]._id
+        td4.id = data[i]._id
+    /*td2.classList.add('text-end', 'pe-0')
+    td3.classList.add('text-end', 'pe-0')
+    td4.classList.add('text-end', 'pe-1')
+    link.classList.add('text-end','pe-0')
+    link.setAttribute("href", "/rec/delete")
+    link.className = "text-end";*/
+    
+    /*let link = document.createTextNode("Delete")
+    
+    td5.appendChild(link);*/
+    
+    
+    td1.innerHTML = data[i].date;
+        td2.innerHTML = data[i].colour;
+       td3.innerHTML = data[i].odour;
+        td4.innerHTML=  data[i].mouthfeel ;
+        td5.innerHTML = data[i].taste
+        td6.innerHTML = data[i].afterTaste
+    
+        /*let link2 = "/rec/delete/"+data[i]._id
+    
+        var linkText = 'Delete'
+    link.href="/rec/delete/"+data[i]._id*/
+     
+        /*link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+    
+        console.log(link,'33tt')
+      
+    
+        console.log(td4,'yeah')*/
+    
+      document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    
+       }
+    
+    
+    
+    
+    
+    var table = document.getElementById('kt_ecommerce_report_sales_table')
+    var cells = table.getElementsByClassName("text-end pe-1")
+    for(var i = 0; i< cells.length; i++){
+    cells[i].onclick = function(){
+    console.log(i,'this')
+    if(this.hasAttribute('data-clicked')){
+        
+        return;
+    }
+    
+    this.setAttribute('data-clicked', 'yes')
+    this.setAttribute('data-text', this.innerHTML)
+    
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text')
+    input.value = this.innerHTML
+    input.style.width = this.offsetWidth - (this.clientLeft * 2) + 'px';
+    input.style.height = this.offsetHeight - (this.clientTop * 2) + "px";
+    input.style.border = '0px';
+    input.style.fontFamily ="inherit";
+    input.style.fontSize ="inherit";
+    input.style.textAlign = "inherit";
+    input.style.backgroundColor = 'LightGoldenRodYellow';
+    
+    input.onblur = function(){
+    
+        var td = input.parentElement;
+            console.log(td.id,'td')
+        var orig_text = input.parentElement.getAttribute('data-text');
+        var current_text = this.value;
+    
+         let reg = /\d+\.*\d*/g;
+    
+    let result = current_text.match(reg)
+    let currentMark = Number(result)
+    
+    
+    
+    
+    let resultX = orig_text.match(reg)
+    let originalMark = Number(resultX)
+    
+    console.log(currentMark,originalMark,'mark')
+    
+    
+    
+    
+    
+        if(orig_text != current_text ){
+      
+            console.log(current_text,'current_text')
+    $.ajax({
+      dataType: 'json',
+                data: {
+                    code: current_text,
+                    
+                },
+                type: 'POST',
+                url: "/rec/stock/update/"+td.id,
+    
+    
+      success: function(data) {
+     
+    
+    console.log(td.id,'id2')
+    console.log(td,'coalition')
+            td.removeAttribute('data-clicked')
+            td.removeAttribute('data-text')
+            td.innerHTML = current_text
+            
+            td.style.cssText = 'padding: 5px';
+    
+        
+      
+        }
+    
+    
+    });
+            console.log(td.id,'id2')
+            td.removeAttribute('data-clicked')
+            td.removeAttribute('data-text')
+            td.innerHTML = current_text
+    
+            td.style.cssText = 'padding: 5px';
+            
+            console.log(orig_text + 'is change to ' + current_text)
+        
+        } else{
+            td.removeAttribute('data-clicked')
+            td.removeAttribute('data-text')
+            td.innerHTML = orig_text
+            td.style.cssText = 'padding: 5px';
+            console.log('No changes made')
+        
+        }
+    
+    }
+    
+    this.innerHTML = ''
+    this.style.cssText = 'padding: 0px';
+    this.append(input);
+    this.firstElementChild.select();
+    
+    }
+    }
+    
+    
+    
+    
+    
+        }
+    
+        })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+    
+    
+    
+  </script>
   
 
-
-<script type="text/javascript" src="#"></script><div class="zread_strip" id="annmsgstrip" style="z-index: 999;"><div class="zread_olymn" id="wmsannmsg" style="display: none; z-index: 999;"><span id="annmsg"></span><div id="hideinfo" class="zchdr_arw"></div><a id="clearannmsg" style="text-decoration:underline; float:right; font-size: 11px; margin: 2px 25px 0px 0px">Don't show again</a></div></div><style type="text/css">#wmstoolbar *::-webkit-scrollbar, #zchhis *::-webkit-scrollbar, #wms_fork_container *::-webkit-scrollbar{ height:8px; width:8px } #wmstoolbar *::-webkit-scrollbar-thumb, #zchhis *::-webkit-scrollbar-thumb, #wms_fork_container *::-webkit-scrollbar-thumb{ background-color: #dcdcdc }</style><iframe id="pconnect" name="wmspconnect" src="#" style="display: none;"></iframe><div class="ember-view  finance-app"><div id="tooltip-popover-wrapper"></div> <!----><div class="product    "><!----><!----><div><ul id="ember3" class="dropdown ember-view nav skip-to"><button id="ember4" class="dropdown-toggle ember-view dropdown-toggle btn">Navigate To <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs"><path d="M2.157 159.57c0 13.773 5.401 27.542 16.195 38.02l198.975 192.867c21.411 20.725 55.94 20.725 77.34 0L493.63 197.59c21.508-20.846 21.637-54.778.269-75.773-21.35-20.994-56.104-21.098-77.612-.26L256.004 276.93 95.721 121.562c-21.528-20.833-56.268-20.734-77.637.26C7.472 132.261 2.157 145.923 2.157 159.57z"></path></svg></button> <div class="dropdown-menu   skip-to-dropdown-menu"><button class="dropdown-item skip-to-dropdown">Main Content</button> <button class="dropdown-item skip-to-dropdown">Left Sidebar</button> <button class="dropdown-item skip-to-dropdown">Top Bar</button></div></ul></div> <header class="top-band unified-top-band d-print-none" id="top-band">
+<script type="text/javascript" src="#"></script>
+<div class="zread_strip" id="annmsgstrip" style="z-index: 999;"><div class="zread_olymn" id="wmsannmsg" style="display: none; z-index: 999;"><span id="annmsg"></span><div id="hideinfo" class="zchdr_arw"></div><a id="clearannmsg" style="text-decoration:underline; float:right; font-size: 11px; margin: 2px 25px 0px 0px">Don't show again</a></div></div><style type="text/css">#wmstoolbar *::-webkit-scrollbar, #zchhis *::-webkit-scrollbar, #wms_fork_container *::-webkit-scrollbar{ height:8px; width:8px } #wmstoolbar *::-webkit-scrollbar-thumb, #zchhis *::-webkit-scrollbar-thumb, #wms_fork_container *::-webkit-scrollbar-thumb{ background-color: #dcdcdc }</style><iframe id="pconnect" name="wmspconnect" src="#" style="display: none;"></iframe><div class="ember-view  finance-app"><div id="tooltip-popover-wrapper"></div> <!----><div class="product    "><!----><!----><div><ul id="ember3" class="dropdown ember-view nav skip-to"><button id="ember4" class="dropdown-toggle ember-view dropdown-toggle btn">Navigate To <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs"><path d="M2.157 159.57c0 13.773 5.401 27.542 16.195 38.02l198.975 192.867c21.411 20.725 55.94 20.725 77.34 0L493.63 197.59c21.508-20.846 21.637-54.778.269-75.773-21.35-20.994-56.104-21.098-77.612-.26L256.004 276.93 95.721 121.562c-21.528-20.833-56.268-20.734-77.637.26C7.472 132.261 2.157 145.923 2.157 159.57z"></path></svg></button> <div class="dropdown-menu   skip-to-dropdown-menu"><button class="dropdown-item skip-to-dropdown">Main Content</button> <button class="dropdown-item skip-to-dropdown">Left Sidebar</button> <button class="dropdown-item skip-to-dropdown">Top Bar</button></div></ul></div>
+ <header class="top-band unified-top-band d-print-none" id="top-band">
     <div class=" logo-container  ">
         <div class="logo-collapse d-flex align-items-center cursor-pointer ">
             <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1024 1024" class="icon icon-xlg app-logo"><g class="cls-1"><path d="M264 866a30 30 0 01-30-25L105 106a36 36 0 00-26-28L22 60A30 30 0 1139 2l58 18a96 96 0 0167 76l129 735a30 30 0 01-24 34 30 30 0 01-5 1z" class="cls-2"></path></g>
@@ -149,6 +352,8 @@ ul.no-bullets {
     </li>
     
 
+
+ 
 
   <ul class="nav flex-column" id="nav_accordion">
 
@@ -347,249 +552,46 @@ ul.no-bullets {
 </div> 
 
 
-<script>
-
-
-$.ajax({
-   
-    dataType: 'json',
-    type: 'POST',
-
-    
-     url: `/production/fermentationPreload/{{{refNumber}}}`,
-    success: function(data) {
-    console.log(data)
-   
-
-    
-   for(var i = 0;i<data.length;i++){
-    var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	 var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-   
-   
-    td1.id =data[i]._id
-    td4.id = data[i]._id
-/*td2.classList.add('text-end', 'pe-0')
-td3.classList.add('text-end', 'pe-0')
-td4.classList.add('text-end', 'pe-1')
-link.classList.add('text-end','pe-0')
-link.setAttribute("href", "/rec/delete")
-link.className = "text-end";*/
-
-/*let link = document.createTextNode("Delete")
-
-td5.appendChild(link);*/
-
-
-td1.innerHTML = data[i].date;
-    td2.innerHTML = data[i].batchNumber;
-    td3.innerHTML = data[i].ingredient;
-    td4.innerHTML=  data[i].quantity ;
-    td5.innerHTML = data[i].product
-   
-
-    /*let link2 = "/rec/delete/"+data[i]._id
-
-    var linkText = 'Delete'
-link.href="/rec/delete/"+data[i]._id*/
- 
-    /*link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
-
-    console.log(link,'33tt')
-  
-
-    console.log(td4,'yeah')*/
-
-  document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-
-   }
-
-
-
-
-
-var table = document.getElementById('kt_ecommerce_report_sales_table')
-var cells = table.getElementsByClassName("text-end pe-1")
-for(var i = 0; i< cells.length; i++){
-cells[i].onclick = function(){
-console.log(i,'this')
-if(this.hasAttribute('data-clicked')){
-    
-    return;
-}
-
-this.setAttribute('data-clicked', 'yes')
-this.setAttribute('data-text', this.innerHTML)
-
-var input = document.createElement('input');
-input.setAttribute('type', 'text')
-input.value = this.innerHTML
-input.style.width = this.offsetWidth - (this.clientLeft * 2) + 'px';
-input.style.height = this.offsetHeight - (this.clientTop * 2) + "px";
-input.style.border = '0px';
-input.style.fontFamily ="inherit";
-input.style.fontSize ="inherit";
-input.style.textAlign = "inherit";
-input.style.backgroundColor = 'LightGoldenRodYellow';
-
-input.onblur = function(){
-
-    var td = input.parentElement;
-        console.log(td.id,'td')
-    var orig_text = input.parentElement.getAttribute('data-text');
-    var current_text = this.value;
-
-     let reg = /\d+\.*\d*/g;
-
-let result = current_text.match(reg)
-let currentMark = Number(result)
-
-
-
-
-let resultX = orig_text.match(reg)
-let originalMark = Number(resultX)
-
-console.log(currentMark,originalMark,'mark')
-
-
-
-
-
-    if(orig_text != current_text ){
-  
-        console.log(current_text,'current_text')
-$.ajax({
-  dataType: 'json',
-            data: {
-                code: current_text,
-                
-            },
-            type: 'POST',
-            url: "/rec/stock/update/"+td.id,
-
-
-  success: function(data) {
- 
-
-console.log(td.id,'id2')
-console.log(td,'coalition')
-        td.removeAttribute('data-clicked')
-        td.removeAttribute('data-text')
-        td.innerHTML = current_text
-        
-        td.style.cssText = 'padding: 5px';
-
-    
-  
-    }
-
-
-});
-        console.log(td.id,'id2')
-        td.removeAttribute('data-clicked')
-        td.removeAttribute('data-text')
-        td.innerHTML = current_text
-
-        td.style.cssText = 'padding: 5px';
-        
-        console.log(orig_text + 'is change to ' + current_text)
-    
-    } else{
-        td.removeAttribute('data-clicked')
-        td.removeAttribute('data-text')
-        td.innerHTML = orig_text
-        td.style.cssText = 'padding: 5px';
-        console.log('No changes made')
-    
-    }
-
-}
-
-this.innerHTML = ''
-this.style.cssText = 'padding: 0px';
-this.append(input);
-this.firstElementChild.select();
-
-}
-}
-
-
-
-
-
-	}
-
-	})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-
-
-
 
 <div showpagelengthoption="" showtotalcount="" id="ember326" class="pagination-bar ember-view">
 <div id="pagination" class="pagination d-flex align-items-center flex-wrap d-print-none mb-3 justify-content-between  "><!----></div><!----></div><!----><!----></div></div></div> <!----> <!----> <!----> <!----> <!---->
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Fermentation </h3></div>
+<h3 class="over-flow">Blending Product Tracker </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
             function add() {
-               if(confirm('Are you sure your want to Add Record?'))
-   {
-       let mass = document.getElementById('quantity').value 
-       let refNumber = document.getElementById('refNumber').value
-       let ingredient =   document.getElementById('ingredient').value         
-       let operator =  document.getElementById('operator').value  
-       let date =  document.getElementById('date').value 
-       let batchNumber = document.getElementById('batchNumber').value
-       let product = document.getElementById('product').value
-       let tanks = document.getElementById('tanks').value
-       console.log(mass,refNumber,ingredient,operator,date,batchNumber,'beggin')
-      
+         let id = document.getElementById('id').value 
+         let odour = document.getElementById('odour').value
+       let color = document.getElementById('color').value
+       let mouthfeel= document.getElementById('mouthfeel').value
+       let taste = document.getElementById('taste').value
+       let date  = document.getElementById('date').value
+       let afterTaste = document.getElementById('aftertaste').value
+       let product = document.getElementById('product').value      
+       let tankNumber = document.getElementById('tankNumber').value 
+       let litres = document.getElementById('litres').value 
+       let refNumber = document.getElementById('batchNumber').value 
+console.log('goodvibes',id,color,odour,mouthfeel,taste,afterTaste,product,tankNumber
+       ,litres,refNumber)
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,batchNumber:batchNumber,product:product,tanks:tanks,
-                    refNumber:refNumber,ingredient:ingredient,operator:operator,date:date
+                     id:id, color:color,date:date,odour:odour,mouthfeel:mouthfeel,taste:taste,afterTaste:afterTaste,refNumber:refNumber,product:product,tankNumber:tankNumber,litres:litres
                     
                 },
                 type: 'POST',
-                url: '/production/fermentationMat/',
+                  url: "/quality/blendingDays/",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
                
                
                  
-                 alert('Enter Mass')
-                   $("#quantity").val("")
+                 alert('Error')
+                   $("#batchNumber").val("")
                  
                  
                  
@@ -602,46 +604,27 @@ this.firstElementChild.select();
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-var td3 = tr.appendChild(document.createElement('td'));
+	  var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
   
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
-    //td5.id = data._id
-/*td2.classList.add('text-end', 'pe-0')
-td3.classList.add('text-end', 'pe-0')
-td4.classList.add('text-end', 'pe-1')
-link.classList.add('text-end','pe-0')*/
-//link.setAttribute("href", "/rec/delete")
-//link.className = "text-end";
-
+    td5.id = data._id
 
 
 
     td1.innerHTML = data.date;
-    td2.innerHTML = data.batchNumber;
-    td3.innerHTML = data.refNumber;
-    td4.innerHTML = data.ingredient;
-    td5.innerHTML=  data.quantity ;
-    td6.innerHTML=  data.product ;
-    /*td5.innerHTML = data.time
-    td6.innerHTML = data.finishTime*/
+    td2.innerHTML = data.colour;
+    td3.innerHTML = data.odour;
+    td4.innerHTML=  data.mouthfeel ;
+    td5.innerHTML = data.taste
+    td6.innerHTML = data.afterTaste
     
-    //let link2 = "/rec/delete/"+data._id
-
-    //td5.innerHTML = "Delete"
-    //var linkText = 'Delete'
-    // link.appendChild(linkText);
-    //link.href="/rec/delete/"+data._id
-    //td5.innerText = 'Delete'
-    //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
-
+    
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#totalMass").val(data.closingMass)
-     $("#mass").val('')
-  
+    
 
                     }
                
@@ -653,115 +636,116 @@ link.classList.add('text-end','pe-0')*/
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
-            }
 			
         </script>
 
-        <script>
-
-          
-            function closeBatch(){
-               if(confirm('Are you sure your want to Close Batch?'))
-   {
-              let tanks = document.getElementById('tanks').value
-              let id = document.getElementById('id').value
-console.log(tanks,id,'tanks555')
-
-              
-if(tanks==''){
-document.getElementById('danger').innerHTML = ''
-document.getElementById('danger').style.display = ''
-document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
-}else{
-
-
-
-
-  $.ajax({
-                dataType: 'json',
-                data: {
-                    code: tanks,
-                    
-                    
-                },
-                type: 'POST',
-                url: "/production/closeFermentationBatch/"+id,
-                success: function(data) {
-
-                console.log(data,'success')
-                 window.location='https://niyonsoft.org/production/draining'
-                // window.location='http://localhost:8000/rm/draining'
-                }
-
-                })
-
-}
-            }
-            }
-        </script>
-	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
-        <div id="success" class="alert alert-success" style="display: none;">
-          
-     
-        </div>
-    </div>
-						
-		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
-        <div id="danger" class="alert alert-danger" style="display: none;">
-          
-     
-        </div>
-    </div>								
-              <form class="zb-txn-form"  name="sample">
+             <form class="zb-txn-form"  name="sample">
+                <input type="hidden" name="id" id="id" value="{{id}}">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
-         <input type="hidden" id="id" name="id" value="{{id}}">
+          <!--<fieldset role="radiogroup" class="form-group">
+              <div class="form-check cursor-pointer mb-2">  
+              <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>
+             <div class="form-check cursor-pointer mb-2">  
+         <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
          <div class="row form-group">
-        <div class="col-lg-2"><label class="col-form-label required">Ingredient</label> 
-         <input  id="ingredient" name="ingredient" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" ></div>
-
-         <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{batchNumber}}" readonly></div> </div></div>
-
-
- <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Quantity (kgs)</label> 
-    <input  id="quantity" name="quantity" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
+        <div class="col-lg-2"><label class="col-form-label required">Date</label> 
+         <input  id="date" name="date" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="date" value="" ></div>
 
 
 
- <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Available Mass(kgs)</label> 
-    <input  id="availableMass" name="availableMass" class="ember-text-field ember-view form-control" type="number"  value="" readonly ></div>
 
-
-<div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Tanks Mixed</label> 
-    <input  id="tanks" name="tanks" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
-
-          <div class="col-lg-2"><label class="col-form-label required">Date</label>
+          <div class="col-lg-2"><label class="col-form-label required">Color</label>
               <div id="ember330" class="ember-view">
           <div class="ac-box ">
 
-      <input  id="date" name="date" class="ember-text-field ember-view form-control" type="text" value="{{date}}" readonly>
+      <input  id="color" name="color" class="ember-text-field ember-view form-control" type="text" value=""  >
             </div> </div></div>
-  
+
+
+             <!--<div class="col-lg-2"><label class="col-form-label required">Odour</label>
+              <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+      <input  id="odour" name="odour" class="ember-text-field ember-view form-control" type="text" value="" >
+            </div> </div></div>-->
+
+            <div class="col-lg-2"><label class="col-form-label required">Odour</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+  <select class="form-select form-select-solid" name="odour" id="odour"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
-    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="" readonly></div>
+																	
+																		
+			</select>    </div> </div></div>
+        <div class="col-lg-2"><label class="col-form-label required">Mouthfeel</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
 
+  <select class="form-select form-select-solid" name="mouthfeel" id="mouthfeel"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
+     
+																	
+																		
+			</select>    </div> </div></div>
+ <div class="col-lg-2"><label class="col-form-label required">Taste</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+  <select class="form-select form-select-solid" name="taste" id="taste"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
+     
+																	
+																		
+			</select>    </div> </div></div>
+<div class="col-lg-2"><label class="col-form-label required">Aftertaste</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+  <select class="form-select form-select-solid" name="aftertaste" id="aftertaste"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
+     
+																	
+																		
+			</select>    </div> </div></div>
+
+
+
+<div class="col-lg-2"><label class="col-form-label required">Tank Number</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="tankNumber" name="tankNumber" class="ember-text-field ember-view form-control" type="number" value="{{tankNumber}}" readonly ></div> </div></div>
+
+
+
+
+<div class="col-lg-2"><label class="col-form-label required">Product</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text" value="{{product}}" readonly ></div> </div></div>
+
+ <div class="col-lg-2"><label class="col-form-label required">Litres</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="litres" name="litres" class="ember-text-field ember-view form-control" type="text" value="{{litres}}" readonly ></div> </div></div>
+
+            <div class="col-lg-2"><label class="col-form-label required">Batch Number</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{refNumber}}" readonly></div> </div></div>
+
+              
     
-         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Operator</label> 
-    <input  id="operator" name="operator" class="ember-text-field ember-view form-control" type="text"  value="{{operator}}" readonly></div>
-
- <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Water (Litres)</label> 
-    <input  id="water" name="water" class="ember-text-field ember-view form-control" type="text"  value="{{water}}" readonly></div>
-
-
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
-    <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text"  value="{{product}}" readonly></div>
-
-    
-
-
+     
     
     
     
@@ -770,11 +754,6 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
     
     
     </div> 
-
-    
-
-
-
     
     <!--<div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
     <table class="table table-bordered">
@@ -806,12 +785,12 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
       <table class="table table-bordered" id="kt_ecommerce_report_sales_table">
 <thead>
 <tr>
-  <th>Date</th>
-	<th> Batch #</th>
-  <th>Ref #</th>
-	<th>Ingredients</th>
-	<th>Tanks/Bags/Buckets</th>
-  <th>Product</th>
+   <th>Date</th>
+	<th>Color</th>
+<th>Odour</th>
+	<th>Mouthfeel</th>
+  <th>Taste</th>
+   <th>Aftertaste</th>
 
 
 
@@ -843,14 +822,12 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
    
       <!--<a class="btn btn-secondary" data-ember-action="" data-ember-action-336="336" href="/eodRepo">Run Report</button>-->
       </div>
-
       </form>
-
         <div class="btn-toolbar">
-          <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
-        <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
+          <button onclick="add()" class="btn btn-primary ember-view" > Add </button>
+       <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a onclick="closeBatch()" class="btn btn-primary ember-view"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" href="/quality/closeBlending/"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -885,7 +862,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
                                  <div class="zgs19_gsProgressLoaderb"></div>
                                  <div class="zgs19_gsProgressLoaderc"></div>
                                  <div class="zgs19_gsProgressLoaderd"></div></div>
-                                
+                               
                                 <div id="zgs20_gsDashboardhome" class="zgs19_gsDashboardhome zgs19_gsDisplayNone"></div>
                                 <div id="zgs20_cloudIntegration" class="zgs19_cloudIntegration zgs19_gsSettingsPages zgs19_gsDisplayNoneImp"></div>
                                 <div id="zgs20_gsbannertip" class="zgs19_gsbannertip zgs19_gsBoxShadowPopup zgs19_gsDisplayNone">
@@ -896,108 +873,13 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
 
 
 
-
+</body>
+<script src="reload.js"></script>
                         
 
-<label for="editor">TX</label><textarea id="editor"></textarea>
-<!--<button id="submit">Send</button>-->
-<label for="output">Mass</label><textarea id="output"></textarea>
-
-
-
-
-
- <script>
-      $(function(){
-    $('#ingredient').autocomplete({
-    source: function(req,res){
-
-      $.ajax({
-        url:"/production/autocompleteFerment/",
-        dataType:"jsonp",
-        type:"GET",
-        data:req,
-        success: function(data){
-          res(data)
-        
-
-        },
-        error: function(err){
-          console.log(err.status);
-        }
-      });
-    },
-
-    minLength:1,
-    select: function(event,ui){
-
-  $.ajax({
-                dataType: 'json',
-                data: {
-                    code: ui.item.label,
-                    
-                },
-                type: 'POST',
-                url: "/production/autoFerment",
-                success: function(data) {
-               
-                
-
-                   $('#ingredient').val(data.ingredient);
-                    $('#refNumber').val(data.refNumber);
-                      $('#availableMass').val(data.quantity);
-               
-    
-          
-                
-            
-                }
-               
-            });
- 
-
-
-  
-    }
-
-
-
-    });
-
-      });
-      </script> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
- <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
-
-
-
-
+<!--<label for="editor">TX</label><textarea id="editor"></textarea>
+<!--<button id="submit">Send</button>
+<label for="output">Mass</label><textarea id="output"></textarea>-->
 
 
 

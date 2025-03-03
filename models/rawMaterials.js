@@ -8,6 +8,10 @@ var rawListSchema = new Schema({
   type: {type: String},
   stage: {type: String},
    massKgs: {type: Number},
+   uniqueMeasure: {type: Number},
+   drums: {type: Number},
+   crates: {type: Number},
+   tanks: {type: Number},
    massTonnes: {type: Number},
    
 

@@ -14,6 +14,7 @@ var batchSchemaGW = new Schema({
     openingMass:{type:Number},
     closingMass:{type:Number},
     newMass:{type:Number},
+    crates:{type:Number},
     totalMass:{type:Number},
     price: {type: Number },
     variance: {type: Number },

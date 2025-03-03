@@ -19,6 +19,8 @@ var batchSchemaGW = new Schema({
     batchNumber: {type: String },
     month: {type: String },
     year: {type: Number },
+    crates: {type: Number },
+    drums: {type: Number },
     dateValue: {type: Number },
     
      

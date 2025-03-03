@@ -12,6 +12,8 @@ var stockSchemaRM = new Schema({
     driver: {type: String },
     idNumber: {type: String },
     trailer: {type: Number },
+    buckets: {type: Number },
+    bags: {type: Number },
     refNumber: {type: String },
     batchNumber: {type: String },
     grvNumber: {type: String },

@@ -6,6 +6,8 @@ var batchSchemaCI = new Schema({
 
     item: {type: String },
     massKgs:{type:Number},
+    crates:{type:Number},
+    uniqueMeasure:{type:Number},
     massTonnes: {type: Number },
 
 

@@ -14,15 +14,17 @@ var batchSchemaGW = new Schema({
     newMass:{type:Number},
     totalMass:{type:Number},
     price: {type: Number },
+    bags: {type: Number },
     variance: {type: Number },
-   
+    drums: {type: Number },
     status: {type: String },
     refNumber: {type: String },
     batchNumber: {type: String },
     month: {type: String },
     year: {type: Number },
     dateValue: {type: Number },
-   
+    crates: {type: Number },
+    drums: {type: Number },
     size:{type:Number},
     variance:{type:Number},
     
