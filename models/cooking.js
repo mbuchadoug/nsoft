@@ -15,6 +15,7 @@ var batchSchemaCK = new Schema({
     year: {type: Number },
     dateValue: {type: Number },
     size:{type:Number},
+    unit:{type:String},
     operator:{type:String},
     teamLeader:{type:String},
     finalProduct:{type:String},

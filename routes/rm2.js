@@ -614,6 +614,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               truck.status = 'pending'
               truck.receivedTonnes = 0
               truck.receivedKgs = 0
+              truck.unit = 'kgs'
               truck.requestedMassTonnes = requestedMassTonnes
               truck.requestedMassKgs = requestedMassKgs
               truck.year = year
@@ -735,6 +736,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
           truck.month = month
+          truck.unit = 'bags'
           truck.status = 'pending'
           truck.receivedTonnes = 0
           truck.receivedKgs = 0
@@ -991,6 +993,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
           truck.month = month
+          truck.unit = 'bags'
           truck.status = 'pending'
           truck.receivedTonnes = 0
           truck.receivedKgs = 0
@@ -1105,7 +1108,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.dateValue = dateValue
           truck.item = item
           truck.prefix = prefix
-          truck.stage = 'crush'
+          truck.stage = 'fermentation'
           truck.priceStatus = 'null'
           truck.refNumber = voucherNo
           truck.batchNumber = batchNumber
@@ -1114,6 +1117,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
           truck.month = month
+          truck.unit = 'buckets'
           truck.status = 'pending'
           truck.receivedTonnes = 0
           truck.receivedKgs = 0
@@ -1613,6 +1617,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.paymentStatus = 'unpaid'
           truck.priceStatus = 'null'
           truck.stage = 'crush'
+          truck.unit = 'crates'
           truck.refNumber = voucherNo
           truck.batchNumber = batchNumber
           truck.month = month
@@ -2029,7 +2034,7 @@ router.post('/receiveMassHoney',function(req,res){
   console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
   
   
-  StockRM.find({refNumber:refNumber},function(err,docs){
+  StockRM.find({grvNumber:grvNumber,item:item},function(err,docs){
   
   for(var i = 0;i<docs.length; i++){
    // console.log(docs[i].newMass,'serima')
@@ -2464,6 +2469,11 @@ StockRM.find({grvNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
 
 router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
 
+  var m = moment()
+
+var mformat = m.format("L")
+var month = m.format('MMMM')
+var year = m.format('YYYY')
   let refNumber = req.params.id
   
 
@@ -2474,8 +2484,11 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
   let batchId = nocs[0].batchId
   let closingMass = nocs[0].closingMass - nocs[0].lossMargin
   let lossMargin = nocs[0].lossMargin
+  let buckets = nocs[0].buckets
+  let refNumber = nocs[0].refNumber
+  let batchNumber = nocs[0].batchNumber
 
-  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin,unitMeasure:buckets}},function(err,vocs){
 
     let batchNumber= vocs.batchNumber
     let item = vocs.item
@@ -2494,17 +2507,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
     })
       }
     })*/
-    console.log(availableMass,'availableMass333')
-    RawMat.find({item:item},function(err,docs){
-      console.log(docs,'letu')
-      if(docs[0].item == 'sugar' || docs[0].item == 'bananas'){
-        console.log('true')
-        let date =  moment().format('l');
-  let date6 =  moment().format('l');
-  let dateValue = moment().valueOf()
 
-  let date7 =  date6.replace(/\//g, "");
-  
 
      // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
 
@@ -2512,59 +2515,42 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
       
 
 
-     RefNo.find({date:date,type:"crush",item:item},function(err,docs){
-      let size = docs.length + 1
-     refNo = date7+prefix+'B'+size+'CRS'
-      console.log(refNo,'refNo')
   
-      var truck = new BatchGingerCrush()
-      truck.date = date
-      truck.mformat = date6
-      truck.dateValue = dateValue
-      truck.item = item
-      truck.type ='ingredient'
-      truck.voucherNo = voucherNo
-      truck.refNumber = batchNumber
+      var final = new FinalProduct()
+      final.refNumber = batchNumber
+      final.quantity = buckets
+      final.date = mformat
+      final.ingredient = 'honey'
+      final.month = month
+      final.year = year
+      final.status = 'null'
+
      
-      truck.batchNumber = refNo
-      truck.month = month
-      truck.nxtStage='cooking'
-      truck.qtyInMass = closingMass
-      truck.qtyOutMass= closingMass
-      truck.month = month
-      truck.status = 'null'
-      truck.year = year
-     
-      
-     
-  
-      truck.save()
+      final.save()
           .then(pro =>{
   
            
 
-            var book = new RefNo();
-            book.refNumber = refNo
-            book.item = item
-            book.date = date
-            book.type = 'crush'
-            book.save()
-            .then(prod =>{
-        
-             
-        
-            })
-
           })
 
-        })
-
- 
-          
-      }
+        
+          /*Ingredients.find({item:'honey'},function(err,toc){
+            let openingBal = toc[0].massKgs + buckets
+           // let openingBal = openingBalC / 5
+            let id2 = toc[0]._id
+    
+          Ingredients.findByIdAndUpdate(id2,{$set:{massKgs:openingBal}},function(err,vocs){
+    
           })
     
-        })
+          })*/
+
+        
+          
+      
+          })
+    
+        
       
     
   
@@ -2577,7 +2563,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
   let lossMarginG = nocs[0].closingMass * 0.025
   //let lossMargin = nocs[0].lossMargin
   let margin = 0.02
-  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete"}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",unitMeasure:lossMarginG}},function(err,vocs){
 
     console.log(vocs,'vocs')
     let batchNumber= vocs.batchNumber
@@ -2714,7 +2700,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
         let closingMass = nocs[0].closingMass - nocs[0].lossMargin
         let bags = nocs[0].bags
       
-        BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0}},function(err,vocs){
+        BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0,unitMeasure:bags}},function(err,vocs){
       
           let batchNumber= vocs.batchNumber
           let item = vocs.item
@@ -2786,6 +2772,26 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
                   })
       
                 })
+
+
+                
+      var final = new FinalProduct()
+      final.refNumber = batchNumber
+      final.quantity = bags
+      final.date = mformat
+      final.ingredient = 'sugar'
+      final.month = month
+      final.year = year
+      final.status = 'null'
+
+     
+      final.save()
+          .then(pro =>{
+  
+           
+
+          })
+
       
               })
       
@@ -2812,7 +2818,7 @@ router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
           let closingMass = nocs[0].closingMass - 0
           let bags = nocs[0].bags
         
-          BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0}},function(err,vocs){
+          BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0,unitMeasure:bags}},function(err,vocs){
         
             let batchNumber= vocs.batchNumber
             let item = vocs.item
@@ -3015,7 +3021,7 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
     })
       }*/
     
-      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes}},function(err,nocs){
+      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:massKgs}},function(err,nocs){
     
       })
     

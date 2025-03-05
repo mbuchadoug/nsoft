@@ -12,6 +12,7 @@ var rawListSchema = new Schema({
    drums: {type: Number},
    crates: {type: Number},
    tanks: {type: Number},
+   unit: {type: String},
    massTonnes: {type: Number},
    
 

@@ -811,15 +811,15 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
   }
 
   else if(ingredient == 'gingerTea'){
-    BatchGingerCrush.find({finalProduct:ingredient,refNumber:id},function(err,docs){
-      res.render('qa/trackCrushing',{listX:docs,idNum:id3})
+    Cooking.find({batchNumber:id3},function(err,docs){
+      res.render('qa/trackCooking2',{listX:docs,idNum:id3})
 
      })
   }
 
   else if(ingredient == 'honey'){
-    BatchGingerCrush.find({item:ingredient,batchNumber:id3},function(err,docs){
-      res.render('qa/trackCrushing',{listX:docs,idNum:id3})
+    BatchRR.find({item:'honey',batchNumber:id3},function(err,docs){
+      res.render('qa/trackRaw',{listX:docs,idNum:id3})
 
      })
   }
@@ -861,6 +861,21 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
      })
   }
 
+  else if(item == 'tea'){
+    BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
+      if(docs.length > 0){
+        let refNumber = docs[0].refNumber
+        BatchRR.find({item:item,batchNumber:refNumber},function(err,locs){
+
+
+          res.render('qa/trackRaw',{listX:locs,idNum:id3})
+        })
+      }
+      
+
+     })
+  }
+
  else if(item == 'garlic'){
    
     BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
@@ -888,12 +903,11 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
 
 
           else if(item == 'honey'){
-   
-            BatchGingerCrush.find({item:item,batchNumber:id3},function(err,docs){
-              res.render('qa/trackCrushing',{listX:docs,idNum:id3})
-         
-               })
-              }
+            BatchRR.find({item:item,batchNumber:id3},function(err,docs){
+              res.render('qa/trackRaw',{listX:docs,idNum:id3})
+        
+             })
+          }
 })
 
 

@@ -12,6 +12,7 @@ var batchSchemaF = new Schema({
     refNumber: {type: String },
     batchNumber: {type: String },
     month: {type: String },
+    unit: {type: String },
     year: {type: Number },
     dateValue: {type: Number },
     size:{type:Number},

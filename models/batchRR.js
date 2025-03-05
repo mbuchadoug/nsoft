@@ -7,6 +7,8 @@ var batchSchemaRR = new Schema({
     address: {type: String },
     regNumber: {type: String },
     item:{type:String},
+    unit:{type:String},
+    unitMeasure:{type:String},
     paymentStatus:{type:String},
     priceStatus:{type:String},
     stage:{type:String},
