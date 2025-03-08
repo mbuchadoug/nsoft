@@ -236,6 +236,17 @@ router.get('/rawUnit',function(req,res){
 
       })
     }
+
+     else if(item == 'colour' && stage == 'fermentation' ){
+      RawMat.findByIdAndUpdate(id,{$set:{unit:'(tanks)'}},function(err,locs){
+
+      })
+    }
+    else if(item == 'colour' && stage == 'blending' ){
+      RawMat.findByIdAndUpdate(id,{$set:{unit:'(tanks)'}},function(err,locs){
+
+      })
+    }
     else if(item == 'tea'){
       RawMat.findByIdAndUpdate(id,{$set:{unit:'(bags)'}},function(err,locs){
 
@@ -258,6 +269,9 @@ router.get('/rawUnit',function(req,res){
 
       })
     }
+
+
+   
 
 
   }
@@ -2440,6 +2454,7 @@ console.log(finalProduct,'finalProduct33')
 
           let item = docs[i].ingredient
           let quantity= docs[i].quantity
+          let refNumber = docs[i].refNumber
 
           if(item == 'sugar'){
             RawMat.find({item:item,stage:'raw'},function(err,tocs){
@@ -2454,6 +2469,25 @@ console.log(finalProduct,'finalProduct33')
             })  
           }
             })
+
+FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
+  if(roc){
+    let rocId = roc[0]._id
+    let rocQty = roc[0].quantity - quantity
+
+    if(rocQty > 0){
+
+      FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+
+      })
+    }else{
+    FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0}},function(err,yoc){
+        
+      })
+    }
+
+  }
+})
           }
 
 
@@ -2740,14 +2774,63 @@ console.log(id,'fermentationPreload')
                   
                         })
         
+                      }else if(ingredient == 'sugar'){
+
+                          RawMat.find({item:ingredient,stage:'raw'},function(err,tocs){
+                            if(tocs.length > 0){
+                           // let opBal = tocs[0].massKgs - quantity
+                           let opBalKg = tocs[0].massKgs - quantity * 50
+                           let opBal = tocs[0].uniqueMeasure - quantity
+                            //let opBalTonnes = opBal / 1000
+                            let id4 = tocs[0]._id
+                          RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
+                
+                          })  
+                        }
+
+
+                          })
+
+                          FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
+                            if(roc){
+                              let rocId = roc[0]._id
+                              let rocQty = roc[0].quantity - quantity
+                          
+                              if(rocQty > 0){
+                          
+                                FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                          
+                                })
+                              }else{
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0}},function(err,yoc){
+                                  
+                                })
+                              }
+                          
+                            }
+
+
+                            RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                              let opBal2 = tocs[0].massKgs + pro.quantity
+                              let opBalV = tocs[0].uniqueMeasure + pro.quantity
+                             // let opBalTonnes2 = opBal2 / 1000
+                              let id5 = tocs[0]._id
+                            RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,uniqueMeasure:opBalV},function(err,locs){
+                      
+                            })  
+                      
+                            })
+                          })
+              
                       }
                        else if(ingredient == 'gingerTea'){
                   
                         RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
                           //let opBalTonnes = opBal / 1000
+                          let opBal3 = tocs[0].uniqueMeasure - pro.quantity
                           let id4 = tocs[0]._id
-                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal3},function(err,locs){
               
                         })  
               
@@ -2756,9 +2839,10 @@ console.log(id,'fermentationPreload')
         
                         RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
                           let opBal2 = tocs[0].massKgs + pro.quantity
+                          let opBal4 = tocs[0].uniqueMeasure + pro.quantity
                          // let opBalTonnes2 = opBal2 / 1000
                           let id5 = tocs[0]._id
-                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,uniqueMeasure:opBal2},function(err,locs){
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,uniqueMeasure:opBal4},function(err,locs){
                   
                         })  
                   
@@ -2820,20 +2904,28 @@ console.log(id,'fermentationPreload')
                       else if(ingredient == 'colour'){
                         RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
+                          let opBal3 = tocs[0].uniqueMeasure - pro.quantity
                           let opBalTonnes = opBal / 1000
                           let id4 = tocs[0]._id
-                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,massTonnes:opBalTonnes},function(err,locs){
+                          if(opBal3 > 0){
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal3,massTonnes:opBalTonnes},function(err,locs){
               
                         })  
+                      }else{
+                        RawMat.findByIdAndUpdate(id4,{massKgs:0,uniqueMeasure:0,massTonnes:0},function(err,locs){
+              
+                        })  
+                      }
               
                         })
         
         
                         RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
                           let opBal2 = tocs[0].massKgs + pro.quantity
+                          let opBal4 = tocs[0].uniqueMeasure + pro.quantity
                           let opBalTonnes2 = opBal2 / 1000
                           let id5 = tocs[0]._id
-                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,massTonnes:opBalTonnes2},function(err,locs){
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,uniqueMeasure:opBal4,massTonnes:opBalTonnes2},function(err,locs){
                   
                         })  
                   
@@ -3113,6 +3205,9 @@ BatchFermentationIngredients.find({batchNumber:batchNumber},function(err,nocs){
 
     Ingredients.find({item:ingredient},function(err,tocs){
   
+      if(tocs.length > 0){
+
+      
   
       // RawMat.find({item:item,stage:'fermentation'},function(err,tocs){
          //let opBal1 = tocs[0].massKgs - nQty
@@ -3122,7 +3217,7 @@ BatchFermentationIngredients.find({batchNumber:batchNumber},function(err,nocs){
        Ingredients.findByIdAndUpdate(id4,{massKgs:opBal1},function(err,locs){
    
        })  
-   
+      }
        //})
      })
     RawMat.find({item:ingredient,stage:"fermentation"},function(err,tocs){

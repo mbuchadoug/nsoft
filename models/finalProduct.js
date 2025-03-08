@@ -7,6 +7,7 @@ var finalSchemaCK = new Schema({
     ingredient:{type:String},
     quantity:{type:Number},
     refNumber: {type: String },
+    refNumber2: {type: String },
     month: {type: String },
     year: {type: Number },
     dateValue: {type: Number },

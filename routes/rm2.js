@@ -2776,7 +2776,8 @@ var year = m.format('YYYY')
 
                 
       var final = new FinalProduct()
-      final.refNumber = batchNumber
+      final.refNumber = refNo
+      final.refNumber2 = batchNumber
       final.quantity = bags
       final.date = mformat
       final.ingredient = 'sugar'

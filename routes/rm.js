@@ -2552,7 +2552,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
     
   
   
-    res.redirect('/rm2/stockRMFile/'+refNumber)
+    res.redirect('/rm/stockRMFile/'+refNumber)
         }else if(nocs[0].item == 'ginger'){
           
     let batchId = nocs[0].batchId
@@ -2592,7 +2592,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
   
   
   
-    res.redirect('/rm2/stockRMFile/'+refNumber)
+    res.redirect('/rm/stockRMFile/'+refNumber)
         }else if(nocs[0].item == 'bananas'){
   
   
@@ -2687,7 +2687,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
             
           
           
-            res.redirect('/rm2/stockRMFile/'+refNumber)
+            res.redirect('/rm/stockRMFile/'+refNumber)
         }else if(nocs[0].item == 'sugar'){
   
   
@@ -2802,7 +2802,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
           
         
         
-          res.redirect('/rm2/stockRMFile/'+refNumber)
+          res.redirect('/rm/stockRMFile/'+refNumber)
       }
         
       else if(nocs[0].item == 'tea'){
@@ -2900,7 +2900,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
             
           
           
-            res.redirect('/rm2/stockRMFile/'+refNumber)
+            res.redirect('/rm/stockRMFile/'+refNumber)
         }
         
         
@@ -2908,7 +2908,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
         
         
         else{
-          res.redirect('/rm2/stockRMFile/'+refNumber)
+          res.redirect('/rm/stockRMFile/'+refNumber)
         }
     })
   

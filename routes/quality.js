@@ -824,6 +824,21 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
      })
   }
 
+
+   else if(ingredient == 'sugar'){
+    BatchGingerCrush.find({item:'sugar',batchNumber:id3},function(err,docs){
+      let refNumber = docs[0].refNumber
+      let sId = docs[0]._id
+    BatchRR.find({batchNumber:refNumber},function(err,tocs){
+
+   
+      res.render('qa/trackRaw',{listX:tocs,idNum:id3})
+
+     })
+
+    })
+  }
+
   else if(ingredient == 'garlic'){
     Cooking.find({batchNumber:id3},function(err,docs){
       res.render('qa/trackCooking2',{listX:docs,idNum:id3})
@@ -886,12 +901,18 @@ router.get('/trailBatch2/:id/:id2/:id3',isLoggedIn,function(req,res){
 
 
       else if(item == 'sugar'){
-   
-        BatchRR.find({item:item,batchNumber:id3},function(err,docs){
-          res.render('qa/trackRaw',{listX:docs,idNum:id3})
-     
-           })
-          }
+        BatchGingerCrush.find({item:'sugar',batchNumber:id3},function(err,docs){
+          let refNumber = docs[0].refNumber
+          let sId = docs[0]._id
+        BatchRR.find({batchNumber:refNumber},function(err,tocs){
+    
+       
+          res.render('qa/trackRaw',{listX:tocs,idNum:id3})
+    
+         })
+    
+        })
+      }
 
       else if(item == 'lemon'){
    
