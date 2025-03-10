@@ -5288,6 +5288,77 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
 
  /*8888*/
  
+ router.get('/updateBIV',function(req,res){
+  BlendedItems.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+     BlendedItems.findByIdAndRemove(id,(err,doc)=>{
+
+     }) 
+    }
+    res.redirect('/production/updateRMV')
+  })
+})
+
+
+router.get('/updateRMV',function(req,res){
+  RawMat.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    RawMat.findByIdAndUpdate(id,{$set:{massKgs:0,massTonnes:0,uniqueMeasure:0,drums:0,crates:0}},function(err,tocs){
+
+    })
+    }
+    res.redirect('/production/updateIngredientsV')
+  })
+})
+
+
+
+
+router.get('/updateIngredientsV',function(req,res){
+  Ingredients.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    Ingredients.findByIdAndUpdate(id,{$set:{massKgs:0}},function(err,tocs){
+
+    })
+    }
+    res.redirect('/production/updateCrushedItemsV')
+  })
+})
+
+
+router.get('/updateCrushedItemsV',function(req,res){
+  CrushedItems.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    CrushedItems.findByIdAndUpdate(id,{$set:{massKgs:0,crates:0,uniqueMeasure:0}},function(err,tocs){
+
+    })
+    }
+    res.redirect('/production/updateBTV')
+  })
+})
+
+
+
+router.get('/updateBTV',function(req,res){
+  BlendingTanks.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+     let id = docs[i]._id
+    BlendingTanks.findByIdAndUpdate(id,{$set:{litres:0,product:"null",refNumber:"null"}},function(err,tocs){
+
+    })
+    }
+    res.redirect('/production/warehouseStock')
+  })
+})
+
+
+
+
+
 
 
 
