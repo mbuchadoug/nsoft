@@ -1825,7 +1825,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({status:'pending'},function(err,docs){
   
-      res.render('rStockTest/vouchers',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStock/vouchers',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
@@ -1836,7 +1836,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({},function(err,docs){
   
-      res.render('rStocK/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStock/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
