@@ -1836,7 +1836,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({},function(err,docs){
   
-      res.render('rStockTest/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStocK/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
@@ -1854,7 +1854,7 @@ BatchRR.findById(id,function(err,doc){
   let prefix = doc.prefix
   let openingWeightTonnes = doc.openingWeightTonne
   let requestedMassTonnes = doc.requestedMassTonnes
-res.render('rStockTest/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
+res.render('rStock/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
 openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,voucherNo:voucherNo})
 
 })
@@ -1987,7 +1987,7 @@ item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:i
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 else{
-  res.render('rStockTest/addMaterial',{date:date,supplier:supplier,mass:mass,
+  res.render('rStock/addMaterial',{date:date,supplier:supplier,mass:mass,
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
 }
 
