@@ -498,6 +498,7 @@ this.firstElementChild.select();
        let bags =  document.getElementById('numberOfBags').value
        let refNumber = document.getElementById('grvNumber').value  
        let lossMargin = 0  
+             let date = document.getElementById('date').value
  let supplier = document.getElementById('supplier').value 
         if(bags == "" ){
  alert('Enter Number of Buckets Or Weight')
@@ -515,7 +516,7 @@ this.firstElementChild.select();
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,bags:bags,
+                    code: mass,bags:bags,date:date,
                     grvNumber:refNumber,lossMargin:lossMargin
                     
                 },

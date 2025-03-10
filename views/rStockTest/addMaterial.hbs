@@ -494,13 +494,14 @@ this.firstElementChild.select();
             function add() {
                   if(confirm('Are you sure your want to Capture Mass?'))
    {
-       let mass = document.getElementById('mass').value 
+       let mass = document.getElementById('mass').value
+             let date = document.getElementById('date').value 
        let refNumber = document.getElementById('grvNumber').value  
        let lossMargin = 0    
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,
+                    code: mass,date:date,
                     grvNumber:refNumber,lossMargin:lossMargin
                     
                 },

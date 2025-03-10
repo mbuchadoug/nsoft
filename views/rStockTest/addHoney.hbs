@@ -511,11 +511,12 @@ this.firstElementChild.select();
      else{
       
       let lossMargin = buckets * bucketWeight
+      let date = document.getElementById('date').value
        let refNumber = document.getElementById('grvNumber').value      
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,buckets:buckets,
+                    code: mass,buckets:buckets,date:date,
                     grvNumber:refNumber,lossMargin:lossMargin
                     
                 },

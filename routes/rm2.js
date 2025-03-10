@@ -439,8 +439,9 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     var uid = req.user._id
     var prefix = req.body.prefix
     var year = 2025
+    let dateB = req.body.date
     let requestedMassTonnes,requestedMassKgs
-    let date6 = moment().format('l');
+    let date6 = moment(dateB).format('l');
     let date7 =  date6.replace(/\//g, "");
   
     if(unit == 'kgs'){
@@ -454,10 +455,10 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     }
   
     var m = moment()
-    var mformat = m.format('L')
-    var month = m.format('MMMM')
-    var year = m.format('YYYY')
-    let dateValue = moment().valueOf()
+    var mformat = moment(dateB).format('L')
+    var month = moment(dateB).format('MMMM')
+    var year = moment(dateB).format('YYYY')
+    let dateValue = moment(dateB).valueOf()
     let voucherNumber = req.user.voucherNumber
     
   
@@ -538,6 +539,10 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
         user.save()
           .then(user =>{
 
+            User.findByIdAndUpdate(uid,{$set:{date:dateB}},function(err,docs){
+
+            })
+
            /* const from = "Kambucha"
             const to = "263771446827"
             const text = 'Check Stock Requisition of'+' '+item+' '+requestedMass+'kgs'
@@ -571,8 +576,9 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
 router.get('/approval/:id',isLoggedIn,function(req,res){
   var id = req.params.id
   var name = req.user.fullname
+  var dateB = req.user.date
  
-  let date6 = moment().format('l');
+  let date6 = moment(dateB).format('l');
    let date7 =  date6.replace(/\//g, "");
   StockVoucher.findByIdAndUpdate(id,{$set:{approver3:name,status3:"approved",status:"approved"}},function(err,docs){
 
@@ -1859,7 +1865,8 @@ openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,
 router.post('/batchRM/:id',isLoggedIn,function(req,res){
 
 //var refNumber = req.body.referenceNumber
-var m = moment()
+var dateB = req.user.date
+var m = moment(dateB)
 var mformat = m.format('L')
 var month = m.format('MMMM')
 var year = m.format('YYYY')
@@ -1876,7 +1883,7 @@ let driver = req.body.driver
 let idNum = req.body.idNum
 let trailer = req.body.trailer
 let refNo = req.body.refNo
-let date6 = moment().format('l');
+let date6 = moment(dateB).format('l');
 let date7 =  date6.replace(/\//g, "");
 
 
@@ -1992,7 +1999,8 @@ else{
 
 
 router.post('/receiveMassHoney',function(req,res){
-  var m = moment()
+  let dateB = req.body.date
+  var m = moment(dateB)
   var mformat = m.format('L')
   var month = m.format('MMMM')
   var year = m.format('YYYY')
@@ -2108,7 +2116,8 @@ router.post('/receiveMassHoney',function(req,res){
 
 
   router.post('/receiveMassSugar',function(req,res){
-    var m = moment()
+    let dateB = req.body.date
+    var m = moment(dateB)
     var mformat = m.format('L')
     var month = m.format('MMMM')
     var year = m.format('YYYY')
@@ -2224,7 +2233,8 @@ router.post('/receiveMassHoney',function(req,res){
 
 
 router.post('/receiveMass',function(req,res){
-var m = moment()
+var dateB = req.user.date
+  var m = moment(dateB)
 var mformat = m.format('L')
 var month = m.format('MMMM')
 var year = m.format('YYYY')
@@ -2336,7 +2346,8 @@ stock.save()
 
 
 router.post('/receiveMassTea',function(req,res){
-  var m = moment()
+  let dateB = req.body.date
+  var m = moment(dateB)
   var mformat = m.format('L')
   var month = m.format('MMMM')
   var year = m.format('YYYY')
@@ -2468,8 +2479,8 @@ StockRM.find({grvNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
 
 
 router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
-
-  var m = moment()
+  var dateB = req.user.date
+  var m = moment(dateB)
 
 var mformat = m.format("L")
 var month = m.format('MMMM')
