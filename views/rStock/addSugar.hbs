@@ -496,12 +496,13 @@ this.firstElementChild.select();
        //let massX = document.getElementById('mass').value 
        let numberOfBags = document.getElementById('numberOfBags').value 
        let mass = numberOfBags * 50
+             let date = document.getElementById('date').value
       // let batchNumber = document.getElementById('batchNumber').value 
         let refNumber = document.getElementById('grvNumber').value           
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,bags:numberOfBags,
+                    code: mass,bags:numberOfBags,date:date,
                     grvNumber:refNumber,
                     
                 },

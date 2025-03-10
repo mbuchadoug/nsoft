@@ -285,7 +285,7 @@ $.ajax({
     dataType: 'json',
     type: 'POST',
 	
-    url: `/rm/reloadMat/{{{refNumber}}}`,
+    url: `/rm2/reloadMat/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    
@@ -521,7 +521,7 @@ this.firstElementChild.select();
                     
                 },
                 type: 'POST',
-                url: "/rm/receiveMass",
+                url: "/rm2/receiveMass",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
@@ -725,7 +725,7 @@ link.classList.add('text-end','pe-0')*/
           <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
        <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm/closeBatchRM/{{refNumber}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm2/closeBatchRM/{{refNumber}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>

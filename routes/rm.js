@@ -415,17 +415,16 @@ router.get('/voucherNumberUpdate',isLoggedIn,function(req,res){
   
   })
 
-
-
-
-router.get('/stockRequisition',isLoggedIn,function(req,res){
-    var errorMsg = req.flash('danger')[0];
-    var successMsg = req.flash('success')[0];
-    var voucherNumber = req.user.voucherNumber
-  res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,voucherNumber:voucherNumber})
   
-  })
-        
+router.get('/stockRequisition',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  var voucherNumber = req.user.voucherNumber
+res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,voucherNumber:voucherNumber})
+
+})
+
+
   router.post('/stockRequisition',isLoggedIn,function(req,res){
     var item =req.body.rawMaterial
     var stockWeight = req.body.stock
@@ -439,8 +438,9 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     var uid = req.user._id
     var prefix = req.body.prefix
     var year = 2025
+    let dateB = req.body.date
     let requestedMassTonnes,requestedMassKgs
-    let date6 = moment().format('l');
+    let date6 = moment(dateB).format('l');
     let date7 =  date6.replace(/\//g, "");
   
     if(unit == 'kgs'){
@@ -454,10 +454,10 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
     }
   
     var m = moment()
-    var mformat = m.format('L')
-    var month = m.format('MMMM')
-    var year = m.format('YYYY')
-    let dateValue = moment().valueOf()
+    var mformat = moment(dateB).format('L')
+    var month = moment(dateB).format('MMMM')
+    var year = moment(dateB).format('YYYY')
+    let dateValue = moment(dateB).valueOf()
     let voucherNumber = req.user.voucherNumber
     
   
@@ -538,6 +538,10 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
         user.save()
           .then(user =>{
 
+            User.findByIdAndUpdate(uid,{$set:{date:dateB}},function(err,docs){
+
+            })
+
            /* const from = "Kambucha"
             const to = "263771446827"
             const text = 'Check Stock Requisition of'+' '+item+' '+requestedMass+'kgs'
@@ -564,6 +568,7 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
       }
   
   })
+
 
 
 
@@ -713,7 +718,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               //res.redirect('/rm/viewPO3/'+id)
 
 
-              res.redirect('/rm2/approvedRequisitions/')
+              res.redirect('/rm/approvedRequisitions/')
 
            
              // res.redirect('/accounts3/grvFileV/'+id)
@@ -840,7 +845,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm2/approvedRequisitions/')
+         res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1095,7 +1100,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
          // res.redirect('/rm/viewPO3/'+id)
 
-         res.redirect('/rm2/approvedRequisitions/')
+         res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1222,7 +1227,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm2/approvedRequisitions/')
+         res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1350,7 +1355,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
          // res.redirect('/accounts3/grvFileV/'+id)
          //res.redirect('/rm/viewPO3/'+id)
 
-         res.redirect('/rm2/approvedRequisitions/')
+         res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1473,7 +1478,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm2/approvedRequisitions/')
+          res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1598,7 +1603,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm2/approvedRequisitions/')
+          res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1726,7 +1731,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm2/approvedRequisitions/')
+          res.redirect('/rm/approvedRequisitions/')
       
       
         })
@@ -1905,7 +1910,7 @@ User.findByIdAndUpdate(uid,{$set:{refNumber:refNo,batchId:id,grvNumber:grvNumber
 })
 
 
-res.redirect('/rm2/receiveMaterialV/'+id)
+res.redirect('/rm/receiveMaterialV/'+id)
 })
 
 
@@ -1934,7 +1939,7 @@ RawMat.find({item:item},function(err,docs){
 router.get('/receiveMaterialV/:id',function(req,res){
 var id = req.params.id
 console.log('good')
-res.redirect('/rm2/receiveMaterial/'+id)
+res.redirect('/rm/receiveMaterial/'+id)
 })
 
 router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
@@ -1959,26 +1964,26 @@ BatchRR.findById(id,function(err,docs){
 
   console.log(grvNumber,'grvNumber')
 
- res.render('rStockTest/addHoney',{date:date,supplier:supplier,mass:mass,
+ res.render('rStock/addHoney',{date:date,supplier:supplier,mass:mass,
 item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
 
  else if(item == 'bananas'){
 
-  res.render('rStockTest/addBananas',{date:date,supplier:supplier,mass:mass,
+  res.render('rStock/addBananas',{date:date,supplier:supplier,mass:mass,
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
  else if(item == 'tea'){
 
-  res.render('rStockTest/addTea',{date:date,supplier:supplier,mass:mass,
+  res.render('rStock/addTea',{date:date,supplier:supplier,mass:mass,
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 
  else if(item == 'sugar'){
 
-  res.render('rStockTest/addSugar',{date:date,supplier:supplier,mass:mass,
+  res.render('rStock/addSugar',{date:date,supplier:supplier,mass:mass,
     item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
  }
 else{
