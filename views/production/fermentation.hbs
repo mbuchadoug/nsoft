@@ -715,9 +715,18 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
               <form class="zb-txn-form"  name="sample">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
          <input type="hidden" id="id" name="id" value="{{id}}">
+
+         
          <div class="row form-group">
         <div class="col-lg-2"><label class="col-form-label required">Ingredient</label> 
-         <input  id="ingredient" name="ingredient" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" ></div>
+         <input  id="ingredient" name="ingredient" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" readonly ></div>
+
+
+<div class="col-lg-2"><label class="col-form-label required">Ref #</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text" value="" ></div> </div></div>
+
 
          <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
           <div id="ember330" class="ember-view">
@@ -745,8 +754,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
             </div> </div></div>
   
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
-    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="" readonly></div>
+     
 
     
          <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Operator</label> 
@@ -909,7 +917,7 @@ document.getElementById('danger').textContent = 'Enter Number of Tanks Mixed'
 
  <script>
       $(function(){
-    $('#ingredient').autocomplete({
+    $('#refNumber').autocomplete({
     source: function(req,res){
 
       $.ajax({

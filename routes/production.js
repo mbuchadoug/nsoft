@@ -2433,9 +2433,15 @@ console.log(finalProduct,'finalProduct33')
 
       })
 
+      let nTanks
+      if(finalProduct == 'colour'){
+        nTanks = number1 / 2
+      }else{
+        nTanks = number1 / 5
+      }
       var final = new FinalProduct()
       final.refNumber = batchNumber
-      final.quantity = number1 / 5
+      final.quantity = nTanks
       final.date = mformat
       final.ingredient = finalProduct
       final.month = month
@@ -2802,7 +2808,7 @@ console.log(id,'fermentationPreload')
                           
                                 })
                               }else{
-                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0}},function(err,yoc){
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
                                   
                                 })
                               }
@@ -2871,6 +2877,28 @@ console.log(id,'fermentationPreload')
                   
                         })  
                   
+                        })
+
+
+
+
+                        FinalProduct.find({ingredient:"honey",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
                         })
         
                       }
@@ -2980,7 +3008,7 @@ console.log(id,'fermentationPreload')
 
       var regex= new RegExp(req.query["term"],'i');
      
-      var itemFilter =FinalProduct.find({ ingredient:regex},{'ingredient':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+      var itemFilter =FinalProduct.find({ refNumber:regex,status:"null"},{'refNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
     
       
       itemFilter.exec(function(err,data){
@@ -3001,7 +3029,7 @@ console.log(id,'fermentationPreload')
             
            let obj={
              id:shop._id,
-             label: shop.ingredient
+             label: shop.refNumber
   
          
        
@@ -3036,7 +3064,7 @@ console.log(id,'fermentationPreload')
     
         
        
-        FinalProduct.find({ingredient:code},function(err,docs){
+        FinalProduct.find({refNumber:code},function(err,docs){
        if(docs == undefined){
          res.redirect('/')
        }else
@@ -3461,9 +3489,6 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       })
  
 
-
-      
-
       router.get('/updateStockBF',function(req,res){
         BatchFermentation.find(function(err,docs){
           for(var i = 0;i<docs.length;i++){
@@ -3472,7 +3497,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateStockBFI')
+          res.redirect('/rm/updateStockBFI')
         })
       })
       
@@ -3488,7 +3513,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateBBC')
+          res.redirect('/rm/updateBBC')
         })
       })
 
@@ -3501,7 +3526,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateBRR')
+          res.redirect('/rm/updateBRR')
         })
       })
       
@@ -3515,7 +3540,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateBGC')
+          res.redirect('/rm/updateBGC')
         })
       })
 
@@ -3528,7 +3553,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateBGW')
+          res.redirect('/rm/updateBGW')
         })
       })
   
@@ -3540,7 +3565,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateGW')
+          res.redirect('/rm/updateGW')
         })
       })
   
@@ -3552,7 +3577,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateGC')
+          res.redirect('/rm/updateGC')
         })
       })
 
@@ -3565,7 +3590,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateC')
+          res.redirect('/rm/updateC')
         })
       })
 
@@ -3579,7 +3604,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateFP')
+          res.redirect('/rm/updateFP')
         })
       })
 
@@ -3591,7 +3616,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateBI')
+          res.redirect('/rm/updateBI')
         })
       })
 
@@ -3605,7 +3630,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateSV')
+          res.redirect('/rm/updateSV')
         })
       })
 
@@ -3618,7 +3643,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateSRM')
+          res.redirect('/rm/updateSRM')
         })
       })
 
@@ -3631,7 +3656,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
       
            }) 
           }
-          res.redirect('/production/updateRM')
+          res.redirect('/rm/updateRM')
         })
       })
 
@@ -3639,11 +3664,11 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         RawMat.find(function(err,docs){
           for(var i = 0;i<docs.length;i++){
            let id = docs[i]._id
-          RawMat.findByIdAndUpdate(id,{$set:{massKgs:0,massTonnes:0}},function(err,tocs){
+          RawMat.findByIdAndUpdate(id,{$set:{massKgs:0,massTonnes:0,uniqueMeasure:0,drums:0,crates:0}},function(err,tocs){
 
           })
           }
-          res.redirect('/production/updateIngredients')
+          res.redirect('/rm/updateIngredients')
         })
       })
 
@@ -3658,7 +3683,7 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
           })
           }
-          res.redirect('/production/updateCrushedItems')
+          res.redirect('/rm/updateCrushedItems')
         })
       })
 
@@ -3667,11 +3692,11 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
         CrushedItems.find(function(err,docs){
           for(var i = 0;i<docs.length;i++){
            let id = docs[i]._id
-          CrushedItems.findByIdAndUpdate(id,{$set:{massKgs:0}},function(err,tocs){
+          CrushedItems.findByIdAndUpdate(id,{$set:{massKgs:0,crates:0,uniqueMeasure:0}},function(err,tocs){
 
           })
           }
-          res.redirect('/production/updateBT')
+          res.redirect('/rm/updateBT')
         })
       })
 
@@ -3685,9 +3710,12 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
           })
           }
-          res.redirect('/production/warehouseStock')
+          res.redirect('/rm/warehouseStock')
         })
       })
+
+
+
 
 
 
