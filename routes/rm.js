@@ -571,8 +571,9 @@ router.get('/stockRequisition',isLoggedIn,function(req,res){
 router.get('/approval/:id',isLoggedIn,function(req,res){
   var id = req.params.id
   var name = req.user.fullname
+  var dateB = req.user.date
  
-  let date6 = moment().format('l');
+  let date6 = moment(dateB).format('l');
    let date7 =  date6.replace(/\//g, "");
   StockVoucher.findByIdAndUpdate(id,{$set:{approver3:name,status3:"approved",status:"approved"}},function(err,docs){
 
@@ -614,6 +615,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               truck.status = 'pending'
               truck.receivedTonnes = 0
               truck.receivedKgs = 0
+              truck.unit = 'kgs'
               truck.requestedMassTonnes = requestedMassTonnes
               truck.requestedMassKgs = requestedMassKgs
               truck.year = year
@@ -711,7 +713,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               //res.redirect('/rm/viewPO3/'+id)
 
 
-              res.redirect('/rm/approvedRequisitions/')
+              res.redirect('/rm2/approvedRequisitions/')
 
            
              // res.redirect('/accounts3/grvFileV/'+id)
@@ -735,6 +737,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
           truck.month = month
+          truck.unit = 'bags'
           truck.status = 'pending'
           truck.receivedTonnes = 0
           truck.receivedKgs = 0
@@ -749,7 +752,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-/*var https = require('follow-redirects').https;
+              /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -837,7 +840,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -853,7 +856,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       truck.item = item
       truck.paymentStatus = 'unpaid'
       truck.priceStatus = 'null'
-      truck.stage = 'cooking'
+      truck.stage = 'crush'
       truck.refNumber = voucherNo
       truck.batchNumber = batchNumber
       truck.month = month
@@ -874,7 +877,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
       truck.save()
           .then(pro =>{
   
-         /*   var https = require('follow-redirects').https;
+           /* var https = require('follow-redirects').https;
             var fs = require('fs');
             
             var options = {
@@ -991,6 +994,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
           truck.month = month
+          truck.unit = 'bags'
           truck.status = 'pending'
           truck.receivedTonnes = 0
           truck.receivedKgs = 0
@@ -1005,7 +1009,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-             /* var https = require('follow-redirects').https;
+            /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1091,7 +1095,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
          // res.redirect('/rm/viewPO3/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1105,7 +1109,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.dateValue = dateValue
           truck.item = item
           truck.prefix = prefix
-          truck.stage = 'cooking'
+          truck.stage = 'fermentation'
           truck.priceStatus = 'null'
           truck.refNumber = voucherNo
           truck.batchNumber = batchNumber
@@ -1114,6 +1118,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.openingWeightKg = stocKgs
           truck.openingWeightTonne = stockTonnes
           truck.month = month
+          truck.unit = 'buckets'
           truck.status = 'pending'
           truck.receivedTonnes = 0
           truck.receivedKgs = 0
@@ -1129,7 +1134,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
               .then(pro =>{
       
       
-            /*  var https = require('follow-redirects').https;
+             /* var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1173,9 +1178,9 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
-              */
+              
    /* const from = "Kambucha"
     const to = "263771446827"
     const text = 'Stock Requistion Accepted, Check Your Purchase Order'+' '+requestedMassKgs+' '+item
@@ -1217,7 +1222,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           //res.redirect('/rm/viewPO3/'+id)
          // res.redirect('/accounts3/grvFileV/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1345,7 +1350,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
          // res.redirect('/accounts3/grvFileV/'+id)
          //res.redirect('/rm/viewPO3/'+id)
 
-         res.redirect('/rm/approvedRequisitions/')
+         res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1382,7 +1387,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-             /*   var https = require('follow-redirects').https;
+              /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1468,7 +1473,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm/approvedRequisitions/')
+          res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1550,8 +1555,8 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
                 
                 req.write(postData);
                 
-                req.end();*/
-            
+                req.end();
+            */
               
     /*const from = "Kambucha"
     const to = "263771446827"
@@ -1593,7 +1598,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm/approvedRequisitions/')
+          res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1613,6 +1618,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.paymentStatus = 'unpaid'
           truck.priceStatus = 'null'
           truck.stage = 'crush'
+          truck.unit = 'crates'
           truck.refNumber = voucherNo
           truck.batchNumber = batchNumber
           truck.month = month
@@ -1633,7 +1639,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
           truck.save()
               .then(pro =>{
       
-              /* var https = require('follow-redirects').https;
+             /*  var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -1720,7 +1726,7 @@ router.get('/approval/:id',isLoggedIn,function(req,res){
 
           //res.redirect('/rm/viewPO3/'+id)
 
-          res.redirect('/rm/approvedRequisitions/')
+          res.redirect('/rm2/approvedRequisitions/')
       
       
         })
@@ -1753,7 +1759,7 @@ StockVoucher.find(function(err,docs){
 StockVoucher.find({_id:id},function(err,locs){
    console.log(locs,'locs')
 
-  res.render('rStock/purchaseOrder',{listX:locs,listX2:docs})
+  res.render('rStockTest/purchaseOrder',{listX:locs,listX2:docs})
 })
 })
 
@@ -1775,7 +1781,7 @@ StockVoucher.find({status:"approved"},function(err,ocs){
  // console.log(docs,'ok')
   //res.render('kambucha/pdf',{listX:docs})
 
-  res.redirect('/rm/viewPO/'+rtnsNumber)
+  res.redirect('/rm2/viewPO/'+rtnsNumber)
 })
 
 })
@@ -1796,7 +1802,7 @@ StockVoucher.find({status3:"approved"},function(err,docs){
   StockVoucher.find({_id:voucherId},function(err,locs){
 
  // console.log(docs,'ok')
-  res.render('rStock/purchaseOrder',{listX:locs,listX2:docs,id:voucherId})
+  res.render('rStockTest/purchaseOrder',{listX:locs,listX2:docs,id:voucherId})
 })
 })
 
@@ -1814,7 +1820,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({status:'pending'},function(err,docs){
   
-      res.render('rStock/vouchers',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStockTest/vouchers',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
@@ -1825,7 +1831,7 @@ router.get('/approvedRequisitions',isLoggedIn,function(req,res){
   var successMsg = req.flash('success')[0];
     BatchRR.find({},function(err,docs){
   
-      res.render('rStock/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
+      res.render('rStockTest/orders',{listX:docs,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg})
     })
   })
     
@@ -1843,7 +1849,7 @@ BatchRR.findById(id,function(err,doc){
   let prefix = doc.prefix
   let openingWeightTonnes = doc.openingWeightTonne
   let requestedMassTonnes = doc.requestedMassTonnes
-res.render('rStock/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
+res.render('rStockTest/rcvBatch',{pro:pro,id:id,prefix:prefix,refNumber:refNumber,item:item,
 openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,voucherNo:voucherNo})
 
 })
@@ -1854,7 +1860,8 @@ openingWeightTonnes:openingWeightTonnes,requestedMassTonnes:requestedMassTonnes,
 router.post('/batchRM/:id',isLoggedIn,function(req,res){
 
 //var refNumber = req.body.referenceNumber
-var m = moment()
+var dateB = req.user.date
+var m = moment(dateB)
 var mformat = m.format('L')
 var month = m.format('MMMM')
 var year = m.format('YYYY')
@@ -1871,7 +1878,7 @@ let driver = req.body.driver
 let idNum = req.body.idNum
 let trailer = req.body.trailer
 let refNo = req.body.refNo
-let date6 = moment().format('l');
+let date6 = moment(dateB).format('l');
 let date7 =  date6.replace(/\//g, "");
 
 
@@ -1898,7 +1905,7 @@ User.findByIdAndUpdate(uid,{$set:{refNumber:refNo,batchId:id,grvNumber:grvNumber
 })
 
 
-res.redirect('/rm/receiveMaterialV/'+id)
+res.redirect('/rm2/receiveMaterialV/'+id)
 })
 
 
@@ -1924,71 +1931,188 @@ RawMat.find({item:item},function(err,docs){
 
 
 
-
 router.get('/receiveMaterialV/:id',function(req,res){
-  var id = req.params.id
-  console.log('good')
-  res.redirect('/rm2/receiveMaterial/'+id)
+var id = req.params.id
+console.log('good')
+res.redirect('/rm2/receiveMaterial/'+id)
+})
+
+router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
+
+
+var pro = req.user
+var id = req.params.id
+console.log(id,'idf')
+BatchRR.findById(id,function(err,docs){
+    
+  let supplier = docs.supplier
+  let item = docs.item
+  let date = docs.date
+  let driver = docs.driver
+  let regNumber = docs.regNumber
+  let refNumber = docs.refNumber
+  let mass = docs.requestedMassKgs
+  let batchNumber = docs.batchNumber
+  let grvNumber = docs.grvNumber
+
+  if(item == 'honey'){
+
+  console.log(grvNumber,'grvNumber')
+
+ res.render('rStockTest/addHoney',{date:date,supplier:supplier,mass:mass,
+item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+ }
+
+
+ else if(item == 'bananas'){
+
+  res.render('rStockTest/addBananas',{date:date,supplier:supplier,mass:mass,
+    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+ }
+
+ else if(item == 'tea'){
+
+  res.render('rStockTest/addTea',{date:date,supplier:supplier,mass:mass,
+    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+ }
+
+ else if(item == 'sugar'){
+
+  res.render('rStockTest/addSugar',{date:date,supplier:supplier,mass:mass,
+    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+ }
+else{
+  res.render('rStockTest/addMaterial',{date:date,supplier:supplier,mass:mass,
+    item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
+}
+
+       
+})
+
+})
+
+
+
+router.post('/receiveMassHoney',function(req,res){
+  let dateB = req.body.date
+  var m = moment(dateB)
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  let dateValue = moment().valueOf()
+  let arrV = []
+  let number1
+  
+  let mass = req.body.code
+  let massTonne
+  let buckets = req.body.buckets
+  console.log(buckets,'buckets')
+  let grvNumber = req.body.grvNumber
+  console.log(grvNumber,'grvNumber')
+  let lossMarginX = req.body.lossMargin
+  let reg = /\d+\.*\d*/g;
+  let result = lossMarginX.match(reg)
+  let lossMargin = Number(result)
+  
+  BatchRR.find({grvNumber:grvNumber},function(err,docs){
+    console.log(docs,'docs','receiveMass')
+    let supplier = docs[0].supplier
+    let item = docs[0].item
+    let date = docs[0].date
+    let driver = docs[0].driver
+    let regNumber = docs[0].regNumber
+    let mobile = docs[0].mobile
+    let trailer = docs[0].trailer
+    let address = docs[0].address
+    let batchNumber = docs[0].batchNumber
+    let refNumber = docs[0].refNumber
+    let idNumber = docs[0].idNumber
+    let voucherNumber = docs[0].voucherNo
+    let dateValue = docs[0].dateValue
+    let openingWeightKg = docs[0].openingWeightKg
+    let openingWeightTonne = docs[0].openingWeightTonne
+    let batchId = docs[0]._id
+  let newMassNum = 0
+  
+  console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
+  
+  
+  StockRM.find({grvNumber:grvNumber,item:item},function(err,docs){
+  
+  for(var i = 0;i<docs.length; i++){
+   // console.log(docs[i].newMass,'serima')
+  arrV.push(docs[i].newMass)
+    }
+    //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+   //console.log(arrV,'arrV')
+  
+  //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+  number1=0;
+  for(var z in arrV) { number1 += arrV[z]; }
+  number1.toFixed(2)
+  let reg = /\d+\.*\d*/g;
+  let resultQty = mass.match(reg)
+  let massNum = Number(resultQty)
+  
+  let total5 = massNum + number1
+  
+  massNum.toFixed(2)
+  let size = docs.length + 1
+  let weight = 'weight'+size
+   
+  var stock = new StockRM();
+  stock.weight = weight
+  stock.date = date
+  stock.address = address
+  stock.regNumber = regNumber
+  stock.item = item
+  stock.buckets = buckets
+  stock.supplier = supplier
+  stock.driver = driver
+  stock.voucherNumber = voucherNumber
+  stock.batchNumber = batchNumber
+  stock.grvNumber = grvNumber
+  stock.idNumber = idNumber
+  stock.trailer = trailer
+  stock.lossMargin = lossMargin
+  stock.voucherNumber = voucherNumber
+  stock.refNumber = refNumber
+  stock.mobile = mobile
+  stock.month = month
+  stock.year = year
+  stock.batchId = batchId
+  stock.openingWeightKg = openingWeightKg
+  stock.openingWeightTonne = openingWeightTonne
+  stock.openingMass = number1
+  stock.newMass = mass
+  stock.closingMass = massNum + number1
+  stock.openingMassTonne = number1 / 1000
+  stock.newMassTonne = mass /1000
+  stock.closingMassTonne = total5 / 1000
+  stock.size = size
+  stock.dateValue = dateValue
+  
+  stock.save()
+  .then(pro =>{
+  
+    res.send(pro)
+  
   })
   
-  router.get('/receiveMaterial/:id',isLoggedIn,function(req,res){
   
   
-  var pro = req.user
-  var id = req.params.id
-  console.log(id,'idf')
-  BatchRR.findById(id,function(err,docs){
-      
-    let supplier = docs.supplier
-    let item = docs.item
-    let date = docs.date
-    let driver = docs.driver
-    let regNumber = docs.regNumber
-    let refNumber = docs.refNumber
-    let mass = docs.requestedMassKgs
-    let batchNumber = docs.batchNumber
-    let grvNumber = docs.grvNumber
-  
-    if(item == 'honey'){
-  
-    console.log(grvNumber,'grvNumber')
-  
-   res.render('rStockTest/addHoney',{date:date,supplier:supplier,mass:mass,
-  item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
-   }
-  
-  
-   else if(item == 'bananas'){
-  
-    res.render('rStockTest/addBananas',{date:date,supplier:supplier,mass:mass,
-      item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
-   }
-  
-   else if(item == 'tea'){
-  
-    res.render('rStockTest/addTea',{date:date,supplier:supplier,mass:mass,
-      item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
-   }
-  
-   else if(item == 'sugar'){
-  
-    res.render('rStockTest/addSugar',{date:date,supplier:supplier,mass:mass,
-      item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
-   }
-  else{
-    res.render('rStockTest/addMaterial',{date:date,supplier:supplier,mass:mass,
-      item:item,refNumber:refNumber,batchNumber:batchNumber,driver:driver,pro:pro,id:id,regNumber:regNumber,grvNumber:grvNumber})
-  }
-  
-         
   })
   
   })
-  
-  
-  
-  router.post('/receiveMassHoney',function(req,res){
-    var m = moment()
+  })
+
+
+
+
+
+  router.post('/receiveMassSugar',function(req,res){
+    let dateB = req.body.date
+    var m = moment(dateB)
     var mformat = m.format('L')
     var month = m.format('MMMM')
     var year = m.format('YYYY')
@@ -1998,14 +2122,12 @@ router.get('/receiveMaterialV/:id',function(req,res){
     
     let mass = req.body.code
     let massTonne
-    let buckets = req.body.buckets
-    console.log(buckets,'buckets')
+    let bags = req.body.bags
+    //console.log(buckets,'buckets')
     let grvNumber = req.body.grvNumber
     console.log(grvNumber,'grvNumber')
-    let lossMarginX = req.body.lossMargin
-    let reg = /\d+\.*\d*/g;
-    let result = lossMarginX.match(reg)
-    let lossMargin = Number(result)
+   
+    let lossMargin =0
     
     BatchRR.find({grvNumber:grvNumber},function(err,docs){
       console.log(docs,'docs','receiveMass')
@@ -2030,7 +2152,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
     console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
     
     
-    StockRM.find({grvNumber:grvNumber,item:item},function(err,docs){
+    StockRM.find({refNumber:refNumber},function(err,docs){
     
     for(var i = 0;i<docs.length; i++){
      // console.log(docs[i].newMass,'serima')
@@ -2059,7 +2181,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
     stock.address = address
     stock.regNumber = regNumber
     stock.item = item
-    stock.buckets = buckets
+    stock.bags = bags
     stock.supplier = supplier
     stock.driver = driver
     stock.voucherNumber = voucherNumber
@@ -2102,125 +2224,125 @@ router.get('/receiveMaterialV/:id',function(req,res){
   
   
   
-  
-    router.post('/receiveMassSugar',function(req,res){
-      var m = moment()
-      var mformat = m.format('L')
-      var month = m.format('MMMM')
-      var year = m.format('YYYY')
-      let dateValue = moment().valueOf()
-      let arrV = []
-      let number1
-      
-      let mass = req.body.code
-      let massTonne
-      let bags = req.body.bags
-      //console.log(buckets,'buckets')
-      let grvNumber = req.body.grvNumber
-      console.log(grvNumber,'grvNumber')
-     
-      let lossMargin =0
-      
-      BatchRR.find({grvNumber:grvNumber},function(err,docs){
-        console.log(docs,'docs','receiveMass')
-        let supplier = docs[0].supplier
-        let item = docs[0].item
-        let date = docs[0].date
-        let driver = docs[0].driver
-        let regNumber = docs[0].regNumber
-        let mobile = docs[0].mobile
-        let trailer = docs[0].trailer
-        let address = docs[0].address
-        let batchNumber = docs[0].batchNumber
-        let refNumber = docs[0].refNumber
-        let idNumber = docs[0].idNumber
-        let voucherNumber = docs[0].voucherNo
-        let dateValue = docs[0].dateValue
-        let openingWeightKg = docs[0].openingWeightKg
-        let openingWeightTonne = docs[0].openingWeightTonne
-        let batchId = docs[0]._id
-      let newMassNum = 0
-      
-      console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
-      
-      
-      StockRM.find({refNumber:refNumber},function(err,docs){
-      
-      for(var i = 0;i<docs.length; i++){
-       // console.log(docs[i].newMass,'serima')
-      arrV.push(docs[i].newMass)
-        }
-        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
-       //console.log(arrV,'arrV')
-      
-      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
-      number1=0;
-      for(var z in arrV) { number1 += arrV[z]; }
-      number1.toFixed(2)
-      let reg = /\d+\.*\d*/g;
-      let resultQty = mass.match(reg)
-      let massNum = Number(resultQty)
-      
-      let total5 = massNum + number1
-      
-      massNum.toFixed(2)
-      let size = docs.length + 1
-      let weight = 'weight'+size
-       
-      var stock = new StockRM();
-      stock.weight = weight
-      stock.date = date
-      stock.address = address
-      stock.regNumber = regNumber
-      stock.item = item
-      stock.bags = bags
-      stock.supplier = supplier
-      stock.driver = driver
-      stock.voucherNumber = voucherNumber
-      stock.batchNumber = batchNumber
-      stock.grvNumber = grvNumber
-      stock.idNumber = idNumber
-      stock.trailer = trailer
-      stock.lossMargin = lossMargin
-      stock.voucherNumber = voucherNumber
-      stock.refNumber = refNumber
-      stock.mobile = mobile
-      stock.month = month
-      stock.year = year
-      stock.batchId = batchId
-      stock.openingWeightKg = openingWeightKg
-      stock.openingWeightTonne = openingWeightTonne
-      stock.openingMass = number1
-      stock.newMass = mass
-      stock.closingMass = massNum + number1
-      stock.openingMassTonne = number1 / 1000
-      stock.newMassTonne = mass /1000
-      stock.closingMassTonne = total5 / 1000
-      stock.size = size
-      stock.dateValue = dateValue
-      
-      stock.save()
-      .then(pro =>{
-      
-        res.send(pro)
-      
-      })
-      
-      
-      
-      })
-      
-      })
-      })
-    
-    
-    
-    
-  
-  
-  
-  router.post('/receiveMass',function(req,res){
-  var m = moment()
+
+
+
+router.post('/receiveMass',function(req,res){
+var dateB = req.user.date
+  var m = moment(dateB)
+var mformat = m.format('L')
+var month = m.format('MMMM')
+var year = m.format('YYYY')
+let dateValue = moment().valueOf()
+let arrV = []
+let number1
+
+let mass = req.body.code
+let massTonne
+let grvNumber = req.body.grvNumber
+console.log(grvNumber,'grvNumber')
+let lossMarginX = req.body.lossMargin
+let reg = /\d+\.*\d*/g;
+let result = lossMarginX.match(reg)
+let lossMargin = Number(result)
+
+BatchRR.find({grvNumber:grvNumber},function(err,docs){
+  console.log(docs,'docs','receiveMass')
+  let supplier = docs[0].supplier
+  let item = docs[0].item
+  let date = docs[0].date
+  let driver = docs[0].driver
+  let regNumber = docs[0].regNumber
+  let mobile = docs[0].mobile
+  let trailer = docs[0].trailer
+  let address = docs[0].address
+  let batchNumber = docs[0].batchNumber
+  let refNumber = docs[0].refNumber
+  let idNumber = docs[0].idNumber
+  let voucherNumber = docs[0].voucherNo
+  let dateValue = docs[0].dateValue
+  let openingWeightKg = docs[0].openingWeightKg
+  let openingWeightTonne = docs[0].openingWeightTonne
+  let batchId = docs[0]._id
+let newMassNum = 0
+
+console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
+
+
+StockRM.find({grvNumber:grvNumber},function(err,docs){
+
+for(var i = 0;i<docs.length; i++){
+ // console.log(docs[i].newMass,'serima')
+arrV.push(docs[i].newMass)
+  }
+  //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+ //console.log(arrV,'arrV')
+
+//InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+number1=0;
+for(var z in arrV) { number1 += arrV[z]; }
+number1.toFixed(2)
+let reg = /\d+\.*\d*/g;
+let resultQty = mass.match(reg)
+let massNum = Number(resultQty)
+
+let total5 = massNum + number1
+
+massNum.toFixed(2)
+let size = docs.length + 1
+let weight = 'weight'+size
+ 
+var stock = new StockRM();
+stock.weight = weight
+stock.date = date
+stock.address = address
+stock.regNumber = regNumber
+stock.item = item
+stock.supplier = supplier
+stock.driver = driver
+stock.voucherNumber = voucherNumber
+stock.batchNumber = batchNumber
+stock.grvNumber = grvNumber
+stock.idNumber = idNumber
+stock.trailer = trailer
+stock.lossMargin = lossMargin
+stock.voucherNumber = voucherNumber
+stock.refNumber = refNumber
+stock.mobile = mobile
+stock.month = month
+stock.year = year
+stock.batchId = batchId
+stock.openingWeightKg = openingWeightKg
+stock.openingWeightTonne = openingWeightTonne
+stock.openingMass = number1
+stock.newMass = mass
+stock.closingMass = massNum + number1
+stock.openingMassTonne = number1 / 1000
+stock.newMassTonne = mass /1000
+stock.closingMassTonne = total5 / 1000
+stock.size = size
+stock.dateValue = dateValue
+
+stock.save()
+.then(pro =>{
+
+  res.send(pro)
+
+})
+
+
+
+})
+
+})
+})
+
+
+
+
+router.post('/receiveMassTea',function(req,res){
+  let dateB = req.body.date
+  var m = moment(dateB)
   var mformat = m.format('L')
   var month = m.format('MMMM')
   var year = m.format('YYYY')
@@ -2231,11 +2353,12 @@ router.get('/receiveMaterialV/:id',function(req,res){
   let mass = req.body.code
   let massTonne
   let grvNumber = req.body.grvNumber
+  let bags = req.body.bags
   console.log(grvNumber,'grvNumber')
-  let lossMarginX = req.body.lossMargin
-  let reg = /\d+\.*\d*/g;
-  let result = lossMarginX.match(reg)
-  let lossMargin = Number(result)
+  /*let lossMarginX = req.body.lossMargin
+  let reg = /\d+\.*\d*//*g;
+  let result = lossMarginX.match(reg)*/
+  let lossMargin = 0
   
   BatchRR.find({grvNumber:grvNumber},function(err,docs){
     console.log(docs,'docs','receiveMass')
@@ -2260,7 +2383,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
   console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
   
   
-  StockRM.find({grvNumber:grvNumber},function(err,docs){
+  StockRM.find({grvNumber:grvNumber,item:item},function(err,docs){
   
   for(var i = 0;i<docs.length; i++){
    // console.log(docs[i].newMass,'serima')
@@ -2289,6 +2412,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
   stock.address = address
   stock.regNumber = regNumber
   stock.item = item
+  stock.bags = bags
   stock.supplier = supplier
   stock.driver = driver
   stock.voucherNumber = voucherNumber
@@ -2296,7 +2420,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
   stock.grvNumber = grvNumber
   stock.idNumber = idNumber
   stock.trailer = trailer
-  stock.lossMargin = lossMargin
+  stock.lossMargin = 0
   stock.voucherNumber = voucherNumber
   stock.refNumber = refNumber
   stock.mobile = mobile
@@ -2328,372 +2452,377 @@ router.get('/receiveMaterialV/:id',function(req,res){
   })
   })
   
+
+
+
+router.post('/reloadMat/:id',isLoggedIn, (req, res) => {
+var pro = req.user
+console.log('reload')
+var m = moment()
+var code = req.params.id
+var mformat = m.format("L")
+
+
+StockRM.find({grvNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
+
+
+  res.send(docs)
+          })
+
+}); 
+
+
+
+router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
+  var dateB = req.user.date
+  var m = moment(dateB)
+
+var mformat = m.format("L")
+var month = m.format('MMMM')
+var year = m.format('YYYY')
+  let refNumber = req.params.id
   
-  
-  
-  router.post('/receiveMassTea',function(req,res){
-    var m = moment()
-    var mformat = m.format('L')
-    var month = m.format('MMMM')
-    var year = m.format('YYYY')
-    let dateValue = moment().valueOf()
-    let arrV = []
-    let number1
-    
-    let mass = req.body.code
-    let massTonne
-    let grvNumber = req.body.grvNumber
-    let bags = req.body.bags
-    console.log(grvNumber,'grvNumber')
-    /*let lossMarginX = req.body.lossMargin
-    let reg = /\d+\.*\d*//*g;
-    let result = lossMarginX.match(reg)*/
-    let lossMargin = 0
-    
-    BatchRR.find({grvNumber:grvNumber},function(err,docs){
-      console.log(docs,'docs','receiveMass')
-      let supplier = docs[0].supplier
-      let item = docs[0].item
-      let date = docs[0].date
-      let driver = docs[0].driver
-      let regNumber = docs[0].regNumber
-      let mobile = docs[0].mobile
-      let trailer = docs[0].trailer
-      let address = docs[0].address
-      let batchNumber = docs[0].batchNumber
-      let refNumber = docs[0].refNumber
-      let idNumber = docs[0].idNumber
-      let voucherNumber = docs[0].voucherNo
-      let dateValue = docs[0].dateValue
-      let openingWeightKg = docs[0].openingWeightKg
-      let openingWeightTonne = docs[0].openingWeightTonne
-      let batchId = docs[0]._id
-    let newMassNum = 0
-    
-    console.log(voucherNumber,'voucherNo',docs[0].voucherNo)
-    
-    
-    StockRM.find({grvNumber:grvNumber,item:item},function(err,docs){
-    
-    for(var i = 0;i<docs.length; i++){
-     // console.log(docs[i].newMass,'serima')
-    arrV.push(docs[i].newMass)
+
+ StockRM.find({refNumber:refNumber},function(err,nocs){
+   if(nocs[0].item == 'honey'){
+
+
+  let batchId = nocs[0].batchId
+  let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+  let lossMargin = nocs[0].lossMargin
+  let buckets = nocs[0].buckets
+  let refNumber = nocs[0].refNumber
+  let batchNumber = nocs[0].batchNumber
+
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin,unitMeasure:buckets}},function(err,vocs){
+
+    let batchNumber= vocs.batchNumber
+    let item = vocs.item
+    let month = vocs.month
+    let year = vocs.year
+    let prefix = vocs.prefix
+    let supplier = vocs.supplier
+    let availableMass = vocs.closingWeightKg - lossMargin
+    let voucherNo = vocs.voucherNo
+
+    /*StockRM.find({refNumber:refNumber},function(err,locs){
+      for(var i = 0;i<locs.length;i++){
+        let idR = locs[i]._id
+    StockRM.findByIdAndUpdate(idR,{$set:{lossMargin:lossMargin}},function(err,hocs){
+      
+    })
       }
-      //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
-     //console.log(arrV,'arrV')
-    
-    //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
-    number1=0;
-    for(var z in arrV) { number1 += arrV[z]; }
-    number1.toFixed(2)
-    let reg = /\d+\.*\d*/g;
-    let resultQty = mass.match(reg)
-    let massNum = Number(resultQty)
-    
-    let total5 = massNum + number1
-    
-    massNum.toFixed(2)
-    let size = docs.length + 1
-    let weight = 'weight'+size
+    })*/
+
+
+     // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+
+     // })
+      
+
+
+  
+      var final = new FinalProduct()
+      final.refNumber = batchNumber
+      final.quantity = buckets
+      final.date = mformat
+      final.ingredient = 'honey'
+      final.month = month
+      final.year = year
+      final.status = 'null'
+
      
-    var stock = new StockRM();
-    stock.weight = weight
-    stock.date = date
-    stock.address = address
-    stock.regNumber = regNumber
-    stock.item = item
-    stock.bags = bags
-    stock.supplier = supplier
-    stock.driver = driver
-    stock.voucherNumber = voucherNumber
-    stock.batchNumber = batchNumber
-    stock.grvNumber = grvNumber
-    stock.idNumber = idNumber
-    stock.trailer = trailer
-    stock.lossMargin = 0
-    stock.voucherNumber = voucherNumber
-    stock.refNumber = refNumber
-    stock.mobile = mobile
-    stock.month = month
-    stock.year = year
-    stock.batchId = batchId
-    stock.openingWeightKg = openingWeightKg
-    stock.openingWeightTonne = openingWeightTonne
-    stock.openingMass = number1
-    stock.newMass = mass
-    stock.closingMass = massNum + number1
-    stock.openingMassTonne = number1 / 1000
-    stock.newMassTonne = mass /1000
-    stock.closingMassTonne = total5 / 1000
-    stock.size = size
-    stock.dateValue = dateValue
-    
-    stock.save()
-    .then(pro =>{
-    
-      res.send(pro)
-    
-    })
-    
-    
-    
-    })
-    
-    })
-    })
-    
+      final.save()
+          .then(pro =>{
   
-  
-  
-  router.post('/reloadMat/:id',isLoggedIn, (req, res) => {
-  var pro = req.user
-  console.log('reload')
-  var m = moment()
-  var code = req.params.id
-  var mformat = m.format("L")
-  
-  
-  StockRM.find({grvNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
-  
-  
-    res.send(docs)
-            })
-  
-  }); 
-  
-  
-  
-  router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
-  
-    var m = moment()
-  
-  var mformat = m.format("L")
-  var month = m.format('MMMM')
-  var year = m.format('YYYY')
-    let refNumber = req.params.id
-    
-  
-   StockRM.find({refNumber:refNumber},function(err,nocs){
-     if(nocs[0].item == 'honey'){
-  
-  
-    let batchId = nocs[0].batchId
-    let closingMass = nocs[0].closingMass - nocs[0].lossMargin
-    let lossMargin = nocs[0].lossMargin
-    let buckets = nocs[0].buckets
-    let refNumber = nocs[0].refNumber
-    let batchNumber = nocs[0].batchNumber
-  
-    BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin,unitMeasure:buckets}},function(err,vocs){
-  
-      let batchNumber= vocs.batchNumber
-      let item = vocs.item
-      let month = vocs.month
-      let year = vocs.year
-      let prefix = vocs.prefix
-      let supplier = vocs.supplier
-      let availableMass = vocs.closingWeightKg - lossMargin
-      let voucherNo = vocs.voucherNo
-  
-      /*StockRM.find({refNumber:refNumber},function(err,locs){
-        for(var i = 0;i<locs.length;i++){
-          let idR = locs[i]._id
-      StockRM.findByIdAndUpdate(idR,{$set:{lossMargin:lossMargin}},function(err,hocs){
+           
+
+          })
+
         
-      })
-        }
-      })*/
-  
-  
-       // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
-  
-       // })
+          /*Ingredients.find({item:'honey'},function(err,toc){
+            let openingBal = toc[0].massKgs + buckets
+           // let openingBal = openingBalC / 5
+            let id2 = toc[0]._id
+    
+          Ingredients.findByIdAndUpdate(id2,{$set:{massKgs:openingBal}},function(err,vocs){
+    
+          })
+    
+          })*/
+
         
-  
-  
-    
-        var final = new FinalProduct()
-        final.refNumber = batchNumber
-        final.quantity = buckets
-        final.date = mformat
-        final.ingredient = 'honey'
-        final.month = month
-        final.year = year
-        final.status = 'null'
-  
-       
-        final.save()
-            .then(pro =>{
-    
-             
-  
-            })
-  
           
-            /*Ingredients.find({item:'honey'},function(err,toc){
-              let openingBal = toc[0].massKgs + buckets
-             // let openingBal = openingBalC / 5
-              let id2 = toc[0]._id
-      
-            Ingredients.findByIdAndUpdate(id2,{$set:{massKgs:openingBal}},function(err,vocs){
-      
-            })
-      
-            })*/
-  
-          
-            
-        
-            })
-      
-          
-        
-      
-    
-  
-  
-    res.redirect('/rm/stockRMFile/'+refNumber)
-        }else if(nocs[0].item == 'ginger'){
-          
-    let batchId = nocs[0].batchId
-    let lossMarginG = nocs[0].closingMass * 0.025
-    //let lossMargin = nocs[0].lossMargin
-    let margin = 0.02
-    BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",unitMeasure:lossMarginG}},function(err,vocs){
-  
-      console.log(vocs,'vocs')
-      let batchNumber= vocs.batchNumber
-      let item = vocs.item
-      let month = vocs.month
-      let year = vocs.year
-      let prefix = vocs.prefix
-      let supplier = vocs.supplier
-      //let lossMarginG = vocs.receivedKgs * 0.025
-      console.log(lossMarginG,'lossMarginG')
-      //let availableMass = vocs.closingWeightKg - lossMargin
-      let voucherNo = vocs.voucherNo
-    //  console.log(availableMass,'availableMass333')
-    
-  
-      StockRM.find({refNumber:refNumber},function(err,locs){
-        console.log(locs,'locs55')
-        for(var i = 0;i<locs.length;i++){
-          let idR = locs[i]._id
-      StockRM.findByIdAndUpdate(idR,{$set:{lossMargin:lossMarginG}},function(err,hocs){
-  
-      })
-        }
-      })
       
           })
+    
         
       
     
   
+
+
+  res.redirect('/rm/stockRMFile/'+refNumber)
+      }else if(nocs[0].item == 'ginger'){
+        
+  let batchId = nocs[0].batchId
+  let lossMarginG = nocs[0].closingMass * 0.025
+  //let lossMargin = nocs[0].lossMargin
+  let margin = 0.02
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",unitMeasure:lossMarginG}},function(err,vocs){
+
+    console.log(vocs,'vocs')
+    let batchNumber= vocs.batchNumber
+    let item = vocs.item
+    let month = vocs.month
+    let year = vocs.year
+    let prefix = vocs.prefix
+    let supplier = vocs.supplier
+    //let lossMarginG = vocs.receivedKgs * 0.025
+    console.log(lossMarginG,'lossMarginG')
+    //let availableMass = vocs.closingWeightKg - lossMargin
+    let voucherNo = vocs.voucherNo
+  //  console.log(availableMass,'availableMass333')
   
+
+    StockRM.find({refNumber:refNumber},function(err,locs){
+      console.log(locs,'locs55')
+      for(var i = 0;i<locs.length;i++){
+        let idR = locs[i]._id
+    StockRM.findByIdAndUpdate(idR,{$set:{lossMargin:lossMarginG}},function(err,hocs){
+
+    })
+      }
+    })
+    
+        })
+      
+    
   
-    res.redirect('/rm/stockRMFile/'+refNumber)
-        }else if(nocs[0].item == 'bananas'){
-  
-  
-  
-            let batchId = nocs[0].batchId
-            let closingMass = nocs[0].closingMass - nocs[0].lossMargin
-            let lossMargin = nocs[0].lossMargin
-          
-            BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
-          
-              let batchNumber= vocs.batchNumber
-              let item = vocs.item
-              let month = vocs.month
-              let year = vocs.year
-              let prefix = vocs.prefix
-              let supplier = vocs.supplier
-              let availableMass = vocs.closingWeightKg - lossMargin
-              let voucherNo = vocs.voucherNo
-              console.log(availableMass,'availableMass333')
-              RawMat.find({item:item},function(err,docs){
-                console.log(docs,'letu')
-                if(docs[0].item == 'sugar' || docs[0].item == 'bananas'){
-                  console.log('true')
-                  let date =  moment().format('l');
-            let date6 =  moment().format('l');
-            let dateValue = moment().valueOf()
-          
-            let date7 =  date6.replace(/\//g, "");
-            
-          
-               // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
-          
-               // })
-                
-          
-          
-               RefNo.find({date:date,type:"crush",item:item},function(err,docs){
-                let size = docs.length + 1
-               refNo = date7+prefix+'B'+size+'CRS'
-                console.log(refNo,'refNo')
-            
-                var truck = new BatchGingerCrush()
-                truck.date = date
-                truck.mformat = date6
-                truck.dateValue = dateValue
-                truck.item = item
-                truck.type ='ingredient'
-                truck.voucherNo = voucherNo
-                truck.refNumber = batchNumber
-               
-                truck.batchNumber = refNo
-                truck.month = month
-                truck.nxtStage='cooking'
-                truck.qtyInMass = closingMass
-                truck.qtyOutMass= closingMass
-                truck.month = month
-                truck.status = 'null'
-                truck.year = year
-               
-                
-               
-            
-                truck.save()
-                    .then(pro =>{
-            
-                     
-          
-                      var book = new RefNo();
-                      book.refNumber = refNo
-                      book.item = item
-                      book.date = date
-                      book.type = 'crush'
-                      book.save()
-                      .then(prod =>{
-                  
-                       
-                  
-                      })
-          
-                    })
-          
-                  })
-          
-           
-                    
-                }
-                    })
-              
-                  })
-                
-              
-            
-          
-          
-            res.redirect('/rm/stockRMFile/'+refNumber)
-        }else if(nocs[0].item == 'sugar'){
-  
-  
-  
+
+
+
+  res.redirect('/rm/stockRMFile/'+refNumber)
+      }else if(nocs[0].item == 'bananas'){
+
+
+
           let batchId = nocs[0].batchId
           let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+          let lossMargin = nocs[0].lossMargin
+        
+          BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin}},function(err,vocs){
+        
+            let batchNumber= vocs.batchNumber
+            let item = vocs.item
+            let month = vocs.month
+            let year = vocs.year
+            let prefix = vocs.prefix
+            let supplier = vocs.supplier
+            let availableMass = vocs.closingWeightKg - lossMargin
+            let voucherNo = vocs.voucherNo
+            console.log(availableMass,'availableMass333')
+            RawMat.find({item:item},function(err,docs){
+              console.log(docs,'letu')
+              if(docs[0].item == 'sugar' || docs[0].item == 'bananas'){
+                console.log('true')
+                let date =  moment().format('l');
+          let date6 =  moment().format('l');
+          let dateValue = moment().valueOf()
+        
+          let date7 =  date6.replace(/\//g, "");
+          
+        
+             // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+        
+             // })
+              
+        
+        
+             RefNo.find({date:date,type:"crush",item:item},function(err,docs){
+              let size = docs.length + 1
+             refNo = date7+prefix+'B'+size+'CRS'
+              console.log(refNo,'refNo')
+          
+              var truck = new BatchGingerCrush()
+              truck.date = date
+              truck.mformat = date6
+              truck.dateValue = dateValue
+              truck.item = item
+              truck.type ='ingredient'
+              truck.voucherNo = voucherNo
+              truck.refNumber = batchNumber
+             
+              truck.batchNumber = refNo
+              truck.month = month
+              truck.nxtStage='cooking'
+              truck.qtyInMass = closingMass
+              truck.qtyOutMass= closingMass
+              truck.month = month
+              truck.status = 'null'
+              truck.year = year
+             
+              
+             
+          
+              truck.save()
+                  .then(pro =>{
+          
+                   
+        
+                    var book = new RefNo();
+                    book.refNumber = refNo
+                    book.item = item
+                    book.date = date
+                    book.type = 'crush'
+                    book.save()
+                    .then(prod =>{
+                
+                     
+                
+                    })
+        
+                  })
+        
+                })
+        
+         
+                  
+              }
+                  })
+            
+                })
+              
+            
+          
+        
+        
+          res.redirect('/rm/stockRMFile/'+refNumber)
+      }else if(nocs[0].item == 'sugar'){
+
+
+
+        let batchId = nocs[0].batchId
+        let closingMass = nocs[0].closingMass - nocs[0].lossMargin
+        let bags = nocs[0].bags
+      
+        BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0,unitMeasure:bags}},function(err,vocs){
+      
+          let batchNumber= vocs.batchNumber
+          let item = vocs.item
+          let month = vocs.month
+          let year = vocs.year
+          let prefix = vocs.prefix
+          let supplier = vocs.supplier
+        //  let availableMass = vocs.closingWeightKg - lossMargin
+          let voucherNo = vocs.voucherNo
+         // console.log(availableMass,'availableMass333')
+          RawMat.find({item:item},function(err,docs){
+            console.log(docs,'letu')
+            if(docs[0].item == 'sugar' ){
+              console.log('true')
+              let date =  moment().format('l');
+        let date6 =  moment().format('l');
+        let dateValue = moment().valueOf()
+      
+        let date7 =  date6.replace(/\//g, "");
+        
+      
+           // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
+      
+           // })
+            
+      
+      
+           RefNo.find({date:date,type:"crush",item:item},function(err,docs){
+            let size = docs.length + 1
+           refNo = date7+prefix+'B'+size+'CRS'
+            console.log(refNo,'refNo')
+        
+            var truck = new BatchGingerCrush()
+            truck.date = date
+            truck.mformat = date6
+            truck.dateValue = dateValue
+            truck.item = item
+            truck.type ='ingredient'
+            truck.voucherNo = voucherNo
+            truck.refNumber = batchNumber
+           
+            truck.batchNumber = refNo
+            truck.month = month
+            truck.nxtStage='cooking'
+            truck.qtyInMass = closingMass
+            truck.qtyOutMass= bags
+            truck.month = month
+            truck.status = 'null'
+            truck.year = year
+           
+            
+           
+        
+            truck.save()
+                .then(pro =>{
+        
+                 
+      
+                  var book = new RefNo();
+                  book.refNumber = refNo
+                  book.item = item
+                  book.date = date
+                  book.type = 'crush'
+                  book.save()
+                  .then(prod =>{
+              
+                   
+              
+                  })
+      
+                })
+
+
+                
+      var final = new FinalProduct()
+      final.refNumber = refNo
+      final.refNumber2 = batchNumber
+      final.quantity = bags
+      final.date = mformat
+      final.ingredient = 'sugar'
+      final.month = month
+      final.year = year
+      final.status = 'null'
+
+     
+      final.save()
+          .then(pro =>{
+  
+           
+
+          })
+
+      
+              })
+      
+       
+                
+            }
+                })
+          
+              })
+            
+          
+        
+      
+      
+        res.redirect('/rm/stockRMFile/'+refNumber)
+    }
+      
+    else if(nocs[0].item == 'tea'){
+  
+
+
+
+          let batchId = nocs[0].batchId
+          let closingMass = nocs[0].closingMass - 0
           let bags = nocs[0].bags
         
           BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0,unitMeasure:bags}},function(err,vocs){
@@ -2709,7 +2838,7 @@ router.get('/receiveMaterialV/:id',function(req,res){
            // console.log(availableMass,'availableMass333')
             RawMat.find({item:item},function(err,docs){
               console.log(docs,'letu')
-              if(docs[0].item == 'sugar' ){
+              if(docs[0].item == 'tea' ){
                 console.log('true')
                 let date =  moment().format('l');
           let date6 =  moment().format('l');
@@ -2768,26 +2897,6 @@ router.get('/receiveMaterialV/:id',function(req,res){
                     })
         
                   })
-  
-  
-                  
-        var final = new FinalProduct()
-        final.refNumber = batchNumber
-        final.quantity = bags
-        final.date = mformat
-        final.ingredient = 'sugar'
-        final.month = month
-        final.year = year
-        final.status = 'null'
-  
-       
-        final.save()
-            .then(pro =>{
-    
-             
-  
-            })
-  
         
                 })
         
@@ -2804,412 +2913,314 @@ router.get('/receiveMaterialV/:id',function(req,res){
         
           res.redirect('/rm/stockRMFile/'+refNumber)
       }
+      
+      
+      
+      
+      
+      else{
+        res.redirect('/rm/stockRMFile/'+refNumber)
+      }
+  })
+
+ 
+})
+
+
+
+/*router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
+
+    let refNumber = req.params.id
+    StockRM.find({refNumber:refNumber},function(err,docs){
+  
+      let size = docs.length - 1
+      let mass = docs[size].closingMass
+      let subtotal = mass / 50
+      subtotal.toFixed(2)
+    for(var i = 0; i<docs.length;i++){
+      let id = docs[i]._id
+      StockRM.findByIdAndUpdate(id,{$set:{subtotal:subtotal}},function(err,locs){
+  
         
-      else if(nocs[0].item == 'tea'){
-    
+      })
+    }
   
   
   
-            let batchId = nocs[0].batchId
-            let closingMass = nocs[0].closingMass - 0
-            let bags = nocs[0].bags
-          
-            BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:0,unitMeasure:bags}},function(err,vocs){
-          
-              let batchNumber= vocs.batchNumber
-              let item = vocs.item
-              let month = vocs.month
-              let year = vocs.year
-              let prefix = vocs.prefix
-              let supplier = vocs.supplier
-            //  let availableMass = vocs.closingWeightKg - lossMargin
-              let voucherNo = vocs.voucherNo
-             // console.log(availableMass,'availableMass333')
-              RawMat.find({item:item},function(err,docs){
-                console.log(docs,'letu')
-                if(docs[0].item == 'tea' ){
-                  console.log('true')
-                  let date =  moment().format('l');
-            let date6 =  moment().format('l');
-            let dateValue = moment().valueOf()
-          
-            let date7 =  date6.replace(/\//g, "");
-            
-          
-               // User.findByIdAndUpdate(uid,{$set:{item:item,supplier:supplier,date:date,availableMass:availableMass,refNumber:refNumber}},function(err,vocs){
-          
-               // })
-                
-          
-          
-               RefNo.find({date:date,type:"crush",item:item},function(err,docs){
-                let size = docs.length + 1
-               refNo = date7+prefix+'B'+size+'CRS'
-                console.log(refNo,'refNo')
-            
-                var truck = new BatchGingerCrush()
-                truck.date = date
-                truck.mformat = date6
-                truck.dateValue = dateValue
-                truck.item = item
-                truck.type ='ingredient'
-                truck.voucherNo = voucherNo
-                truck.refNumber = batchNumber
-               
-                truck.batchNumber = refNo
-                truck.month = month
-                truck.nxtStage='cooking'
-                truck.qtyInMass = closingMass
-                truck.qtyOutMass= bags
-                truck.month = month
-                truck.status = 'null'
-                truck.year = year
-               
-                
-               
-            
-                truck.save()
-                    .then(pro =>{
-            
-                     
-          
-                      var book = new RefNo();
-                      book.refNumber = refNo
-                      book.item = item
-                      book.date = date
-                      book.type = 'crush'
-                      book.save()
-                      .then(prod =>{
-                  
-                       
-                  
-                      })
-          
-                    })
-          
-                  })
-          
-           
-                    
-                }
-                    })
-              
-                  })
-                
-              
-            
-          
-          
-            res.redirect('/rm/stockRMFile/'+refNumber)
-        }
-        
-        
-        
-        
-        
-        else{
-          res.redirect('/rm/stockRMFile/'+refNumber)
-        }
     })
   
-   
+    res.redirect('/rm/stockRMFile/'+refNumber)
+  })*/
+  
+
+router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
+  var uid = req.user._id
+  var id = req.params.id
+  console.log(id,'refNumber')
+
+  StockRM.find({refNumber:id},function(err,docs){
+    if(docs.length > 0 ){
+  let size = docs.length - 1
+
+  let supplier = docs[size].supplier
+  let item = docs[size].item
+  let date = docs[size].date
+  let refNumber = docs[size].refNumber
+  let lossMargin = docs[size].lossMargin
+  let buckets = docs[size].buckets
+  let bags = docs[size].bags
+  let driver = docs[size].driver
+  let regNumber = docs[size].regNumber
+  let mobile = docs[size].mobile
+  let trailer = docs[size].trailer
+  let address = docs[size].address
+  let idNumber = docs[size].idNumber
+  let month = docs[size].month
+  let year = docs[size].year
+  let batchId = docs[size].batchId
+  let openingWeight = docs[size].openingWeight
+  let openingWeightTonne = docs[size].openingWeightTonne
+  console.log(openingWeightTonne,'openingWeightTonne')
+  let weight = docs[size].closingMass - docs[size].lossMargin
+
+  console.log(docs[size].closingMass, docs[size].lossMargin,weight,'weight')
+  //let weightTonne = docs[size].closingMass / 1000
+  let weightTonne = weight / 1000
+  let dateValue = docs[size].dateValue
+  let closingWeight = docs[size].openingWeightKg + docs[size].closingMass - docs[size].lossMargin
+  let closingWeightTonne = closingWeight / 1000
+  console.log(closingWeightTonne,'closingWeightTonne')
+for(var i =0;i<docs.length;i++){
+  let sId = docs[i]._id
+  StockRM.findByIdAndUpdate(sId,{$set:{closingMass:weight,closingMassTonne:weightTonne}},function(err,locs){
+
   })
+}
+
+User.findByIdAndUpdate(uid,{$set:{batchId:batchId}},function(err,locs){
+
+
+})
+
+  BatchRR.findByIdAndUpdate(batchId,{$set:{receivedKgs:weight,
+  receivedTonnes:weightTonne,receivedKgs:weight, closingWeightTonne:closingWeightTonne,status:"complete",
+closingWeightKg:closingWeight}},function(err,vocs){
+
+})
+
+RawMat.find({item:item,stage:'raw'},function(err,hocs){
+  //if(hocs[0].status == 'wash'){
+
   
-  
-  
-  /*router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
-  
-      let refNumber = req.params.id
-      StockRM.find({refNumber:refNumber},function(err,docs){
+    if(hocs[0].item == 'ginger'){
+      let massKgs = hocs[0].massKgs + weight
+      let massTonnes = hocs[0].massTonnes + weightTonne
+      let idRaw = hocs[0]._id
+      /*if(hocs[0].stage == 'raw'){
+    BatchGingerWash.find({refNumber2:id},function(err,nocs){
     
-        let size = docs.length - 1
-        let mass = docs[size].closingMass
-        let subtotal = mass / 50
-        subtotal.toFixed(2)
-      for(var i = 0; i<docs.length;i++){
-        let id = docs[i]._id
-        StockRM.findByIdAndUpdate(id,{$set:{subtotal:subtotal}},function(err,locs){
+      if(nocs.length > 0){
+        let idG = nocs[0]._id
+    BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
     
-          
-        })
-      }
-    
-    
-    
-      })
-    
-      res.redirect('/rm/stockRMFile/'+refNumber)
-    })*/
-    
-  
-  router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
-    var uid = req.user._id
-    var id = req.params.id
-    console.log(id,'refNumber')
-  
-    StockRM.find({refNumber:id},function(err,docs){
-      if(docs.length > 0 ){
-    let size = docs.length - 1
-  
-    let supplier = docs[size].supplier
-    let item = docs[size].item
-    let date = docs[size].date
-    let refNumber = docs[size].refNumber
-    let lossMargin = docs[size].lossMargin
-    let buckets = docs[size].buckets
-    let bags = docs[size].bags
-    let driver = docs[size].driver
-    let regNumber = docs[size].regNumber
-    let mobile = docs[size].mobile
-    let trailer = docs[size].trailer
-    let address = docs[size].address
-    let idNumber = docs[size].idNumber
-    let month = docs[size].month
-    let year = docs[size].year
-    let batchId = docs[size].batchId
-    let openingWeight = docs[size].openingWeight
-    let openingWeightTonne = docs[size].openingWeightTonne
-    console.log(openingWeightTonne,'openingWeightTonne')
-    let weight = docs[size].closingMass - docs[size].lossMargin
-  
-    console.log(docs[size].closingMass, docs[size].lossMargin,weight,'weight')
-    //let weightTonne = docs[size].closingMass / 1000
-    let weightTonne = weight / 1000
-    let dateValue = docs[size].dateValue
-    let closingWeight = docs[size].openingWeightKg + docs[size].closingMass - docs[size].lossMargin
-    let closingWeightTonne = closingWeight / 1000
-    console.log(closingWeightTonne,'closingWeightTonne')
-  for(var i =0;i<docs.length;i++){
-    let sId = docs[i]._id
-    StockRM.findByIdAndUpdate(sId,{$set:{closingMass:weight,closingMassTonne:weightTonne}},function(err,locs){
-  
     })
-  }
-  
-  User.findByIdAndUpdate(uid,{$set:{batchId:batchId}},function(err,locs){
-  
-  
-  })
-  
-    BatchRR.findByIdAndUpdate(batchId,{$set:{receivedKgs:weight,
-    receivedTonnes:weightTonne,receivedKgs:weight, closingWeightTonne:closingWeightTonne,status:"complete",
-  closingWeightKg:closingWeight}},function(err,vocs){
-  
-  })
-  
-  RawMat.find({item:item,stage:'raw'},function(err,hocs){
-    //if(hocs[0].status == 'wash'){
-  
-    
-      if(hocs[0].item == 'ginger'){
-        let massKgs = hocs[0].massKgs + weight
-        let massTonnes = hocs[0].massTonnes + weightTonne
-        let idRaw = hocs[0]._id
-        /*if(hocs[0].stage == 'raw'){
-      BatchGingerWash.find({refNumber2:id},function(err,nocs){
-      
-        if(nocs.length > 0){
-          let idG = nocs[0]._id
-      BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
-      
-      })
-        }
-      })
-        }*/
-      
-        RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:massKgs}},function(err,nocs){
-      
-        })
-      
-      }else if(hocs[0].item == 'honey'){
-        let massKgs = hocs[0].massKgs + weight
-        let uniqueMeasure = hocs[0].uniqueMeasure + buckets
-        let massTonnes = hocs[0].massTonnes + weightTonne
-        let idRaw = hocs[0]._id
-        /*if(hocs[0].stage == 'raw'){
-      BatchGingerWash.find({refNumber2:id},function(err,nocs){
-      
-        if(nocs.length > 0){
-          let idG = nocs[0]._id
-      BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
-      
-      })
-        }
-      })
-        }*/
-      
-        RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
-      
-        })
-      
       }
-  
-  
-  
-  
-  
-  
-      else if(hocs[0].item == 'sugar'){
-        let massKgs = hocs[0].massKgs + weight
-        let uniqueMeasure = hocs[0].uniqueMeasure + bags
-        let massTonnes = hocs[0].massTonnes + weightTonne
-        let idRaw = hocs[0]._id
-        /*if(hocs[0].stage == 'raw'){
-      BatchGingerWash.find({refNumber2:id},function(err,nocs){
-      
-        if(nocs.length > 0){
-          let idG = nocs[0]._id
-      BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
-      
-      })
-        }
-      })
-        }*/
-      
-        RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
-      
-        })
-      
-      }
-  
-  
-  
-      
-  
-  
-      else if(hocs[0].item == 'tea'){
-        let massKgs = hocs[0].massKgs + weight
-        let uniqueMeasure = hocs[0].uniqueMeasure + bags
-        let massTonnes = hocs[0].massTonnes + weightTonne
-        let idRaw = hocs[0]._id
-        /*if(hocs[0].stage == 'raw'){
-      BatchGingerWash.find({refNumber2:id},function(err,nocs){
-      
-        if(nocs.length > 0){
-          let idG = nocs[0]._id
-      BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
-      
-      })
-        }
-      })
-        }*/
-      
-        RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
-      
-        })
-      
-      }
-    /*}else{
-      
-    let date6 =  moment().format('l');
-    let dateValue = moment().valueOf()
-  
-    let date7 =  date6.replace(/\//g, "");
+    })
+      }*/
     
-      RefNo.find({date:date,type:"crush"},function(err,docs){
-        let size = docs.length + 1
-       refNo = date7+'B'+size+item+'crush'
-        console.log(refNo,'refNo')
+      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:massKgs}},function(err,nocs){
     
-        var truck = new BatchGingerCrush()
-        truck.date = date
-        truck.mformat = date6
-        truck.dateValue = dateValue
-        truck.item = item
-        truck.refNumber = refNo
-        truck.refNumber2 = id
-        truck.batchNumber = id
-        truck.month = month
-        truck.qtyInMass = 0
-        truck.qtyOutMass= 0
-        truck.month = month
-        truck.status = 'null'
-        truck.year = year
-       
+      })
+    
+    }else if(hocs[0].item == 'honey'){
+      let massKgs = hocs[0].massKgs + weight
+      let uniqueMeasure = hocs[0].uniqueMeasure + buckets
+      let massTonnes = hocs[0].massTonnes + weightTonne
+      let idRaw = hocs[0]._id
+      /*if(hocs[0].stage == 'raw'){
+    BatchGingerWash.find({refNumber2:id},function(err,nocs){
+    
+      if(nocs.length > 0){
+        let idG = nocs[0]._id
+    BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
+    
+    })
+      }
+    })
+      }*/
+    
+      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
+    
+      })
+    
+    }
+
+
+
+
+
+
+    else if(hocs[0].item == 'sugar'){
+      let massKgs = hocs[0].massKgs + weight
+      let uniqueMeasure = hocs[0].uniqueMeasure + bags
+      let massTonnes = hocs[0].massTonnes + weightTonne
+      let idRaw = hocs[0]._id
+      /*if(hocs[0].stage == 'raw'){
+    BatchGingerWash.find({refNumber2:id},function(err,nocs){
+    
+      if(nocs.length > 0){
+        let idG = nocs[0]._id
+    BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
+    
+    })
+      }
+    })
+      }*/
+    
+      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
+    
+      })
+    
+    }
+
+
+
+    
+
+
+    else if(hocs[0].item == 'tea'){
+      let massKgs = hocs[0].massKgs + weight
+      let uniqueMeasure = hocs[0].uniqueMeasure + bags
+      let massTonnes = hocs[0].massTonnes + weightTonne
+      let idRaw = hocs[0]._id
+      /*if(hocs[0].stage == 'raw'){
+    BatchGingerWash.find({refNumber2:id},function(err,nocs){
+    
+      if(nocs.length > 0){
+        let idG = nocs[0]._id
+    BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
+    
+    })
+      }
+    })
+      }*/
+    
+      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
+    
+      })
+    
+    }
+  /*}else{
+    
+  let date6 =  moment().format('l');
+  let dateValue = moment().valueOf()
+
+  let date7 =  date6.replace(/\//g, "");
+  
+    RefNo.find({date:date,type:"crush"},function(err,docs){
+      let size = docs.length + 1
+     refNo = date7+'B'+size+item+'crush'
+      console.log(refNo,'refNo')
+  
+      var truck = new BatchGingerCrush()
+      truck.date = date
+      truck.mformat = date6
+      truck.dateValue = dateValue
+      truck.item = item
+      truck.refNumber = refNo
+      truck.refNumber2 = id
+      truck.batchNumber = id
+      truck.month = month
+      truck.qtyInMass = 0
+      truck.qtyOutMass= 0
+      truck.month = month
+      truck.status = 'null'
+      truck.year = year
+     
+      
+     
+  
+      truck.save()
+          .then(pro =>{
+  
+          
+            var book = new RefNo();
+            book.refNumber = refNo
+            book.date = date
+            book.type = 'crush'
+            book.save()
+            .then(prod =>{
         
-       
-    
-        truck.save()
-            .then(pro =>{
-    
-            
-              var book = new RefNo();
-              book.refNumber = refNo
-              book.date = date
-              book.type = 'crush'
-              book.save()
-              .then(prod =>{
-          
-               
-          
-              })
-  
+             
+        
             })
-  
+
           })
-  
-    }*/
-  
-     var https = require('follow-redirects').https;
-                  var fs = require('fs');
-                  
-                  var options = {
-                      'method': 'POST',
-                      'hostname': 'lqvvzd.api.infobip.com',
-                      'path': '/sms/2/text/advanced',
-                      'headers': {
-                          'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
-                          'Content-Type': 'application/json',
-                          'Accept': 'application/json'
-                      },
-                      'maxRedirects': 20
-                  };
-                  
-                  var req = https.request(options, function (res) {
-                      var chunks = [];
-                  
-                      res.on("data", function (chunk) {
-                          chunks.push(chunk);
-                      });
-                  
-                      res.on("end", function (chunk) {
-                          var body = Buffer.concat(chunks);
-                          console.log(body.toString());
-                      });
-                  
-                      res.on("error", function (error) {
-                          console.error(error);
-                      });
-                  });
-                  
-                  var postData = JSON.stringify({
-                      "messages": [
-                          {
-                            "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
-                              "from": "Niyonsoft",
-                              "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'+' '+ 'https://niyonsoft.org/rm/grvFile/'+refNumber
-                          }
-                      ]
-                  });
-                  
-                  req.write(postData);
-                  
-                  req.end();
+
+        })
+
+  }*/
+
+   /*var https = require('follow-redirects').https;
+                var fs = require('fs');
                 
-    
+                var options = {
+                    'method': 'POST',
+                    'hostname': 'lqvvzd.api.infobip.com',
+                    'path': '/sms/2/text/advanced',
+                    'headers': {
+                        'Authorization': 'App 08a11352afef5e0a42dd9eb5c90f6bd2-8407578d-7fc2-469c-9b90-50a400b88ea8',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    'maxRedirects': 20
+                };
+                
+                var req = https.request(options, function (res) {
+                    var chunks = [];
+                
+                    res.on("data", function (chunk) {
+                        chunks.push(chunk);
+                    });
+                
+                    res.on("end", function (chunk) {
+                        var body = Buffer.concat(chunks);
+                        console.log(body.toString());
+                    });
+                
+                    res.on("error", function (error) {
+                        console.error(error);
+                    });
+                });
+                
+                var postData = JSON.stringify({
+                    "messages": [
+                        {
+                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
+                            "from": "Niyonsoft",
+                            "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'+' '+ 'https://niyonsoft.org/rm/grvFile/'+refNumber
+                        }
+                    ]
+                });
+                
+                req.write(postData);
+                
+                req.end();*/
+              
+  
+})
+
+
+
+//req.flash('success', 'Goods received successfully');
+
+//res.redirect('/rm/send-notification/'+weight+'/'+item)
+res.redirect('/rm/approvedRequisitions')
+
+    }
   })
-  
-  
-  
-  //req.flash('success', 'Goods received successfully');
-  
-  //res.redirect('/rm/send-notification/'+weight+'/'+item)
-  res.redirect('/rm2/approvedRequisitions')
-  
-      }
-    })
-  })
-  
+})
+
 
 
 const sendNotification = async (token,item,weight) => {
