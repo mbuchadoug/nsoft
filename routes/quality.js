@@ -717,11 +717,35 @@ router.get('/draining',isLoggedIn,function(req,res){
   
     })
   
-    BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
+
+
+
+    BlendedItems.find({product:product},function(err,docs) {
+      // console.log(docs,'docs')
+       for(var i = 0;i<docs.length;i++){
+     // let product = docs[i].product
+      //console.log(docs,'docs')
+    
+          if(arr.length > 0 && arr.find(value => value.refNumber == docs[i].refNumber  && value.product == docs[i].product )){
+                 console.log('true')
+                //arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
+           }else{
+    arr.push(docs[i])
+           }
+    
+         
+       }
+      //console.log(arr,'arr')
+      //res.send(arr)
+     })
+    
+    
+
+    //BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
        
-            res.render('qa/itemFilesMonthly',{pro:pro,product:product,listX:docs})
+            res.render('qa/itemFilesMonthly',{pro:pro,product:product,listX:arr})
   
-    })
+    //})
     
   })
 
