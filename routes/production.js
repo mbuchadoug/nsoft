@@ -2364,7 +2364,7 @@ router.post('/reloadCooking/:id', (req, res) => {
     
         
        
-        BatchGingerCrush.find({item:code},function(err,docs){
+        BatchGingerCrush.find({batchNumber:code},function(err,docs){
        if(docs == undefined){
          res.redirect('/')
        }else
