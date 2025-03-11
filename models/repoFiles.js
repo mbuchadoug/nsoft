@@ -11,6 +11,7 @@ var repoSchema = new Schema({
     date: {type: String},
     type: {type: String},
     item: {type: String},
+    num: {type: Number},
     invoiceNumber: {type: Number, },
     idNum: {type: String},
     year: {type: Number, },
