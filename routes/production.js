@@ -729,11 +729,12 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       router.get('/closeBatch/:id',isLoggedIn,function(req,res){
         let id = req.params.id
         let refNumber = req.user.refNumber
+        let batchNum = req.user.batchNumber
         let number1
         let arrV=[]
         let batchId = req.user.batchId
         console.log(id,batchId,'id')
-        GingerWash.find({batchId:batchId,refNumber:refNumber,type:'qtyIn'},function(err,docs){
+        GingerWash.find({batchId:batchId,batchNumber:batchNum,refNumber:refNumber,type:'qtyIn'},function(err,docs){
         let item = docs[0].item
           for(var i = 0;i<docs.length; i++){
            
@@ -781,14 +782,15 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
        
       })
       
-      router.post('/reloadGinger/:id', (req, res) => {
+      router.post('/reloadGinger/:id/:id2', (req, res) => {
         var pro = req.user
         var m = moment()
         var id = req.params.id
+        var batchNumber = req.params.id2
       
         var mformat = m.format("L")
         
-        GingerWash.find({refNumber:id,type:"qtyIn"},(err, docs) => {
+        GingerWash.find({refNumber:id,type:"qtyIn",batchNumber:batchNumber},(err, docs) => {
        console.log(docs,'docs')
           res.send(docs)
                   })
@@ -821,7 +823,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
   router.get('/gingerWashQtyOut/:id/',isLoggedIn,function(req,res){
     var id = req.params.id
 
-    GingerWash.find({refNumber:id},function(err,docs){
+    GingerWash.find({batchNumber:id},function(err,docs){
 
     
     var supplier = docs[0].supplier
@@ -969,13 +971,14 @@ router.get('/batchList',isLoggedIn,function(req,res){
       router.get('/closeBatchOut/:id',isLoggedIn,function(req,res){
         let id = req.params.id
         let refNumber = req.user.refNumber
+        let batchNum = req.user.batchNumber
         let number1, number2
         let arrV=[]
         let arrT=[]
         let batchId = req.user.batchId
         let variance
         console.log(id,batchId,'id')
-        GingerWash.find({batchId:batchId,refNumber:refNumber,type:'qtyOut'},function(err,docs){
+        GingerWash.find({batchId:batchId,refNumber:refNumber,type:'qtyOut',batchNumber:batchNum},function(err,docs){
 let item = docs[0].item
           for(var i = 0;i<docs.length; i++){
            

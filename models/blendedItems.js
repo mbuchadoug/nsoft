@@ -12,6 +12,7 @@ var batchSchemaBI = new Schema({
     releasedBy: {type: String },
     receivedBy: {type: String },
     refNumber: {type: String },
+
     date: {type: String },
     month: {type: String },
     year: {type: Number },

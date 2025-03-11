@@ -352,7 +352,7 @@ $.ajax({
     dataType: 'json',
     type: 'POST',
 	
-    url: `/production/reloadGinger/{{{refNumber}}}`,
+    url: `/production/reloadGinger/{{{refNumber}}}/{{{batchNumber}}}`,
     success: function(data) {
     console.log(data)
    
