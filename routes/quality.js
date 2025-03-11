@@ -999,7 +999,7 @@ router.get('/statementGenGW/:id',isLoggedIn,function(req,res){
   var id = req.params.id
  
   var arrG = []
-  BatchGingerWash.find({grvNumber:id}).lean().then(docs=>{
+  BatchGingerWash.find({batchNumber:id}).lean().then(docs=>{
 
 
   
