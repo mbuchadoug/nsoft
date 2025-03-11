@@ -674,11 +674,16 @@ link.classList.add('text-end','pe-0')*/
         <div class="col-lg-2"><label class="col-form-label required">Ingredient</label> 
          <input  id="ingredient" name="ingredient" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" autocomplete="off" ></div>
 
+
+
          <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
              <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{batchNumber}}" readonly></div> </div></div>
 
+
+ <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
+    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="" ></div>
 
  <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Enter B/D/BG)</label> 
     <input  id="quantity" name="quantity" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
@@ -715,8 +720,7 @@ link.classList.add('text-end','pe-0')*/
             </div> </div></div>
   
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Ref Number</label> 
-    <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text"  value="" readonly></div>
+     
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Shift</label> 
     <input  id="shift" name="shift" class="ember-text-field ember-view form-control" type="text"  value="{{shift}}" readonly></div>
@@ -843,7 +847,7 @@ link.classList.add('text-end','pe-0')*/
 
  <script>
       $(function(){
-    $('#batchNumber').autocomplete({
+    $('#refNumber').autocomplete({
     source: function(req,res){
 
       $.ajax({
