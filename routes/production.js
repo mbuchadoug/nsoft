@@ -954,14 +954,14 @@ router.get('/batchList',isLoggedIn,function(req,res){
 
 
   
-      router.post('/reloadGingerOut/:id', (req, res) => {
+      router.post('/reloadGingerOut/:id/:id2', (req, res) => {
         var pro = req.user
         var m = moment()
         var id = req.params.id
-      
+        var batchNumber = req.params.id2
         var mformat = m.format("L")
         
-        GingerWash.find({refNumber:id,type:"qtyOut"},(err, docs) => {
+        GingerWash.find({refNumber:id,type:"qtyOut",batchNumber:batchNumber},(err, docs) => {
        console.log(docs,'docs')
           res.send(docs)
                   })
