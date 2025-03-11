@@ -490,7 +490,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
 
     //console.log(batchNumber,'batchNumber')
     let id = req.user._id
-    let m = moment()
+    let m = moment(date)
     var month = m.format('MMMM')
     var year = m.format('YYYY')
     req.check('date','Enter Date').notEmpty();
@@ -515,8 +515,8 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
 else{
 
   
-  let date6 =  moment().format('l');
-  let dateValue = moment().valueOf()
+  let date6 =  moment(date).format('l');
+  let dateValue = moment(date).valueOf()
 
   let date7 =  date6.replace(/\//g, "");
   
@@ -1072,7 +1072,7 @@ let item = docs[0].item
     var shift = req.body.shift
     var refNumber = req.body.batchNumber
     let id = req.user._id
-    let m = moment()
+    let m = moment(date)
     var month = m.format('MMMM')
     var year = m.format('YYYY')
     req.check('date','Enter Date').notEmpty();
@@ -1097,8 +1097,8 @@ let item = docs[0].item
 else{
 
   
-  let date6 =  moment().format('l');
-  let dateValue = moment().valueOf()
+  let date6 =  moment(date).format('l');
+  let dateValue = moment(date).valueOf()
 
   let date7 =  date6.replace(/\//g, "");
   
@@ -2139,11 +2139,11 @@ var date = req.body.date
 var shift = req.body.shift
 var operator = req.body.operator
 var teamLeader = req.body.teamLeader
-var m = moment()
+var m = moment(date)
 var month = m.format('MMMM')
 var year = m.format('YYYY')
 var mformat = m.format('L')
-let date6 =  moment().format('l');
+let date6 =  moment(date).format('l');
 let dateValue = moment().valueOf()
 
 let date7 =  date6.replace(/\//g, "");
@@ -2623,11 +2623,11 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
   let prefix
   var water = req.body.water
   var endDate = req.body.endDate
-  var m = moment()
+  var m = moment(date)
   var month = m.format('MMMM')
   var year = m.format('YYYY')
   var mformat = m.format('L')
-  let date6 =  moment().format('l');
+  let date6 =  moment(date).format('l');
   let dateValue = moment().valueOf()
   var id = req.user._id
   let date7 =  date6.replace(/\//g, "");
