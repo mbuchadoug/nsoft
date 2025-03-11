@@ -732,7 +732,7 @@ router.get('/draining',isLoggedIn,function(req,res){
 
     //BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
        
-            res.render('qa/batchNumberList',{pro:pro,product:product,listX:arr})
+            res.render('qa/batchNumberList',{pro:pro,listX:arr})
   
     //})
     
