@@ -999,7 +999,7 @@ router.get('/statementGenGW/:id',isLoggedIn,function(req,res){
   var id = req.params.id
  
   var arrG = []
-  BatchGingerWash.find().lean().then(docs=>{
+  BatchGingerWash.find({batchNumber:id}).lean().then(docs=>{
 
 
   
@@ -1236,7 +1236,7 @@ var id = req.params.id
 //var code ="Tiana Madzima"
 
 var arrG = []
-BatchGingerCrush.find({type:"normal"}).lean().then(docs=>{
+BatchGingerCrush.find({type:"normal",batchNumber:id}).lean().then(docs=>{
 
 if(docs){
   let refNumber = docs[0].refNumber
@@ -1475,7 +1475,7 @@ var id = req.params.id
 //var code ="Tiana Madzima"
 
 var arrG = []
-Cooking.find().lean().then(docs=>{
+Cooking.find({batchNumber:id}).lean().then(docs=>{
 
 if(docs){
   let refNumber = docs[0].refNumber

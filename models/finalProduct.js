@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var finalSchemaCK = new Schema({
 
     date: {type: String },
+    unit: {type: String },
     ingredient:{type:String},
     quantity:{type:Number},
     refNumber: {type: String },

@@ -278,6 +278,51 @@ router.get('/rawUnit',function(req,res){
   })
 })
 
+
+
+
+
+router.get('/finalUnit',function(req,res){
+  FinalProduct.find(function(err,docs){
+    for(var i = 0; i<docs.length;i++){
+      let id = docs[i]._id
+      let item = docs[i].ingredient
+ 
+      if(item == 'gingerTea' ){
+      FinalProduct.findByIdAndUpdate(id,{$set:{unit:'(tanks)'}},function(err,locs){
+
+      })
+    }
+    else if(item == 'colour'){
+      FinalProduct.findByIdAndUpdate(id,{$set:{unit:'(tanks)'}},function(err,locs){
+
+      })
+    }
+
+
+    else if(item == 'sugar'  ){
+      FinalProduct.findByIdAndUpdate(id,{$set:{unit:'(bags)'}},function(err,locs){
+
+      })
+    }
+
+
+    else if(item == 'honey' ){
+      FinalProduct.findByIdAndUpdate(id,{$set:{unit:'(buckets)'}},function(err,locs){
+
+      })
+    }
+
+
+    
+
+   
+
+
+  }
+  })
+})
+
 router.get('/warehouseStock',isLoggedIn,function(req,res){
   var pro = req.user
   //res.render('admin/dash6',{pro:pro})

@@ -3365,7 +3365,7 @@ router.get('/grvFile/:id',function(req,res){
   //let batchId = req.user.batchId
   //var batchNumber = req.user.batchNumber
 
-  StockRM.find({refNumber:refNumber}).lean().then(docs=>{
+  StockRM.find({batchNumber:refNumber}).lean().then(docs=>{
 
 
   let size = docs.length - 1
