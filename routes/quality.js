@@ -1714,7 +1714,7 @@ console.log(idNum,'idNum')
 //var code ="Tiana Madzima"
 
 var arrG = []
-Fermentation.find().lean().then(docs=>{
+Fermentation.find({batchNumber:idNum}).lean().then(docs=>{
 
 if(docs){
 let refNumber = docs[0].refNumber
