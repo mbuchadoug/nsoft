@@ -878,7 +878,7 @@ var button6 = document.getElementById('myChart6tab').addEventListener('click', f
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].refNumber,"y":data[i].tanks})
+        labels3.push({"x":data[i].refNumber,"y":data[i].tanks.toFixed(2)})
         // labels3.push(data[i].qty)
          }
     
@@ -1739,7 +1739,7 @@ var button = document.getElementById('myChart5tabS').addEventListener('click', f
     let labels4=[]
     for (var i = 0;i<data.length;i++){
      
-      labels3.push(data[i].uniqueMeasure)
+      labels3.push(data[i].uniqueMeasure.toFixed(2))
       labels4.push(data[i].item+''+data[i].unit)
 
       // labels3.push(data[i].qty)
@@ -2072,7 +2072,7 @@ var button6 = document.getElementById('myChart6tabS').addEventListener('click', 
     let labels3=[]
     let labels4=[]
     for (var i = 0;i<data.length;i++){
-      labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure})
+      labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
       // labels3.push(data[i].qty)
        }
   
@@ -2277,7 +2277,7 @@ var button7 = document.getElementById('myChart7tabS').addEventListener('click', 
     let labels3=[]
     let labels4=[]
     for (var i = 0;i<data.length;i++){
-      labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure})
+      labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
       // labels3.push(data[i].qty)
        }
   
@@ -2484,7 +2484,7 @@ var button8 = document.getElementById('myChart8tabS').addEventListener('click', 
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure})
+        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
         // labels3.push(data[i].qty)
          }
     
@@ -2692,7 +2692,7 @@ var button9 = document.getElementById('myChart9tabS').addEventListener('click', 
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure})
+        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
         // labels3.push(data[i].qty)
          }
     
@@ -2896,7 +2896,7 @@ var button10 = document.getElementById('myChart10tabS').addEventListener('click'
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+''+data[i].unit,"y":data[i].uniqueMeasure})
+        labels3.push({"x":data[i].item+''+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
         // labels3.push(data[i].qty)
          }
     
