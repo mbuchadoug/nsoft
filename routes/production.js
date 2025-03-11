@@ -2308,7 +2308,7 @@ router.post('/reloadCooking/:id', (req, res) => {
 
       var regex= new RegExp(req.query["term"],'i');
      
-      var itemFilter =BatchGingerCrush.find({ batchNumber:regex,nxtStage:'cooking'},{'item':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+      var itemFilter =BatchGingerCrush.find({ batchNumber:regex,nxtStage:'cooking'},{'batchNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
     
       
       itemFilter.exec(function(err,data){
