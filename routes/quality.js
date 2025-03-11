@@ -696,6 +696,49 @@ router.get('/draining',isLoggedIn,function(req,res){
    })
 
 
+   router.get('/batchNumberList',isLoggedIn,function(req,res){
+    var pro = req.user
+    //var product = req.params.id
+    var uid = req.user._id
+    var arr = []
+    var year = 2025
+   /* User.findByIdAndUpdate(uid,{$set:{year:year,product:product}},function(err,locs){
+  
+    })*/
+  
+
+
+
+    BlendedItems.find(function(err,docs) {
+      // console.log(docs,'docs')
+       for(var i = 0;i<docs.length;i++){
+     // let product = docs[i].product
+      //console.log(docs,'docs')
+    
+          if(arr.length > 0 && arr.find(value => value.refNumber == docs[i].refNumber  && value.product == docs[i].product )){
+                 console.log('true')
+                //arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
+           }else{
+    arr.push(docs[i])
+           }
+    
+         
+       }
+      //console.log(arr,'arr')
+      //res.send(arr)
+     })
+    
+    
+
+    //BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
+       
+            res.render('qa/batchNumberList',{pro:pro,product:product,listX:arr})
+  
+    //})
+    
+  })
+
+
 
 
    router.get('/folderReg',function(req,res){
