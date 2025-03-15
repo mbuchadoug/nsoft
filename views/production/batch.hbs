@@ -368,7 +368,7 @@ ul.no-bullets {
 
                                                                 <option value=""></option> 
                                                               {{#each arr}}
-                                                               <option value="{{this.grvNumber}}">{{this.grvNumber}}||{{this.closingWeightTonne}}tonnes</option>
+                                                               <option value="{{this.grvNumber}}">{{this.grvNumber}}||{{this.remainingTonnes}}tonnes</option>
                                                                      {{/each}}
     </select>  </div></div>
  
@@ -422,7 +422,7 @@ select.innerHTML = ''
 for (var i = 0; i < data.length; i++) {
   var optco = data[i];
   var opt = document.createElement('option');
-  opt.textContent = optco.grvNumber || optco.closingWeightTonne + 'tonnes'   /*+'Cases:'+''+optco.closingWeightTonne+'| '+optco.warehouse;*/
+  opt.textContent = optco.grvNumber || optco.remainingTonnes + 'tonnes'   /*+'Cases:'+''+optco.closingWeightTonne+'| '+optco.warehouse;*/
   opt.value = optco.grvNumber;
   select.appendChild(opt);
 

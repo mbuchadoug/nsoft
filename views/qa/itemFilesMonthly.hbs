@@ -267,16 +267,18 @@ ul.no-bullets {
 
 	
 
-	 <li id="ember420" class="ember-view nav-item">
-      <a id="ember421" class="ember-view nav-link" href="/quality/packagingBatchList">
+		 <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchNumberList">
 <!---->          
               <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
 <!---->             <img src="icons/box.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-       Packaging
+       Batch Trail
 <!----><!---->      </a>
     </li>
+
+
 
 
 
@@ -407,7 +409,7 @@ ul.no-bullets {
 													</svg>
 												</span>
 												<!--end::Svg Icon-->
-												<a href="/quality/selectMonth">Select Batch</a>
+												<a href="/quality/selectMonth/{{product}}">Select Batch</a>
 												<!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
 												
 												<!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
@@ -465,7 +467,7 @@ ul.no-bullets {
 																</svg>
 															</span>
 															<!--end::Svg Icon-->
-															<a href="/quality/folderFiles/{{this.refNumber}}/{{product}}" class="text-gray-800 text-hover-primary">{{this.refNumber}}</a>
+															<a href="/quality/folderFiles/{{this.code}}/{{product}}" class="text-gray-800 text-hover-primary">{{this.code}}</a>
 														</div>
 													</td>
 													<!--end::Name=-->

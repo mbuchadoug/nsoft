@@ -249,16 +249,18 @@ ul.no-bullets {
 
 	
 
-	 <li id="ember420" class="ember-view nav-item">
-      <a id="ember421" class="ember-view nav-link" href="/quality/packagingBatchList">
+		 <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchNumberList">
 <!---->          
               <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
 <!---->             <img src="icons/box.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-       Packaging
+       Batch Trail
 <!----><!---->      </a>
     </li>
+
+
 
 
 
@@ -388,6 +390,7 @@ ul.no-bullets {
 													        <th class="min-w-100px">Ingredient</th>
 												         	<th class="text-end min-w-75px">BatchNumber</th>
 															<th class="text-end min-w-75px">RefNumber </th>
+															<th class="text-end min-w-75px">Code </th>
 									                        <th class="text-end min-w-75px">Qty </th>
 															<th class="text-end min-w-75px">Date</th>
 												
@@ -411,6 +414,7 @@ ul.no-bullets {
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.batchNumber}}</td>
                                                     <td class="text-end pe-0">{{this.refNumber}}</td>  
+													<td class="text-end pe-0">{{this.code}}</td>  
 													<td class="text-end pe-0">{{this.quantity}}{{this.unit}}</td>
 													
 													<td class="text-end pe-0">{{this.date}}</td>
@@ -439,6 +443,10 @@ ul.no-bullets {
 															</div>
 															
 															<!--end::Menu item-->
+
+															 <div class="menu-item px-3">
+																<a href="/quality/batchNumberUpdate/{{batchNumber}}/2" class="menu-link px-3">Update</a>
+															</div>
 														</div>
 														<!--end::Menu-->
 													</td>

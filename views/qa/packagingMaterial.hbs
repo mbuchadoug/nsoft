@@ -230,17 +230,18 @@ ul.no-bullets {
 
 
 	
-
 	 <li id="ember420" class="ember-view nav-item">
-      <a id="ember421" class="ember-view nav-link" href="/quality/packagingBatchList">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchNumberList">
 <!---->          
               <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
 <!---->             <img src="icons/box.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-       Packaging
+       Batch Trail
 <!----><!---->      </a>
     </li>
+
+
 
 
 
@@ -554,6 +555,7 @@ this.firstElementChild.select();
             function add() {
        let volume = document.getElementById('volume').value 
        let batchNumber = document.getElementById('batchNumber').value
+       let refNumber = document.getElementById('refNumber').value
        let taste =   document.getElementById('taste').value      
        let label =   document.getElementById('label').value  
        let time =   document.getElementById('time').value    
@@ -572,7 +574,7 @@ this.firstElementChild.select();
                 dataType: 'json',
                 data: {
                     volume: volume,batchNumber:batchNumber,
-                    taste:taste,label:label, time:time,
+                    taste:taste,label:label,refNumber:refNumber, time:time,
                shift:shift,date:date,product:product,tank:tank,batchId:batchId
                     
                 },
@@ -602,6 +604,7 @@ var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
+    var td7 = tr.appendChild(document.createElement('td'));
   
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
@@ -622,6 +625,7 @@ link.classList.add('text-end','pe-0')*/
     td4.innerHTML=  data.volume ;
     td5.innerHTML = data.taste
     td6.innerHTML = data.label
+     td7.innerHTML = data.tank
     
     //let link2 = "/rec/delete/"+data._id
 
@@ -672,9 +676,13 @@ link.classList.add('text-end','pe-0')*/
          <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
           <div id="ember330" class="ember-view">
            <div class="ac-box ">
-             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="" readonly></div> </div></div>
+             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{code}}" readonly></div> </div></div>
 
 
+ <div class="col-lg-2"><label class="col-form-label required">Batch #</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="refNumber" name="refNumber" class="ember-text-field ember-view form-control" type="text" value="" readonly></div> </div></div>
  
  <div class="col-lg-2"><label class="col-form-label required">Time</label>
           <div id="ember330" class="ember-view">
@@ -706,12 +714,22 @@ link.classList.add('text-end','pe-0')*/
               <div id="ember330" class="ember-view">
           <div class="ac-box ">
 
-      <input  id="date" name="date" class="ember-text-field ember-view form-control" type="text" value="{{date}}" readonly>
+      <input  id="date" name="date" class="ember-text-field ember-view form-control" type="date" value="">
             </div> </div></div>
   
    
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Shift</label> 
-    <input  id="shift" name="shift" class="ember-text-field ember-view form-control" type="text"  value="{{shift}}" readonly></div>
+    
+          <div class="col-lg-2"><label class="col-form-label required">Shift</label>
+              <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+     <select class="form-select form-select-solid" name="shift" id="shift"   >
+			<option></option>
+			<option value="day" >Day</option>
+			<option value="night" >Night</option>
+
+																	
+																		
+			</select> </div> </div></div>
         
     
     
@@ -763,6 +781,7 @@ link.classList.add('text-end','pe-0')*/
 	<th>Volume</th>
   <th>Taste</th>
    <th>Label</th>
+   <th>Tank</th>
 
 
                               </tr>
@@ -798,7 +817,7 @@ link.classList.add('text-end','pe-0')*/
           <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
        <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a  class="btn btn-primary ember-view" href="/quality/closePackagingBatch/{{id}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" href="/quality/closePackagingBatch/{{code}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -856,7 +875,7 @@ link.classList.add('text-end','pe-0')*/
                 
                      $('#tank').val(data.tankNumber);
                       $('#availableVolume').val(data.litres);
-                    $('#batchNumber').val(data.refNumber);
+                    $('#refNumber').val(data.refNumber);
                
                
     

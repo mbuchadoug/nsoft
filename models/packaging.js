@@ -8,6 +8,7 @@ var packaging = new Schema({
     product:{type:String},
     type:{type:String},
     batchNumber:{type:String},
+    refNumber:{type:String},
     time:{type:String},
     shift:{type:String},
     batchId: {type: String },

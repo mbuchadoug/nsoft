@@ -250,16 +250,17 @@ ul.no-bullets {
 
 	
 
-	 <li id="ember420" class="ember-view nav-item">
-      <a id="ember421" class="ember-view nav-link" href="/quality/packagingBatchList">
+		 <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchNumberList">
 <!---->          
               <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
 <!---->             <img src="icons/box.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-       Packaging
+       Batch Trail
 <!----><!---->      </a>
     </li>
+
 
 
 
@@ -387,6 +388,7 @@ ul.no-bullets {
 												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
 													        <th class="min-w-100px">Batch Number</th>
 															  <th class="min-w-100px">Ref Number</th>
+															<th class="text-end min-w-75px">Code</th>
 												         	<th class="text-end min-w-75px">Ingredient</th>
 															 <th class="text-end min-w-75px">Qty</th>
 															<th class="text-end min-w-75px">Pot #</th>
@@ -416,6 +418,7 @@ ul.no-bullets {
 													<!--end::Date=-->
 													<!--begin::No Orders=-->
 													<td class="text-end pe-0">{{this.refNumber}}</td>
+													<td class="text-end pe-0">{{this.code}}</td>
 															<td class="text-end pe-0">{{this.ingredient}}</td>
 																<td class="text-end pe-0">{{this.quanity}}{{this.unit}}</td>
                                                     <td class="text-end pe-0">{{this.potNumber}}</td>  

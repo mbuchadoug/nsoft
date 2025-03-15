@@ -8,6 +8,7 @@ var batchSchemaBT = new Schema({
     litres: {type: Number },
     product: {type: String },
     refNumber: {type: String },
+    status: {type: String },
        
    
 });

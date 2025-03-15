@@ -13,6 +13,7 @@ var batchSchemaCK = new Schema({
     batchNumber: {type: String },
     month: {type: String },
     year: {type: Number },
+    code: {type: String },
     dateValue: {type: Number },
     size:{type:Number},
     unit:{type:String},

@@ -48,6 +48,7 @@ var StockD = require('../models/stockD');
 var StockR = require('../models/stockR');
 var StockRM = require('../models/stockRM');
 var RawMat = require('../models/rawMaterials');
+var RawMatX = require('../models/rawMatX');
 var StockRMFile = require('../models/stockRMFile');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
@@ -669,7 +670,7 @@ router.get('/batchListCrush',function(req,res){
   
 
     router.get('/batchListIngredients',function(req,res){
-        Ingredients.find(function(err,docs){
+        BatchCooking.find(function(err,docs){
         
           let arr=[]
           for(var i = docs.length - 1; i>=0; i--){
@@ -677,7 +678,7 @@ router.get('/batchListCrush',function(req,res){
             arr.push(docs[i])
           }
         
-          res.render('qa/batchListIngredients',{listX:arr})
+          res.render('qa/batchListCooking',{listX:arr})
         
         })
         
@@ -685,6 +686,26 @@ router.get('/batchListCrush',function(req,res){
         
         })
       
+
+
+        
+    /*router.get('/batchListIngredients',function(req,res){
+      Ingredients.find(function(err,docs){
+      
+        let arr=[]
+        for(var i = docs.length - 1; i>=0; i--){
+      
+          arr.push(docs[i])
+        }
+      
+        res.render('qa/batchListIngredients',{listX:arr})
+      
+      })
+      
+      
+      
+      })*/
+    
 
         
         
@@ -694,50 +715,6 @@ router.get('/draining',isLoggedIn,function(req,res){
   
         })
    })
-
-
-   router.get('/batchNumberList',isLoggedIn,function(req,res){
-    var pro = req.user
-    //var product = req.params.id
-    var uid = req.user._id
-    var arr = []
-    var year = 2025
-   /* User.findByIdAndUpdate(uid,{$set:{year:year,product:product}},function(err,locs){
-  
-    })*/
-  
-
-
-
-    BlendedItems.find(function(err,docs) {
-      // console.log(docs,'docs')
-       for(var i = 0;i<docs.length;i++){
-     // let product = docs[i].product
-      //console.log(docs,'docs')
-    
-          if(arr.length > 0 && arr.find(value => value.refNumber == docs[i].refNumber  && value.product == docs[i].product )){
-                 console.log('true')
-                //arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
-           }else{
-    arr.push(docs[i])
-           }
-    
-         
-       }
-      //console.log(arr,'arr')
-      //res.send(arr)
-     })
-    
-    
-
-    //BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
-       
-            res.render('qa/batchNumberList',{pro:pro,listX:arr})
-  
-    //})
-    
-  })
-
 
 
 
@@ -804,10 +781,10 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
    var pro = req.user
    
    var year = m.format('YYYY')
-   var refNumber = req.params.id
+   var code = req.params.id
    var product = req.params.id2
    var date = req.user.invoCode
- RepoFiles.find({idNum:refNumber},function(err,docs){
+ RepoFiles.find({code:code},function(err,docs){
      if(docs){
  
    console.log(docs,'docs')
@@ -818,7 +795,7 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
       }
  
  
- res.render('qa/itemFiles',{listX:arr,product:product,refNumber:refNumber,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
+ res.render('qa/itemFiles',{listX:arr,product:product,code:code,pro:pro,year:year,successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg}) 
  }
  })
     
@@ -834,13 +811,23 @@ router.get('/folderFiles/:id/:id2',isLoggedIn,function(req,res){
 
 
 
- router.get('/trailFermentation/:id',isLoggedIn,function(req,res){
+ router.get('/trailFermentationBatch/:id',isLoggedIn,function(req,res){
    var id = req.params.id
-  Fermentation.find({batchNumber:id},function(err,docs){
-       res.render('qa/trackFermentation',{listX:docs,refNumber:id})
+  BatchFermentation.find({batchNumber:id},function(err,docs){
+       res.render('qa/trackFermentationBatch',{listX:docs,refNumber:id})
 
       })
  })
+
+
+ 
+ router.get('/trailFermentation/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+ Fermentation.find({batchNumber:id},function(err,docs){
+      res.render('qa/trackFermentation',{listX:docs,refNumber:id})
+
+     })
+})
 
 
 
@@ -1072,6 +1059,7 @@ router.get('/statementGenGW/:id',isLoggedIn,function(req,res){
   
 let item = docs[0].item
 let refNumber = docs[0].refNumber
+let code = docs[0].code
   //arrG.push(docs)
     
     console.log(docs,'arrG')
@@ -1155,6 +1143,7 @@ let refNumber = docs[0].refNumber
   repo.type = 'Washing'
   repo.item = item
   repo.date = mformat
+  repo.code = code
   repo.year = year;
   repo.idNum = id
   repo.refNumber = refNumber
@@ -1308,6 +1297,7 @@ BatchGingerCrush.find({type:"normal",batchNumber:id}).lean().then(docs=>{
 if(docs){
   let refNumber = docs[0].refNumber
   let item = docs[0].item
+  let code = docs[0].code
 
 
 
@@ -1393,6 +1383,7 @@ repo.fileId = "null";
 repo.status = 'GC'
 repo.type = 'Crushing'
 repo.item = item
+repo.code = code
 repo.date = mformat
 repo.year = year;
 repo.idNum = id
@@ -1547,6 +1538,7 @@ Cooking.find({batchNumber:id}).lean().then(docs=>{
 if(docs){
   let refNumber = docs[0].refNumber
   let item = docs[0].item
+  let code = docs[0].code
 
 
 
@@ -1632,6 +1624,7 @@ repo.fileId = "null";
 repo.status = 'CN'
 repo.type = 'Cooking'
 repo.item = item
+repo.code = code
 repo.date = mformat
 repo.year = year;
 repo.refNumber = refNumber
@@ -1786,6 +1779,7 @@ Fermentation.find({batchNumber:idNum}).lean().then(docs=>{
 if(docs){
 let refNumber = docs[0].refNumber
 let item = docs[0].item
+let code = docs[0].code
 
 
 
@@ -1871,6 +1865,7 @@ repo.status = 'FM'
 repo.type = 'Fermentation'
 repo.item = item
 repo.date = mformat
+repo.code = code
 repo.year = year;
 repo.refNumber = refNumber
 repo.idNum = idNum
@@ -2026,7 +2021,7 @@ var idNum = req.params.id
 BatchRR.find({refNumber:refNumber}).lean().then(docs=>{
 
 
-
+let code = docs[0].code
 
 
 
@@ -2100,6 +2095,7 @@ repo.status = 'RM'
 repo.type = 'Raw'
 repo.date = mformat
 repo.year = year;
+repo.code = code
 repo.refNumber = refNumber
 repo.idNum = idNum
 repo.month = month
@@ -2330,7 +2326,7 @@ let date7 =  date6.replace(/\//g, "");
 
 
 
-router.get('/packaging/:id',isLoggedIn,function(req,res){
+/*router.get('/packaging/:id',isLoggedIn,function(req,res){
 
   var id = req.params.id
   BatchPackaging.findById(id,function(err,doc){
@@ -2341,19 +2337,42 @@ router.get('/packaging/:id',isLoggedIn,function(req,res){
     res.render('qa/packagingMaterial',{product:product,
     shift:shift,date:date,id:id})
   })
-  })
+  })*/
   
+
+  router.get('/packaging/:id',isLoggedIn,function(req,res){
+
+    var id = req.params.id
+   /* BatchPackaging.findById(id,function(err,doc){
+    let date = doc.date
+    let shift = doc.shift
+    let product = doc.product*/
+   Fermentation.find({batchNumber:id},function(err,docs){
+     if(docs.length > 0){
+       if(docs[0].code == 'null'){
+         res.redirect('/quality/batchNumberList')
+       }else{
+         let code = docs[0].code
+         let product = docs[0].product
+        res.render('qa/packagingMaterial',{product:product,id:id,code:code,refNumber:id})
+       }
+     }
+   })
+      
+    //})
+    })
 
   router.post('/packagingMat/',isLoggedIn,function(req,res){
 
     var product = req.body.product
     var batchNumber = req.body.batchNumber
+    var refNumber = req.body.refNumber
     var volume = req.body.volume
     var taste = req.body.taste
     var label = req.body.label
     var time = req.body.time
     var date = req.body.date
-    var batchId = req.body.batchId
+   // var batchId = req.body.batchId
     var tank = req.body.tank
     //var refNumber = req.body.refNumber
     var shift = req.body.shift
@@ -2368,13 +2387,14 @@ router.get('/packaging/:id',isLoggedIn,function(req,res){
   cook.product = product
   cook.volume = volume
   cook.batchNumber = batchNumber
+  cook.refNumber = refNumber
   cook.taste = taste
   cook.label = label
   cook.tank = tank
   cook.time = time
   cook.date = date
   cook.shift = shift
-  cook.batchId = batchId
+  //cook.batchId = batchId
 
   
   cook.save()
@@ -2402,9 +2422,12 @@ router.get('/packaging/:id',isLoggedIn,function(req,res){
     var mformat = m.format('L')
     let total
 
-    Packaging.find({batchId:id},function(err,docs){
+    Packaging.find({batchNumber:id},function(err,docs){
       
 let refNumber = docs[0].batchNumber
+let ref = docs[0].refNumber
+let code = docs[0].code
+let total = docs.length
       for(var i = 0;i<docs.length; i++){
            
         arrV.push(docs[i].volume)
@@ -2417,16 +2440,54 @@ let refNumber = docs[0].batchNumber
         for(var z in arrV) { number1 += arrV[z]; }
         total = number1
    
-        BatchPackaging.findByIdAndUpdate(id,{$set:{volume:number1,refNumber:refNumber}},function(err,locs){
+       /* BatchPackaging.findByIdAndUpdate(id,{$set:{volume:number1,refNumber:refNumber}},function(err,locs){
+
+        })*/
+
+        BatchPackaging.find({refNumber:refNumber,code:code},function(err,docs){
+          if(docs.length == 0){
+             var user = new BatchPackaging();
+              user.year = year;
+              user.month = month
+              user.volume = number1
+              user.tanks = total;
+              user.batchNumber = code
+              user.refNumber = refNumber
+              user.product = product
+              user.status = 'null'
+              user.code = code
+          
+              user.save()
+                .then(user =>{
+                })
+
+              }else{
+        console.log(pro.quantity,'quantity555')
+        let idF = docs[0]._id
+        //let opQ = docs[0].tanks + pro.quantity
+        BatchPackaging.findByIdAndUpdate(idF,{$set:{tanks:total}},function(err,pocs){
 
         })
+              }
+            })
 
+
+
+      BatchFermentation.find({batchNumber:refNumber},function(err,jocs){
+        if(jocs){
+          let idV = jocs[0]._id
+          BatchFermentation.findByIdAndUpdate(idV,{$set:{tanksDrained:total,volumeDrained:number1,code:code}},function(err,gocs){
+
+
+          })
+        }
+      })
         for(var i = 0;i<docs.length; i++){
            
       let refNumber = docs[i].batchNumber
       let tank = docs[i].tank
       let litres = docs[i].volume
-            
+            console.log(refNumber,'refNumber')
         BlendedItems.find({refNumber:refNumber,blendingTank:tank},function(err,focs){
 
 let nVolume = litres - focs[0].litres
@@ -2453,10 +2514,11 @@ BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:nVolume}},function(err,tocs){
       for(var i = 0;i<docs.length; i++){
            
         let refNumber = docs[i].batchNumber
+        let ref = docs[i].refNumber
         let tank = docs[i].tank
         let litres = docs[i].volume
-              
-          BlendingTanks.find({refNumber:refNumber,tankNumber:tank},function(err,focs){
+            console.log(ref,tank,'refTank')  
+          BlendingTanks.find({refNumber:ref,tankNumber:tank},function(err,focs){
   
   let nVolume =  focs[0].litres - litres
   let bId = focs[0]._id
@@ -2466,7 +2528,7 @@ BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:nVolume}},function(err,tocs){
   
   })
   }else{
-    BlendingTanks.findByIdAndUpdate(bId,{$set:{litres:0,product:"null",refNumber:"null"}},function(err,tocs){
+    BlendingTanks.findByIdAndUpdate(bId,{$set:{litres:0,product:"null",refNumber:"null",status:"empty"}},function(err,tocs){
   
     })
   }
@@ -2569,7 +2631,7 @@ res.redirect('/quality/warehouseStock')
 
     var regex= new RegExp(req.query["term"],'i');
    
-    var itemFilter =BlendingTanks.find({ tankNumber:regex},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+    var itemFilter =BlendingTanks.find({ tankNumber:regex,status:"null"},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
   
     
     itemFilter.exec(function(err,data){
@@ -2813,6 +2875,515 @@ router.post('/blendingExtraDays/',isLoggedIn,function(req,res){
 router.get('/closeBlending',isLoggedIn,function(req,res){
   res.redirect('/quality/blendingTanks')
 })
+
+
+
+
+router.get('/batchNumberList',isLoggedIn,function(req,res){
+  var pro = req.user
+  //var product = req.params.id
+  var uid = req.user._id
+  var arr = []
+  var year = 2025
+ /* User.findByIdAndUpdate(uid,{$set:{year:year,product:product}},function(err,locs){
+
+  })*/
+
+
+
+
+  BlendedItems.find(function(err,docs) {
+    // console.log(docs,'docs')
+     for(var i = 0;i<docs.length;i++){
+   // let product = docs[i].product
+    //console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.refNumber == docs[i].refNumber  && value.product == docs[i].product )){
+               console.log('true')
+              //arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }
+    //console.log(arr,'arr')
+    //res.send(arr)
+    res.render('qa/batchNumberList',{pro:pro,listX:arr})
+   })
+  
+  
+
+  //BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
+     
+       
+
+  //})
+  
+})
+
+
+router.get('/update/:id',isLoggedIn,function(req,res){
+  var pro = req.user
+  var id = req.params.id
+  console.log(id,'refNumber')
+ 
+  res.render('qa/update',{pro:pro,refNumber:id})
+  
+  
+  })
+
+router.post('/update/:id/',isLoggedIn,function(req,res){
+  let id = req.params.id
+  let num = req.body.batchNumber
+
+
+   
+  req.check('batchNumber','Enter Batch Number').notEmpty();
+  var errors = req.validationErrors();
+
+  if (errors) {
+   
+   req.session.errors = errors;
+   req.session.success = false;
+   console.log( req.session.errors[0].msg)
+   req.flash('danger', req.session.errors[0].msg);
+        
+         
+   res.redirect('/quality/update/'+id);
+  
+  }
+  
+  else{
+  
+  
+  
+  BlendedItems.find({refNumber:id},function(err,docs){
+    console.log(docs,'ferm')
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      
+      BlendedItems.findByIdAndUpdate(idF,{$set:{code:num}},function(er,tocs){
+  
+      })
+    }
+  })
+
+
+  RawMatX.find({batchNumber:id},function(err,docs){
+    console.log(docs,'ferm')
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      
+      RawMatX.findByIdAndUpdate(idF,{$set:{code:num}},function(er,tocs){
+  
+      })
+    }
+  })
+
+  BatchFermentation.find({batchNumber:id},function(err,docs){
+    //console.log(docs,'Bferm')
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      
+      BatchFermentation.findByIdAndUpdate(idF,{$set:{code:num}},function(er,tocs){
+  
+      })
+    }
+  })
+
+
+  RawMatX.find({refNumber:id},function(err,docs){
+    //console.log(docs,'ferm')
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      
+      RawMatX.findByIdAndUpdate(idF,{$set:{code:num}},function(er,tocs){
+  
+      })
+    }
+  })
+  
+  Fermentation.find({batchNumber:id},function(err,docs){
+    //console.log(docs,'ferm')
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      
+      Fermentation.findByIdAndUpdate(idF,{$set:{code:num}},function(er,tocs){
+  
+      })
+    }
+
+
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      let refNumberV = docs[i].refNumber
+      let ingredient = docs[i].ingredient
+      if(ingredient == 'gingerTea'){
+
+      Cooking.find({batchNumber:refNumberV},function(err,hocs){
+
+     let cId = hocs[0]._id
+
+      
+      Cooking.findByIdAndUpdate(cId,{$set:{code:num}},function(er,tocs){
+  
+      })
+
+      RawMatX.find({batchNumber:refNumberV},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+    })
+    }else if(ingredient == 'sugar'){
+
+      BatchGingerCrush.find({batchNumber:refNumberV},function(err,jocs){
+      let refNum = jocs[0].refNumber
+
+      BatchRR.find({batchNumber:refNum},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+      })
+
+      RawMatX.find({batchNumber:refNum},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+
+      })
+    } else if(ingredient == 'honey'){
+
+      
+      BatchRR.find({batchNumber:refNumberV},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+
+        RawMatX.find({batchNumber:refNumberV},function(err,docs){
+          //console.log(docs,'ferm')
+          for(var i = 0;i<docs.length;i++){
+            let idR = docs[i]._id
+            
+            RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+        
+            })
+          }
+        })
+      })
+    }else if(ingredient == 'colour'){
+      
+      Cooking.find({batchNumber:refNumberV},function(err,hocs){
+
+        let cId = hocs[0]._id
+   
+         
+         Cooking.findByIdAndUpdate(cId,{$set:{code:num}},function(er,tocs){
+     
+         })
+   
+       })
+
+       RawMatX.find({batchNumber:refNumberV},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+    }
+    }
+
+    res.redirect('/quality/batchCookingUpdate/'+num)
+
+  })
+
+}
+
+})  
+
+
+router.get('/batchCookingUpdate/:id',function(req,res){
+var id = req.params.id
+var num = id
+console.log(num,'num')
+Cooking.find({code:id},function(err,ocs){
+  console.log(ocs,'cook')
+  if(ocs.length > 0){
+
+  
+
+  let batchNum = ocs[0].batchNumber
+  Cooking.find({batchNumber:batchNum},function(err,docs){
+
+    
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      
+      Cooking.findByIdAndUpdate(idF,{$set:{code:num}},function(er,tocs){
+  
+      })
+    }
+    
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      let refNumberV = docs[i].refNumber
+      let ingredient = docs[i].ingredient
+      if(ingredient == 'ginger'){
+
+     BatchGingerCrush.find({batchNumber:refNumberV},function(err,hocs){
+
+     let cId = hocs[0]._id
+
+      
+     BatchGingerCrush.findByIdAndUpdate(cId,{$set:{code:num}},function(er,tocs){
+  
+      })
+
+
+      RawMatX.find({batchNumber:refNumberV},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+    })
+    }else if(ingredient == 'sugar'){
+
+      BatchGingerCrush.find({batchNumber:refNumberV},function(err,jocs){
+      let refNum = jocs[0].refNumber
+
+      BatchRR.find({batchNumber:refNum},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+      })
+
+      RawMatX.find({batchNumber:refNum},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+
+      })
+    } else if(ingredient == 'honey'){
+
+      
+      BatchRR.find({batchNumber:refNumberV},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+      })
+
+      RawMatX.find({batchNumber:refNumberV},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+    }else if(ingredient == 'tea'){
+      
+      BatchGingerCrush.find({batchNumber:refNumberV},function(err,jocs){
+        let refNum = jocs[0].refNumber
+  
+        BatchRR.find({batchNumber:refNum},function(err,ocs){
+          let idC = ocs[0]._id
+          BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+  
+          })
+        })
+  
+        RawMatX.find({batchNumber:refNum},function(err,docs){
+          //console.log(docs,'ferm')
+          for(var i = 0;i<docs.length;i++){
+            let idR = docs[i]._id
+            
+            RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+        
+            })
+          }
+        })
+        })
+    }
+    }
+
+      
+  
+res.redirect('/quality/batchCrushingUpdate/'+num)
+})
+  }
+})
+
+
+
+})
+
+
+
+
+router.get('/batchCrushingUpdate/:id',function(req,res){
+var num = req.params.id
+var id = num
+BatchGingerCrush.find({code:id},function(err,docs){
+  console.log(docs,'ferm')
+  
+    
+    
+    for(var i = 0;i<docs.length;i++){
+      let idF = docs[i]._id
+      let refNumberV = docs[i].refNumber
+      let ingredient = docs[i].item
+      if(ingredient == 'ginger'){
+        BatchGingerWash.find({batchNumber:refNumberV},function(err,hocs){
+
+          let cId = hocs[0]._id
+     
+           
+          BatchGingerWash.findByIdAndUpdate(cId,{$set:{code:num}},function(er,tocs){
+       
+           })
+     
+         })
+
+         RawMatX.find({batchNumber:refNumberV},function(err,docs){
+          //console.log(docs,'ferm')
+          for(var i = 0;i<docs.length;i++){
+            let idR = docs[i]._id
+            
+            RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+        
+            })
+          }
+        })
+
+      }else if(ingredient == 'bananas'){
+
+        BatchRR.find({batchNumber:refNumberV},function(err,hocs){
+
+          let cId = hocs[0]._id
+     
+           
+          BatchRR.findByIdAndUpdate(cId,{$set:{code:num}},function(er,tocs){
+       
+           })
+     
+         })
+
+         RawMatX.find({batchNumber:refNumberV},function(err,docs){
+          //console.log(docs,'ferm')
+          for(var i = 0;i<docs.length;i++){
+            let idR = docs[i]._id
+            
+            RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+        
+            })
+          }
+        })
+
+      }
+
+    }
+
+
+
+    res.redirect('/quality/batchWashingUpdate/'+num)
+  })
+
+
+
+})
+
+
+router.get('/batchWashingUpdate/:id',function(req,res){
+  var num = req.params.id
+  var id = num
+  BatchGingerWash.find({code:id},function(err,docs){
+    console.log(docs,'ferm')
+    
+      
+      
+      for(var i = 0;i<docs.length;i++){
+        let idF = docs[i]._id
+        let refNumberV = docs[i].refNumber
+        let ingredient = docs[i].item
+        if(ingredient == 'ginger'){
+          BatchRR.find({grvNumber:refNumberV},function(err,hocs){
+  
+            let cId = hocs[0]._id
+       
+             
+            BatchRR.findByIdAndUpdate(cId,{$set:{code:num}},function(er,tocs){
+         
+             })
+       
+           })
+
+           RawMatX.find({batchNumber:refNumberV},function(err,docs){
+            //console.log(docs,'ferm')
+            for(var i = 0;i<docs.length;i++){
+              let idR = docs[i]._id
+              
+              RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+          
+              })
+            }
+          })
+  
+        }
+      }
+  
+  res.redirect('/quality/batchNumberList')
+    })
+  
+  
+  
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

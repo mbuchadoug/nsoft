@@ -2660,9 +2660,11 @@ var year = m.format('YYYY')
              
               truck.batchNumber = refNo
               truck.month = month
+              truck.status3 = 'open'
               truck.nxtStage='cooking'
               truck.qtyInMass = closingMass
               truck.qtyOutMass= closingMass
+              truck.qtyLeft= closingMass
               truck.month = month
               truck.status = 'null'
               truck.year = year
@@ -2752,12 +2754,13 @@ var year = m.format('YYYY')
             truck.type ='ingredient'
             truck.voucherNo = voucherNo
             truck.refNumber = batchNumber
-           
+            truck.status3 = 'open'
             truck.batchNumber = refNo
             truck.month = month
             truck.nxtStage='cooking'
             truck.qtyInMass = closingMass
             truck.qtyOutMass= bags
+            truck.qtyLeft= bags
             truck.month = month
             truck.status = 'null'
             truck.year = year
@@ -2877,8 +2880,10 @@ var year = m.format('YYYY')
               truck.nxtStage='cooking'
               truck.qtyInMass = closingMass
               truck.qtyOutMass= bags
+              truck.qtyLeft = bags
               truck.month = month
               truck.status = 'null'
+              truck.status3 = 'open'
               truck.year = year
              
               
@@ -3007,9 +3012,9 @@ User.findByIdAndUpdate(uid,{$set:{batchId:batchId}},function(err,locs){
 
 })
 
-  BatchRR.findByIdAndUpdate(batchId,{$set:{receivedKgs:weight,
+  BatchRR.findByIdAndUpdate(batchId,{$set:{receivedKgs:weight,remainingKgs:weight,remainingTonnes:weightTonne,
   receivedTonnes:weightTonne,receivedKgs:weight, closingWeightTonne:closingWeightTonne,status:"complete",
-closingWeightKg:closingWeight}},function(err,vocs){
+closingWeightKg:closingWeight,status2:"open"}},function(err,vocs){
 
 })
 
@@ -3299,11 +3304,29 @@ router.get('/send-notification/:id/:id2', async (req, res) => {
 })*/
 
 
-router.get('/grvList',isLoggedIn,function(req,res){
+/*router.get('/grvList',isLoggedIn,function(req,res){
   BatchRR.find({status:"complete"},function(err,docs){
     res.render('rStock/grvList',{listX:docs})
   })
-})
+})*/
+
+router.get('/grvList',isLoggedIn,function(req,res){
+  BatchRR.find({status:"complete"},function(err,docs){
+  
+    let arr=[]
+    for(var i = docs.length - 1; i>=0; i--){
+  
+      arr.push(docs[i])
+    }
+  
+    res.render('rStock/grvList',{listX:arr})
+  
+  })
+  
+  
+  
+  })
+
 
 
 router.get('/grvWeights/:id',isLoggedIn,function(req,res){
@@ -3572,7 +3595,7 @@ let arrV=[]
 let number1, massKgs
     StockRM.find({voucherNumber:voucherNumber},function(err,docs){
 
-      if(docs){
+      if(docs.length > 0){
 
       
 let item = docs[0].item
@@ -3636,7 +3659,7 @@ let item = docs[0].item
     var voucherNo = req.params.id
 
     BatchRR.find({voucherNo:voucherNo},function(err,docs){
-      if(docs){
+      if(docs.length > 0){
         let id = docs[0]._id
         BatchRR.findByIdAndRemove(id,function(err,locs){
 
@@ -3776,6 +3799,18 @@ let item = docs[0].item
           for(var i = 0;i<docs.length;i++){
            let id = docs[i]._id
            Cooking.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateF2')
+        })
+      })
+
+      router.get('/updateF2',function(req,res){
+       Fermentation.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           Fermentation.findByIdAndRemove(id,(err,doc)=>{
       
            }) 
           }

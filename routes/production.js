@@ -48,6 +48,7 @@ var StockD = require('../models/stockD');
 var StockR = require('../models/stockR');
 var StockRM = require('../models/stockRM');
 var RawMat = require('../models/rawMaterials');
+var RawMatX = require('../models/rawMatX');
 var StockRMFile = require('../models/stockRMFile');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
@@ -456,7 +457,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
 
     router.post('/batchAuto',function(req,res){
       var grvNumber = req.body.code
-      BatchRR.find({status:"complete",grvNumber:grvNumber},function(err,docs){
+      BatchRR.find({status2:"open",grvNumber:grvNumber},function(err,docs){
         res.send(docs)
       })
     })
@@ -470,7 +471,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   var readonly = 'hidden'
   var read =''
   let prefix = ''
-  BatchRR.find({status:'complete',stage:"wash"}).lean().then(docs=>{
+  BatchRR.find({status2:'open',stage:"wash"}).lean().then(docs=>{
   var arr = docs
    if(docs.length >0){
      prefix = docs[0].prefix
@@ -561,6 +562,7 @@ else{
         truck.qtyOutMass= 0
         truck.month = month
         truck.status = 'null'
+        truck.status2 = 'open'
         truck.year = year
        
         
@@ -733,7 +735,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
         let number1
         let arrV=[]
         let batchId = req.user.batchId
-        console.log(id,batchId,'id')
+        console.log(id,refNumber,batchId,'refNumber','id')
         GingerWash.find({batchId:batchId,batchNumber:batchNum,refNumber:refNumber,type:'qtyIn'},function(err,docs){
         let item = docs[0].item
           for(var i = 0;i<docs.length; i++){
@@ -764,6 +766,29 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
             })  
           }
 
+            })
+
+           
+            
+
+            BatchRR.find({grvNumber:refNumber},function(err,doc){
+              console.log(doc,'doc')
+              let remainingKgs = doc[0].remainingKgs - number1
+              let remainingTonnes = remainingKgs / 1000
+              let bId = doc[0]._id
+              if(remainingKgs < 10){
+
+              
+          BatchRR.findByIdAndUpdate(bId,{$set:{remainingKgs:remainingKgs,remianingTonnes:remainingTonnes,status2:"closed"}},function(err,locs){
+
+
+          })
+        }else{
+          BatchRR.findByIdAndUpdate(bId,{$set:{remainingKgs:remainingKgs,remianingTonnes:remainingTonnes,status2:"open"}},function(err,locs){
+
+
+          })
+        }
             })
 
            /* RawMat.find({item:item,stage:'wash'},function(err,focs){
@@ -973,6 +998,7 @@ router.get('/batchList',isLoggedIn,function(req,res){
         let refNumber = req.user.refNumber
         let batchNum = req.user.batchNumber
         let number1, number2
+        var date = moment().format("L")
         let arrV=[]
         let arrT=[]
         let batchId = req.user.batchId
@@ -1022,7 +1048,21 @@ let item = docs[0].item
             })
 
 
-            
+            var book = new RawMatX();
+            book.refNumber = refNumber
+            book.batchNumber = batchNum
+            book.date = date
+            book.unit = '(crates)'
+            book.stage = 'wash'
+            book.uniqueMeasure = number2
+            book.item = item
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
+
           })
 
         })
@@ -1049,7 +1089,7 @@ let item = docs[0].item
         }
         
         //arr =ocs
-      BatchGingerWash.find({status:'qtyOut',status2:"null"}).lean().then(docs=>{
+      BatchGingerWash.find({status:'qtyOut',status2:"open"}).lean().then(docs=>{
    // arr.push(docs[0])
     
     for(var i = 0;i<docs.length;i++){
@@ -1130,10 +1170,12 @@ else{
         truck.refNumber = gingerBatch
         //truck.refNumber2 = refNo
         truck.type ='normal'
+        truck.status3 = 'open'
         truck.batchNumber = refNo
         truck.month = month
         truck.qtyInMass = 0
         truck.qtyOutMass= 0
+        truck.qtyLeft = 0
         truck.month = month
         truck.status = 'null'
         truck.year = year
@@ -1195,9 +1237,11 @@ else{
           truck.month = month
           truck.qtyInMass = 0
           truck.qtyOutMass= 0
+          truck.qtyLeft = 0
           truck.month = month
           truck.type ='normal'
           truck.status = 'null'
+          truck.status3 = 'open'
           truck.year = year
          
           
@@ -1620,9 +1664,26 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
           })
           })
 
-            
+  if(item == 'ginger'){          
+BatchGingerWash.find({batchNumber:refNumber},function(err,loc){
+
+let idC = loc[0]._id
+let crates = loc[0].crates
+
+console.log(number1,crates,'number1,crates')
+if(number1 >= crates){
+  BatchGingerWash.findByIdAndUpdate(idC,{$set:{status2:"closed"}},function(err,vocs){
+
+  })
+}else{
+  BatchGingerWash.findByIdAndUpdate(idC,{$set:{status2:"open"}},function(err,vocs){
+
+  })
+}
 
 
+})
+  }
           })
           res.redirect('/production/batchListCrush')
         })
@@ -1834,6 +1895,7 @@ console.log(id,'id')
         console.log(id,batchId,'id')
         GingerCrush.find({batchId:batchId,type:'qtyOut'},function(err,docs){
 let item = docs[0].item
+let batchNumber = docs[0].batchNumber
 if(item == 'ginger'){
           for(var i = 0;i<docs.length; i++){
            
@@ -1851,7 +1913,7 @@ if(item == 'ginger'){
            // let qtyInMass= doc.qtyInMass
            let qtyInMass= doc.crates
             //variance = number1 - qtyInMass
-          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',status2:'crushed',nxtStage:'cooking',drums:number1}},function(err,vocs){
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,qtyLeft:number1,status:'qtyOut',status2:'crushed',nxtStage:'cooking',drums:number1}},function(err,vocs){
  RawMat.find({item:item,stage:'wash'},function(err,tocs){
               let opBal = tocs[0].crates - qtyInMass
              // let opBalTonnes = opBal / 1000
@@ -1872,6 +1934,21 @@ if(item == 'ginger'){
               }) 
             })
 
+
+            var book = new RawMatX();
+            book.refNumber = refNumber
+            book.batchNumber = batchNumber
+            book.date = mformat
+            book.unit = '(drums)'
+            book.stage = 'crush'
+            book.uniqueMeasure = number1
+            book.item = item
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
 
 
 
@@ -1898,7 +1975,7 @@ if(item == 'ginger'){
            let qtyInMass= doc.crates
            let batchNumber = doc.batchNumber
             //variance = number1 - qtyInMass
-          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',status2:'crushed',nxtStage:'cooking',drums:drums}},function(err,vocs){
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,qtyLeft:number1,status:'qtyOut',status2:'crushed',nxtStage:'cooking',drums:drums}},function(err,vocs){
  RawMat.find({item:item,stage:'wash'},function(err,tocs){
               let opBal = tocs[0].crates - qtyInMass
              // let opBalTonnes = opBal / 1000
@@ -1938,6 +2015,21 @@ if(item == 'ginger'){
               res.redirect('/production/batchListCrush')
             })
 
+            var book = new RawMatX();
+            book.refNumber = refNumber
+            book.batchNumber = batchNumber
+            book.date = mformat
+            book.unit = 'drums'
+            book.stage = 'crush'
+            book.uniqueMeasure = number1
+            book.item = item
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
+
 
           })
 
@@ -1963,7 +2055,7 @@ if(item == 'ginger'){
             let qtyInMass= doc.qtyInMass
             let batchNumber = doc.batchNumber
             variance = number1 - qtyInMass
-          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
+          BatchGingerCrush.findByIdAndUpdate(batchId,{$set:{qtyOutMass:number1,qtyLeft:number1,status:'qtyOut',variance:variance,status2:'crushed',nxtStage:'fermentation'}},function(err,vocs){
  RawMat.find({item:item,stage:'raw'},function(err,tocs){
               let opBal = tocs[0].massKgs - qtyInMass
               let opBalTonnes = opBal / 1000
@@ -2139,6 +2231,8 @@ var date = req.body.date
 var shift = req.body.shift
 var operator = req.body.operator
 var teamLeader = req.body.teamLeader
+var ingredient = req.body.ingredient
+let prefix
 var m = moment(date)
 var month = m.format('MMMM')
 var year = m.format('YYYY')
@@ -2147,6 +2241,12 @@ let date6 =  moment(date).format('l');
 let dateValue = moment().valueOf()
 
 let date7 =  date6.replace(/\//g, "");
+
+if(ingredient == 'gingerTea'){
+  prefix = 'GINTEA'
+}else if(ingredient == 'colour'){
+  prefix = 'COL'
+}
 
 req.check('date','Enter Date').notEmpty();
 req.check('operator','Enter Operator').notEmpty();
@@ -2172,13 +2272,14 @@ else{
 
   RefNo.find({date:date,type:"cooking"},function(err,docs){
     let size = docs.length + 1
-   refNo = date7+'B'+size+'CKN'
+   refNo = date7+'B'+size+prefix
     console.log(refNo,'refNo')
 
   var stock = new BatchCooking();
   stock.operator = operator
   stock.date =mformat
   stock.shift = shift
+  stock.ingredient = ingredient
   stock.teamLeader = teamLeader
   stock.quantity = 0
   stock.batchNumber=refNo
@@ -2272,6 +2373,26 @@ cook.teamLeader = teamLeader
 
 cook.save()
       .then(pro =>{
+
+        BatchGingerCrush.find({item:ingredient,batchNumber:refNumber},function(err,roc){
+          if(roc){
+            let rocId = roc[0]._id
+            let rocQty = roc[0].qtyLeft - quantity
+        
+            if(rocQty > 0){
+        
+              BatchGingerCrush.findByIdAndUpdate(rocId,{$set:{qtyLeft:rocQty,status3:"open"}},function(err,yoc){
+        
+              })
+            }else{
+              BatchGingerCrush.findByIdAndUpdate(rocId,{$set:{qtyLeft:0,status3:"closed"}},function(err,yoc){
+                
+              })
+            }
+        
+          }
+        })
+
       
         res.send(pro)
       
@@ -2308,7 +2429,7 @@ router.post('/reloadCooking/:id', (req, res) => {
 
       var regex= new RegExp(req.query["term"],'i');
      
-      var itemFilter =BatchGingerCrush.find({ batchNumber:regex,nxtStage:'cooking'},{'batchNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+      var itemFilter =BatchGingerCrush.find({ batchNumber:regex,nxtStage:'cooking',status3:"open"},{'batchNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
     
       
       itemFilter.exec(function(err,data){
@@ -2446,8 +2567,13 @@ else{
 }
 
 console.log(finalProduct,'finalProduct33')
-
-    BatchCooking.findByIdAndUpdate(id,{$set:{status:"complete",finalProduct:finalProduct,quantity:number1}},function(err,locs){
+let vTanks
+if(finalProduct == 'colour'){
+  vTanks = number1 / 2
+}else{
+  vTanks = number1 / 5
+}
+    BatchCooking.findByIdAndUpdate(id,{$set:{status:"complete",finalProduct:finalProduct,quantity:number1,tanks:vTanks}},function(err,locs){
       Cooking.find({batchNumber:batchNumber},function(err,docs){
         for(var i = 0;i<docs.length; i++){
 
@@ -2502,6 +2628,21 @@ console.log(finalProduct,'finalProduct33')
       
       })
 
+      var book = new RawMatX();
+      book.refNumber = refNumber
+      book.batchNumber = batchNumber
+      book.date = mformat
+      book.unit = '(tanks)'
+      book.stage = 'cooking'
+      book.uniqueMeasure = nTanks
+      book.item = finalProduct
+      book.save()
+      .then(prod =>{
+  
+       
+  
+      })
+
       Cooking.find({batchNumber:batchNumber},function(err,docs){
 
         for(var i = 0;i<docs.length; i++){
@@ -2523,6 +2664,9 @@ console.log(finalProduct,'finalProduct33')
             })  
           }
             })
+
+
+         
 
 FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
   if(roc){
@@ -2555,10 +2699,27 @@ FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
             RawMat.findByIdAndUpdate(id4,{massKgs:opBalKg,uniqueMeasure:opBal},function(err,locs){
   
             })  
+
+         
+          }
+            })
+          }else if(item == 'ginger'){
+            RawMat.find({item:item,stage:'crush'},function(err,tocs){
+              if(tocs.length > 0){
+             // let opBal = tocs[0].massKgs - quantity
+             let opBal = tocs[0].uniqueMeasure - quantity
+              //let opBalTonnes = opBal / 1000
+              let id4 = tocs[0]._id
+            RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
+  
+            })  
+
+           
           }
             })
           }
-          RawMat.find({item:item,stage:'crush'},function(err,tocs){
+          
+          /*RawMat.find({item:item,stage:'crush'},function(err,tocs){
             if(tocs.length > 0){
            // let opBal = tocs[0].massKgs - quantity
            let opBal = tocs[0].uniqueMeasure - quantity
@@ -2568,7 +2729,7 @@ FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
 
           })  
         }
-          })
+          })*/
         
         }
 
@@ -2806,7 +2967,8 @@ console.log(id,'fermentationPreload')
                   })
 
                      if(ingredient == 'ginger'){
-                  
+                     
+
                         RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
                           //let opBalTonnes = opBal / 1000
@@ -2827,6 +2989,43 @@ console.log(id,'fermentationPreload')
                         })  
                   
                         })
+
+                        var book = new RawMatX();
+                        book.refNumber = refNumber
+                        book.batchNumber = batchNumber
+                        book.date = date
+                        book.unit = '(tanks)'
+                        book.tanks = tanks
+                        book.stage = 'fermentation'
+                        book.uniqueMeasure = pro.quantity
+                        book.item = ingredient
+                        book.save()
+                        .then(prod =>{
+                    
+                         
+                    
+                        })
+
+                        FinalProduct.find({ingredient:"ginger",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
+  
+
+                      })
         
                       }else if(ingredient == 'sugar'){
 
@@ -2843,6 +3042,23 @@ console.log(id,'fermentationPreload')
                         }
 
 
+                          })
+
+
+                          var book = new RawMatX();
+                          book.refNumber = refNumber
+                          book.batchNumber = batchNumber
+                          book.date = date
+                          book.unit = '(bags)'
+                          book.tanks = tanks
+                          book.stage = 'fermentation'
+                          book.uniqueMeasure = quantity
+                          book.item = ingredient
+                          book.save()
+                          .then(prod =>{
+                      
+                           
+                      
                           })
 
                           FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
@@ -2878,7 +3094,8 @@ console.log(id,'fermentationPreload')
               
                       }
                        else if(ingredient == 'gingerTea'){
-                  
+                      
+
                         RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
                           //let opBalTonnes = opBal / 1000
@@ -2901,7 +3118,42 @@ console.log(id,'fermentationPreload')
                         })  
                   
                         })
-        
+
+                        var book = new RawMatX();
+                        book.refNumber = refNumber
+                        book.batchNumber = batchNumber
+                        book.date = date
+                        book.tanks = tanks
+                        book.unit = '(tanks)'
+                        book.stage = 'fermentation'
+                        book.uniqueMeasure = pro.quantity
+                        book.item = ingredient
+                        book.save()
+                        .then(prod =>{
+                    
+                         
+                    
+                        })
+
+                        FinalProduct.find({ingredient:"gingerTea",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
+
+                      })
                       }
 
                       else if(ingredient == 'honey'){
@@ -2928,7 +3180,21 @@ console.log(id,'fermentationPreload')
                         })
 
 
-
+                        var book = new RawMatX();
+                        book.refNumber = refNumber
+                        book.batchNumber = batchNumber
+                        book.date = date
+                        book.unit = '(buckets)'
+                        book.tanks = tanks
+                        book.stage = 'fermentation'
+                        book.uniqueMeasure = pro.quantity
+                        book.item = ingredient
+                        book.save()
+                        .then(prod =>{
+                    
+                         
+                    
+                        })
 
                         FinalProduct.find({ingredient:"honey",refNumber:refNumber},function(err,roc){
                           if(roc){
@@ -2973,11 +3239,33 @@ console.log(id,'fermentationPreload')
                         })  
                   
                         })
+
+                        FinalProduct.find({ingredient:"bananas",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
+                        })
+        
         
                       }
                   
 
                       else if(ingredient == 'colour'){
+                        
+
                         RawMat.find({item:ingredient,stage:'cooking'},function(err,tocs){
                           let opBal = tocs[0].massKgs - pro.quantity
                           let opBal3 = tocs[0].uniqueMeasure - pro.quantity
@@ -2992,6 +3280,43 @@ console.log(id,'fermentationPreload')
               
                         })  
                       }
+
+                      var book = new RawMatX();
+                      book.refNumber = refNumber
+                      book.batchNumber = batchNumber
+                      book.date = date
+                      book.unit = '(tanks)'
+                      book.tanks = tanks
+                      book.stage = 'fermentation'
+                      book.uniqueMeasure = pro.quantity
+                      book.item = ingredient
+                      book.save()
+                      .then(prod =>{
+                  
+                       
+                  
+                      })
+
+
+                      FinalProduct.find({ingredient:"colour",refNumber:refNumber},function(err,roc){
+                        if(roc){
+                          let rocId = roc[0]._id
+                          let rocQty = roc[0].quantity - quantity
+                      
+                          if(rocQty > 0){
+                      
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                      
+                            })
+                          }else{
+                          FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                              
+                            })
+                          }
+                      
+                        }
+                      })
+      
               
                         })
         
@@ -3029,6 +3354,25 @@ console.log(id,'fermentationPreload')
                   
                         })  
                   
+                        })
+
+                        FinalProduct.find({ingredient:"gingerGarlic",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
                         })
         
                       }
@@ -3261,7 +3605,7 @@ BlendingTanks.find({tankNumber:blendingTank},function(err,toc){
   let litresDrained = tanks * 1000
   let opLitres = toc[0].litres + litresDrained
   let maseId = toc[0]._id
-  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:batchNumber}},function(err,focs){
+  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:batchNumber,status:"null"}},function(err,focs){
 
 
   })
@@ -3387,7 +3731,7 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 
     var regex= new RegExp(req.query["term"],'i');
    
-    var itemFilter =BlendingTanks.find({ tankNumber:regex},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+    var itemFilter =BlendingTanks.find({ tankNumber:regex,status:"null"},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
   
     
     itemFilter.exec(function(err,data){
@@ -3435,6 +3779,17 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
   });
 
 
+  router.get('/tankUpdate',function(req,res){
+    BlendingTanks.find(function(err,docs){
+      for(var i = 0;i<docs.length;i++){
+        let id = docs[i]._id
+        BlendingTanks.findByIdAndUpdate(id,{$set:{status:"null"}},function(err,locs){
+          
+        })
+      }
+    })
+  })
+
 //this route shop
   router.post('/autoTank',isLoggedIn,function(req,res){
       var code = req.body.code
@@ -3458,7 +3813,39 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 
 router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
-  res.redirect('/production/draining')
+  var id = req.params.id
+  BlendingTanks.find({refNumber:id},function(err,docs){
+
+    let size = docs.length
+    let product  = docs[0].product
+
+    BatchFermentation.find({batchNumber:id},function(err,gocs){
+      let bId = gocs[0]._id
+    BatchFermentation.findByIdAndUpdate(bId,{$set:{blendingTanks:size}},function(err,locs){
+
+    })
+    
+
+    var book = new RawMatX();
+    book.refNumber = id
+    book.batchNumber = id
+
+    book.unit = '(tanks)'
+    //book.tanks = tanks
+    book.stage = 'blending'
+    book.uniqueMeasure = size
+    book.item = product
+    book.save()
+    .then(prod =>{
+
+     
+
+    })
+
+    })
+    res.redirect('/production/draining')
+  })
+  
 })
 
  
