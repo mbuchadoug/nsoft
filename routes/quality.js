@@ -2428,6 +2428,7 @@ let refNumber = docs[0].batchNumber
 let ref = docs[0].refNumber
 let code = docs[0].code
 let total = docs.length
+let product = docs[0].product
       for(var i = 0;i<docs.length; i++){
            
         arrV.push(docs[i].volume)
@@ -2473,7 +2474,7 @@ let total = docs.length
 
 
 
-      BatchFermentation.find({batchNumber:refNumber},function(err,jocs){
+      BatchFermentation.find({batchNumber:ref},function(err,jocs){
         if(jocs){
           let idV = jocs[0]._id
           BatchFermentation.findByIdAndUpdate(idV,{$set:{tanksDrained:total,volumeDrained:number1,code:code}},function(err,gocs){
@@ -2488,7 +2489,7 @@ let total = docs.length
       let tank = docs[i].tank
       let litres = docs[i].volume
             console.log(refNumber,'refNumber')
-        BlendedItems.find({refNumber:refNumber,blendingTank:tank},function(err,focs){
+        BlendedItems.find({refNumber:ref,blendingTank:tank},function(err,focs){
 
 let nVolume = litres - focs[0].litres
 let bId = focs[0]._id

@@ -9,6 +9,7 @@ var BlendingDays = require('../models/blendingDays');
 var FinalProductEvaluation = require('../models/finalProductEvaluation');
 var Ware = require('../models/ware');
 var BatchPackaging = require('../models/batchPackaging')
+var BlendingDays = require('../models/blendingDays');
 var Packaging = require('../models/packaging')
 var CrushedItems = require('../models/crushedItems');
 var Warehouse = require('../models/warehouse');
@@ -16,6 +17,8 @@ var SaleStock = require('../models/salesStock');
 var Customer = require('../models/customer');
 var BatchR = require('../models/batchR');
 var BatchRR = require('../models/batchRR');
+var BatchPackaging = require('../models/batchPackaging')
+var Packaging = require('../models/packaging')
 var FermentationProduct = require('../models/fermentationProduct');
 var DrainedProducts = require('../models/drainedProducts');
 var BlendedItems = require('../models/blendedItems');
@@ -3772,6 +3775,44 @@ let item = docs[0].item
           for(var i = 0;i<docs.length;i++){
            let id = docs[i]._id
            GingerWash.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBP')
+        })
+      })
+
+
+      router.get('/updateBP',function(req,res){
+        BatchPackaging.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BatchPackaging.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updatePA')
+        })
+      })
+
+
+      router.get('/updatePA',function(req,res){
+        Packaging.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           Packaging.findByIdAndRemove(id,(err,doc)=>{
+      
+           }) 
+          }
+          res.redirect('/rm/updateBD')
+        })
+      })
+
+      router.get('/updateBD',function(req,res){
+        BlendingDays.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+           BlendingDays.findByIdAndRemove(id,(err,doc)=>{
       
            }) 
           }

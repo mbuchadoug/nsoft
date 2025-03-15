@@ -2629,7 +2629,7 @@ if(finalProduct == 'colour'){
       })
 
       var book = new RawMatX();
-      book.refNumber = refNumber
+      //book.refNumber = refNumber
       book.batchNumber = batchNumber
       book.date = mformat
       book.unit = '(tanks)'
