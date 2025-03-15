@@ -192,7 +192,7 @@ router.get('/rawUpdate',function(req,res){
 
 
 router.get('/unitUpdateF',function(req,res){
-  Fermentation.find({item:"honey"},function(err,docs){
+  Fermentation.find({ingredient:"honey"},function(err,docs){
     for(var i = 0; i<docs.length;i++){
       let id = docs[i]._id
       Fermentation.findByIdAndUpdate(id,{$set:{unit:'buckets'}},function(err,locs){
