@@ -2488,9 +2488,9 @@ let product = docs[0].product
       let refNumber = docs[i].batchNumber
       let tank = docs[i].tank
       let litres = docs[i].volume
-            console.log(refNumber,'refNumber')
+            console.log(tank,ref,'refNumberTank')
         BlendedItems.find({refNumber:ref,blendingTank:tank},function(err,focs){
-
+if(focs.length > 0){
 let nVolume = litres - focs[0].litres
 let bId = focs[0]._id
 
@@ -2502,6 +2502,7 @@ BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:nVolume}},function(err,tocs){
   BlendedItems.findByIdAndUpdate(bId,{$set:{nLitres:0,status:"emptied"}},function(err,tocs){
 
   })
+}
 }
         })
 
