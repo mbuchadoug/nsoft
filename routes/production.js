@@ -191,6 +191,18 @@ router.get('/rawUpdate',function(req,res){
 })
 
 
+router.get('/unitUpdateF',function(req,res){
+  Fermentation.find({item:"honey"},function(err,docs){
+    for(var i = 0; i<docs.length;i++){
+      let id = docs[i]._id
+      Fermentation.findByIdAndUpdate(id,{$set:{unit:'buckets'}},function(err,locs){
+
+      })
+    }
+  })
+})
+
+
 
 
 
@@ -2911,7 +2923,7 @@ console.log(id,'fermentationPreload')
   
     let unit
     if(ingredient == 'honey'){
-      unit = 'bags'
+      unit = 'buckets'
     }else if (ingredient == 'gingerTea'){
       unit = 'tanks'
     }
