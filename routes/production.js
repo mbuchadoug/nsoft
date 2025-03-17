@@ -3858,8 +3858,24 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 
 
 router.get('/closeDraining/:id',isLoggedIn,function(req,res){
+ var arrV = []
+ var number1
+  var id = req.params.
+  BlendedItems.find({refNumber:id},function(err,tocs){
 
-  var id = req.params.id
+    for(var i = 0;i<tocs.length; i++){
+         
+      arrV.push(tocs[i].tanks)
+        }
+        //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+       console.log(arrV,'arrV')
+      
+      //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+      number1=0;
+      for(var z in arrV) { number1 += arrV[z]; }
+ 
+ 
+ 
   BlendingTanks.find({refNumber:id},function(err,docs){
 
     let size = docs.length
@@ -3867,9 +3883,11 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
 
     BatchFermentation.find({batchNumber:id},function(err,gocs){
       let bId = gocs[0]._id
-    BatchFermentation.findByIdAndUpdate(bId,{$set:{blendingTanks:size}},function(err,locs){
+    BatchFermentation.findByIdAndUpdate(bId,{$set:{blendingTanks:size,tanksDrained:number1}},function(err,locs){
 
     })
+
+
     
 
     var book = new RawMatX();
@@ -3889,9 +3907,10 @@ router.get('/closeDraining/:id',isLoggedIn,function(req,res){
     })
 
     })
-    res.redirect('/production/draining')
+    
   })
-  
+  res.redirect('/production/draining')
+})
 })
 
  
