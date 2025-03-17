@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var batchSchemaBI = new Schema({
     product: {type: String },
+    days: {type: Number },
     batchNumber:{type:String},
     litres: {type: Number },
     nLitres: {type: Number },

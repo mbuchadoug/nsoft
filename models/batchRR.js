@@ -32,6 +32,7 @@ var batchSchemaRR = new Schema({
     receivedTonnes: {type: Number },
     receivedKgs: {type: Number },
     status:{type:String},
+    state:{type:String},
     remainingTonnes:{type:Number},
     remainingKgs:{type:Number},
     price: {type: Number },

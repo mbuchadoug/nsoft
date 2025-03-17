@@ -2,7 +2,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Receive Stock | Kambucha Inventory</title>
+    <title>Extra Days| Kambucha Inventory</title>
 
     
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
@@ -135,9 +135,9 @@ console.log(idR,'idR')
     $.ajax({
        
         dataType: 'json',
-        type: 'GET',
+        type: 'POST',
         
-        url: "/rm/blendingExtraReload/"+idR,
+        url: `/quality/blendingExtraReload/{{{refNumber}}}`,
         success: function(data) {
         console.log(data)
        
@@ -552,7 +552,7 @@ console.log(idR,'idR')
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Blending Product Tracker </h3></div>
+<h3 class="over-flow">Blending Product Tracker (Extra Days) </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 

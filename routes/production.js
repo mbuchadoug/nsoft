@@ -260,6 +260,12 @@ router.get('/rawUnit',function(req,res){
 
       })
     }
+
+    else if(item == 'gingerTea' ){
+      RawMat.findByIdAndUpdate(id,{$set:{unit:'(tanks)'}},function(err,locs){
+
+      })
+    }
     else if(item == 'tea'){
       RawMat.findByIdAndUpdate(id,{$set:{unit:'(bags)'}},function(err,locs){
 
@@ -2674,8 +2680,7 @@ if(finalProduct == 'colour'){
             RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
   
             })  
-          }
-            })
+        
 
 
          
@@ -2687,7 +2692,7 @@ FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
 
     if(rocQty > 0){
 
-      FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+      FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:opBal}},function(err,yoc){
 
       })
     }else{
@@ -2698,7 +2703,20 @@ FinalProduct.find({ingredient:"sugar",refNumber:refNumber},function(err,roc){
 
   }
 })
-          }
+        
+
+BatchGingerCrush.find({batchNumber:refNumber},function(err,focs){
+  if(focs){
+    let bId = focs[0]._id
+    BatchGingerCrush.findByIdAndUpdate(bId,{$set:{qtyLeft:opBal}},function(err,uoc){
+
+    })
+  }
+})
+
+}
+})
+}
 
 
          else  if(item == 'tea'){
@@ -2942,6 +2960,7 @@ console.log(id,'fermentationPreload')
     cook.batchNumber = batchNumber
     cook.quantity = quantity
     cook.date = date
+    cook.code = 'null'
     cook.endDate = endDate
     cook.product = product
     cook.water = water
@@ -3051,9 +3070,14 @@ console.log(id,'fermentationPreload')
                           RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
                 
                           })  
-                        }
-
-
+  
+                          BatchGingerCrush.find({batchNumber:refNumber},function(err,focs){
+                            if(focs){
+                              let bId = focs[0]._id
+                              BatchGingerCrush.findByIdAndUpdate(bId,{$set:{qtyLeft:opBal}},function(err,uoc){
+                                
+                              })
+                            }
                           })
 
 
@@ -3080,7 +3104,7 @@ console.log(id,'fermentationPreload')
                           
                               if(rocQty > 0){
                           
-                                FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                                FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:opBal}},function(err,yoc){
                           
                                 })
                               }else{
@@ -3101,8 +3125,17 @@ console.log(id,'fermentationPreload')
                       
                             })  
                       
-                            })
+                         
+
+                            
+
+})
                           })
+
+                        }
+
+
+                      })
               
                       }
                        else if(ingredient == 'gingerTea'){
@@ -3600,6 +3633,7 @@ router.post('/draining/',isLoggedIn,function(req,res){
     cook.month = month
     cook.blendingTank = blendingTank
     cook.year = year
+    cook.code='null'
     cook.product = product
     cook.tanks= tanks
     cook.litres = tanks * 1000
@@ -3617,7 +3651,7 @@ BlendingTanks.find({tankNumber:blendingTank},function(err,toc){
   let litresDrained = tanks * 1000
   let opLitres = toc[0].litres + litresDrained
   let maseId = toc[0]._id
-  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:batchNumber,status:"null"}},function(err,focs){
+  BlendingTanks.findByIdAndUpdate(maseId,{$set:{litres:opLitres,product:product,refNumber:batchNumber,status:"filled"}},function(err,focs){
 
 
   })
@@ -3743,7 +3777,7 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 
     var regex= new RegExp(req.query["term"],'i');
    
-    var itemFilter =BlendingTanks.find({ tankNumber:regex,status:"null"},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+    var itemFilter =BlendingTanks.find({ tankNumber:regex,status:"empty"},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
   
     
     itemFilter.exec(function(err,data){
@@ -3795,7 +3829,7 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
     BlendingTanks.find(function(err,docs){
       for(var i = 0;i<docs.length;i++){
         let id = docs[i]._id
-        BlendingTanks.findByIdAndUpdate(id,{$set:{status:"null"}},function(err,locs){
+        BlendingTanks.findByIdAndUpdate(id,{$set:{status:"empty"}},function(err,locs){
           
         })
       }

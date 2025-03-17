@@ -468,6 +468,7 @@ res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, 
     req.check('stock','Enter Stock on hand').notEmpty();
     req.check('qty','Enter Mass').notEmpty();
     req.check('unit','Enter Unit').notEmpty();
+    req.check('date','Enter Date').notEmpty();
            
                   
                
@@ -2013,14 +2014,14 @@ router.post('/receiveMassHoney',function(req,res){
   
   let mass = req.body.code
   let massTonne
-  let buckets = req.body.buckets
-  console.log(buckets,'buckets')
+  /*let buckets = req.body.buckets
+  console.log(buckets,'buckets')*/
   let grvNumber = req.body.grvNumber
   console.log(grvNumber,'grvNumber')
-  let lossMarginX = req.body.lossMargin
-  let reg = /\d+\.*\d*/g;
-  let result = lossMarginX.match(reg)
-  let lossMargin = Number(result)
+  /*let lossMarginX = req.body.lossMargin
+  let reg = /\d+\.*\d*///g;
+  /*let result = lossMarginX.match(reg)
+  let lossMargin = Number(result)*/
   
   BatchRR.find({grvNumber:grvNumber},function(err,docs){
     console.log(docs,'docs','receiveMass')
@@ -2074,7 +2075,7 @@ router.post('/receiveMassHoney',function(req,res){
   stock.address = address
   stock.regNumber = regNumber
   stock.item = item
-  stock.buckets = buckets
+  //stock.buckets = buckets
   stock.supplier = supplier
   stock.driver = driver
   stock.voucherNumber = voucherNumber
@@ -2082,7 +2083,7 @@ router.post('/receiveMassHoney',function(req,res){
   stock.grvNumber = grvNumber
   stock.idNumber = idNumber
   stock.trailer = trailer
-  stock.lossMargin = lossMargin
+  //stock.lossMargin = lossMargin
   stock.voucherNumber = voucherNumber
   stock.refNumber = refNumber
   stock.mobile = mobile
@@ -2247,6 +2248,8 @@ let number1
 
 let mass = req.body.code
 let massTonne
+let state = req.body.state
+console.log(state,'state777')
 let grvNumber = req.body.grvNumber
 console.log(grvNumber,'grvNumber')
 let lossMarginX = req.body.lossMargin
@@ -2306,6 +2309,7 @@ stock.date = date
 stock.address = address
 stock.regNumber = regNumber
 stock.item = item
+stock.state = state
 stock.supplier = supplier
 stock.driver = driver
 stock.voucherNumber = voucherNumber
@@ -2479,7 +2483,55 @@ StockRM.find({grvNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
 
 }); 
 
+router.get('/closeBatchRMHoney/:id',isLoggedIn,function(req,res){
+var id = req.params.id
+res.render('rStock/update',{id:id})
 
+})
+
+router.post('/closeBatchRMHoney/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  var buckets = req.body.buckets
+  req.check('buckets','Enter Buckets').notEmpty();
+           
+                  
+               
+                 
+    
+          
+       
+    var errors = req.validationErrors();
+        if (errors) {
+    
+        
+          req.session.errors = errors;
+          req.session.success = false;
+          req.flash('danger', req.session.errors[0].msg);
+  
+  
+      res.redirect('/rm/closeBatchRMHoney/'+id);
+          
+        
+      }
+  else{
+StockRM.find({refNumber:id},function(err,docs){
+  if(docs){
+  for(var i = 0;i<docs.length;i++){
+    let sId = docs[i]._id
+    StockRM.findByIdAndUpdate(sId,{$set:{buckets:buckets,lossMargin:buckets}},function(err,locs){
+
+    })
+  }
+  let batchId = docs[0].batchId
+  BatchRR.findByIdAndUpdate(batchId,{$set:{buckets:buckets,lossMargin:buckets}},function(err,vocs){
+
+  })
+  }
+
+  res.redirect('/rm/stockRMFile/'+id)
+})
+  }
+})
 
 router.get('/closeBatchRM/:id',isLoggedIn,function(req,res){
   var dateB = req.user.date
@@ -2572,12 +2624,20 @@ var year = m.format('YYYY')
 
   res.redirect('/rm/stockRMFile/'+refNumber)
       }else if(nocs[0].item == 'ginger'){
-        
+        let loss
+        if(nocs[0].state == 'clean'){
+           loss = 0
+
+        }else{
+          loss = 0.025
+          
+        }
+        let state = nocs[0].state
   let batchId = nocs[0].batchId
-  let lossMarginG = nocs[0].closingMass * 0.025
+  let lossMarginG = nocs[0].closingMass * loss
   //let lossMargin = nocs[0].lossMargin
   let margin = 0.02
-  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",unitMeasure:lossMarginG}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",state:state,unitMeasure:lossMarginG}},function(err,vocs){
 
     console.log(vocs,'vocs')
     let batchNumber= vocs.batchNumber

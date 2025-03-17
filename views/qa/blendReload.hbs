@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
       <link rel="stylesheet" href="bootstrap-5.3.3/dist/css/bootstrap.min.css">
      <link href="sidebars.css" rel="stylesheet">
-      
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
    
@@ -32,7 +32,7 @@
     <!-- Google Fonts - This Stylesheet Link Referenced in Widgets too.  -->
     <link title="zf-font-src" href="https://webfonts.zoho.com/css?display=swap&amp;family=Inter:400,500,600,700/Source+Sans+Pro:400/Open+Sans:400,600,700" rel="stylesheet" type="text/css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
 
 <link href="addStock/d31g2a6snus4ly.cloudfront.net/zbooks/assets/vendor-fac69530bc.css" rel="stylesheet">
     
@@ -118,10 +118,217 @@ ul.no-bullets {
 
       
       
+
+
+
+
+
+<body onload="reload()">
+
+  <script>
+    function reload(){
+
+var idR = document.getElementById('id').value
+console.log(idR,'idR')
+  
+    $.ajax({
+       
+        dataType: 'json',
+        type: 'GET',
+        
+         url: `/quality/reloadMat/{{{refNumber}}}`,
+        success: function(data) {
+        console.log(data)
+       
+    
+        
+       for(var i = 0;i<data.length;i++){
+        var tr = document.createElement('tr');
+    
+        var td1 = tr.appendChild(document.createElement('td'));
+        var td2 = tr.appendChild(document.createElement('td'));
+        var td3 = tr.appendChild(document.createElement('td'));
+        var td4 = tr.appendChild(document.createElement('td'));
+        var td5 = tr.appendChild(document.createElement('td'));
+        var td6 = tr.appendChild(document.createElement('td'));
+        
+       
+        td1.id =data[i]._id
+        td4.id = data[i]._id
+    /*td2.classList.add('text-end', 'pe-0')
+    td3.classList.add('text-end', 'pe-0')
+    td4.classList.add('text-end', 'pe-1')
+    link.classList.add('text-end','pe-0')
+    link.setAttribute("href", "/rec/delete")
+    link.className = "text-end";*/
+    
+    /*let link = document.createTextNode("Delete")
+    
+    td5.appendChild(link);*/
+    
+    
+    td1.innerHTML = data[i].date;
+        td2.innerHTML = data[i].colour;
+       td3.innerHTML = data[i].odour;
+        td4.innerHTML=  data[i].mouthfeel ;
+        td5.innerHTML = data[i].taste
+        td6.innerHTML = data[i].afterTaste
+    
+        /*let link2 = "/rec/delete/"+data[i]._id
+    
+        var linkText = 'Delete'
+    link.href="/rec/delete/"+data[i]._id*/
+     
+        /*link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
+    
+        console.log(link,'33tt')
+      
+    
+        console.log(td4,'yeah')*/
+    
+      document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
+    
+       }
+    
+    
+    
+    
+    
+    var table = document.getElementById('kt_ecommerce_report_sales_table')
+    var cells = table.getElementsByClassName("text-end pe-1")
+    for(var i = 0; i< cells.length; i++){
+    cells[i].onclick = function(){
+    console.log(i,'this')
+    if(this.hasAttribute('data-clicked')){
+        
+        return;
+    }
+    
+    this.setAttribute('data-clicked', 'yes')
+    this.setAttribute('data-text', this.innerHTML)
+    
+    var input = document.createElement('input');
+    input.setAttribute('type', 'text')
+    input.value = this.innerHTML
+    input.style.width = this.offsetWidth - (this.clientLeft * 2) + 'px';
+    input.style.height = this.offsetHeight - (this.clientTop * 2) + "px";
+    input.style.border = '0px';
+    input.style.fontFamily ="inherit";
+    input.style.fontSize ="inherit";
+    input.style.textAlign = "inherit";
+    input.style.backgroundColor = 'LightGoldenRodYellow';
+    
+    input.onblur = function(){
+    
+        var td = input.parentElement;
+            console.log(td.id,'td')
+        var orig_text = input.parentElement.getAttribute('data-text');
+        var current_text = this.value;
+    
+         let reg = /\d+\.*\d*/g;
+    
+    let result = current_text.match(reg)
+    let currentMark = Number(result)
+    
+    
+    
+    
+    let resultX = orig_text.match(reg)
+    let originalMark = Number(resultX)
+    
+    console.log(currentMark,originalMark,'mark')
+    
+    
+    
+    
+    
+        if(orig_text != current_text ){
+      
+            console.log(current_text,'current_text')
+    $.ajax({
+      dataType: 'json',
+                data: {
+                    code: current_text,
+                    
+                },
+                type: 'POST',
+                url: "/rec/stock/update/"+td.id,
+    
+    
+      success: function(data) {
+     
+    
+    console.log(td.id,'id2')
+    console.log(td,'coalition')
+            td.removeAttribute('data-clicked')
+            td.removeAttribute('data-text')
+            td.innerHTML = current_text
+            
+            td.style.cssText = 'padding: 5px';
+    
+        
+      
+        }
+    
+    
+    });
+            console.log(td.id,'id2')
+            td.removeAttribute('data-clicked')
+            td.removeAttribute('data-text')
+            td.innerHTML = current_text
+    
+            td.style.cssText = 'padding: 5px';
+            
+            console.log(orig_text + 'is change to ' + current_text)
+        
+        } else{
+            td.removeAttribute('data-clicked')
+            td.removeAttribute('data-text')
+            td.innerHTML = orig_text
+            td.style.cssText = 'padding: 5px';
+            console.log('No changes made')
+        
+        }
+    
+    }
+    
+    this.innerHTML = ''
+    this.style.cssText = 'padding: 0px';
+    this.append(input);
+    this.firstElementChild.select();
+    
+    }
+    }
+    
+    
+    
+    
+    
+        }
+    
+        })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+    
+    
+    
+  </script>
   
 
-
-<script type="text/javascript" src="#"></script><div class="zread_strip" id="annmsgstrip" style="z-index: 999;"><div class="zread_olymn" id="wmsannmsg" style="display: none; z-index: 999;"><span id="annmsg"></span><div id="hideinfo" class="zchdr_arw"></div><a id="clearannmsg" style="text-decoration:underline; float:right; font-size: 11px; margin: 2px 25px 0px 0px">Don't show again</a></div></div><style type="text/css">#wmstoolbar *::-webkit-scrollbar, #zchhis *::-webkit-scrollbar, #wms_fork_container *::-webkit-scrollbar{ height:8px; width:8px } #wmstoolbar *::-webkit-scrollbar-thumb, #zchhis *::-webkit-scrollbar-thumb, #wms_fork_container *::-webkit-scrollbar-thumb{ background-color: #dcdcdc }</style><iframe id="pconnect" name="wmspconnect" src="#" style="display: none;"></iframe><div class="ember-view  finance-app"><div id="tooltip-popover-wrapper"></div> <!----><div class="product    "><!----><!----><div><ul id="ember3" class="dropdown ember-view nav skip-to"><button id="ember4" class="dropdown-toggle ember-view dropdown-toggle btn">Navigate To <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs"><path d="M2.157 159.57c0 13.773 5.401 27.542 16.195 38.02l198.975 192.867c21.411 20.725 55.94 20.725 77.34 0L493.63 197.59c21.508-20.846 21.637-54.778.269-75.773-21.35-20.994-56.104-21.098-77.612-.26L256.004 276.93 95.721 121.562c-21.528-20.833-56.268-20.734-77.637.26C7.472 132.261 2.157 145.923 2.157 159.57z"></path></svg></button> <div class="dropdown-menu   skip-to-dropdown-menu"><button class="dropdown-item skip-to-dropdown">Main Content</button> <button class="dropdown-item skip-to-dropdown">Left Sidebar</button> <button class="dropdown-item skip-to-dropdown">Top Bar</button></div></ul></div> <header class="top-band unified-top-band d-print-none" id="top-band">
+<script type="text/javascript" src="#"></script>
+<div class="zread_strip" id="annmsgstrip" style="z-index: 999;"><div class="zread_olymn" id="wmsannmsg" style="display: none; z-index: 999;"><span id="annmsg"></span><div id="hideinfo" class="zchdr_arw"></div><a id="clearannmsg" style="text-decoration:underline; float:right; font-size: 11px; margin: 2px 25px 0px 0px">Don't show again</a></div></div><style type="text/css">#wmstoolbar *::-webkit-scrollbar, #zchhis *::-webkit-scrollbar, #wms_fork_container *::-webkit-scrollbar{ height:8px; width:8px } #wmstoolbar *::-webkit-scrollbar-thumb, #zchhis *::-webkit-scrollbar-thumb, #wms_fork_container *::-webkit-scrollbar-thumb{ background-color: #dcdcdc }</style><iframe id="pconnect" name="wmspconnect" src="#" style="display: none;"></iframe><div class="ember-view  finance-app"><div id="tooltip-popover-wrapper"></div> <!----><div class="product    "><!----><!----><div><ul id="ember3" class="dropdown ember-view nav skip-to"><button id="ember4" class="dropdown-toggle ember-view dropdown-toggle btn">Navigate To <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" class="icon icon-xxs"><path d="M2.157 159.57c0 13.773 5.401 27.542 16.195 38.02l198.975 192.867c21.411 20.725 55.94 20.725 77.34 0L493.63 197.59c21.508-20.846 21.637-54.778.269-75.773-21.35-20.994-56.104-21.098-77.612-.26L256.004 276.93 95.721 121.562c-21.528-20.833-56.268-20.734-77.637.26C7.472 132.261 2.157 145.923 2.157 159.57z"></path></svg></button> <div class="dropdown-menu   skip-to-dropdown-menu"><button class="dropdown-item skip-to-dropdown">Main Content</button> <button class="dropdown-item skip-to-dropdown">Left Sidebar</button> <button class="dropdown-item skip-to-dropdown">Top Bar</button></div></ul></div>
+ <header class="top-band unified-top-band d-print-none" id="top-band">
     <div class=" logo-container  ">
         <div class="logo-collapse d-flex align-items-center cursor-pointer ">
             <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1024 1024" class="icon icon-xlg app-logo"><g class="cls-1"><path d="M264 866a30 30 0 01-30-25L105 106a36 36 0 00-26-28L22 60A30 30 0 1139 2l58 18a96 96 0 0167 76l129 735a30 30 0 01-24 34 30 30 0 01-5 1z" class="cls-2"></path></g>
@@ -134,71 +341,133 @@ ul.no-bullets {
               <button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-39="39">Expenses <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-41="41">Purchase Orders <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-43="43">Purchase Receives <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-45="45">Bills <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-47="47">Vendor Credits <!----></button>
               <button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-49="49">Documents <!----></button><button class="dropdown-item pe-7 " type="button" data-ember-action="" data-ember-action-51="51">Tasks <!----></button></div> <div class="position-sticky bottom-0 bg-white"><li class="adv-search dropdown-item d-flex align-items-center m-0 rounded-0 border-top" data-ember-action="" data-ember-action-52="52"><span class="text-black cursor-pointer flex-grow-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon fill-theme-blue align-text-bottom"><path d="M455.2 419.8L385.3 350c25.6-33.5 39.1-74.4 38.2-117.1-1-48.5-20.4-94.1-54.7-128.4-35.3-35.3-82.2-54.7-132.2-54.7h-.2c-50 0-97 19.6-132.3 55-72.5 72.8-72.5 191.2.1 264 24.8 24.8 55.9 42.1 90 50 33.1 7.7 67.6 6.2 99.9-4.2 13.1-4.2 20.3-18.3 16.1-31.5-4.2-13.1-18.3-20.3-31.5-16.1-49.3 15.9-102.6 3.1-139.1-33.5-53.2-53.3-53.3-140-.1-193.4 25.9-25.9 60.3-40.3 96.9-40.3h.1c36.6 0 71 14.2 96.8 40.1 25.1 25.1 39.4 58.5 40.1 94.1.7 35.4-12.1 69.3-36 95.3l-.1.1c-11.6 12.8-11.2 32.3 1 44.5l81.4 81.4c4.9 4.9 11.3 7.3 17.7 7.3 6.4 0 12.8-2.4 17.7-7.3 9.8-9.9 9.8-25.7.1-35.5z"></path></svg>&nbsp;Advanced Search</span>  <em class="px-2 py-1 rounded-md fst-normal">Alt&nbsp;+&nbsp;/</em></li> <li class="zia-search dropdown-item d-flex align-items-center m-0 rounded-0 border-top" data-ember-action="" data-ember-action-53="53"><span class="text-black cursor-pointer flex-grow-1"><img src="https://d31g2a6snus4ly.cloudfront.net/zbooks/assets/images/ziasearch-4d77ef63db.png" width="14" height="14" class="mt-n2 ms-1">&nbsp;Search across Zoho</span> <em class="px-2 py-1 rounded-md fst-normal">Ctrl&nbsp;+&nbsp;/</em></li></div></div></div></div></div></div> <!----></div></div> <!----> <!----><!---->
                <div id="right-topband" class="d-flex align-items-center"><div class="dropdown orglist-topband orglist-title top-item-fixed-width"><div class="cursor-pointer d-flex align-items-center" data-ember-action="" data-ember-action-54="54"><span class="org-name-section font-normal over-flow" title="Demo Account 1 "><!----> {{pro.fullname}} </span> &nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon icon-xxs align-top "><path d="M15.6 3.9c-.4-.4-1-.4-1.4 0L8 10 1.9 3.9c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l6.9 6.9c.2.2.4.3.7.3s.5-.1.7-.3l6.9-6.9c.3-.4.3-1-.1-1.4z"></path></svg></div> <!----></div> <div><div id="ember55" class="dropdown ember-view top-item-spaced quik-add multi-col-dropdown rounded ms-0"><button id="ember56" class="dropdown-toggle no-caret ember-view btn p-0 no-box-shadow"><span id="quick-create"><span id="dd076364-6295-4be9-8488-4700da2ed492" class="quick-add-icon" tabindex="0" aria-describedby="cbed77ba-00ac-4194-9212-8497e3fb6042"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="icon align-middle unified-icon-fill"><rect width="32" height="32" rx="4" ry="4"></rect><path fill="#fff" d="M23.53 15.53h-7.06V8.47a.47.47 0 10-.94 0v7.06H8.47a.47.47 0 100 .94h7.06v7.06a.47.47 0 10.94 0v-7.06h7.06a.47.47 0 100-.94z"></path></svg></span> <!----></span></button> <div class="dropdown-menu   mt-2 dropdown-menu-center"><!----></div></div></div> <div id="ember57" class="dropdown top-item-icon-spaced ember-view cursor-pointer"><span class="cursor-pointer"><span id="cef965f8-dd42-41b6-988d-0092ef39ee78" tabindex="0" aria-describedby="c2a8f7e1-955e-4838-9718-a0da9b66c453"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-top unified-icon-fill"><path d="M6 7c1.5 0 2.7-1.2 2.7-2.7S7.5 1.5 6 1.5 3.2 2.8 3.2 4.3 4.5 7 6 7zm0-4.5c1 0 1.7.8 1.7 1.7S6.9 6 6 6c-1 0-1.8-.8-1.8-1.7S5 2.5 6 2.5zm5.8 5c1.1 0 1.9-.9 1.9-1.9s-.9-1.9-1.9-1.9c-1.1 0-1.9.9-1.9 1.9s.8 1.9 1.9 1.9zm0-2.9c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9zm.8 4H4C2 8.6.4 10.2.4 12.2v1.4c0 .3.2.5.5.5s.5-.2.5-.5v-1.4c0-1.4 1.2-2.6 2.6-2.6h4c1.4 0 2.6 1.2 2.6 2.6v1.4c0 .3.2.5.5.5s.5-.2.5-.5v-1.4c0-1-.4-2-1.1-2.6h2.1c1.2 0 2.2 1 2.2 2.2V13c0 .3.2.5.5.5s.5-.2.5-.5v-1.2c0-1.8-1.5-3.2-3.2-3.2z"></path></svg></span> <!----></span> <!----></div> <!----> <div id="ember58" class="dropdown top-item-icon-spaced user-notification ember-view cursor-pointer"><span class="cursor-pointer float-end" id="notification-bar"><div id="c9c19ea7-1b4f-4191-b2af-910baf66edbc" class="position-relative" tabindex="0" aria-describedby="e71f58d3-1971-4aea-a874-f4a9d1effe89"><!----> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon align-text-top unified-icon-fill "><path d="M14.44 8.73l-1.29-1.29a.51.51 0 01-.15-.35V5c0-2.76-2.24-5-5-5S3 2.24 3 5v2.09c0 .13-.05.26-.15.35L1.56 8.73c-.36.36-.56.84-.56 1.35v.41c0 .83.67 1.5 1.5 1.5h11c.83 0 1.5-.67 1.5-1.5v-.41c0-.51-.2-.99-.56-1.35zM14 10.5c0 .28-.22.5-.5.5h-11c-.28 0-.5-.22-.5-.5v-.41c0-.25.09-.47.27-.65l1.29-1.29c.28-.28.44-.67.44-1.06V5c0-2.21 1.79-4 4-4s4 1.79 4 4v2.09c0 .39.16.78.44 1.06l1.29 1.29c.17.17.27.4.27.65v.41zM10 13c-.28 0-.5.22-.5.5 0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5c0-.28-.22-.5-.5-.5s-.5.22-.5.5a2.5 2.5 0 005 0c0-.28-.22-.5-.5-.5z"></path></svg></div> <!----></span><!----> <!----></div> <div id="ember59" class="dropdown top-item-icon-spaced ember-view cursor-pointer "><span id="settings-dropdown"><span id="edeb662d-d7e1-40ee-aa42-57a76b59c0f5" tabindex="0" aria-describedby="c20f6680-41c2-4ddb-be7a-09a09ceafca6"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon cursor-pointer align-text-top unified-icon-fill"><path d="M8 5C6.35 5 5 6.35 5 8s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3zm0 5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path><path d="M13.99 8.28v-.56l1.15-1.3c.43-.48.5-1.18.18-1.75l-.78-1.35c-.32-.56-.96-.85-1.6-.72l-1.7.35c-.16-.1-.32-.19-.49-.28l-.55-1.65C10 .41 9.43 0 8.78 0H7.22C6.57 0 6 .41 5.8 1.03l-.55 1.65c-.17.09-.33.18-.49.28l-1.7-.35c-.63-.13-1.28.16-1.6.72L.68 4.68c-.32.56-.25 1.26.18 1.75l1.15 1.3v.56L.86 9.59c-.43.48-.5 1.19-.18 1.75l.78 1.35c.32.56.97.85 1.6.72l1.7-.35c.16.1.32.19.49.28l.55 1.65c.21.61.78 1.02 1.42 1.02h1.56c.65 0 1.22-.41 1.42-1.03l.55-1.65c.17-.09.33-.18.49-.28l1.7.35c.63.13 1.27-.16 1.6-.72l.78-1.35c.32-.56.25-1.26-.18-1.75l-1.15-1.3zm.46 2.54l-.78 1.35c-.11.19-.32.28-.53.24l-1.9-.39c-.13-.03-.27 0-.39.08-.22.15-.46.29-.72.41-.12.06-.22.16-.26.29l-.62 1.85c-.07.21-.26.34-.47.34H7.22c-.22 0-.41-.14-.47-.34l-.62-1.85a.469.469 0 00-.26-.29c-.26-.12-.5-.26-.72-.41a.476.476 0 00-.29-.09h-.1l-1.9.39a.484.484 0 01-.53-.24l-.78-1.35a.497.497 0 01.06-.58L2.9 8.77c.09-.1.13-.24.12-.37-.01-.14-.02-.28-.02-.42s0-.28.02-.42a.49.49 0 00-.12-.37L1.61 5.74a.499.499 0 01-.06-.58l.78-1.35c.11-.19.32-.28.53-.24l1.9.39c.13.03.27 0 .39-.08.22-.15.46-.29.72-.41.12-.06.22-.16.26-.29l.62-1.85c.07-.2.26-.34.47-.34h1.56c.22 0 .41.14.47.34l.62 1.85c.04.13.14.24.26.29.26.12.5.26.72.41.11.08.25.11.39.08l1.9-.39c.21-.04.42.05.53.24l.78 1.35c.11.19.08.42-.06.58L13.1 7.2c-.09.1-.14.24-.12.37s.02.28.02.42 0 .28-.02.41.03.27.12.37l1.29 1.46c.14.16.17.4.06.58z"></path></svg></span> <!----></span> <!----></div></div> <div class="d-flex align-items-center"><div class="top-item-fixed-width position-relative" id="profile-section"><span class="cursor-pointer" data-ember-action="" data-ember-action-60="60"><img class="float-start rounded-circle" alt="inhari" src="https://contacts.zoho.com/file?t=user&amp;ID=772539688&amp;fs=thumb"></span> <!----></div></div> <div class="products-menu-addon-container"><div class="text-center cursor-pointer zohoapps position-relative "><div class="zohoapps__candybox"><div class="zohoapps__candybox__dots"><span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span></div> <div class="zohoapps__candybox__z-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 100 100"><path class="zohoapps__candybox__z-icon__path1" d="M50 50l1.8-4.5 3.5-8.6c1.3-3.3-1.1-6.9-4.6-6.9H9c-3.6 0-6-3.7-4.6-6.9l6.8-16C12 5.2 13.8 4 15.8 4h51.9c14.1 0 23.7 14.2 18.6 27.2l-8.7 22.3"></path><path class="zohoapps__candybox__z-icon__path2" d="M22.4 46.4l-8.7 22.3C8.6 81.8 18.2 96 32.3 96h51.9c2 0 3.8-1.2 4.6-3.1l6.8-16c1.4-3.3-1-6.9-4.6-6.9H49.4c-3.5 0-6-3.6-4.6-6.9l3.7-9.3L50 50"></path></svg></div></div> <!----></div> <!----></div></header><!----><!----> <!----> <div id="flyout-with-topbar" class="d-print-none"></div> <div class="product-wrapper"><nav id="main-nav-tab" class="noscroll-x tab-column main-tab-column d-print-none scrollbar-thin ember-view  "><!----><ul class="nav nav-pills fill nav-bottom-spacing flex-column"><li id="ember338" class="ember-view nav-item">
-      <a id="ember280" class="ember-view nav-link" href="/rm2/warehouseStock">
+      <a id="ember280" class="ember-view nav-link" href="/quality/warehouseStock">
 <!---->          
-              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+               <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
 <!---->             <img src="icons/analysis.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-        Analysis
+        Analytics
 <!----><!---->      </a>
     </li>
-
+  
+   
 
   <ul class="nav flex-column" id="nav_accordion">
 
 
 
-   <li class="divider"></li>
+   
     <li id="ember420" class="ember-view nav-item">
-      <a id="ember421" class="ember-view nav-link" href="/rm2/stockRequisition">
+      <a id="ember421" class="ember-view nav-link" href="/quality/blendingExtraDaysApproval">
 <!---->          
-             <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
-<!---->             <img src="icons/requisition.png" alt="" class="icon lpanel"  width="20px" height="15px">
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/approved.png" alt="" class="icon lpanel"  width="20px" height="15px">
               </span>
              <!---->
-        Request Stock
-<!----><!---->      </a>
-    </li>
-
-    <li class="divider"></li><li id="ember423" class="ember-view nav-item">
-      <a id="ember424" class="ember-view nav-link" href="/rm2/approvedRequisitions">
-<!---->          
-                <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
-<!---->             <img src="icons/order.png" alt="" class="icon lpanel"  width="20px" height="15px">
-              </span>
-             <!---->
-        Purchase Orders
+        Extra Days Approval
 <!----><!---->      </a>
     </li>
 
 
-
-
-	 <li class="divider"></li><li id="ember423" class="ember-view nav-item">
-      <a id="ember424" class="ember-view nav-link" href="/rm2/purchaseOrders">
+  <li class="divider"></li>
+  <em class="ember-view nav-link"> <b> Cooking </b></em>
+    <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchList">
 <!---->          
-             <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
-<!---->             <img src="icons/reverse.png" alt="" class="icon lpanel"  width="20px" height="15px">
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/wash.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-        Reversal
+        Washing
 <!----><!---->      </a>
     </li>
 
 
-        <li class="divider"></li><li id="ember423" class="ember-view nav-item">
-      <a id="ember424" class="ember-view nav-link" href="/rm2/grvList">
+      <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchListCrush">
 <!---->          
-             <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
-<!---->             <img src="icons/grv.png" alt="" class="icon lpanel"  width="20px" height="15px">
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/crush.png" alt="" class="icon lpanel" width="20px" height="15px">
               </span>
              <!---->
-        GRVs
+       Crushing
 <!----><!---->      </a>
     </li>
 
-  
+
+
+  <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchListIngredients">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/ingredients.png" alt="" class="icon lpanel" width="20px" height="15px">
+              </span>
+             <!---->
+       Ingredients
+<!----><!---->      </a>
+    </li>
+
+
+
+    <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/draining">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/crush.png" alt="" class="icon lpanel" width="20px" height="15px">
+              </span>
+             <!---->
+       Fermentation
+<!----><!---->      </a>
+    </li>
+
+
+	 <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/blendingTanks">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/tanks.png" alt="" class="icon lpanel" width="20px" height="15px">
+              </span>
+             <!---->
+       Blending Tanks
+<!----><!---->      </a>
+    </li>
+
+
+	
+
+		 <li id="ember420" class="ember-view nav-item">
+      <a id="ember421" class="ember-view nav-link" href="/quality/batchNumberList">
+<!---->          
+              <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/box.png" alt="" class="icon lpanel" width="20px" height="15px">
+              </span>
+             <!---->
+       Batch Trail
+<!----><!---->      </a>
+    </li>
+
+
+
+
+
+	
+
+
+	
+        <li id="ember423" class="ember-view nav-item">
+      <a id="ember424" class="ember-view nav-link" href="/quality/folderReg">
+<!---->          
+               <span id="d2f4a213-766d-47e6-b839-7ed15e8ec8f1" class="position-relative" tabindex="0" aria-describedby="c299bf4d-18d3-4dd2-b580-27155f983350">
+<!---->             <img src="icons/repo.png" alt="" class="icon lpanel" width="20px" height="15px">
+              </span>
+             <!---->
+        Files
+<!----><!---->      </a>
+    </li>
+
+
+	
 	  <li id="ember420" class="ember-view nav-item">
       <a id="ember421" class="ember-view nav-link" href="/logout">
 <!---->          
@@ -210,10 +479,8 @@ ul.no-bullets {
 <!----><!---->      </a>
     </li>
 
-
     
   </ul>
-
 <!----><!----><!----><!----> <!---->
     <li class="divider"></li> 
     <li class="divider"></li> 
@@ -278,248 +545,53 @@ ul.no-bullets {
 </div> 
 
 
-<script>
-console.log('reload')
-//var refNumber = {{{refNumber}}}
-$.ajax({
-   
-    dataType: 'json',
-    type: 'POST',
-	
-    url: `/rm/reloadMat/{{{grvNumber}}}`,
-    success: function(data) {
-    console.log(data)
-   
-
-    
-   for(var i = 0;i<data.length;i++){
-    var tr = document.createElement('tr');
-
-    var td1 = tr.appendChild(document.createElement('td'));
-    var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
-    var td4 = tr.appendChild(document.createElement('td'));
-    var td5 = tr.appendChild(document.createElement('td'));
-    var td6 = tr.appendChild(document.createElement('td'));
-    
-   
-    td1.id =data[i]._id
-    td4.id = data[i]._id
-/*td2.classList.add('text-end', 'pe-0')
-td3.classList.add('text-end', 'pe-0')
-td4.classList.add('text-end', 'pe-1')
-link.classList.add('text-end','pe-0')
-link.setAttribute("href", "/rec/delete")
-link.className = "text-end";*/
-
-/*let link = document.createTextNode("Delete")
-
-td5.appendChild(link);*/
-
-
-td1.innerHTML = data[i].weight;
-    td2.innerHTML = data[i].openingMass;
-   // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data[i].newMass ;
-    td5.innerHTML = data[i].closingMass
-    td6.innerHTML = data[i].refNumber
-
-    /*let link2 = "/rec/delete/"+data[i]._id
-
-    var linkText = 'Delete'
-link.href="/rec/delete/"+data[i]._id*/
- 
-    /*link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
-
-    console.log(link,'33tt')
-  
-
-    console.log(td4,'yeah')*/
-
-  document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-
-   }
-
-
-
-
-
-var table = document.getElementById('kt_ecommerce_report_sales_table')
-var cells = table.getElementsByClassName("text-end pe-1")
-for(var i = 0; i< cells.length; i++){
-cells[i].onclick = function(){
-console.log(i,'this')
-if(this.hasAttribute('data-clicked')){
-    
-    return;
-}
-
-this.setAttribute('data-clicked', 'yes')
-this.setAttribute('data-text', this.innerHTML)
-
-var input = document.createElement('input');
-input.setAttribute('type', 'text')
-input.value = this.innerHTML
-input.style.width = this.offsetWidth - (this.clientLeft * 2) + 'px';
-input.style.height = this.offsetHeight - (this.clientTop * 2) + "px";
-input.style.border = '0px';
-input.style.fontFamily ="inherit";
-input.style.fontSize ="inherit";
-input.style.textAlign = "inherit";
-input.style.backgroundColor = 'LightGoldenRodYellow';
-
-input.onblur = function(){
-
-    var td = input.parentElement;
-        console.log(td.id,'td')
-    var orig_text = input.parentElement.getAttribute('data-text');
-    var current_text = this.value;
-
-     let reg = /\d+\.*\d*/g;
-
-let result = current_text.match(reg)
-let currentMark = Number(result)
-
-
-
-
-let resultX = orig_text.match(reg)
-let originalMark = Number(resultX)
-
-console.log(currentMark,originalMark,'mark')
-
-
-
-
-
-    if(orig_text != current_text ){
-  
-        console.log(current_text,'current_text')
-$.ajax({
-  dataType: 'json',
-            data: {
-                code: current_text,
-                
-            },
-            type: 'POST',
-            url: "/rec/stock/update/"+td.id,
-
-
-  success: function(data) {
- 
-
-console.log(td.id,'id2')
-console.log(td,'coalition')
-        td.removeAttribute('data-clicked')
-        td.removeAttribute('data-text')
-        td.innerHTML = current_text
-        
-        td.style.cssText = 'padding: 5px';
-
-    
-  
-    }
-
-
-});
-        console.log(td.id,'id2')
-        td.removeAttribute('data-clicked')
-        td.removeAttribute('data-text')
-        td.innerHTML = current_text
-
-        td.style.cssText = 'padding: 5px';
-        
-        console.log(orig_text + 'is change to ' + current_text)
-    
-    } else{
-        td.removeAttribute('data-clicked')
-        td.removeAttribute('data-text')
-        td.innerHTML = orig_text
-        td.style.cssText = 'padding: 5px';
-        console.log('No changes made')
-    
-    }
-
-}
-
-this.innerHTML = ''
-this.style.cssText = 'padding: 0px';
-this.append(input);
-this.firstElementChild.select();
-
-}
-}
-
-
-
-
-
-	}
-
-	})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-
-
-
 
 <div showpagelengthoption="" showtotalcount="" id="ember326" class="pagination-bar ember-view">
 <div id="pagination" class="pagination d-flex align-items-center flex-wrap d-print-none mb-3 justify-content-between  "><!----></div><!----></div><!----><!----></div></div></div> <!----> <!----> <!----> <!----> <!---->
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Receive Raw Materials </h3></div>
+<h3 class="over-flow">Blending Product Tracker Day {{days}} </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
             function add() {
-                  if(confirm('Are you sure your want to Capture Mass?'))
-   {
-       let mass = document.getElementById('mass').value
-       let state = document.getElementById('state').value
-             let date = document.getElementById('date').value 
-       let refNumber = document.getElementById('grvNumber').value  
-       let lossMargin = 0    
+         let id = document.getElementById('id').value 
+         let odour = document.getElementById('odour').value
+       let color = document.getElementById('color').value
+       let mouthfeel= document.getElementById('mouthfeel').value
+       let taste = document.getElementById('taste').value
+       let date  = document.getElementById('date').value
+       let afterTaste = document.getElementById('aftertaste').value
+       let product = document.getElementById('product').value      
+       let tankNumber = document.getElementById('tankNumber').value 
+       let litres = document.getElementById('litres').value 
+       let refNumber = document.getElementById('batchNumber').value 
+console.log('goodvibes',id,color,odour,mouthfeel,taste,afterTaste,product,tankNumber
+       ,litres,refNumber)
             $.ajax({
                 dataType: 'json',
                 data: {
-                    code: mass,date:date,state:state,
-                    grvNumber:refNumber,lossMargin:lossMargin
+                     id:id, color:color,date:date,odour:odour,mouthfeel:mouthfeel,taste:taste,afterTaste:afterTaste,refNumber:refNumber,product:product,tankNumber:tankNumber,litres:litres
                     
                 },
                 type: 'POST',
-                url: "/rm/receiveMass",
+                  url: "/quality/blendingDays/",
                 success: function(data) {
                   console.log(data,'dat666')
                if(data.length === 0){
                
                
                  
-                 alert('Enter Mass')
-                   $("#mass").val("")
+                 alert('Error')
+                  
                  
                  
                  
                
+                }else if(data.pos == 2 || data.pos > 2){
+
+              window.location=`https://niyonsoft.org/quality/blendingDays/{{{id}}}`
                 }
                     else{
 
@@ -528,7 +600,7 @@ this.firstElementChild.select();
 
     var td1 = tr.appendChild(document.createElement('td'));
     var td2 = tr.appendChild(document.createElement('td'));
-	//var td3 = tr.appendChild(document.createElement('td'));
+	  var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
@@ -536,36 +608,19 @@ this.firstElementChild.select();
    // var link= tr.appendChild(document.createElement('td'));
     td1.id =data._id
     td5.id = data._id
-/*td2.classList.add('text-end', 'pe-0')
-td3.classList.add('text-end', 'pe-0')
-td4.classList.add('text-end', 'pe-1')
-link.classList.add('text-end','pe-0')*/
-//link.setAttribute("href", "/rec/delete")
-//link.className = "text-end";
 
 
 
-
-    td1.innerHTML = data.weight;
-    td2.innerHTML = data.openingMass;
-   // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data.newMass ;
-    td5.innerHTML = data.closingMass
-    td6.innerHTML = data.grvNumber
+    td1.innerHTML = data.date;
+    td2.innerHTML = data.colour;
+    td3.innerHTML = data.odour;
+    td4.innerHTML=  data.mouthfeel ;
+    td5.innerHTML = data.taste
+    td6.innerHTML = data.afterTaste
     
-    //let link2 = "/rec/delete/"+data._id
-
-    //td5.innerHTML = "Delete"
-    //var linkText = 'Delete'
-    // link.appendChild(linkText);
-    //link.href="/rec/delete/"+data._id
-    //td5.innerText = 'Delete'
-    //link.innerHTML='<a href="'+link2+'">'+linkText+'</a>'
-
+    
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
-    $("#totalMass").val(data.closingMass)
-     $("#mass").val('')
-  
+    
 
                     }
                
@@ -578,78 +633,125 @@ link.classList.add('text-end','pe-0')*/
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
 			
-            }
         </script>
 
-              <form class="zb-txn-form"  name="sample">
+             <form class="zb-txn-form"  name="sample">
+                <input type="hidden" name="id" id="id" value="{{id}}">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
           <!--<fieldset role="radiogroup" class="form-group">
               <div class="form-check cursor-pointer mb-2">  
               <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>
              <div class="form-check cursor-pointer mb-2">  
          <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
-
- 
          <div class="row form-group">
-        <div class="col-lg-2"><label class="col-form-label required">Supplier</label> 
-         <input  id="supplier" name="supplier" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{supplier}}" readonly></div>
+        <div class="col-lg-2"><label class="col-form-label required">Date</label> 
+         <input  id="date" name="date" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="date" value="" ></div>
 
-         <div class="col-lg-2"><label class="col-form-label required">Item</label>
-          <div id="ember330" class="ember-view">
-           <div class="ac-box ">
-             <input  id="item" name="item" class="ember-text-field ember-view form-control" type="text" value="{{item}}" readonly></div> </div></div>
 
-          <div class="col-lg-2"><label class="col-form-label required">Date</label>
+
+
+          <div class="col-lg-2"><label class="col-form-label required">Color</label>
               <div id="ember330" class="ember-view">
           <div class="ac-box ">
 
-      <input  id="date" name="date" class="ember-text-field ember-view form-control" type="text" value="{{date}}" readonly>
+      <input  id="color" name="color" class="ember-text-field ember-view form-control" type="text" value=""  >
             </div> </div></div>
-       <input type="hidden" name="refNumber" id="refNumber" value="{{refNumber}}">
+
+
+             <!--<div class="col-lg-2"><label class="col-form-label required">Odour</label>
+              <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+      <input  id="odour" name="odour" class="ember-text-field ember-view form-control" type="text" value="" >
+            </div> </div></div>-->
+
+            <div class="col-lg-2"><label class="col-form-label required">Odour</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+  <select class="form-select form-select-solid" name="odour" id="odour"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
      
-      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Driver</label> 
-    <input  id="driver" name="driver" class="ember-text-field ember-view form-control" type="text"  value="{{driver}}" readonly></div>
-
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Vehicle Reg#</label> 
-    <input  id="regNumber" name="regNumber" class="ember-text-field ember-view form-control" type="text"  value="{{regNumber}}" readonly></div>
-
-    <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Order Number</label> 
-    <input  id="orderNumber" name="orderNumber" class="ember-text-field ember-view form-control" type="text"  value="{{refNumber}}" readonly></div>
-         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">PO Number</label> 
-    <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text"  value="{{batchNumber}}" readonly></div>
-
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">GRV Number</label> 
-    <input  id="grvNumber" name="grvNumber" class="ember-text-field ember-view form-control" type="text"  value="{{grvNumber}}" readonly></div>
-
-     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Requested Mass (kgs)</label> 
-    <input  id="reqMass" name="reqMass" class="ember-text-field ember-view form-control" type="text"  value="{{mass}}" readonly></div>
-    
-    
-    
-   <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">State</label> 
- 
-                                  <!--<input autocomplete="off" spellcheck="false" placeholder="Salutation" autocorrect="off" autocapitalize="off" id="ember491" class="ember-text-field form-control ac-search-txt ember-view" type="text">-->
- <select  autocomplete="off" spellcheck="false" placeholder="Select or type to add" autocorrect="off" autocapitalize="off" id="state" class="ember-text-field form-control ac-search-txt ember-view" type="text" name="state"  >
-																	
-																		<option value="clean" >Clean</option>
-                                    	<option value="mud" >Mud</option>
-																	
 																	
 																		
-																	</select> </div>
+			</select>    </div> </div></div>
+        <div class="col-lg-2"><label class="col-form-label required">Mouthfeel</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
 
+  <select class="form-select form-select-solid" name="mouthfeel" id="mouthfeel"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
+     
+																	
+																		
+			</select>    </div> </div></div>
+ <div class="col-lg-2"><label class="col-form-label required">Taste</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+  <select class="form-select form-select-solid" name="taste" id="taste"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
+     
+																	
+																		
+			</select>    </div> </div></div>
+<div class="col-lg-2"><label class="col-form-label required">Aftertaste</label>
+    <div id="ember330" class="ember-view">
+          <div class="ac-box ">
+
+  <select class="form-select form-select-solid" name="aftertaste" id="aftertaste"   >
+			<option></option>
+			<option value="good" >Good</option>
+			<option value="bad" >Bad</option>
+     
+																	
+																		
+			</select>    </div> </div></div>
+
+
+
+<div class="col-lg-2"><label class="col-form-label required">Tank Number</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="tankNumber" name="tankNumber" class="ember-text-field ember-view form-control" type="number" value="{{tankNumber}}" readonly ></div> </div></div>
+
+
+
+
+<div class="col-lg-2"><label class="col-form-label required">Product</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text" value="{{product}}" readonly ></div> </div></div>
+
+ <div class="col-lg-2"><label class="col-form-label required">Litres</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="litres" name="litres" class="ember-text-field ember-view form-control" type="text" value="{{litres}}" readonly ></div> </div></div>
+
+            <div class="col-lg-2"><label class="col-form-label required">Batch Number</label>
+          <div id="ember330" class="ember-view">
+           <div class="ac-box ">
+             <input  id="batchNumber" name="batchNumber" class="ember-text-field ember-view form-control" type="text" value="{{refNumber}}" readonly></div> </div></div>
+
+              
+    
+     
+    
+    
+    
    
     
     
     
     </div> 
-
     
-
-
-
-    
-    <div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
+    <!--<div class="row pt-5"><div id="ember429" class="ember-view col-lg-8" style="display: block;">
     <table class="table table-bordered">
         <tbody><tr>
           <td>
@@ -660,7 +762,7 @@ link.classList.add('text-end','pe-0')*/
      <td>
        <input type="hidden" name="" id="output">
     <span class="float-end">
-      <input  id="totalMass" class="ember-text-field text-end ember-view form-control" type="number" name="totalMass" readonly> 
+      <input  id="totalMass" class="ember-text-field text-end ember-view form-control" type="number" name="totalMass"> 
  </span> <label class="col-form-label">Total Mass</label></td>
     </tr> 
     
@@ -669,7 +771,7 @@ link.classList.add('text-end','pe-0')*/
     </tbody>
     </table>
     </div>
-    </div> 
+    </div> -->
 
      
 
@@ -679,12 +781,13 @@ link.classList.add('text-end','pe-0')*/
       <table class="table table-bordered" id="kt_ecommerce_report_sales_table">
 <thead>
 <tr>
-  <th>Weight</th>
-	<th>Opening Mass</th>
-	<!--<th>Cases Received</th>-->
-	<th>New Mass</th>
-  <th>Closing Mass</th>
-   <th>GRV Number</th>
+   <th>Date</th>
+	<th>Color</th>
+<th>Odour</th>
+	<th>Mouthfeel</th>
+  <th>Taste</th>
+   <th>Aftertaste</th>
+
 
 
                               </tr>
@@ -717,10 +820,10 @@ link.classList.add('text-end','pe-0')*/
       </div>
       </form>
         <div class="btn-toolbar">
-          <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
-        <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>
+          <button onclick="add()" class="btn btn-primary ember-view" > Add </button>
+       <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm/closeBatchRM/{{refNumber}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" href="/quality/closeBlending/"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>
@@ -756,15 +859,25 @@ link.classList.add('text-end','pe-0')*/
                                  <div class="zgs19_gsProgressLoaderc"></div>
                                  <div class="zgs19_gsProgressLoaderd"></div></div>
                                
+                                <div id="zgs20_gsDashboardhome" class="zgs19_gsDashboardhome zgs19_gsDisplayNone"></div>
+                                <div id="zgs20_cloudIntegration" class="zgs19_cloudIntegration zgs19_gsSettingsPages zgs19_gsDisplayNoneImp"></div>
+                                <div id="zgs20_gsbannertip" class="zgs19_gsbannertip zgs19_gsBoxShadowPopup zgs19_gsDisplayNone">
+                                <div id="zgs20_gsbannertipicon" class="zgs19_gsbannertipicon zgs19_gsfl"></div>
+                                <div id="zgs20_gsbannertiptext" class="zgs19_gsbannertiptext zgs19_gsfl"></div>
+                                </div>
                             </div><div id="zgs20_gstootltip" class="zgs19_gstootltip zgs19_gsTipBoxShadow zgs19_gsBorderBox zgs19_gsDisplayNone"><div id="zgs20_gstoolarrow" class="zgs19_gsBorderBox"></div></div></div></div></body></html>
 
 
 
-
+</body>
+<script src="reload.js"></script>
                         
-<div hidden>
-<label for="editor">TX</label><textarea id="editor"></textarea>
-<!--<button id="submit">Send</button>-->
-<label for="output">Mass</label><textarea id="output"></textarea>
-</div>
+
+<!--<label for="editor">TX</label><textarea id="editor"></textarea>
+<!--<button id="submit">Send</button>
+<label for="output">Mass</label><textarea id="output"></textarea>-->
+
+
+
+
 

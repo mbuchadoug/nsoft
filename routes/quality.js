@@ -277,6 +277,8 @@ router.get('/warehouseStock',isLoggedIn,function(req,res){
     
     })
     
+
+      
     
     router.get('/batchPackagingList',isLoggedIn,function(req,res){
       BatchPackaging.find(function(err,docs){
@@ -319,7 +321,7 @@ router.get('/blendingExtraDaysApproval/:id',isLoggedIn,function(req,res){
   var id = req.params.id
  
 
-  BlendingDays.findByIdAndUpdate(id,{$set:{qualityAssurance:'approved'}},function(err,doc){
+  BlendingDays.findByIdAndUpdate(id,{$set:{qualityAssurance:'approved',supervisor:'approved',md:'approved'}},function(err,doc){
 
 
 
@@ -2706,7 +2708,7 @@ res.redirect('/quality/warehouseStock')
     
 
   
-
+/*
 router.get('/blendingDays/:id',isLoggedIn,function(req,res){
   var id = req.params.id
   BlendingTanks.findById(id,function(err,doc){
@@ -2719,14 +2721,118 @@ BlendingDays.find({batchId:id},function(err,docs){
     res.render('qa/blend3',{tankNumber:tankNumber,product:product,
       litres:litres,refNumber:refNumber,id:id})
   }else{
+    let days = docs.length + 1
     res.render('qa/blend2',{tankNumber:tankNumber,product:product,
-    litres:litres,refNumber:refNumber,id:id})
+    litres:litres,refNumber:refNumber,id:id,days:days})
   }
   })
 
 })
+})*/
+
+
+
+
+router.get('/blendingTrackerFolder',isLoggedIn,function(req,res){
+  var pro = req.user
+  //var product = req.params.id
+  var uid = req.user._id
+  var arr = []
+  var year = 2025
+ /* User.findByIdAndUpdate(uid,{$set:{year:year,product:product}},function(err,locs){
+
+  })*/
+
+
+
+
+  BlendedItems.find(function(err,docs) {
+    // console.log(docs,'docs')
+     for(var i = 0;i<docs.length;i++){
+   // let product = docs[i].product
+    //console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.refNumber == docs[i].refNumber  && value.product == docs[i].product )){
+               console.log('true')
+              //arr.find(value => value.product == docs[i].product).holdingCases += docs[i].holdingCases
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }
+    //console.log(arr,'arr')
+    //res.send(arr)
+    res.render('qa/blendingFolder',{pro:pro,listX:arr})
+   })
+  
+  
+
+  //BlendedItems.find({product:product}).sort({num:1}).then(docs=>{
+     
+       
+
+  //})
+  
 })
 
+router.get('/blendingTrackerTanks/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  BlendedItems.find({refNumber:id},function(err,docs){
+
+    res.render('qa/blendingTracker',{listX:docs})
+
+  })
+
+})
+
+
+
+router.post('/reloadMat/:id',isLoggedIn, (req, res) => {
+  var pro = req.user
+  console.log('reload')
+  var m = moment()
+  var code = req.params.id
+  var mformat = m.format("L")
+  
+  
+  BlendingDays.find({refNumber:code}).lean().sort({'pos':1}).then(docs=>{
+  
+  
+    res.send(docs)
+            })
+  
+  }); 
+  
+
+router.get('/blendingDays/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+  BlendedItems.findById(id,function(err,doc){
+    if(doc.code == 'null'){
+      res.redirect('/quality/blendingTrackerTanks/'+doc.refNumber)
+    }else{
+
+    
+    var tankNumber = doc.blendingTank
+    var product = doc.product
+    var litres = doc.litres
+    var refNumber = doc.refNumber
+    var batchNumber = doc.code
+BlendingDays.find({batchId:id},function(err,docs){
+  if(docs.length >= 2){
+    let days = docs.length + 1
+    res.render('qa/blend3',{tankNumber:tankNumber,product:product,
+      litres:litres,refNumber:refNumber,batchNumber:batchNumber,id:id,days:days})
+  }else{
+    let days = docs.length + 1
+    res.render('qa/blend2',{tankNumber:tankNumber,batchNumber:batchNumber,product:product,
+    litres:litres,refNumber:refNumber,id:id,days:days})
+  }
+  })
+}
+
+})
+})
 
 
 router.post('/blendingDays/',isLoggedIn,function(req,res){
@@ -2741,6 +2847,7 @@ router.post('/blendingDays/',isLoggedIn,function(req,res){
    var date = req.body.date
    var odour = req.body.odour
    var refNumber = req.body.refNumber
+   var batchNumber = req.body.batchNumber
    var mouthfeel = req.body.mouthfeel
    var taste= req.body.taste
    var product = req.body.product
@@ -2768,6 +2875,7 @@ BlendingDays.find({batchId:id},function(err,docs){
  cook.date = date
  cook.odour = odour
  cook.month = month
+ cook.batchNumber = batchNumber
  cook.tankNumber = tankNumber
  cook.year = year
  cook.batchId = id
@@ -2785,7 +2893,9 @@ BlendingDays.find({batchId:id},function(err,docs){
          console.log(pro,'pro')
 
 
+BlendedItems.findByIdAndUpdate(batchId,{$set:{days:pos}},function(err,locs){
 
+})
          
          res.send(pro)
        
@@ -2864,10 +2974,11 @@ router.post('/blendingExtraDays/',isLoggedIn,function(req,res){
 
 
 
- router.get('/blendingExtraReload/:id',function(req,res){
+ router.post('/blendingExtraReload/:id',function(req,res){
   var id = req.params.id
   console.log(id,'id')
-  BlendingDays.find({batchId:id,status:'extra'},function(err,docs){
+  BlendingDays.find({refNumber:id,status:'extra'},function(err,docs){
+    //console.log(docs,'docs')
     res.send(docs)
   })
   })
@@ -2877,6 +2988,226 @@ router.post('/blendingExtraDays/',isLoggedIn,function(req,res){
 router.get('/closeBlending',isLoggedIn,function(req,res){
   res.redirect('/quality/blendingTanks')
 })
+
+
+
+
+router.get('/blendingFile/:id',isLoggedIn,function(req,res){
+
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  var date = req.user.date
+  var refNumber = req.params.id
+  let id = req.params.id
+
+
+  BlendingDays.find({batchId:id}).lean().then(docs=>{
+
+
+  let size = docs.length - 1
+
+var arrG = []
+
+for(var i = 0;i<docs.length;i++){
+
+
+arrG.push(docs[i])
+}
+  console.log(arrG,'arrG')
+  
+  const compile = async function (templateName,arrG ){
+  const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+  
+  const html = await fs.readFile(filePath, 'utf8')
+  
+  return hbs.compile(html)(arrG)
+  
+  };
+  
+  
+  
+  
+  (async function(){
+  
+  try{
+
+  const browser = await puppeteer.launch({
+  headless: true,
+  args: [
+  "--disable-setuid-sandbox",
+  "--no-sandbox",
+  "--single-process",
+  "--no-zygote",
+  ],
+  executablePath:
+  process.env.NODE_ENV === "production"
+    ? process.env.PUPPETEER_EXECUTABLE_PATH
+    : puppeteer.executablePath(),
+  });
+  
+  const page = await browser.newPage()
+  
+  
+  
+  //const content = await compile('report3',arr[uid])
+  const content = await compile('blendTracker',arrG)
+  
+
+  
+  await page.setContent(content, { waitUntil: 'networkidle2'});
+  
+  await page.emulateMediaType('screen')
+  let height = await page.evaluate(() => document.documentElement.offsetHeight);
+  await page.evaluate(() => matchMedia('screen').matches);
+  await page.setContent(content, { waitUntil: 'networkidle0'});
+ 
+   
+  let filename = 'blend'+id+'.pdf'
+  await page.pdf({  
+  path:(`./public/grv/${year}/${month}/blend${id}`+'.pdf'),
+  format:"A4",
+  height: height + 'px',
+  printBackground:true
+  
+  })
+  
+ 
+   res.redirect('/quality/openFileBlend/'+id)
+
+
+
+  
+  
+  
+ 
+ 
+ /* const file = await fs.readFile(`./public/grv/${year}/${month}/blend${id}`+'.pdf');
+  const form = new FormData();
+  form.append("file", file,filename);
+  
+  await Axios({
+    method: "POST",
+   //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
+     //url: 'https://niyonsoft.org/uploadStatementDispatch',
+     //url:'https://niyonsoft.org/uploadGrv',
+     url:'localhost:8000/rm/uploadBlending',
+    headers: {
+      "Content-Type": "multipart/form-data"  
+    },
+    data: form
+  });
+  
+  
+  res.redirect('/rm/fileIdBlending/'+filename);*/
+  
+  
+  }catch(e) {
+  
+  console.log(e)
+  
+  
+  }
+  
+
+  
+  }) ()
+  
+  
+  
+})
+  
+  
+
+  
+  })
+
+router.get('/openFileBlend/:id',isLoggedIn,function(req,res){
+var refNumber = req.params.id
+var batchNumber = req.user.batchNumber
+var m = moment()
+var mformat = m.format('L')
+var month = m.format('MMMM')
+var year = m.format('YYYY')
+const path =`./public/grv/${year}/${month}/blend${refNumber}.pdf`
+if (fs.existsSync(path)) {
+    res.contentType("application/pdf");
+    fs.createReadStream(path).pipe(res)
+} else {
+    res.status(500)
+    console.log('File not found')
+    res.send('File not found')
+}
+
+})
+
+  router.post('/uploadBlending',upload.single('file'),(req,res,nxt)=>{
+    var fileId = req.file.id
+    console.log(fileId,'fileId')
+    var filename = req.file.filename
+    console.log(filename,'filename')
+  RepoFiles.find({filename:filename},function(err,docs){
+  if(docs.length>0){
+  
+  
+  //console.log(docs,'docs')
+  let id = docs[0]._id
+  RepoFiles.findByIdAndUpdate(id,{$set:{fileId:fileId}},function(err,tocs){
+  
+  })
+  
+  }
+  res.redirect('/quality/fileIdBlending/'+filename)
+  })
+  
+  })
+
+  router.get('/fileIdBlending/:id',function(req,res){
+    console.log(req.params.id)
+    var id = req.params.id
+    
+    res.redirect('/quality/openBlending/'+id)
+    
+    })
+
+
+  router.get('/openBlending/:id',(req,res)=>{
+    var filename = req.params.id
+    console.log(filename,'fileId')
+      const bucket = new mongodb.GridFSBucket(conn.db,{ bucketName: 'uploads' });
+      gfs.files.find({filename: filename}).toArray((err, files) => {
+      console.log(files[0])
+    
+        const readStream = bucket.openDownloadStream(files[0]._id);
+            readStream.pipe(res);
+    
+      })
+     //gfs.openDownloadStream(ObjectId(mongodb.ObjectId(fileId))).pipe(fs.createWriteStream('./outputFile'));
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

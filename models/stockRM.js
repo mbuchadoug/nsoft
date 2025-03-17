@@ -7,6 +7,7 @@ var stockSchemaRM = new Schema({
     address: {type: String },
     regNumber: {type: String },
     item:{type:String},
+    state:{type:String},
     batchId:{type:String},
     supplier:{type:String},
     driver: {type: String },

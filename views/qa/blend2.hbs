@@ -2,7 +2,7 @@
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Receive Stock | Kambucha Inventory</title>
+    <title>Blending Tracker | Kambucha Inventory</title>
 
     
         <link rel="stylesheet" href="bootstrap-5.3.3/dist/js/bootstrap.min.js">
@@ -134,9 +134,9 @@ console.log(idR,'idR')
     $.ajax({
        
         dataType: 'json',
-        type: 'GET',
+        type: 'POST',
         
-        url: "/rm/blendingReload/"+idR,
+        url: `/quality/reloadMat/{{{refNumber}}}`,
         success: function(data) {
         console.log(data)
        
@@ -551,7 +551,7 @@ console.log(idR,'idR')
 <div class="column content-column">
   <div class="header fill"> 
 <button class="icon-button close-details close-detailspage" type="button" data-ember-action="" data-ember-action-327="327"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button>
-<h3 class="over-flow">Blending Product Tracker </h3></div>
+<h3 class="over-flow">Blending Product Tracker Day {{days}} </h3></div>
 <div class="scroll-y noscroll-x fill body scrollbox">
   <script>
 
@@ -567,12 +567,13 @@ console.log(idR,'idR')
        let tankNumber = document.getElementById('tankNumber').value 
        let litres = document.getElementById('litres').value 
        let refNumber = document.getElementById('batchNumber').value 
+       let batchNumber = document.getElementById('code').value 
 console.log('goodvibes',id,color,odour,mouthfeel,taste,afterTaste,product,tankNumber
        ,litres,refNumber)
             $.ajax({
                 dataType: 'json',
                 data: {
-                     id:id, color:color,date:date,odour:odour,mouthfeel:mouthfeel,taste:taste,afterTaste:afterTaste,refNumber:refNumber,product:product,tankNumber:tankNumber,litres:litres
+                     id:id,batchNumber:batchNumber, color:color,date:date,odour:odour,mouthfeel:mouthfeel,taste:taste,afterTaste:afterTaste,refNumber:refNumber,product:product,tankNumber:tankNumber,litres:litres
                     
                 },
                 type: 'POST',
@@ -584,11 +585,14 @@ console.log('goodvibes',id,color,odour,mouthfeel,taste,afterTaste,product,tankNu
                
                  
                  alert('Error')
-                   $("#batchNumber").val("")
+                  
                  
                  
                  
                
+                }else if(data.pos == 2 || data.pos > 2){
+
+              window.location=`https://niyonsoft.org/quality/blendingDays/{{{id}}}`
                 }
                     else{
 
@@ -634,6 +638,7 @@ console.log('goodvibes',id,color,odour,mouthfeel,taste,afterTaste,product,tankNu
 
              <form class="zb-txn-form"  name="sample">
                 <input type="hidden" name="id" id="id" value="{{id}}">
+                  <input type="hidden" name="code" id="code" value="{{batchNumber}}">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view"><!----></div>
           <!--<fieldset role="radiogroup" class="form-group">
               <div class="form-check cursor-pointer mb-2">  
