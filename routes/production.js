@@ -3860,7 +3860,7 @@ FermentationProduct.findByIdAndUpdate(idF,{$set:{tanks:oTanks}},function(err,yoc
 router.get('/closeDraining/:id',isLoggedIn,function(req,res){
  var arrV = []
  var number1
-  var id = req.params.
+  var id = req.params.id
   BlendedItems.find({refNumber:id},function(err,tocs){
 
     for(var i = 0;i<tocs.length; i++){
