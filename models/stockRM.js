@@ -39,6 +39,7 @@ var stockSchemaRM = new Schema({
     price: {type: Number },
     subtotal: {type: Number },
     weight: {type: String },
+    unitMeasure: {type: String },
     
    
    

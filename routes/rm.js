@@ -2518,17 +2518,17 @@ StockRM.find({refNumber:id},function(err,docs){
   if(docs){
   for(var i = 0;i<docs.length;i++){
     let sId = docs[i]._id
-    StockRM.findByIdAndUpdate(sId,{$set:{buckets:buckets,lossMargin:buckets}},function(err,locs){
+    StockRM.findByIdAndUpdate(sId,{$set:{buckets:buckets,lossMargin:buckets,unitMeasure:'buckets'}},function(err,locs){
 
     })
   }
   let batchId = docs[0].batchId
-  BatchRR.findByIdAndUpdate(batchId,{$set:{buckets:buckets,lossMargin:buckets}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{buckets:buckets,lossMargin:buckets,unitMeasure:"buckets"}},function(err,vocs){
 
   })
   }
 
-  res.redirect('/rm/stockRMFile/'+id)
+  res.redirect('/rm/closeBatchRM/'+id)
 })
   }
 })
@@ -2546,7 +2546,7 @@ var year = m.format('YYYY')
  StockRM.find({refNumber:refNumber},function(err,nocs){
    if(nocs[0].item == 'honey'){
 
-
+console.log('honey')
   let batchId = nocs[0].batchId
   let closingMass = nocs[0].closingMass - nocs[0].lossMargin
   let lossMargin = nocs[0].lossMargin
@@ -2554,7 +2554,7 @@ var year = m.format('YYYY')
   let refNumber = nocs[0].refNumber
   let batchNumber = nocs[0].batchNumber
 
-  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",lossMargin:lossMargin,unitMeasure:buckets}},function(err,vocs){
+  BatchRR.findByIdAndUpdate(batchId,{$set:{status:"complete",unitMeasure:buckets}},function(err,vocs){
 
     let batchNumber= vocs.batchNumber
     let item = vocs.item
