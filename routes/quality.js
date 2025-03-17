@@ -2441,7 +2441,7 @@ let product = docs[0].product
         //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
         number1=0;
         for(var z in arrV) { number1 += arrV[z]; }
-        total = number1
+        volumeDrained = number1
    
        /* BatchPackaging.findByIdAndUpdate(id,{$set:{volume:number1,refNumber:refNumber}},function(err,locs){
 
@@ -2479,7 +2479,7 @@ let product = docs[0].product
       BatchFermentation.find({batchNumber:ref},function(err,jocs){
         if(jocs){
           let idV = jocs[0]._id
-          BatchFermentation.findByIdAndUpdate(idV,{$set:{tanksDrained:total,volumeDrained:number1,code:code,blendingTanksdrained:total}},function(err,gocs){
+          BatchFermentation.findByIdAndUpdate(idV,{$set:{blendingTanksDrained:total,volumeDrained:number1,code:code}},function(err,gocs){
 
 
           })
