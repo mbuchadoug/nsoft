@@ -2479,7 +2479,7 @@ let product = docs[0].product
       BatchFermentation.find({batchNumber:ref},function(err,jocs){
         if(jocs){
           let idV = jocs[0]._id
-          BatchFermentation.findByIdAndUpdate(idV,{$set:{tanksDrained:total,volumeDrained:number1,code:code}},function(err,gocs){
+          BatchFermentation.findByIdAndUpdate(idV,{$set:{tanksDrained:total,volumeDrained:number1,code:code,blendingTanksdrained:total}},function(err,gocs){
 
 
           })

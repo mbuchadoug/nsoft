@@ -13,6 +13,7 @@ var batchSchemaPackaging = new Schema({
     batchNumber:{type:String},
     status:{type:String},
     volume:{type:Number},
+    tanks:{type:Number},
     taste: {type: String },
     label: {type: String },
     month: {type: String },
