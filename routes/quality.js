@@ -2635,7 +2635,7 @@ res.redirect('/quality/warehouseStock')
 
     var regex= new RegExp(req.query["term"],'i');
    
-    var itemFilter =BlendingTanks.find({ tankNumber:regex,status:"null"},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
+    var itemFilter =BlendingTanks.find({ tankNumber:regex,status:"filled"},{'tankNumber':1}).sort({"updated_at":-1}).sort({"created_at":-1}).limit(20);
   
     
     itemFilter.exec(function(err,data){
