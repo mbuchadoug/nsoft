@@ -342,7 +342,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   
         if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.item == docs[i].item  )){
                console.log('true')
-              arr.find(value => value.item == docs[i].item).uniqueMeasure += docs[i].uniqueMeasure;
+              arr.find(value => value.item == docs[i].item && value.stage == docs[i].stage  ).uniqueMeasure += docs[i].uniqueMeasure;
          }else{
   arr.push(docs[i])
          }
