@@ -332,8 +332,8 @@ var button = document.getElementById('myChart5tab').addEventListener('click', fu
 
     
       
-      let stage = 'wash'
-      let code = document.getElementById('batchNumber').value
+      let item = 'kambucha lite'
+      let status = document.getElementById('status').value
       
     
     
@@ -499,14 +499,14 @@ var button = document.getElementById('myChart5tab').addEventListener('click', fu
          
           dataType: 'json',
           type: 'POST',
-          data:{stage:stage,code:code},
-          url: "/rm/dashChartTrail",
+          data:{item:item,status:status},
+          url: "/rm/dashChartFermentation",
           success: function(data) {
       console.log(data,'data')
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
+          labels3.push({"x":data[i].refNumber,"y":data[i].tanks.toFixed(0)})
           // labels3.push(data[i].qty)
            }
       
@@ -536,16 +536,16 @@ var button = document.getElementById('myChart5tab').addEventListener('click', fu
    
         dataType: 'json',
         type: 'POST',
-        data:{stage:'wash',code:"3"},
-        url: "/rm/dashChartTrail",
+        data:{product:'kambucha lite',status:"null"},
+        url: "/rm/dashChartFermentation",
         success: function(data) {
             let labels3=[]
       let labels4=[]
       console.log(data,'dataV')
       for (var i = 0;i<data.length;i++){
        
-        labels3.push(data[i].uniqueMeasure.toFixed(2))
-        labels4.push(data[i].item+' '+data[i].unit)
+        labels3.push(data[i].tanks.toFixed(0))
+        labels4.push(data[i].refNumber)
 
         // labels3.push(data[i].qty)
          }
@@ -708,8 +708,8 @@ var button6 = document.getElementById('myChart6tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'crush'
-      let code = document.getElementById('batchNumber').value
+      let product = 'kambucha No1'
+      let status = document.getElementById('status').value
 
   
       const labels1= []
@@ -871,14 +871,14 @@ var button6 = document.getElementById('myChart6tab').addEventListener('click', f
          
           dataType: 'json',
           type: 'POST',
-          data:{stage:stage,code:code},
-          url: "/rm/dashChartTrail",
+          data:{item:product,status:status},
+          url: "/rm/dashChartFermentation",
           success: function(data) {
       console.log(data,'data')
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
+        labels3.push({"x":data[i].refNumber,"y":data[i].tanks.toFixed(2)})
         // labels3.push(data[i].qty)
          }
     
@@ -913,8 +913,8 @@ var button7 = document.getElementById('myChart7tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let  stage = 'cooking'
-      let code = document.getElementById('batchNumber').value
+      let product = 'kambucha No2'
+      let status = document.getElementById('status').value
       
     
  
@@ -1077,14 +1077,14 @@ var button7 = document.getElementById('myChart7tab').addEventListener('click', f
          
           dataType: 'json',
           type: 'POST',
-          data:{stage:stage,code:code},
-          url: "/rm/dashChartTrail",
+          data:{item:product,status:status},
+          url: "/rm/dashChartFermentation",
           success: function(data) {
       console.log(data,'data')
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
+        labels3.push({"x":data[i].refNumber,"y":data[i].tanks})
         // labels3.push(data[i].qty)
          }
     
@@ -1117,9 +1117,9 @@ var button8 = document.getElementById('myChart8tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let stage = 'fermentation'
-      let code = document.getElementById('batchNumber').value
-      
+      let product = 'kambucha No3'
+      let status = document.getElementById('status').value
+  
       const labels1= []
       const labels2= []
    
@@ -1279,14 +1279,14 @@ var button8 = document.getElementById('myChart8tab').addEventListener('click', f
          
           dataType: 'json',
           type: 'POST',
-          data:{stage:stage,code:code},
-          url: "/rm/dashChartTrail",
+          data:{item:product,status:status},
+          url: "/rm/dashChartFermentation",
           success: function(data) {
       console.log(data,'data')
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
+        labels3.push({"x":data[i].refNumber,"y":data[i].tanks})
         // labels3.push(data[i].qty)
          }
     
@@ -1324,8 +1324,8 @@ var button9 = document.getElementById('myChart9tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let stage = 'blending'
-      let code = document.getElementById('batchNumber').value
+      let product = 'manyuchi'
+      let status = document.getElementById('status').value
       
 
   
@@ -1488,14 +1488,14 @@ var button9 = document.getElementById('myChart9tab').addEventListener('click', f
          
           dataType: 'json',
           type: 'POST',
-          data:{stage:stage,code:code},
-          url: "/rm/dashChartTrail",
+          data:{product:product,status:status},
+          url: "/rm/dashChartFermentation",
           success: function(data) {
       console.log(data,'data')
       let labels3=[]
       let labels4=[]
       for (var i = 0;i<data.length;i++){
-        labels3.push({"x":data[i].item+' '+data[i].unit,"y":data[i].uniqueMeasure.toFixed(2)})
+        labels3.push({"x":data[i].refNumber,"y":data[i].tanks})
           // labels3.push(data[i].qty)
            }
       

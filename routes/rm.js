@@ -51,6 +51,7 @@ var StockD = require('../models/stockD');
 var StockR = require('../models/stockR');
 var StockRM = require('../models/stockRM');
 var RawMat = require('../models/rawMaterials');
+var RawMatX = require('../models/rawMatX');
 var StockRMFile = require('../models/stockRMFile');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
@@ -318,6 +319,45 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   
   
 
+  router.post('/dashChartTrail',isLoggedIn,function(req,res){
+
+  
+    var stage = req.body.stage
+    var code = req.body.code
+  //console.log(warehouse,'warehouse')
+ 
+   var date = req.body.date
+   var arr = []
+   var id = req.user._id
+   let num = req.user.num
+   num++
+   
+  
+  
+   RawMatX.find({stage:stage,code:code},function(err,docs) {
+     console.log(docs,'docs')
+    for(var i = 0;i<docs.length;i++){
+
+    console.log(docs,'docs')
+  
+        if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.code == docs[i].code )){
+               console.log('true')
+              arr.find(value => value.stage == docs[i].stage).uniqueMeasure += docs[i].uniqueMeasure;
+         }else{
+  arr.push(docs[i])
+         }
+  
+       
+     }  
+     console.log(arr,'arr')
+    //console.log(docs,'888')
+    res.send(arr)
+   })
+  
+  })
+  
+
+
   router.post('/dashChartFermentation',isLoggedIn,function(req,res){
 
   
@@ -355,7 +395,6 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   
   })
   
-
   
   router.post('/dashChartBlendingTanks',isLoggedIn,function(req,res){
 
