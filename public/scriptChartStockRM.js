@@ -708,7 +708,7 @@ var button6 = document.getElementById('myChart6tab').addEventListener('click', f
       var name = id+uid
       document.getElementById(id).id = name*/
       
-      let product = 'crush'
+      let stage = 'crush'
       let code = document.getElementById('batchNumber').value
 
   
