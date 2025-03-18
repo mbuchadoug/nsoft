@@ -335,14 +335,14 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   
   
    RawMatX.find({stage:stage,code:code},function(err,docs) {
-     console.log(docs,'docs1')
+     //console.log(docs,'docs1')
     for(var i = 0;i<docs.length;i++){
 
     console.log(docs,'docs')
   
-        if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.item == docs[i].item  && value.code == docs[i].code )){
+        if(arr.length > 0 && arr.find(value => value.stage == docs[i].stage  && value.item == docs[i].item  )){
                console.log('true')
-              arr.find(value => value.stage == docs[i].stage).uniqueMeasure += docs[i].uniqueMeasure;
+              arr.find(value => value.item == docs[i].item).uniqueMeasure += docs[i].uniqueMeasure;
          }else{
   arr.push(docs[i])
          }
