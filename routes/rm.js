@@ -1937,7 +1937,7 @@ BatchRR.find({year:year},function(err,docs){
 
 
 BatchRR.findByIdAndUpdate(id,{$set:{supplier:supplier,mobile:mobile,
-driver:driver,address:address,regNumber:regNumber,trailer:trailer,grvNumber:grvNumber}},function(err,docs){
+driver:driver,address:address,regNumber:regNumber,trailer:trailer,grvNumber:grvNumber,idNumber:idNum}},function(err,docs){
 
 
 
