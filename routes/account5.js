@@ -1000,16 +1000,30 @@ router.get('/grvFileV/:id',function(req,res){
   
   
   
-    
 
-      router.get('/batchRemitt',isLoggedIn,function(req,res){
+      /*router.get('/batchRemitt',isLoggedIn,function(req,res){
 
         var pro = req.user
        
       
-        SalesList.find(function(err,nocs){
+        //SalesList.find(function(err,nocs){
       
-        res.render('accounts5/batchR',{pro:pro,user:req.query,arr1:nocs})
+        res.render('accounts5/batchRFloat',{pro:pro,user:req.query,arr1:nocs})
+       // })
+      
+        })*/
+    
+
+      router.get('/batchRemitt/:id/:id2',isLoggedIn,function(req,res){
+
+        var pro = req.user
+        var id = req.params.id
+        
+        BatchStockUpdate.findById(id,function(err,doc){
+        let salesPerson = doc.salesPerson
+        
+      
+        res.render('accounts5/batchRFloat',{pro:pro,user:req.query,arr1:nocs})
         })
       
         })
@@ -1066,9 +1080,9 @@ router.get('/grvFileV/:id',function(req,res){
       
       
       
-      router.get('/invoiceNumberUpdateRemitt',isLoggedIn,function(req,res){
+      router.get('/invoiceNumberUpdateRemitt/:id',isLoggedIn,function(req,res){
         var id = req.user._id
-       
+        var code = req.params.id
           InvoNum.find(function(err,doc){
             let invoiceNum = doc[0].num
             let invoId = doc[0]._id
@@ -1083,15 +1097,15 @@ router.get('/grvFileV/:id',function(req,res){
         
         })
       
-        res.redirect('/accounts5/cashRemitt')
+        res.redirect('/accounts5/cashRemitt/'+code)
         
           })
         
         })
       
       
-      router.get('/cashRemitt',isLoggedIn,function(req,res){
-       
+      router.get('/cashRemitt/:id',isLoggedIn,function(req,res){
+        var id = req.params.id
         let batchId = req.user.batchId
         let refNumber = req.user.refNumber
         let amount = req.user.amount
@@ -1099,7 +1113,7 @@ router.get('/grvFileV/:id',function(req,res){
         let invoiceNumber = req.user.invoiceNumber
         //paymentStatus:"unpaid"
        
-          res.render('accounts5/cashR',{invoiceNumber:invoiceNumber,batchId:batchId,refNumber:refNumber,amount:amount,salesPerson:salesPerson})
+          res.render('accounts5/cashR',{invoiceNumber:invoiceNumber,id:id,batchId:batchId,refNumber:refNumber,amount:amount,salesPerson:salesPerson})
         })
       
         

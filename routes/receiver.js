@@ -29,6 +29,7 @@ var StockD = require('../models/stockD');
 var StockR = require('../models/stockR');
 var StockRM = require('../models/stockRM');
 var RawMat = require('../models/rawMaterials');
+var RawMatX = require('../models/rawMatX');
 var StockRMFile = require('../models/stockRMFile');
 var Product = require('../models/product');
 var Truck = require('../models/truck');
@@ -800,9 +801,25 @@ else{
 
   
 
-  BatchPackaging.findByIdAndUpdate(id,{$set:{totalCases:cases}},function(err,docs){
+  BatchPackaging.findByIdAndUpdate(id,{$set:{totalCases:cases}},function(err,doc){
+
+    var book = new RawMatX();
+  //book.refNumber = refNumber
+  book.batchNumber = doc.refNumber
+  book.unit = '(cases)'
+  book.stage = 'receiving'
+  book.uniqueMeasure = cases
+  book.item = doc.product
+  book.code = doc.refNumber
+  book.save()
+  .then(prod =>{
+
+   
 
   })
+  })
+
+  
 
   res.redirect('/receiver/batchPackagingList/')
 }

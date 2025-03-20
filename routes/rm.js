@@ -3273,7 +3273,7 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
 
   }*/
 
-   /*var https = require('follow-redirects').https;
+   var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -3308,7 +3308,7 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
                 var postData = JSON.stringify({
                     "messages": [
                         {
-                          "destinations": [{"to":"263772219443"},{"to":"263777801742"}, {"to":"263782808922"},{"to":"263783186772"},{"to":"263789155951"}],
+                          "destinations": [{"to":"263772219443"},{"to":"263789155951"}],
                             "from": "Niyonsoft",
                             "text": weight+'kgs'+' '+' '+'of'+' '+item+' '+'Received'+' '+ 'https://niyonsoft.org/rm/grvFile/'+refNumber
                         }
@@ -3317,7 +3317,7 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
                 
                 req.write(postData);
                 
-                req.end();*/
+                req.end();
               
   
 })

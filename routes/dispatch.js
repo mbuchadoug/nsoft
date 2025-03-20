@@ -9556,32 +9556,50 @@ router.post('/updateStock/:id',isLoggedIn,function(req,res){
 
 var month = m.format('MMMM')
   var id = req.params.id
-  let openingStock, sales
+  let openingStock, sales, salesPerson
   var cases = req.body.cases
   console.log(cases,'cases')
   SaleStock.findById(id,function(err,doc){
     openingStock = doc.holdingCases
+     salesPerson = doc.salesPerson
     sales = doc.holdingCases - cases
   SaleStock.findByIdAndUpdate(id,{$set:{holdingCases:cases,openingBal:openingStock,openingStock:openingStock,closingStock:cases,sales:sales}},function(err,docs){
 
     
   })
 
+   
+  let date6 =  moment(date).format('l');
+  let dateValue = moment(date).valueOf()
+
+  let date7 =  date6.replace(/\//g, "");
+  RefNo.find({date:date,type:"sales"},function(err,docs){
+    let size = docs.length + 1
+    let refNo = date7+'SALES'+size
+
+
   var batch = new BatchStockUpdate();
 
+  
 
     batch.date = date
     batch.openingStock = openingStock
     batch.closingStock = cases
     batch.sales = sales
+    batch.salesPerson = salesPerson
+    batch.code = refNo
     batch.month= month
+    batch.status= 'null'
+    batch.variance= 0
     batch.year= year
     batch.save()
     .then(pro =>{
 
 
-      res.redirect('/dispatch/salesList')
+     
       })
+      res.redirect('/dispatch/salesList')
+    })
 })
 })
 
@@ -9589,7 +9607,7 @@ var month = m.format('MMMM')
 
 
 
-router.get('/salesList',isLoggedIn,function(req,res){
+/*router.get('/salesList',isLoggedIn,function(req,res){
   SaleStock.find(function(err,docs){
     res.render('dispatcher/salesList2',{listX:docs})
   })
@@ -9612,7 +9630,7 @@ router.post('/updateStock/:id',isLoggedIn,function(req,res){
 
 })
 
-
+*/
 
 
 
