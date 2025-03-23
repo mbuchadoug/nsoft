@@ -479,13 +479,8 @@ this.firstElementChild.select();
          <script>
 
             function add() {
-
-              
        let date = document.getElementById('date').value 
-        let code = document.getElementById('code').value 
        let invoiceNumber= document.getElementById('invoiceNumber').value
-       let salesPersonId= document.getElementById('salesPersonId').value
-       let salesPerson= document.getElementById('salesPerson').value
        let customer = document.getElementById('customer').value
        let customerAddress = document.getElementById('customerAddress').value
        let customerMobile = document.getElementById('customerMobile').value
@@ -500,41 +495,10 @@ this.firstElementChild.select();
        let refNumber = document.getElementById('refNumber').value
        let batchId = document.getElementById('batchId').value
        let expSales = document.getElementById('expSales').value
-
-                  if(confirm('Are you sure your want to Capture This Record?'))
-   {
-     if(product == ""){
-  alert('Enter Product')
-     }
-     else if(price == ""){
-  alert('Enter Price')
-
-     }
-      else if(customer == ""){
-  alert('Enter Customer')
-
-     }
-
-      else if(customerAddress == ""){
-  alert('Enter Address')
-
-     }
-
-      else if(customerMobile == ""){
-  alert('Enter Phone #')
-
-     }
-      else if(units == ""){
-  alert('Enter Units Sold')
-
-     }
-     else{
-
             $.ajax({
                 dataType: 'json',
                 data: {
-                    date: date, invoiceNumber:invoiceNumber,amount:amount,salesPersonId:salesPersonId,
-                    salesPerson:salesPerson,code: code,
+                    date: date, invoiceNumber:invoiceNumber,amount:amount,
                     customer:customer,customerAddress:customerAddress,customerMobile:customerMobile,
                     product:product,price:price,openingStock:openingStock,closingStock:closingStock,
                     cases:cases,units:units,paymentMethod:paymentMethod,expSales:expSales
@@ -551,19 +515,6 @@ this.firstElementChild.select();
                  alert('You need permision to add invoice')
                   
                  
-                 
-                 
-               
-                }
-
-                else if(data.length === 2){
-               
-                console.log(data[0],'data0')
-
-                 alert('Change Invoice Number')
-                  document.getElementById('invoiceNumber').value = data[0]
-                  //document.getElementById('customer').value = data[0]
-                  alert('Invoice Number Successfully Updated')
                  
                  
                
@@ -604,11 +555,7 @@ this.firstElementChild.select();
     td10.innerHTML = data.missingCases
     td11.innerHTML = data.subtotal
     td12.innerHTML = data.date
-       $('#product').val('');
-                 $('#price').val('');
-                 $('#expSales').val('');
-                 $('#openingStock').val('');
-                 $('#closingStock').val('');
+    
      $("#subtotal").val(data.cumulativeTotal)
     
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
@@ -625,8 +572,7 @@ this.firstElementChild.select();
             });
                 /*document.querySelector('#barcodeNumber').innerHTML = scanned_barcode;*/
             }
-            }
-            }
+			
         </script>
 
 
@@ -636,8 +582,6 @@ this.firstElementChild.select();
 
                     <input type="hidden" id="refNumber" name="refNumber" value="{{refNumber}}">
                     <input type="hidden" id="batchId" name="batchId" value="{{batchId}}">
-                     <input type="hidden" id="salesPersonId" name="salesPersonId" value="{{salesPersonId}}">
-
           <!--<fieldset role="radiogroup" class="form-group">
               <div class="form-check cursor-pointer mb-2">  
               <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="d1a53147-7569-4419-9679-da0b2402bdd4" tabindex="0" class="form-check-input" type="radio" value="quantity"> <label for="d1a53147-7569-4419-9679-da0b2402bdd4" class="form-check-label">Quantity Adjustment</label></div>
@@ -668,7 +612,7 @@ this.firstElementChild.select();
     <input  id="customerMobile" name="customerMobile" class="ember-text-field ember-view form-control" type="text"  value="" ></div>
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Remitt Code</label> 
-    <input  id="code" name="code" class="ember-text-field ember-view form-control" type="text"  value="{{code}}"  readonly></div>
+    <input  id="code" name="code" class="ember-text-field ember-view form-control" type="text"  value="{{id}}"  readonly></div>
 
      <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Product</label> 
     <input  id="product" name="product" class="ember-text-field ember-view form-control" type="text"  value=""></div>
@@ -694,7 +638,7 @@ this.firstElementChild.select();
     <input  id="units" name="units" class="ember-text-field ember-view form-control" type="number"  value=""></div>
 
     <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Expected Sales</label> 
-    <input  id="expSales" name="expSales" class="ember-text-field ember-view form-control" type="number"  value="{{sales}}" readonly></div>
+    <input  id="expSales" name="expSales" class="ember-text-field ember-view form-control" type="number"  value="" readonly></div>
 
    <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Payment Method</label> 
  
@@ -801,7 +745,7 @@ this.firstElementChild.select();
              <button onclick="add()" class="btn btn-primary ember-view" > Add Invoice </button>
         
 
-      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close ?');" href="/accounts5/closeBatch/{{batchId}}/{{code}}"> Close </a></div>
+      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close ?');" href="/sales/close/{{batchId}}"> Close </a></div>
       </div> <!----> <!---->
        <div class="column content-column d-none"></div>
        </main>

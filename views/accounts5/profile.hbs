@@ -251,177 +251,548 @@ Outstanding Bills Payments
   </ul><!----></nav>
                      <!----> <!----><!---->
 
-			<!--begin::Toolbar-->
+			
+						<!--begin::Toolbar-->
 						<div class="toolbar" id="kt_toolbar">
 							<!--begin::Container-->
-							
+						
 							<!--end::Container-->
 						</div>
 						<!--end::Toolbar-->
 						<!--begin::Post-->
 						<div class="post d-flex flex-column-fluid" id="kt_post">
 							<!--begin::Container-->
-							<div id="kt_content_container" class="container-xxl">
-								<!--begin::Products-->
-								<div class="card card-flush">
-									<!--begin::Card header-->
-									<div class="card-header align-items-center py-5 gap-2 gap-md-5">
-										<!--begin::Card title-->
-										<div class="card-title">
-											<!--begin::Search-->
-											<div class="d-flex align-items-center position-relative my-1">
-												<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-												<span class="svg-icon svg-icon-1 position-absolute ms-4">
-													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-														<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
-														<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
-													</svg>
-												</span>
-												<!--end::Svg Icon-->
-												<input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search Report" />
+							<div id="kt_content_container" class="container-fluid">
+								<!--begin::Contacts App- View Contact-->
+								<div class="row g-7">
+									<!--begin::Contact groups-->
+								<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+									<!--end::Contact groups-->
+									<!--begin::Search-->
+									<div class="col-lg-6 col-xl-3">
+										<!--begin::Contacts-->
+										<div class="card card-flush" id="kt_contacts_list">
+											<!--begin::Card header-->
+											<div class="card-header pt-7" id="kt_contacts_list_header">
+												<!--begin::Form-->
+												<form class="d-flex align-items-center position-relative w-100 m-0" autocomplete="off">
+													<!--begin::Icon-->
+													<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+													<span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+															<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<!--end::Icon-->
+													<!--begin::Input-->
+													<input type="text" class="form-control form-control-solid ps-13" id="searcher" name="search" value="" placeholder="Search SalesPerson" onkeyup="getValue(this.value)"  />
+													<!--onkeyup="getValue(this.value)"-->
+													<!--end::Input-->
+												</form>
+												<!--end::Form-->
 											</div>
-											<!--end::Search-->
-											<!--begin::Export buttons-->
-											<div id="kt_ecommerce_report_sales_export" class="d-none"></div>
-											<!--end::Export buttons-->
-										</div>
-										<!--end::Card title-->
-										<!--begin::Card toolbar-->
-										<div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-											<!--begin::Daterangepicker-->
-											<input type="hidden" class="form-control form-control-solid w-100 mw-250px" placeholder="Pick date range" id="kt_ecommerce_report_sales_daterangepicker" />
-											<!--end::Daterangepicker-->
-											<!--begin::Export dropdown-->
-											<button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-											<!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
-											<span class="svg-icon svg-icon-2">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-													<rect opacity="0.3" x="12.75" y="4.25" width="12" height="2" rx="1" transform="rotate(90 12.75 4.25)" fill="black" />
-													<path d="M12.0573 6.11875L13.5203 7.87435C13.9121 8.34457 14.6232 8.37683 15.056 7.94401C15.4457 7.5543 15.4641 6.92836 15.0979 6.51643L12.4974 3.59084C12.0996 3.14332 11.4004 3.14332 11.0026 3.59084L8.40206 6.51643C8.0359 6.92836 8.0543 7.5543 8.44401 7.94401C8.87683 8.37683 9.58785 8.34458 9.9797 7.87435L11.4427 6.11875C11.6026 5.92684 11.8974 5.92684 12.0573 6.11875Z" fill="black" />
-													<path d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z" fill="#C4C4C4" />
-												</svg>
-											</span>
-											<!--end::Svg Icon-->Export Report</button>
-											<!--begin::Menu-->
-											<div id="kt_ecommerce_report_sales_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-200px py-4" data-kt-menu="true">
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="#" class="menu-link px-3" data-kt-ecommerce-export="copy">Copy to clipboard</a>
-												</div>
-												<!--end::Menu item-->
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="#" class="menu-link px-3" data-kt-ecommerce-export="excel">Export as Excel</a>
-												</div>
-												<!--end::Menu item-->
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="#" class="menu-link px-3" data-kt-ecommerce-export="csv">Export as CSV</a>
-												</div>
-												<!--end::Menu item-->
-												<!--begin::Menu item-->
-												<div class="menu-item px-3">
-													<a href="#" class="menu-link px-3" data-kt-ecommerce-export="pdf">Export as PDF</a>
-												</div>
-												<!--end::Menu item-->
-											</div>
-											<!--end::Menu-->
-											<!--end::Export dropdown-->
-										</div>
-										<!--end::Card toolbar-->
-									</div>
-									<!--end::Card header-->
-									<!--begin::Card body-->
-									<div class="card-body pt-0">
-										<!--begin::Table-->
-										<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_report_sales_table">
-											<!--begin::Table head-->
-											<thead>
-												<!--begin::Table row-->
-												<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-													        <th class="min-w-100px">Date</th>
-												         	<th class="text-end min-w-75px">SalesPerson</th>
-															<th class="text-end min-w-75px">Code</th>
-															<th class="text-end min-w-75px">Exp. Sales</th>
-															<th class="text-end min-w-75px">Month</th>
-															<th class="text-end min-w-75px">Year</th>
-															<!--<th class="text-end min-w-75px">Year</th>-->
+											<!--end::Card header-->
+											<!--begin::Card body-->
+											<div class="card-body pt-5" id="kt_contacts_list_body">
+												<!--begin::List-->
+												<div class="scroll-y me-n5 pe-5 h-300px h-xl-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_contacts_list_header" data-kt-scroll-wrappers="#kt_content, #kt_contacts_list_body" data-kt-scroll-stretch="#kt_contacts_list, #kt_contacts_main" data-kt-scroll-offset="5px" >
+													<!--begin::User-->
+												
+													{{#each listX}}
+													<!--<div class="d-flex flex-stack py-4" >
+												
+														<div class="d-flex align-items-center"  data-kt-element="users" id="listC">
 														
-															<th class="text-end min-w-75px">Actions</th>
+
+															<input type="hidden" name="xid" id="xid" value="{{this._id}}">
+															<div class="symbol symbol-40px symbol-circle">
+																<img alt="Pic" src="uploads/{{this.photo}}" />
+																<div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+															</div>
+														
+															<div class="ms-4">
+																<a onclick="loadItems('{{this._id}}')" class="fs-6 fw-bolder text-gray-900 text-hover-primary mb-2">{{this.fullname}}</a>
+																<div class="fw-bold fs-7 text-muted">{{this.email}}</div>
+															</div>
+													
+														</div>
+														
+													
+													</div>-->
+													<!--<div id="list">
+  <div>
+    <p>
+		<a href="">test data 1</a>
+		<br/>Last Seen</p>
+  </div>
+  <div>
+    <p><a href="">test data 2</a><br/>Last Seen</p>
+  </div>
+  <div>
+    <p><a href="">new test data 3</a><br/>Last Seen</p>
+  </div>
+</div>-->
+
+
+<div id="result">
+ <input type="hidden" name="xid" id="xid" value="{{this._id}}">
+    <div class="item"><a onclick="loadItems('{{this._id}}')" class="fs-6 fw-bolder text-gray-900 text-hover-primary mb-2">{{this.fullname}}</a></div>
+  
+  
+</div>
+													{{/each}}
+												
 												
 											
-												</tr>
-												<!--end::Table row-->
-											</thead>
-											<!--end::Table head-->
-											<!--begin::Table body-->
-											<tbody class="fw-bold text-gray-600">
-												<!--begin::Table row-->
-												{{#each listX}}
-												<tr>
-													<!--begin::Date=-->
-													<td>{{this.date}}</td>
-													<!--end::Date=-->
-													<!--begin::No Orders=-->
-													<td class="text-end pe-0">{{this.salesPerson}}</td>
-                                                    <td class="text-end pe-0">{{this.code}}</td>  
+													<script>
+										/*function getValue(val){  
+     //search goes here (you can use either startswith or includes)
+  /*console.log(val,'val')
+    var $searchBox = $('#searcher');
+var $userDivs = document.querySelector(' [data-kt-element="users"]');
 
-													<td class="text-end pe-0">{{this.sales}}</td>
-													<td class="text-end pe-0">{{this.month}}</td>
-													<td class="text-end pe-0">{{this.year}}</td>
-													<!--<td class="text-end pe-0">{{this.year}}</td>-->
+$searchBox.on('input', function() {
+  var scope = this;
+  if (!scope.value || scope.value == '') {
+    $userDivs.show();
+    return;
+  }
+
+  $userDivs.each(function(i, div) {
+    var $div = $(div);
+    $div.toggle($div.text().toLowerCase().indexOf(scope.value.toLowerCase()) > -1);
+  })
+});*/
+
+
+
+/*$("#searcher").keyup(function () {
+  var filter = $(this).val().trim().toLowerCase();
+  $('.fs-6.fw-bolder.text-gray-900.text-hover-primary.mb-2').each(function () {
+    if ($(this).find("a").text().toLowerCase().includes(filter)) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
+});*/
+/*}	*/		
+
+/*
+$(document).ready(function(){
+console.log('flint')
+ var $search = $("#searcher").on('input',function(){
+        //$btns.removeClass('active');
+		
+        var matcher = new RegExp($(this).val(), 'gi');
+        $('.ms-4').show().not(function(){
+            return matcher.test($(this).find('.ms-3').text())
+        }).hide();		
+		   })
+		   
+		   })*/
+
+
+
+		/*   var input = document.getElementById("searcher");
+input.addEventListener("input", myFunction);
+
+function myFunction(e) {
+  var filter = e.target.value.toUpperCase();
+
+
+  var list = document.getElementById("list")
+  console.log(list,'list')
+  var divs = list.getElementsByTagName("div");
+  console.log(divs,'divs')
+  for (var i = 0; i < divs.length; i++) {
+    var a = divs[i].getElementsByTagName("a")[0];
+
+    if (a) {
+      if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        divs[i].style.display = "";
+      } else {
+        divs[i].style.display = "none";
+      }
+    }
+  }
+
+}*/
+
+function getValue(val){  
+     //search goes here 
+
+     document.querySelectorAll('.item').forEach(item => {
+       if(item.textContent.toLowerCase().startsWith(val.toLowerCase())) {
+         item.style.display = 'block';
+		
+       } else {
+         item.style.display = 'none';
+       }
+     });
+}
+		   
+		
+ 						
+						 						</script>
+													<!--begin::Separator-->
+													<div class="separator separator-dashed d-none"></div>
+													<!--end::Separator-->
+													<!--begin::User-->
 													
-													<!--begin::Products sold=-->
-													<td class="text-end">
-														<a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-														<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-														<span class="svg-icon svg-icon-5 m-0">
+													<!--end::User-->
+												</div>
+												<!--end::List-->
+											</div>
+											<!--end::Card body-->
+										</div>
+										<!--end::Contacts-->
+									</div>
+									<!--end::Search-->
+
+									
+<script>
+
+	
+function loadItems(id){
+
+
+	console.log(id,"id")
+
+  $.ajax({
+    dataType: 'json',
+    data: {
+     code:id
+        
+    },
+    type: 'POST',
+    url: "/accounts5/autoClientProfile",
+    success: function(data) {
+
+document.getElementById('img').src = 'uploads/'+data.photo
+document.getElementById('fullname').innerText = data.fullname
+document.getElementById('name2').innerText = data.fullname
+document.getElementById('balance').innerText = data.balance
+document.getElementById('class1').innerText = data.casesSold
+document.getElementById('address').innerText = data.address
+document.getElementById('mobile2').innerText = data.mobile
+document.getElementById('email2').innerText = data.email
+console.log(data,'6ix data')
+ 
+
+ loadInvoices(data._id)
+	}
+	})
+}
+
+	</script>
+
+	<script>
+		function loadInvoices(id){
+
+  
+			
+	console.log(id,"id")
+
+  $.ajax({
+    dataType: 'json',
+    data: {
+     code:id
+        
+    },
+    type: 'POST',
+    url: "/accounts5/autoClientInvoices",
+    success: function(data) {
+
+document.getElementById("kt_schedule_day_1").innerHTML = ""
+var list = document.getElementById("kt_schedule_day_1");
+
+function addText(data) {
+  for (var i = 0; i < data.length; i++) {
+    var text = data[i].invoiceNumber;
+    
+      var listItem = document.createElement("div");
+	  listItem.className = "d-flex flex-stack position-relative mt-8";
+	      var listItem1 = document.createElement("div");
+		  listItem1.className = "position-absolute h-100 w-4px bg-primary rounded top-0 start-0";
+      var listItem2 = document.createElement("div");
+	  	listItem2.className = "fw-bold ms-5 text-gray-600";
+	        var listItem3 = document.createElement("div");
+			listItem3.className = "fs-5";
+			 var listItem4 = document.createElement("span");
+			 listItem4.className = "fs-7 text-gray-400 text-uppercase";
+			  var listItem5 = document.createElement("a");
+
+			  
+     // listItem.textContent = text;
+
+		listItem5.href = "#";
+	listItem5.className = "fs-5 fw-bolder text-gray-800 text-hover-primary mb-2";
+listItem5.textContent ='INVOICE NUMBER'+" "+ data[i].invoiceNumber
+	var listItem6 = document.createElement("div");
+	listItem6.className = "text-gray-400"
+	//listItem6.textContent =data[i].status
+
+
+	var listItem7 = document.createElement("a");
+	listItem7.className = "btn btn-bg-light btn-active-color-primary btn-sm"
+	listItem7.textContent ="View"
+	listItem7.target = "_blank"
+	listItem7.href ="/accounts5/statementGenSales/"+data[i].invoiceNumber
+				  var listItem8 = document.createElement("a");
+
+			  
+     // listItem.textContent = text;
+
+		listItem8.href = "#";
+		listItem8.textContent =data[i].status
+		
+      list.appendChild(listItem);
+	  listItem.appendChild(listItem1);
+	  //listItem1.appendChild(listItem1);
+	  listItem.appendChild(listItem2)
+	  listItem2.appendChild(listItem3);
+	  listItem3.appendChild(listItem4);
+	  listItem4.appendChild(listItem5);
+	  listItem.append(listItem6)
+	  listItem6.append(listItem8)
+	   listItem.append(listItem7)
+
+    
+  }
+}
+
+addText(data);
+
+
+
+	}
+	})
+		}
+	</script>
+									<!--begin::Content-->
+									<div class="col-xl-6">
+										<!--begin::Contacts-->
+										<div class="card card-flush h-lg-100" id="kt_contacts_main">
+											<!--begin::Card header-->
+											<div class="card-header pt-7" id="kt_chat_contacts_header">
+												<!--begin::Card title-->
+												<div class="card-title">
+													<!--begin::Svg Icon | path: icons/duotune/communication/com005.svg-->
+													<span class="svg-icon svg-icon-1 me-2">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z" fill="black" />
+															<path opacity="0.3" d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z" fill="black" />
+														</svg>
+													</span>
+													<!--end::Svg Icon-->
+													<h2>SalesPerson Details</h2>
+												</div>
+												<!--end::Card title-->
+												<!--begin::Card toolbar-->
+												<div class="card-toolbar gap-3">
+													<!--begin::Chat-->
+													<button class="btn btn-sm btn-light btn-active-light-primary" data-kt-drawer-show="true" data-kt-drawer-target="#kt_drawer_chat">
+													<!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+													<span class="svg-icon svg-icon-2">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="black" />
+															<rect x="6" y="12" width="7" height="2" rx="1" fill="black" />
+															<rect x="6" y="7" width="12" height="2" rx="1" fill="black" />
+														</svg>
+													</span>
+													<!--end::Svg Icon-->Chat</button>
+													<!--end::Chat-->
+													<!--begin::Chat-->
+													<a href="/clerk/compose" class="btn btn-sm btn-light btn-active-light-primary">
+													<!--begin::Svg Icon | path: icons/duotune/communication/com007.svg-->
+													<span class="svg-icon svg-icon-2">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+															<path opacity="0.3" d="M8 8C8 7.4 8.4 7 9 7H16V3C16 2.4 15.6 2 15 2H3C2.4 2 2 2.4 2 3V13C2 13.6 2.4 14 3 14H5V16.1C5 16.8 5.79999 17.1 6.29999 16.6L8 14.9V8Z" fill="black" />
+															<path d="M22 8V18C22 18.6 21.6 19 21 19H19V21.1C19 21.8 18.2 22.1 17.7 21.6L15 18.9H9C8.4 18.9 8 18.5 8 17.9V7.90002C8 7.30002 8.4 6.90002 9 6.90002H21C21.6 7.00002 22 7.4 22 8ZM19 11C19 10.4 18.6 10 18 10H12C11.4 10 11 10.4 11 11C11 11.6 11.4 12 12 12H18C18.6 12 19 11.6 19 11ZM17 15C17 14.4 16.6 14 16 14H12C11.4 14 11 14.4 11 15C11 15.6 11.4 16 12 16H16C16.6 16 17 15.6 17 15Z" fill="black" />
+														</svg>
+													</span>
+													<!--end::Svg Icon-->Message</a>
+													<!--end::Chat-->
+													<!--begin::Action menu-->
+													<a href="#" class="btn btn-sm btn-icon btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen052.svg-->
+														<span class="svg-icon svg-icon-2">
 															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black" />
+																<rect x="10" y="10" width="4" height="4" rx="2" fill="black" />
+																<rect x="17" y="10" width="4" height="4" rx="2" fill="black" />
+																<rect x="3" y="10" width="4" height="4" rx="2" fill="black" />
 															</svg>
 														</span>
-														<!--end::Svg Icon--></a>
-														<!--begin::Menu-->
-														<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-															<!--begin::Menu item-->
-															<div class="menu-item px-3">
-																<a href="/accounts5/batchRemitt/{{this._id}}/{{this.code}}" class="menu-link px-3">Cash Remitt</a>
-															</div>
-
-													<!--<div class="menu-item px-3">
-																<a href="/receiver/update/{{this._id}}" class="menu-link px-3">Update Cases</a>
-															</div>-->
-															
-															<!--end::Menu item-->
+														<!--end::Svg Icon-->
+													</a>
+													<!--begin::Menu-->
+													<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+														<!--begin::Menu item--
+														<div class="menu-item px-3">
+															<a href="../../demo1/dist/apps/contacts/edit-contact.html" class="menu-link px-3">Edit</a>
 														</div>
-														<!--end::Menu-->
-													</td>
+														<!--end::Menu item-->
+														<!--begin::Menu item--
+														<div class="menu-item px-3">
+															<a href="#" class="menu-link px-3" id="kt_contact_delete" data-kt-redirect="../../demo1/dist/apps/contacts/getting-started.html">Delete</a>
+														</div>
+														<!--end::Menu item-->
+													</div>
+													<!--end::Menu-->
+													<!--end::Action menu-->
+												</div>
+												<!--end::Card toolbar-->
+											</div>
+											<!--end::Card header-->
+											<!--begin::Card body-->
+											<div class="card-body pt-5">
+												<!--begin::Profile-->
+												<div class="d-flex gap-7 align-items-center">
+													<!--begin::Avatar-->
+													<div class="symbol symbol-circle symbol-100px">
+														<img src="uploads/{{listX.0.photo}}" alt="image" id="img" />
+													</div>
+													<!--end::Avatar-->
+													<!--begin::Contact details-->
+													<div class="d-flex flex-column gap-2">
+														<!--begin::Name-->
+														<h3 class="mb-0" id="fullname">{{listX.0.fullname}}</h3>
+														<!--end::Name-->
+														<!--begin::Email-->
+														<div class="d-flex align-items-center gap-2">
+															<!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
+															<span class="svg-icon svg-icon-2">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="black" />
+																	<path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="black" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<a href="#" class="text-muted text-hover-primary" id="email2">{{listX.0.email}}</a>
+														</div>
+														<!--end::Email-->
+														<!--begin::Phone-->
+														<div class="d-flex align-items-center gap-2">
+															<!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
+															<span class="svg-icon svg-icon-2">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z" fill="black" />
+																	<path opacity="0.3" d="M19 4H5V20H19V4Z" fill="black" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<a href="#" class="text-muted text-hover-primary" id="mobile2">{{listX.0.mobile}}</a>
+														</div>
+														<!--end::Phone-->
+													</div>
+													<!--end::Contact details-->
+												</div>
+												<!--end::Profile-->
+												<!--begin:::Tabs-->
+												<ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-bold mt-6 mb-8">
+													<!--begin:::Tab item-->
+													<li class="nav-item">
+														<a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_contact_view_general">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen001.svg-->
+														<span class="svg-icon svg-icon-4 me-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<path d="M11 2.375L2 9.575V20.575C2 21.175 2.4 21.575 3 21.575H9C9.6 21.575 10 21.175 10 20.575V14.575C10 13.975 10.4 13.575 11 13.575H13C13.6 13.575 14 13.975 14 14.575V20.575C14 21.175 14.4 21.575 15 21.575H21C21.6 21.575 22 21.175 22 20.575V9.575L13 2.375C12.4 1.875 11.6 1.875 11 2.375Z" fill="black" />
+															</svg>
+														</span>
+														<!--end::Svg Icon-->General</a>
+													</li>
+													<!--end:::Tab item-->
+													<!--begin:::Tab item-->
+													<li class="nav-item">
+														<a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_contact_view_meetings">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+														<span class="svg-icon svg-icon-4 me-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V5C2 4.4 2.4 4 3 4H21C21.6 4 22 4.4 22 5V21C22 21.6 21.6 22 21 22Z" fill="black" />
+																<path d="M6 6C5.4 6 5 5.6 5 5V3C5 2.4 5.4 2 6 2C6.6 2 7 2.4 7 3V5C7 5.6 6.6 6 6 6ZM11 5V3C11 2.4 10.6 2 10 2C9.4 2 9 2.4 9 3V5C9 5.6 9.4 6 10 6C10.6 6 11 5.6 11 5ZM15 5V3C15 2.4 14.6 2 14 2C13.4 2 13 2.4 13 3V5C13 5.6 13.4 6 14 6C14.6 6 15 5.6 15 5ZM19 5V3C19 2.4 18.6 2 18 2C17.4 2 17 2.4 17 3V5C17 5.6 17.4 6 18 6C18.6 6 19 5.6 19 5Z" fill="black" />
+																<path d="M8.8 13.1C9.2 13.1 9.5 13 9.7 12.8C9.9 12.6 10.1 12.3 10.1 11.9C10.1 11.6 10 11.3 9.8 11.1C9.6 10.9 9.3 10.8 9 10.8C8.8 10.8 8.59999 10.8 8.39999 10.9C8.19999 11 8.1 11.1 8 11.2C7.9 11.3 7.8 11.4 7.7 11.6C7.6 11.8 7.5 11.9 7.5 12.1C7.5 12.2 7.4 12.2 7.3 12.3C7.2 12.4 7.09999 12.4 6.89999 12.4C6.69999 12.4 6.6 12.3 6.5 12.2C6.4 12.1 6.3 11.9 6.3 11.7C6.3 11.5 6.4 11.3 6.5 11.1C6.6 10.9 6.8 10.7 7 10.5C7.2 10.3 7.49999 10.1 7.89999 10C8.29999 9.90003 8.60001 9.80003 9.10001 9.80003C9.50001 9.80003 9.80001 9.90003 10.1 10C10.4 10.1 10.7 10.3 10.9 10.4C11.1 10.5 11.3 10.8 11.4 11.1C11.5 11.4 11.6 11.6 11.6 11.9C11.6 12.3 11.5 12.6 11.3 12.9C11.1 13.2 10.9 13.5 10.6 13.7C10.9 13.9 11.2 14.1 11.4 14.3C11.6 14.5 11.8 14.7 11.9 15C12 15.3 12.1 15.5 12.1 15.8C12.1 16.2 12 16.5 11.9 16.8C11.8 17.1 11.5 17.4 11.3 17.7C11.1 18 10.7 18.2 10.3 18.3C9.9 18.4 9.5 18.5 9 18.5C8.5 18.5 8.1 18.4 7.7 18.2C7.3 18 7 17.8 6.8 17.6C6.6 17.4 6.4 17.1 6.3 16.8C6.2 16.5 6.10001 16.3 6.10001 16.1C6.10001 15.9 6.2 15.7 6.3 15.6C6.4 15.5 6.6 15.4 6.8 15.4C6.9 15.4 7.00001 15.4 7.10001 15.5C7.20001 15.6 7.3 15.6 7.3 15.7C7.5 16.2 7.7 16.6 8 16.9C8.3 17.2 8.6 17.3 9 17.3C9.2 17.3 9.5 17.2 9.7 17.1C9.9 17 10.1 16.8 10.3 16.6C10.5 16.4 10.5 16.1 10.5 15.8C10.5 15.3 10.4 15 10.1 14.7C9.80001 14.4 9.50001 14.3 9.10001 14.3C9.00001 14.3 8.9 14.3 8.7 14.3C8.5 14.3 8.39999 14.3 8.39999 14.3C8.19999 14.3 7.99999 14.2 7.89999 14.1C7.79999 14 7.7 13.8 7.7 13.7C7.7 13.5 7.79999 13.4 7.89999 13.2C7.99999 13 8.2 13 8.5 13H8.8V13.1ZM15.3 17.5V12.2C14.3 13 13.6 13.3 13.3 13.3C13.1 13.3 13 13.2 12.9 13.1C12.8 13 12.7 12.8 12.7 12.6C12.7 12.4 12.8 12.3 12.9 12.2C13 12.1 13.2 12 13.6 11.8C14.1 11.6 14.5 11.3 14.7 11.1C14.9 10.9 15.2 10.6 15.5 10.3C15.8 10 15.9 9.80003 15.9 9.70003C15.9 9.60003 16.1 9.60004 16.3 9.60004C16.5 9.60004 16.7 9.70003 16.8 9.80003C16.9 9.90003 17 10.2 17 10.5V17.2C17 18 16.7 18.4 16.2 18.4C16 18.4 15.8 18.3 15.6 18.2C15.4 18.1 15.3 17.8 15.3 17.5Z" fill="black" />
+															</svg>
+														</span>
+														<!--end::Svg Icon-->Invoices</a>
+													</li>
+													<!--end:::Tab item-->
+													<!--begin:::Tab item-->
+													<li class="nav-item">
+														<a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_contact_view_activity">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen056.svg-->
+														<span class="svg-icon svg-icon-4 me-1">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<path d="M16.0077 19.2901L12.9293 17.5311C12.3487 17.1993 11.6407 17.1796 11.0426 17.4787L6.89443 19.5528C5.56462 20.2177 4 19.2507 4 17.7639V5C4 3.89543 4.89543 3 6 3H17C18.1046 3 19 3.89543 19 5V17.5536C19 19.0893 17.341 20.052 16.0077 19.2901Z" fill="black" />
+															</svg>
+														</span>
+														<!--end::Svg Icon-->Activity</a>
+													</li>
+													<!--end:::Tab item-->
+												</ul>
+												<!--end:::Tabs-->
+												<!--begin::Tab content-->
+												<div class="tab-content" id="">
+													<!--begin:::Tab pane-->
+													<div class="tab-pane fade show active" id="kt_contact_view_general" role="tabpanel">
+														<!--begin::Additional details-->
+														<div class="d-flex flex-column gap-5 mt-7">
+															<!--begin::Company name-->
+															<div class="d-flex flex-column gap-1">
+																<div class="fw-bolder text-muted">Balance</div>
+																<div class="fw-bolder fs-5" id="balance">{{listX.0.balance}}</div>
+															</div>
+															<!--end::Company name-->
+															<!--begin::City-->
+															<div class="d-flex flex-column gap-1">
+																<div class="fw-bolder text-muted">Cases Sold</div>
+																<div class="fw-bolder fs-5" id="class1">{{listX.0.casesSold}}</div>
+															</div>
+															<!--end::City-->
+															<!--begin::Country-->
+															<div class="d-flex flex-column gap-1">
+																<div class="fw-bolder text-muted">Address</div>
+																<div class="fw-bolder fs-5" id="address">{{listX.0.address}}</div>
+															</div>
+															<!--end::Country-->
+															<!--begin::Notes-->
+															<div class="d-flex flex-column gap-1">
+																<div class="fw-bolder text-muted">Notes</div>
+																<p id="name2">{{listX.0.fullname}} is one of our best sellers.
+																<br />
+																<!--<br />{{listX.0.fullname}} now heads a team of 5 associates and leads the company's sales growth by 7%.</p>-->
+															</div>
+															<!--end::Notes-->
+														</div>
+														<!--end::Additional details-->
+													</div>
+													<!--end:::Tab pane-->
+													<!--begin:::Tab pane-->
+													<div class="tab-pane fade" id="kt_contact_view_meetings" role="tabpanel">
+														<!--begin::Dates-->
 													
-													<!--end::Tax=-->
-													<!--begin::Total=-->
-													
-													<!--end::Total=-->
-												</tr>
-												<!--end::Table row-->
-												<!--begin::Table row-->
-												{{/each}}
-												<!--end::Table row-->
-											</tbody>
-											<!--end::Table body-->
-										</table>
-										<!--end::Table-->
-									</div>
-									<!--end::Card body-->
-								</div>
-								<!--end::Products-->
-							</div>
-							<!--end::Container-->
-						</div>
-						<!--end::Post-->
-					</div>
-					<!--end::Content-->
-					<!--begin::Footer-->
+														<!--end::Dates-->
+														<!--begin::Tab Content-->
+															<!--end::Day-->
+															<!--begin::Day-->
+															<div id="kt_schedule_day_1" class="tab-pane fade show active">
+																<!--begin::Time-->
+															
+																<!--end::Time-->
+																<!--begin::Time-->
+																
+													<!--end:::Tab pane-->
+													<!--begin:::Tab pane-->
 					
+		<!--end::Chat drawer-->
+		<!--end::Drawers-->
+		<!--end::Main-->
+		<!--begin::Engage drawers-->
+		<!--begin::Demos drawer-->
+	
+		<!--end::Modal - Create App-->
 		<!--end::Modal - Invite Friend-->
 		<!--end::Modals-->
 		<!--begin::Javascript-->
@@ -434,10 +805,14 @@ Outstanding Bills Payments
 		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 		<!--end::Page Vendors Javascript-->
 		<!--begin::Page Custom Javascript(used by this page)-->
-		<script src="assets/js/custom/apps/ecommerce/reports/sales/sales.js"></script>
+		<script src="assets/js/custom/apps/contacts/view-contact.js"></script>
 		<script src="assets/js/widgets.bundle.js"></script>
 		<script src="assets/js/custom/widgets.js"></script>
-
+		<script src="assets/js/custom/apps/chat/chat.js"></script>
+		<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+		<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
 	</body>
 	<!--end::Body-->

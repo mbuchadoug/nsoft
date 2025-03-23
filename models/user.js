@@ -72,6 +72,13 @@ var userSchema = new mongoose.Schema({
     expiryMformat: {type: String },
     expiryDate: {type: String },
     refNumDispatch:{type:String},
+    balance: {type: Number },
+    casesSold: {type: Number },
+    uid: {type: String },
+    address: {type: String },
+    mobile: {type: String },
+    region: {type: String },
+    photo: {type: String },
     password: {type: String, required: true}
    
 });

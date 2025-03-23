@@ -1,13 +1,16 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var batchCashRemitt = new Schema({
+var suspense = new Schema({
   
    date: {type: String},
+   totalBeforeExpenses: {type: Number},
    amount: {type: Number},
-   batchNumber: {type: String},
+   totalAfterExpenses: {type: Number},
    code: {type: String},
    batchId: {type: String},
+   salesPerson: {type: String},
+   driver: {type: String},
    month: {type: String},
    year: {type: String},
     
@@ -15,4 +18,4 @@ var batchCashRemitt = new Schema({
    
 });
 
-module.exports = mongoose.model('BatchCashRemitt', batchCashRemitt);
+module.exports = mongoose.model('Suspense', suspense);

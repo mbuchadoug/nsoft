@@ -17,6 +17,7 @@ var BatchRR = require('../models/batchRR');
 var InvoiceSubBatch= require('../models/invoiceSubBatch');
 var RtnsSubBatch= require('../models/rtnsSubBatch');
 var SaleStock = require('../models/salesStock');
+var StockUpdate = require('../models/stockUpdate');
 var BatchD = require('../models/batchD');
 var InvoNum = require('../models/invoNum');
 var RefNo = require('../models/refNo');
@@ -9534,6 +9535,334 @@ router.get('/vicUpdate',function(req,res){
   })
 })
 
+router.get('/stockUpdate',isLoggedIn,function(req,res){
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  SalesList.find(function(err,nocs){
+  res.render('dispatcher/batchR',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,arr1:nocs})
+
+  })
+})
+
+router.post('/stockUpdate',isLoggedIn,function(req,res){
+  var m = moment()
+  var year = m.format('YYYY')
+  var arrV=[]
+  let number1
+  var date =  m.format('L')
+
+var month = m.format('MMMM')
+var no1 = req.body.no1
+var no2 = req.body.no2
+var no3 = req.body.no3
+let sales
+var lite = req.body.lite
+var salesPerson = req.body.salesPerson
+  /*var id = req.params.id
+  let openingStock, sales, salesPerson
+
+  var cases = req.body.cases
+  console.log(cases,'cases')*/
+
+  console.log(no1,no2,no3,lite,'masikizi')
+//let  cases = no1 + no2 + no3 + lite
+let sales1, sales2, sales3, sales4
+let status1, status2, status3, status4
+let price1,price2,price3,price4
+let product1, product2,product3,product4
+let reg = /\d+\.*\d*/g;
+let n1 = no1.match(reg)
+let k1 = Number(n1)
+
+let n2 = no2.match(reg)
+let k2 = Number(n2)
+
+let  n3 = no3.match(reg)
+let k3 = Number(n3)
+
+
+
+let n4 = lite.match(reg)
+let k4 = Number(n4)
+
+console.log(k1,k2,k3,k4,'ks')
+let  cases = k1 + k2 + k3 + k4
+console.log(cases,'cases')
+
+
+  req.check('no1','Enter Closing Stock for No1').notEmpty();
+  req.check('no2','Enter Closing Stock for No2').notEmpty();
+  req.check('no3','Enter Closing Stock for No3').notEmpty();
+  req.check('lite','Enter Closing Stock for Lite').notEmpty();
+           
+                  
+               
+                 
+    
+          
+       
+  var errors = req.validationErrors();
+      if (errors) {
+  
+      
+        req.session.errors = errors;
+        req.session.success = false;
+        req.flash('danger', req.session.errors[0].msg);
+
+
+    res.redirect('/dispatch/stockUpdate');
+        
+      
+    }
+
+    else{
+  
+      let date6 =  moment(date).format('l');
+      let dateValue = moment(date).valueOf()
+    
+      let date7 =  date6.replace(/\//g, "");
+      RefNo.find({date:date,type:"sales"},function(err,docs){
+        let size = docs.length + 1
+        let refNo = date7+'SALES'+size
+  SaleStock.find({product:'kambucha No1',salesPerson:salesPerson},function(err,doc){
+    openingStock = doc[0].holdingCases
+     salesPerson = doc[0].salesPerson
+    sales1 = doc[0].holdingCases - k1
+    let sid = doc[0]._id
+    price1 = doc[0].price
+    salesPersonId = doc[0].salesPersonId
+    product1 = doc[0].product
+    console.log(sales1,'sales')
+  SaleStock.findByIdAndUpdate(sid,{$set:{holdingCases:no1,openingBal:openingStock,openingStock:openingStock,closingStock:no1}},function(err,docs){
+
+    
+  })
+
+  if(sales1 <= 0){
+    status1 = 'closed'
+  }else{
+    status1 = 'null'
+  }
+  var batch = new StockUpdate();
+
+  
+
+  batch.date = date
+  batch.product = 'kambucha No1'
+  batch.openingStock = openingStock
+  batch.closingStock = no1
+  batch.sales = sales1
+  batch.price = price1
+  batch.salesPerson = salesPerson
+  batch.salesPersonId = salesPersonId
+  batch.code = refNo
+  batch.month= month
+  batch.status= status1
+  batch.variance= 0
+  batch.year= year
+  batch.save()
+  .then(pro =>{
+
+
+   
+    })
+
+
+  SaleStock.find({salesPerson:salesPerson,product:'kambucha No2'},function(err,doc){
+   let openingStock2 = doc[0].holdingCases
+    
+    sales2 = doc[0].holdingCases - k2
+    let sid = doc[0]._id
+    console.log(sales2,'sales2')
+    price2 = doc[0].price
+  SaleStock.findByIdAndUpdate(sid,{$set:{holdingCases:no2,openingBal:openingStock2,openingStock:openingStock2,closingStock:no2}},function(err,docs){
+
+    
+  })
+
+
+  if(sales2 <= 0){
+    status2 = 'closed'
+  }else{
+    status2 = 'null'
+  }
+  var batch = new StockUpdate();
+
+  
+
+  batch.date = date
+  batch.product = 'kambucha No2'
+  batch.openingStock = openingStock2
+  batch.closingStock = no2
+  batch.sales = sales2
+  batch.price = price2
+  batch.salesPerson = salesPerson
+  batch.salesPersonId = salesPersonId
+  batch.code = refNo
+  batch.month= month
+  batch.status= status2
+  batch.variance= 0
+  batch.year= year
+  batch.save()
+  .then(pro =>{
+
+
+   
+    })
+
+
+
+
+
+SaleStock.find({salesPerson:salesPerson,product:'kambucha No3'},function(err,doc){
+ let openingStock3 = doc[0].holdingCases
+ 
+  let sales3 = doc[0].holdingCases - k3
+  price3 = doc[0].price
+  console.log(sales3,'sales3')
+  let sid = doc[0]._id
+SaleStock.findByIdAndUpdate(sid,{$set:{holdingCases:no3,openingBal:openingStock3,openingStock:openingStock3,closingStock:no3}},function(err,docs){
+
+  
+})
+if(sales3 <= 0){
+  status3 = 'closed'
+}else{
+  status3 = 'null'
+}
+var batch = new StockUpdate();
+
+  
+
+  batch.date = date
+  batch.product = 'kambucha No3'
+  batch.openingStock = openingStock3
+  batch.closingStock = no3
+  batch.sales = sales3
+  batch.price = price3
+  batch.salesPerson = salesPerson
+  batch.salesPersonId = salesPersonId
+  batch.code = refNo
+  batch.month= month
+  batch.status= status3
+  batch.variance= 0
+  batch.year= year
+  batch.save()
+  .then(pro =>{
+
+
+   
+    })
+
+
+
+
+
+
+
+SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,doc){
+ let openingStock4 = doc[0].holdingCases
+  // salesPerson = doc[0].salesPerson
+ let sales4 = doc[0].holdingCases - k4
+ console.log(sales4,'sales4')
+  let sid = doc[0]._id
+  price4 = doc[0].price
+SaleStock.findByIdAndUpdate(sid,{$set:{holdingCases:lite,openingBal:openingStock4,openingStock:openingStock4,closingStock:lite}},function(err,docs){
+
+  
+})
+
+if(sales4 <= 0){
+  status4 = 'closed'
+}else{
+  status4 = 'null'
+}
+var batch = new StockUpdate();
+
+  
+
+  batch.date = date
+  batch.product = 'kambucha lite'
+  batch.openingStock = openingStock4
+  batch.closingStock = lite
+ batch.sales = sales4
+ batch.price = price4
+  batch.salesPerson = salesPerson
+  batch.salesPersonId = salesPersonId
+  batch.code = refNo
+  batch.month= month
+  batch.status= status4
+  batch.variance= 0
+  batch.year= year
+  batch.save()
+  .then(pro =>{
+
+
+    
+StockUpdate.find({code:refNo},function(err,docs){
+  for(var i = 0;i<docs.length; i++){
+    // console.log(docs[i].newMass,'serima')
+   arrV.push(docs[i].sales)
+     }
+     //adding all incomes from all lots of the same batch number & growerNumber & storing them in variable called total
+    //console.log(arrV,'arrV')
+   
+   //InvoiceSubBatch.find({invoiceNumber:invoiceNumber},function(err,docs){
+   number1=0;
+   for(var z in arrV) { number1 += arrV[z]; }
+
+
+console.log(number1,'sales')
+  var batch = new BatchStockUpdate();
+
+  
+
+    batch.date = date
+    //batch.openingStock = openingStock
+    batch.closingStock = cases
+    batch.sales = number1
+    batch.salesPerson = salesPerson
+    batch.salesPersonId = salesPersonId
+    batch.code = refNo
+    batch.month= month
+    batch.status= 'null'
+    batch.variance= 0
+    batch.year= year
+    batch.save()
+    .then(pro =>{
+
+      var book = new RefNo();
+                book.refNumber = refNo
+        
+                book.date = date
+                book.type = 'sales'
+                book.save()
+                .then(prod =>{
+            
+                  res.redirect('/dispatch/salesList')
+            
+                })
+
+     
+      })
+    })
+
+   
+    })
+
+ 
+  })
+
+})
+})
+})
+
+})
+
+    }
+})
+
+
 
 
 router.get('/salesList',isLoggedIn,function(req,res){
@@ -9542,7 +9871,7 @@ router.get('/salesList',isLoggedIn,function(req,res){
   })
 })
 
-router.get('/updateStock/:id',isLoggedIn,function(req,res){
+/*router.get('/updateStock/:id',isLoggedIn,function(req,res){
   var id = req.params.id
 res.render('dispatcher/update',{id:id})
 })
@@ -9601,8 +9930,17 @@ var month = m.format('MMMM')
       res.redirect('/dispatch/salesList')
     })
 })
-})
+})*/
 
+
+
+router.post('/batchAutoSales',function(req,res){
+  var salesPerson = req.body.code
+  //console.log(product,'pro7')
+  SaleStock.find({salesPerson:salesPerson},function(err,docs){
+    res.send(docs)
+  })
+})
 
 
 

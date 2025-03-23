@@ -281,41 +281,124 @@ Outstanding Bills Payments
            <main class="product-content-container"><div class="column content-column">
              <div class="fill header"> 
                <button class="icon-button close-details-header close-details float-end close-detailspage" type="button" data-ember-action="" data-ember-action-369="369"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" xml:space="preserve" class="icon icon-sm align-text-top" aria-hidden="true"><path d="M455.2 9.2L256 208.4 56.8 9.2C44.5-3.1 24.6-3.1 12.2 9.2l-2.9 2.9C-3 24.4-3 44.4 9.3 56.7L208.4 256 9.2 455.2c-12.3 12.3-12.3 32.3 0 44.6l2.9 2.9c12.3 12.3 32.3 12.3 44.6 0L256 303.6l199.2 199.2c12.3 12.3 32.3 12.3 44.6 0l2.9-2.9c12.3-12.3 12.3-32.3 0-44.6L303.6 256 502.8 56.8c12.3-12.3 12.3-32.3 0-44.6l-2.9-2.9c-12.5-12.4-32.4-12.4-44.7-.1z"></path></svg></button> 
-             <h3>Enter Float</h3></div>
+             <h3>Update Stock</h3></div>
   <div class="scroll-y noscroll-x fill body scrollbox">
-<form method="POST" action="/accounts5/batchRemitt/{{id}}/{{code}}" class="item-creation">
+    
+      	<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" {{#if noMessages}}hidden{{/if}}>
+            {{ successMsg }}
+     
+        </div>
+    </div>
+						
+		<div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="danger" class="alert alert-danger" {{#if noMessages2}}hidden{{/if}}>
+            {{ errorMsg }}
+     
+        </div>
+    </div>	
+    
+{{# if success }}
+    <section class="success">
+        <h2>Successful Validation!</h2>
+    </section>
+{{ else }}
+    {{# if errors }}
+        <section class="errors">
+            <ul>
+                {{# each errors }}
+                    <li>{{ this.msg }}</li>
+                {{/each}}
+            </ul>
+        </section>
+
+        {{/if}}
+        {{#if message}}
+        <div  class="p-3 mb-2 bg-danger txt-white">
+            <strong class="p-3 mb-2 bg-danger txt-white">{{message.intro}}</strong>{{message.message}}
+        </div>
+        {{/if}}
+
+<form method="POST" action="/dispatch/stockUpdate" class="item-creation">
 
 
   <div class="zb-txn-form overflow-container w-100">
 <div tabindex="-1" id="ember370" class="no-outline ember-view"><!----></div> 
 
 
-<div class="form-group row">
-<label class="col-lg-2 col-form-label required">SalesPerson</label> 
+<div class="form-group row" >
+    <label class="col-lg-2 col-form-label required">Salesperson</label> 
     <div class="col-lg-4">
-      <input type="text"  id="salesPerson" name="salesPerson" class="ember-text-field zf-date-picker date-picker ember-view form-control" value="{{salesPerson}}" ></div>
+
+      <input class="form-select form-select-solid" list="sales"  name="salesPerson" id="salesPerson" onchange="changeSalesPerson(this.value)" value="{{user.salesPerson}}">
+
+<datalist id="sales">
+       {{#each arr1}}
+  <option value="{{this.salesPerson}}">{{this.salesPerson}} </option>
+                  {{/each}}
+
+</datalist>
+     <!--<select class="form-select form-select-solid" name="warehouse" id="warehouse"   >
+			<option></option>
+			<option value="warehouse1" >Warehouse 1</option>
+			<option value="warehouse2" >Warehouse 2</option>
+																	
+																		
+			</select>-->
+      </div></div>
+
+  <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha No1  Opening Stock</label> 
+    <div class="col-lg-4">
+      <input type="number"  id="no1op" name="no1op" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly ></div>
       </div>
 
-      
 <div class="form-group row">
-<label class="col-lg-2 col-form-label required">Date</label> 
+<label class="col-lg-2 col-form-label required">Kambucha No1  Closing Stock</label> 
     <div class="col-lg-4">
-      <input type="text"  id="date" name="date" class="ember-text-field zf-date-picker date-picker ember-view form-control"  value="{{date}}"></div>
+      <input type="number"  id="no1" name="no1" class="ember-text-field zf-date-picker date-picker ember-view form-control" ></div>
       </div>
 
 
-      
-<div class="form-group row">
-<label class="col-lg-2 col-form-label required">Code</label> 
+      <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha No2  Opening Stock</label> 
     <div class="col-lg-4">
-      <input type="text"  id="code" name="code" class="ember-text-field zf-date-picker date-picker ember-view form-control" value="{{code}}" ></div>
+      <input type="number"  id="no2op" name="no2op" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly ></div>
       </div>
 
-      
-<div class="form-group row">
-<label class="col-lg-2 col-form-label required">Float ($)</label> 
+
+      <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha No2  Closing Stock</label> 
     <div class="col-lg-4">
-      <input type="number"  id="amount" name="amount" class="ember-text-field zf-date-picker date-picker ember-view form-control" ></div>
+      <input type="number"  id="no2" name="no2" class="ember-text-field zf-date-picker date-picker ember-view form-control" ></div>
+      </div>
+
+
+
+
+       <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha No3  Opening Stock</label> 
+    <div class="col-lg-4">
+      <input type="number"  id="no3op" name="no3op" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly ></div>
+      </div>
+
+       <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha No3  Closing Stock</label> 
+    <div class="col-lg-4">
+      <input type="number"  id="no3" name="no3" class="ember-text-field zf-date-picker date-picker ember-view form-control" ></div>
+      </div>
+
+
+        <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha Lite  Opening Stock</label> 
+    <div class="col-lg-4">
+      <input type="number"  id="liteop" name="liteop" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly></div>
+      </div>
+
+       <div class="form-group row">
+<label class="col-lg-2 col-form-label required">Kambucha Lite  Closing Stock</label> 
+    <div class="col-lg-4">
+      <input type="number"  id="lite" name="lite" class="ember-text-field zf-date-picker date-picker ember-view form-control" ></div>
       </div>
 
  <div class="row"><!----></div>
@@ -325,11 +408,76 @@ Outstanding Bills Payments
         
                     </div></div>
                     </form> 
+                      {{/if}}
   <div class="txn-creation-column">
     <div class="btn-toolbar fixed-actions">
     <div class="btn-group">
       <button id="ember406" class="btn btn-primary ember-view" type="submit"> Save</button></div>
                     </main> 
+
+
+
+                        
+                            <script>
+
+                              function changeSalesPerson(salesPerson){
+    console.log(salesPerson,'salesPerson')
+
+                                            
+     $.ajax({
+     dataType: 'json',
+  
+     type: 'POST',
+     url: "/dispatch/batchAutoSales",
+     data:{code:salesPerson},
+     
+ 
+       success: function(data) {
+         console.log(data.length,'batch')
+
+for(var i = 0;i<data.length;i++){
+  if(data[i].product == 'kambucha No1'){
+    document.getElementById('no1op').value = data[i].holdingCases
+  }else if(data[i].product == 'kambucha No2'){
+    document.getElementById('no2op').value = data[i].holdingCases
+  }else if(data[i].product == 'kambucha No3'){
+    document.getElementById('no3op').value = data[i].holdingCases
+  }else if(data[i].product == 'kambucha lite'){
+     document.getElementById('liteop').value = data[i].holdingCases
+  }
+}
+         
+
+
+
+/*for (var i = 0; i < data.length; i++) {
+  var optco = data[i];
+  var opt = document.createElement('option');
+  opt.textContent = optco.refNumber +'|'+'Cases:'+''+optco.statsRemainingCases+'| '+optco.warehouse;
+  opt.value = optco.refNumber;
+  select.appendChild(opt);
+
+}*/
+
+ 
+       }
+ 
+   })
+ }
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                            </script>
                         
 <script type="text/javascript"> 
  	document.getElementById('dateV').value = new Date().toJSON().slice(0,10).replace(/-/g,'/'); 

@@ -3418,7 +3418,52 @@ router.post('/update/:id/',isLoggedIn,function(req,res){
           }
         })
       })
-    }else if(ingredient == 'colour'){
+    }
+    else if(ingredient == 'rosemary'){
+
+      
+      BatchRR.find({batchNumber:refNumberV},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+
+        RawMatX.find({batchNumber:refNumberV},function(err,docs){
+          //console.log(docs,'ferm')
+          for(var i = 0;i<docs.length;i++){
+            let idR = docs[i]._id
+            
+            RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+        
+            })
+          }
+        })
+      })
+    }
+    
+    else if(ingredient == 'thyme'){
+
+      
+      BatchRR.find({batchNumber:refNumberV},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+
+        RawMatX.find({batchNumber:refNumberV},function(err,docs){
+          //console.log(docs,'ferm')
+          for(var i = 0;i<docs.length;i++){
+            let idR = docs[i]._id
+            
+            RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+        
+            })
+          }
+        })
+      })
+    }
+    
+    else if(ingredient == 'colour'){
       
       Cooking.find({batchNumber:refNumberV},function(err,hocs){
 
@@ -3546,7 +3591,52 @@ Cooking.find({code:id},function(err,ocs){
           })
         }
       })
-    }else if(ingredient == 'tea'){
+    }
+    else if(ingredient == 'rosemary'){
+
+      
+      BatchRR.find({batchNumber:refNumberV},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+      })
+
+      RawMatX.find({batchNumber:refNumberV},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+    }
+    
+    else if(ingredient == 'thyme'){
+
+      
+      BatchRR.find({batchNumber:refNumberV},function(err,ocs){
+        let idC = ocs[0]._id
+        BatchRR.findByIdAndUpdate(idC,{$set:{code:num}},function(err,uocs){
+
+        })
+      })
+
+      RawMatX.find({batchNumber:refNumberV},function(err,docs){
+        //console.log(docs,'ferm')
+        for(var i = 0;i<docs.length;i++){
+          let idR = docs[i]._id
+          
+          RawMatX.findByIdAndUpdate(idR,{$set:{code:num}},function(er,tocs){
+      
+          })
+        }
+      })
+    }
+    
+    else if(ingredient == 'tea'){
       
       BatchGingerCrush.find({batchNumber:refNumberV},function(err,jocs){
         let refNum = jocs[0].refNumber

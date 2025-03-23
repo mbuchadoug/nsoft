@@ -7532,6 +7532,45 @@ router.get('/updateSalesStock4',isLoggedIn,function(req,res){
    if(ocs.length == 0){*/
 
       var sale =SaleStock();
+      sale.product = 'kambucha lite'
+      sale.casesReceived = 0
+      sale.openingBal = 0
+      sale.holdingCases = 0
+      sale.salesPerson = salesPerson
+      sale.qty = 0
+      sale.price = 1
+      
+      sale.save()
+      .then(pas =>{
+
+     
+
+      })
+    
+
+    }
+
+/*})
+    }*/
+    res.redirect('/updateSalesStock5')
+  })
+})
+
+
+
+
+router.get('/updateSalesStock5',isLoggedIn,function(req,res){
+  
+  SalesList.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+   let  salesPerson = docs[i].salesPerson
+
+     
+  /*SaleStock.find({salesPerson:salesPerson,product:'kambucha lite'},function(err,ocs){
+    console.log(ocs.length,'length')
+   if(ocs.length == 0){*/
+
+      var sale =SaleStock();
       sale.product = 'manyuchi'
       sale.casesReceived = 0
       sale.openingBal = 0

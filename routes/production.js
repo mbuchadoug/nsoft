@@ -283,6 +283,18 @@ router.get('/rawUnit',function(req,res){
       })
     }
 
+    else if(item == 'rosemary'){
+      RawMat.findByIdAndUpdate(id,{$set:{unit:'(bags)'}},function(err,locs){
+
+      })
+    }
+
+    else if(item == 'thyme'){
+      RawMat.findByIdAndUpdate(id,{$set:{unit:'(bags)'}},function(err,locs){
+
+      })
+    }
+
     else {
       RawMat.findByIdAndUpdate(id,{$set:{unit:'(kgs)'}},function(err,locs){
 
@@ -2952,6 +2964,10 @@ console.log(id,'fermentationPreload')
       unit = 'tanks'
     }else if(ingredient== 'sugar'){
       unit = 'bags'
+    }else if(ingredient== 'rosemary'){
+      unit = 'bags'
+    }else if(ingredient== 'thyme'){
+      unit = 'bags'
     }
     
     
@@ -3242,6 +3258,130 @@ console.log(id,'fermentationPreload')
                         })
 
                         FinalProduct.find({ingredient:"honey",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
+                        })
+        
+                      }
+
+                      else if(ingredient == 'rosemary'){
+                  
+                        RawMat.find({item:'rosemary',stage:'raw'},function(err,tocs){
+                          let opBal = tocs[0].uniqueMeasure - pro.quantity
+                          //let opBalTonnes = opBal / 1000
+                          let id4 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
+              
+                        })  
+              
+                        })
+        
+        
+                        RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                          let opBal2 = tocs[0].uniqueMeasure + pro.quantity
+                         // let opBalTonnes2 = opBal2 / 1000
+                          let id5 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,uniqueMeasure:opBal2},function(err,locs){
+                  
+                        })  
+                  
+                        })
+
+
+                        var book = new RawMatX();
+                        book.refNumber = refNumber
+                        book.batchNumber = batchNumber
+                        book.date = date
+                        book.unit = '(bags)'
+                        book.tanks = tanks
+                        book.stage = 'fermentation'
+                        book.uniqueMeasure = pro.quantity
+                        book.item = ingredient
+                        book.save()
+                        .then(prod =>{
+                    
+                         
+                    
+                        })
+
+                        FinalProduct.find({ingredient:"rosemary",refNumber:refNumber},function(err,roc){
+                          if(roc){
+                            let rocId = roc[0]._id
+                            let rocQty = roc[0].quantity - quantity
+                        
+                            if(rocQty > 0){
+                        
+                              FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:rocQty}},function(err,yoc){
+                        
+                              })
+                            }else{
+                            FinalProduct.findByIdAndUpdate(rocId,{$set:{quantity:0,status:"closed"}},function(err,yoc){
+                                
+                              })
+                            }
+                        
+                          }
+                        })
+        
+                      }
+
+
+
+                      else if(ingredient == 'thyme'){
+                  
+                        RawMat.find({item:'thyme',stage:'raw'},function(err,tocs){
+                          let opBal = tocs[0].uniqueMeasure - pro.quantity
+                          //let opBalTonnes = opBal / 1000
+                          let id4 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id4,{massKgs:opBal,uniqueMeasure:opBal},function(err,locs){
+              
+                        })  
+              
+                        })
+        
+        
+                        RawMat.find({item:ingredient,stage:'fermentation'},function(err,tocs){
+                          let opBal2 = tocs[0].uniqueMeasure + pro.quantity
+                         // let opBalTonnes2 = opBal2 / 1000
+                          let id5 = tocs[0]._id
+                        RawMat.findByIdAndUpdate(id5,{massKgs:opBal2,uniqueMeasure:opBal2},function(err,locs){
+                  
+                        })  
+                  
+                        })
+
+
+                        var book = new RawMatX();
+                        book.refNumber = refNumber
+                        book.batchNumber = batchNumber
+                        book.date = date
+                        book.unit = '(bags)'
+                        book.tanks = tanks
+                        book.stage = 'fermentation'
+                        book.uniqueMeasure = pro.quantity
+                        book.item = ingredient
+                        book.save()
+                        .then(prod =>{
+                    
+                         
+                    
+                        })
+
+                        FinalProduct.find({ingredient:"thyme",refNumber:refNumber},function(err,roc){
                           if(roc){
                             let rocId = roc[0]._id
                             let rocQty = roc[0].quantity - quantity

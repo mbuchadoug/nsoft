@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var invoPaymentSchema = new Schema({
 
     date: {type: String },
+    code: {type: String },
     product:{type:String},
     paymentStatus:{type:String},
     amount:{type:Number},
@@ -30,6 +31,7 @@ var invoPaymentSchema = new Schema({
     customerEmail:{type:String},
     status: {type: String },
     salesPerson: {type: String },
+    salesPersonId:{type:String},
     batchId: {type: String },
     refNumber: {type: String },
     batchNumber: {type: String },

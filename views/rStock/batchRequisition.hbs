@@ -299,10 +299,11 @@ ul.no-bullets {
       <option value="sugar">Sugar</option>
       <option value="blackPepper">Black Pepper</option>
       <option value="rosemary">Rosemary</option>
+      <option value="thyme">Thyme</option>
                                                                     
     </select>  </div></div>
 
-      <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Stock On Hand (kgs)</label> 
+      <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Stock On Hand</label> 
 <div class="col-lg-4">
 <input type="number" name="stock" id="stock" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly >
 
@@ -312,12 +313,12 @@ ul.no-bullets {
 
 
 
-      <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Stock On Hand (tonnes)</label> 
+    <!--  <div class="form-group row" ><label for="aefdd00cb" class="col-lg-2 col-form-label">Stock On Hand (tonnes)</label> 
 <div class="col-lg-4">
 <input type="number" name="stockT" id="stockT" class="ember-text-field zf-date-picker date-picker ember-view form-control" readonly >
 
 </div>
-</div>
+</div>-->
 
 
    <div class="form-group row" >
@@ -427,9 +428,9 @@ ul.no-bullets {
 
          
 document.getElementById('stock').value ='';
-document.getElementById('stockT').value ='';
-document.getElementById('stock').value = data[0].massKgs
-document.getElementById('stockT').value = data[0].massTonnes
+//document.getElementById('stockT').value ='';
+document.getElementById('stock').value = data[0].uniqueMeasure+''+data[0].unit
+//document.getElementById('stockT').value = data[0].massTonnes
 
 
 if(item == 'ginger'){
@@ -463,6 +464,10 @@ document.getElementById('prefix').value ='BLP';
 
 else if(item == 'rosemary'){
 document.getElementById('prefix').value ='ROS';
+}
+
+else if(item == 'thyme'){
+document.getElementById('prefix').value ='THY';
 }
 /*for (var i = 0; i < data.length; i++) {
   var optco = data[i];
