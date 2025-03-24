@@ -470,13 +470,14 @@ res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, 
   router.post('/stockRequisition',isLoggedIn,function(req,res){
     var item =req.body.rawMaterial
     var stockWeight = req.body.stock
-    var stockTonne = req.body.stockT
+    //var stockTonne = req.body.stockT
     var requestedMass = req.body.qty
     var name = req.user.fullname
     var userId  = req.user._id
     var dept = req.user.dept
     var description = req.body.description
     var unit = req.body.unit
+    var unitMeasure = req.body.unitMeasure
     var uid = req.user._id
     var prefix = req.body.prefix
     var year = 2025
@@ -562,7 +563,8 @@ res.render('rStock/batchRequisition',{successMsg: successMsg,errorMsg:errorMsg, 
         user.unit = unit
         user.year = year
         user.dateValue = dateValue
-        user.currentMassTonnes = stockTonne
+        //user.currentMassTonnes = stockTonne
+        user.unitMeasure = unitMeasure
         user.currentMassKgs = stockWeight
         user.requestedMass = requestedMass
         user.voucherNumber = voucherNumber

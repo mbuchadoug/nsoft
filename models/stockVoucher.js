@@ -31,6 +31,7 @@ var stockVoucher = new Schema({
     requestedMassKgs:{type:Number},
     date:{type:String},
     unit:{type:String},
+    unitMeasure:{type:String},
     voucherNumber:{type:Number},
    
     
