@@ -2621,7 +2621,24 @@ res.redirect('/accounts5/updatedStock')
              
           
       
-      
+    
+router.get('/suspense',isLoggedIn,function(req,res){
+  Suspense.find(function(err,docs){
+  
+    let arr=[]
+    for(var i = docs.length - 1; i>=0; i--){
+  
+      arr.push(docs[i])
+    }
+  
+    res.render('accounts5/suspense',{listX:arr})
+  
+  })
+  
+  
+  
+  })
+  
       
       
       
