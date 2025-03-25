@@ -377,6 +377,18 @@ router.get('/dash',isLoggedIn,function(req,res){
 
 
 
+router.get('/dashG',isLoggedIn,function(req,res){
+  var pro = req.user
+  //res.render('admin/dash6',{pro:pro})
+  Product.find({},function(err,docs){
+ Warehouse.find({},function(err,hocs){
+  res.render('production/dashG',{pro:pro,arr:docs,arr1:hocs})
+})
+  })
+})
+
+
+
 router.post('/dashChartStockSub',isLoggedIn,function(req,res){
 
   

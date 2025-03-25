@@ -18,6 +18,7 @@ var batchSchemaRR = new Schema({
     voucherNo:{type:Number},
     lossMargin:{type:Number},
     buckets:{type:Number},
+    crates:{type:Number},
     voucherId:{type:String},
     invoiceNumber:{type:Number},
     openingWeightKg:{type:Number},

@@ -491,17 +491,17 @@ this.firstElementChild.select();
   <script>
 
             function add() {
-              // let crates = document.getElementById('crates').value 
+               let crates = document.getElementById('crates').value 
                let supplier = document.getElementById('supplier').value 
-                let mass = document.getElementById('mass').value 
-             //  let crateWeight = document.getElementById('crateWeight').value
+                //let mass = document.getElementById('mass').value 
+               let crateWeight = document.getElementById('crateWeight').value
                   if(confirm('Are you sure your want to Capture Mass?'))
    {
 
-     /*if(crates== "" || crateWeight == "" ){
+     if(crates== "" || crateWeight == "" ){
  alert('Enter Number of Buckets Or Weight')
-     }*/
-     if(supplier == ""){
+     }
+     else if(supplier == ""){
   alert('Reload Page')
      }
      /*else if(mass == ""){
@@ -510,7 +510,7 @@ this.firstElementChild.select();
      }*/
      else{
       
-      //let mass = crates * crateWeight
+      let mass = crates * crateWeight
       let lossMargin = 0
        let refNumber = document.getElementById('grvNumber').value      
             $.ajax({
@@ -637,12 +637,12 @@ link.classList.add('text-end','pe-0')*/
     <input  id="reqMass" name="reqMass" class="ember-text-field ember-view form-control" type="text"  value="{{mass}}" readonly></div>
 
 
-   <!-- <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Enter Crates</label> 
+    <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Enter Crates</label> 
     <input  id="crates" name="crates" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
     
     
         <div class="col-lg-2"><label for="a5a1572c4" class="col-form-label">Avg Weight</label> 
-    <input  id="crateWeight" name="crateWeight" class="ember-text-field ember-view form-control" type="number"  value="" ></div>-->
+    <input  id="crateWeight" name="crateWeight" class="ember-text-field ember-view form-control" type="number"  value="" ></div>
    
     
     
@@ -725,7 +725,7 @@ link.classList.add('text-end','pe-0')*/
           <button onclick="add()" class="btn btn-primary ember-view" > Receive </button>
        <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm/closeBatchRMBanana/{{refNumber}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view"  onclick="return confirm('Are you sure you want to Close this batch ?');" href="/rm/closeBatchRM/{{refNumber}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>

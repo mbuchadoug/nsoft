@@ -2922,6 +2922,66 @@ router.get('/closeBatchRMRosemary/:id',isLoggedIn,function(req,res){
     
   
   
+
+    
+
+
+
+  router.get('/closeBatchRMBanana/:id',isLoggedIn,function(req,res){
+    var id = req.params.id
+    res.render('rStock/updateB',{id:id})
+    
+    })
+    
+    router.post('/closeBatchRMBanana/:id',isLoggedIn,function(req,res){
+      var id = req.params.id
+      var crates = req.body.crates
+
+      
+      req.check('crates','Enter Crates').notEmpty();
+               
+                      
+                   
+                     
+        
+              
+           
+        var errors = req.validationErrors();
+            if (errors) {
+        
+            
+              req.session.errors = errors;
+              req.session.success = false;
+              req.flash('danger', req.session.errors[0].msg);
+      
+      
+          res.redirect('/rm/closeBatchRMBanana/'+id);
+              
+            
+          }
+      else{
+        let lossMargin = crates * 3
+    StockRM.find({refNumber:id},function(err,docs){
+      if(docs){
+      for(var i = 0;i<docs.length;i++){
+        let sId = docs[i]._id
+        StockRM.findByIdAndUpdate(sId,{$set:{crates:crates,lossMargin:lossMargin,unitMeasure:'crates'}},function(err,locs){
+    
+        })
+      }
+      let batchId = docs[0].batchId
+      BatchRR.findByIdAndUpdate(batchId,{$set:{crates:crates,lossMargin:lossMargin,unitMeasure:"crates"}},function(err,vocs){
+    
+      })
+      }
+    
+      res.redirect('/rm/closeBatchRM/'+id)
+    })
+      }
+    })
+    
+  
+  
   
 
 
@@ -3554,6 +3614,7 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let refNumber = docs[size].refNumber
   let lossMargin = docs[size].lossMargin
   let buckets = docs[size].buckets
+  let crates = docs[size].crates
   let bags = docs[size].bags
   let driver = docs[size].driver
   let regNumber = docs[size].regNumber
@@ -3568,7 +3629,8 @@ router.get('/stockRMFile/:id',isLoggedIn,function(req,res){
   let openingWeightTonne = docs[size].openingWeightTonne
   console.log(openingWeightTonne,'openingWeightTonne')
   let weight = docs[size].closingMass - docs[size].lossMargin
-
+ console.log(docs[size].closingMass, docs[size].lossMargin,'lossMargin')
+  console.log(weight,'weight55')
   console.log(docs[size].closingMass, docs[size].lossMargin,weight,'weight')
   //let weightTonne = docs[size].closingMass / 1000
   let weightTonne = weight / 1000
@@ -3670,6 +3732,30 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
     }
 
 
+    else if(hocs[0].item == 'bananas'){
+      let massKgs = hocs[0].massKgs + weight
+      let uniqueMeasure = hocs[0].uniqueMeasure + crates
+      let massTonnes = hocs[0].massTonnes + weightTonne
+      let idRaw = hocs[0]._id
+      /*if(hocs[0].stage == 'raw'){
+    BatchGingerWash.find({refNumber2:id},function(err,nocs){
+    
+      if(nocs.length > 0){
+        let idG = nocs[0]._id
+    BatchGingerWash.findByIdAndUpdate(idG,{$set:{qtyInMass:massKgs,qtyOutMass:massKgs}},function(err,focs){
+    
+    })
+      }
+    })
+      }*/
+    
+      RawMat.findByIdAndUpdate(idRaw,{$set:{massKgs:massKgs,massTonnes:massTonnes,uniqueMeasure:uniqueMeasure}},function(err,nocs){
+    
+      })
+    
+    }
+
+
 
     
 
@@ -3747,7 +3833,7 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
 
   }*/
 
-   var https = require('follow-redirects').https;
+  /* var https = require('follow-redirects').https;
                 var fs = require('fs');
                 
                 var options = {
@@ -3791,7 +3877,7 @@ RawMat.find({item:item,stage:'raw'},function(err,hocs){
                 
                 req.write(postData);
                 
-                req.end();
+                req.end();*/
               
   
 })

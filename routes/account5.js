@@ -6,6 +6,7 @@ var User = require('../models/user');
 var InvoPayments = require('../models/invoPayments');
 var SalesInvoPayments = require('../models/salesInvoPayments');
 var BatchStockUpdate = require('../models/batchStockUpdate');
+var SaleStats = require('../models/saleStats');
 var BatchCashRemitt = require('../models/batchCashRemitt');
 var Ware = require('../models/ware');
 var Suspense = require('../models/suspense');
@@ -122,7 +123,443 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 
 
+router.get('/productStat',function(req,res){
+  var max
+    var m = moment()
+    var year = m.format('YYYY')
+    var arr = []
+  
+    SaleStats.find({year:year}, function(err,locs){
+      console.log(locs.length,'length')
+      if(locs.length == 0){
+  var std = SaleStats();
+  std.bestSeller = 0;
+  std.bestSellingProduct = 0;
+  std.worstSeller = 0;
+  std.worstSellingProduct = 0;
 
+  std.bestSellerX = 'null';
+  std.bestSellingProductX = 'null';
+
+  std.worstSellerX = 'null';
+  std.worstSellingProductX = 'null';
+  std.year = year;
+  
+  
+  std.save()
+  .then(std=>{
+  
+    SalesInvoPayments.find({year:year},function(err,docs) {
+      // console.log(docs,'docs')
+      if(docs.length > 0){
+       for(var i = 0;i<docs.length;i++){
+   
+       
+          if(arr.length > 0 && arr.find(value => value.product  == docs[i].product )){
+                 console.log('true')
+                arr.find(value => value.product  == docs[i].product ).cases += docs[i].cases;
+           }else{
+   arr.push(docs[i])
+           }
+   
+         }
+       
+      // console.log(arr,'arr')
+      //res.send(arr)
+   max = arr[0].cases
+   let max2
+   for(var i = 0;i< arr.length;i++){
+     if(arr[i].cases >= max){
+       max = arr[i].cases
+       max2 = arr[i].product
+     }
+   }
+   console.log(max,'max')
+   console.log(max2,'shop')
+   SaleStats.findByIdAndUpdate(std._id,{$set:{bestSellingProduct:max,bestSellingProductX:max2}},function(err,kocs){
+  
+  
+  })
+}
+     })
+  
+     
+  
+  })
+      }else{
+        SalesInvoPayments.find({year:year},function(err,docs) {
+          // console.log(docs,'docs')
+          if(docs.length > 0){
+           for(var i = 0;i<docs.length;i++){
+       
+           
+              if(arr.length > 0 && arr.find(value => value.product  == docs[i].product )){
+                     console.log('true')
+                    arr.find(value => value.product  == docs[i].product ).cases += docs[i].cases;
+               }else{
+       arr.push(docs[i])
+               }
+       
+             }
+           
+          // console.log(arr,'arr')
+          //res.send(arr)
+       max = arr[0].cases
+       let max2
+       for(var i = 0;i< arr.length;i++){
+         if(arr[i].cases >= max){
+           max = arr[i].cases
+           max2 = arr[i].product
+         }
+       }
+       console.log(max,'max')
+       console.log(max2,'shop')
+       SaleStats.findByIdAndUpdate(locs[0]._id,{$set:{bestSellingProduct:max,bestSellingProductX:max2}},function(err,kocs){
+      
+      
+      })
+    }
+         })
+        
+      }
+  //res.redirect('/accounts5/dashG')
+      })
+  
+    })
+
+    ////////////sales
+
+    
+
+router.get('/productStatSales',function(req,res){
+  var max
+    var m = moment()
+    var year = m.format('YYYY')
+    var arr = []
+  
+    SaleStats.find({year:year}, function(err,locs){
+      console.log(locs.length,'length')
+      if(locs.length == 0){
+  var std = SaleStats();
+  std.bestSeller = 0;
+  std.bestSellingProduct = 0;
+  std.worstSeller = 0;
+  std.worstSellingProduct = 0;
+
+  std.bestSellerX = 'null';
+  std.bestSellingProductX = 'null';
+
+  std.worstSellerX = 'null';
+  std.worstSellingProductX = 'null';
+  std.year = year;
+  
+  
+  std.save()
+  .then(std=>{
+  
+    SalesInvoPayments.find({year:year},function(err,docs) {
+      // console.log(docs,'docs')
+      if(docs.length > 0){
+       for(var i = 0;i<docs.length;i++){
+   
+       
+          if(arr.length > 0 && arr.find(value => value.salesPerson  == docs[i].salesPerson )){
+                 console.log('true')
+                arr.find(value => value.salesPerson  == docs[i].salesPerson ).cases += docs[i].cases;
+           }else{
+   arr.push(docs[i])
+           }
+   
+         }
+       
+      // console.log(arr,'arr')
+      //res.send(arr)
+   max = arr[0].cases
+   let max2
+   for(var i = 0;i< arr.length;i++){
+     if(arr[i].cases >= max){
+       max = arr[i].cases
+       max2 = arr[i].salesPerson
+     }
+   }
+   console.log(max,'max')
+   console.log(max2,'shop')
+   SaleStats.findByIdAndUpdate(std._id,{$set:{bestSeller:max,bestSellerX:max2}},function(err,kocs){
+  
+  
+  })
+}
+     })
+  
+     
+  
+  })
+      }else{
+        SalesInvoPayments.find({year:year},function(err,docs) {
+          // console.log(docs,'docs')
+          if(docs.length > 0){
+           for(var i = 0;i<docs.length;i++){
+       
+           
+              if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson )){
+                     console.log('true')
+                    arr.find(value => value.salesPerson  == docs[i].salesPerson ).cases += docs[i].cases;
+               }else{
+       arr.push(docs[i])
+               }
+       
+             }
+           
+          // console.log(arr,'arr')
+          //res.send(arr)
+       max = arr[0].cases
+       let max2
+       for(var i = 0;i< arr.length;i++){
+         if(arr[i].cases >= max){
+           max = arr[i].cases
+           max2 = arr[i].salesPerson
+         }
+       }
+       console.log(max,'max')
+       console.log(max2,'shop')
+       SaleStats.findByIdAndUpdate(locs[0]._id,{$set:{bestSeller:max,bestSellerX:max2}},function(err,kocs){
+      
+      
+      })
+    }
+         })
+        
+      }
+  //res.redirect('/accounts5/dashG')
+      })
+  
+    })
+
+
+router.post('/dashChart1',isLoggedIn,function(req,res){
+  var product = req.body.product
+  //var shop = req.body.shop
+
+  var date = req.body.date
+  var arr = []
+  var id = req.user._id
+  let num = req.user.num
+  num++
+  
+  var m = moment(date)
+  console.log(date.split('-')[0])
+  var startDate = date.split('-')[0]
+  var endDate = date.split('-')[1]
+   var startValueA = moment(startDate)
+   var startValueB=startValueA.subtract(1,"days");
+   var startValue = moment(startValueB).valueOf()
+
+   var endValueA = moment(endDate)
+   var endValueB = endValueA.add(1,"days");
+   var endValue= moment(endValueB).valueOf()
+  console.log(startValue,endValue,'output')
+
+
+  SalesInvoPayments.find({product:product},function(err,docs) {
+   // console.log(docs,'docs')
+    for(var i = 0;i<docs.length;i++){
+
+      let sdate = docs[i].dateValue
+      if(sdate >= startValue && sdate <= endValue){
+        //console.log(docs[i],'docs')
+       if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson)){
+              console.log('true')
+             arr.find(value => value.salesPerson == docs[i].salesPerson).cases += docs[i].cases;
+        }else{
+arr.push(docs[i])
+        }
+
+      }
+    }
+   // console.log(arr,'arr')
+   res.send(arr)
+  })
+
+})
+
+
+
+router.post('/dashChart4',isLoggedIn,function(req,res){
+ 
+
+ 
+  var date = req.body.date
+  console.log(date,'date4')
+  var arr = []
+  var id = req.user._id
+  let num = req.user.num
+  num++
+  
+  var m = moment(date)
+  console.log(date.split('-')[0])
+  var startDate = date.split('-')[0]
+  var endDate = date.split('-')[1]
+   var startValueA = moment(startDate)
+   var startValueB=startValueA.subtract(1,"days");
+   var startValue = moment(startValueB).valueOf()
+
+   var endValueA = moment(endDate)
+   var endValueB = endValueA.add(1,"days");
+   var endValue= moment(endValueB).valueOf()
+  //console.log(startValue,endValue,'output')
+
+
+  SalesInvoPayments.find(function(err,docs) {
+    for(var i = 0;i<docs.length;i++){
+
+      let sdate = docs[i].dateValue
+      if(sdate >= startValue && sdate <= endValue){
+        
+       if(arr.length > 0 && arr.find(value => value.product == docs[i].product)){
+              console.log('true')
+             arr.find(value => value.product== docs[i].product).cases += docs[i].cases;
+        }else{
+arr.push(docs[i])
+        }
+
+      }
+    }
+    //console.log(arr,'arr')
+   res.send(arr)
+  })
+
+})
+
+
+
+router.post('/dashChart5',isLoggedIn,function(req,res){
+ 
+
+ 
+  var date = req.body.date
+  var arr = []
+  var id = req.user._id
+  let num = req.user.num
+  num++
+  
+  var m = moment(date)
+  console.log(date.split('-')[0])
+  var startDate = date.split('-')[0]
+  var endDate = date.split('-')[1]
+   var startValueA = moment(startDate)
+   var startValueB=startValueA.subtract(1,"days");
+   var startValue = moment(startValueB).valueOf()
+
+   var endValueA = moment(endDate)
+   var endValueB = endValueA.add(1,"days");
+   var endValue= moment(endValueB).valueOf()
+  console.log(startValue,endValue,'output')
+
+
+  SalesInvoPayments.find(function(err,docs) {
+    for(var i = 0;i<docs.length;i++){
+
+      let sdate = docs[i].dateValue
+      if(sdate >= startValue && sdate <= endValue){
+        
+       if(arr.length > 0 && arr.find(value => value.salesPerson == docs[i].salesPerson)){
+              console.log('true')
+             arr.find(value => value.salesPerson== docs[i].salesPerson).cases += docs[i].cases;
+        }else{
+arr.push(docs[i])
+        }
+
+      }
+    }
+    //console.log(arr,'arr')
+   res.send(arr)
+  })
+
+})
+
+
+
+router.post('/dashChartG1',isLoggedIn,function(req,res){
+
+ 
+  var m = moment()
+  var year = m.format('YYYY')
+  var arr = []
+  var id = req.user._id
+
+  
+
+
+
+  SalesInvoPayments.find({year:year},function(err,docs) {
+    for(var i = 0;i<docs.length;i++){
+
+   
+        
+       if(arr.length > 0 && arr.find(value => value.month == docs[i].month)){
+              console.log('true')
+             arr.find(value => value.month == docs[i].month).cases += docs[i].cases;
+        }else{
+arr.push(docs[i])
+        }
+
+    
+    }
+    //console.log(arr,'arr')
+   res.send(arr)
+  })
+
+})
+
+
+
+router.post('/dashChartG2',isLoggedIn,function(req,res){
+
+ 
+  var m = moment()
+  var year = m.format('YYYY')
+  var arr = []
+  var id = req.user._id
+
+  let product = req.body.product
+
+
+
+  SalesInvoPayments.find({product:product,year:year},function(err,docs) {
+    for(var i = 0;i<docs.length;i++){
+
+   
+        
+       if(arr.length > 0 && arr.find(value => value.month == docs[i].month)){
+              console.log('true')
+             arr.find(value => value.month == docs[i].month).cases+= docs[i].cases;
+        }else{
+arr.push(docs[i])
+        }
+
+    
+    }
+    //console.log(arr,'arr')
+   res.send(arr)
+  })
+
+})
+
+
+
+router.post('/dashGX1',isLoggedIn,function(req,res){
+   
+  var m = moment()
+  var year = m.format('YYYY')
+
+  SaleStats.find({year:year},function(rr,docs){
+    if(docs == undefined){
+      res.redirect('/dash')
+    }else
+
+       res.send(docs)
+  })
+})
 
 
 router.get('/grvList',isLoggedIn,function(req,res){
@@ -1581,7 +2018,7 @@ if(docs.length > 0){
            let uid = req.user._id
           var code = req.body.code
           let number1, status, amountX, number2
-          let salesPerson = req.user.fullname
+          let salesPerson = req.body.salesPerson
           let salesPersonId = req.body.salesPersonId
           let date = req.body.date
           let invoiceNumber = req.body.invoiceNumber
