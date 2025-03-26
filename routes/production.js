@@ -180,7 +180,7 @@ router.get('/prefix',function(req,res){
 
 
 router.get('/rawUpdate',function(req,res){
-  RawMat.find(function(err,docs){
+  RawMat.find({item:"thyme"},function(err,docs){
     for(var i = 0; i<docs.length;i++){
       let id = docs[i]._id
       RawMat.findByIdAndUpdate(id,{$set:{uniqueMeasure:0}},function(err,locs){
