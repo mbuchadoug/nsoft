@@ -2806,7 +2806,7 @@ BatchGingerCrush.find({batchNumber:refNumber},function(err,focs){
 
 })
 
-res.redirect('/production/batchListIngredients')
+res.redirect('/production/batchListCooking')
 
 
 })
@@ -2815,7 +2815,7 @@ res.redirect('/production/batchListIngredients')
 
       
 
-      router.get('/batchListIngredients',isLoggedIn,function(req,res){
+      router.get('/batchListCooking',isLoggedIn,function(req,res){
         BatchCooking.find(function(err,docs){
         
           let arr=[]
