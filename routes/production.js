@@ -2814,9 +2814,27 @@ res.redirect('/production/batchListIngredients')
 
 
       
+
+      router.get('/batchListIngredients',isLoggedIn,function(req,res){
+        BatchCooking.find(function(err,docs){
+        
+          let arr=[]
+          for(var i = docs.length - 1; i>=0; i--){
+        
+            arr.push(docs[i])
+          }
+        
+          res.render('production/batchList',{listX:arr})
+        
+        })
+        
+        
+        
+        })
+      
       
  
-router.get('/batchListIngredients',function(req,res){
+/*router.get('/batchListIngredients',function(req,res){
   Ingredients.find(function(err,docs){
   
     let arr=[]
@@ -2832,7 +2850,7 @@ router.get('/batchListIngredients',function(req,res){
   
   
   })
-
+*/
 
 
 
