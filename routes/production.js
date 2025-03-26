@@ -2824,7 +2824,7 @@ res.redirect('/production/batchListCooking')
             arr.push(docs[i])
           }
         
-          res.render('production/batchList',{listX:arr})
+          res.render('production/batchListCooking',{listX:arr})
         
         })
         
