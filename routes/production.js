@@ -153,6 +153,19 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
+ router.get('/updateBTS',function(req,res){
+        BlendingTanks.find(function(err,docs){
+          for(var i = 0;i<docs.length;i++){
+           let id = docs[i]._id
+          BlendingTanks.findByIdAndUpdate(id,{$set:{litres:0,product:"null",refNumber:"null",status:'empty'}},function(err,tocs){
+
+          })
+          }
+          //res.redirect('/rm/warehouseStock')
+        })
+      })
+
+
 
 router.get('/prefix',function(req,res){
   let prefix
@@ -791,6 +804,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
         console.log(id,refNumber,batchId,'refNumber','id')
         GingerWash.find({batchId:batchId,batchNumber:batchNum,refNumber:refNumber,type:'qtyIn'},function(err,docs){
         let item = docs[0].item
+        let bags = docs[0].bags
           for(var i = 0;i<docs.length; i++){
            
           arrV.push(docs[i].newMass)
@@ -802,7 +816,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
           number1=0;
           for(var z in arrV) { number1 += arrV[z]; }
 
-          BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyInMass:number1,status:'qtyIn'}},function(err,vocs){
+          BatchGingerWash.findByIdAndUpdate(batchId,{$set:{qtyInMass:number1,status:'qtyIn',bags:bags}},function(err,vocs){
 
             RawMat.find({item:item,stage:'raw'},function(err,tocs){
               let opBal = tocs[0].massKgs - number1
@@ -865,6 +879,7 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
         var m = moment()
         var id = req.params.id
         var batchNumber = req.params.id2
+        console.log(id,batchNumber,'id,batchNumber')
       
         var mformat = m.format("L")
         
@@ -1203,7 +1218,8 @@ else{
         let refNumber = docs[0].refNumber
         let gingerBatch = docs[0].batchNumber
         let prefix = docs[0].prefix
-      User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:refNumber,batchNumber:gingerBatch}},function(err,vocs){
+        let crates = docs[0].crates
+      User.findByIdAndUpdate(id,{$set:{item:item,crates:crates,date:date,availableMass:availableMass,refNumber:refNumber,batchNumber:gingerBatch}},function(err,vocs){
 
       })
       
@@ -1266,8 +1282,8 @@ else{
           let refNumber = docs[0].refNumber
           let grvNumber = docs[0].grvNumber
           let prefix = docs[0].prefix
-  
-        User.findByIdAndUpdate(id,{$set:{item:item,date:date,availableMass:availableMass,refNumber:grvNumber}},function(err,vocs){
+          let crates = docs[0].crates
+        User.findByIdAndUpdate(id,{$set:{item:item,crates:crates,date:date,availableMass:availableMass,refNumber:grvNumber}},function(err,vocs){
   
         })
         
@@ -1303,7 +1319,7 @@ else{
           truck.save()
               .then(pro =>{
       
-                User.findByIdAndUpdate(id,{$set:{batchNumber:refNo,refNumber:grvNumber,batchId:pro._id}},function(err,vocs){
+                User.findByIdAndUpdate(id,{$set:{batchNumber:refNo,crates:crates,refNumber:grvNumber,batchId:pro._id}},function(err,vocs){
   
                 })
                 var book = new RefNo();
@@ -1343,10 +1359,11 @@ var item = req.user.item
 var date = req.user.date
 var batchNumber = req.user.batchNumber
 var refNumber = req.user.refNumber
-var availableMass = req.user.availableMass
+var availableMass = req.user.crates
 var batchId = req.user.batchId
+var crates = req.user.crates
 
-res.render('production/addMaterialCrush',{batchNumber:batchNumber,
+res.render('production/addMaterialCrush',{batchNumber:batchNumber,crates:crates,
 refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batchId})
 
     
@@ -1407,6 +1424,9 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       let massNum = Number(resultQty)
       
       let total5 = massNum + number1
+
+      let resultCrates = crates.match(reg)
+      let nCrates = Number(resultCrates)
       
       massNum.toFixed(2)
       let size = docs.length + 1
@@ -1426,8 +1446,8 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.batchId = batchId
       stock.totalMass = total5
       stock.openingMass = number1
-      stock.newMass = mass
-      stock.closingMass = massNum + number1
+      stock.newMass = crates
+      stock.closingMass = nCrates + number1
       stock.size = size
       stock.dateValue = dateValue
       
@@ -1500,8 +1520,8 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.batchId = batchId
       stock.totalMass = total5
       stock.openingMass = number1
-      stock.newMass = mass
-      stock.closingMass = massNum + number1
+      stock.newMass = crates
+      stock.closingMass = nCrates+ number1
       stock.size = size
       stock.dateValue = dateValue
       
@@ -1580,8 +1600,8 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.batchId = batchId
       stock.totalMass = total5
       stock.openingMass = number1
-      stock.newMass = mass
-      stock.closingMass = massNum + number1
+      stock.newMass =crates
+      stock.closingMass = nCrates + number1
       stock.size = size
       stock.dateValue = dateValue
       
@@ -1663,8 +1683,8 @@ refNumber:refNumber,availableMass:availableMass,item:item,date:date,batchId:batc
       stock.batchId = batchId
       stock.totalMass = total5
       stock.openingMass = number1
-      stock.newMass = mass
-      stock.closingMass = massNum + number1
+      stock.newMass = crates
+      stock.closingMass = nCrates + number1
       stock.size = size
       stock.dateValue = dateValue
       
@@ -1869,6 +1889,9 @@ console.log(id,'id')
       let massNum = Number(resultQty)
       
       let total5 = massNum + number1
+
+      let resultDrums = drums.match(reg)
+      let nDrums = Number(resultDrums)
       
       massNum.toFixed(2)
       let size = docs.length + 1
@@ -1892,9 +1915,9 @@ console.log(id,'id')
       stock.batchId = batchId
       stock.openingBatchWeightKg = availableMass
       stock.totalMass = total5
-      stock.openingMass = number2
-      stock.newMass = mass
-      stock.closingMass = number2 - massNum
+      stock.openingMass = number1
+      stock.newMass = drums
+      stock.closingMass = nDrums + number1
       stock.size = size
       stock.dateValue = dateValue
       
@@ -2467,8 +2490,8 @@ router.post('/reloadCooking/:id', (req, res) => {
 
   var mformat = m.format("L")
   
-  Cooking.find({refNumber:id},(err, docs) => {
- console.log(docs,'docs')
+  Cooking.find({batchNumber:id},(err, docs) => {
+ console.log(docs,'docsCooking')
     res.send(docs)
             })
 
@@ -2970,7 +2993,7 @@ router.post('/batchFermentation',isLoggedIn,function(req,res){
     })
     })
     
-router.get('/fermentationPreload/:id',isLoggedIn,function(req,res){
+router.post('/fermentationPreload/:id',isLoggedIn,function(req,res){
   var id = req.params.id
 console.log(id,'fermentationPreload')
    Fermentation.find({batchNumber:id},function(err,docs){
@@ -3775,15 +3798,22 @@ router.get('/draining',isLoggedIn,function(req,res){
 
  router.get('/draining/:id/:id2/:id3',isLoggedIn,function(req,res){
 var id = req.params.id
+var refNumber = req.params.id
 var product = req.params.id2
 var availableTanks = req.params.id3
 var litres = availableTanks * 1000
-  res.render('production/drain',{id:id,product:product,availableTanks:availableTanks,litres:litres})
+  res.render('production/drain',{refNumber:refNumber,id:id,product:product,availableTanks:availableTanks,litres:litres})
  })
         
 
 
-
+ router.post('/drainingPreload/:id',isLoggedIn,function(req,res){
+  var id = req.params.id
+console.log(id,'drainingPreload')
+BlendedItems.find({refNumber:id},function(err,docs){
+     res.send(docs)
+   })
+})
 
 
 router.post('/draining/',isLoggedIn,function(req,res){

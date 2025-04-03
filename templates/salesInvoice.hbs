@@ -126191,13 +126191,13 @@ Zimbabwe</span>
 
 			<tr>
 				<td style="padding:5px 10px 5px 0px;" class="pcs-label invoice-details-label"><span>Due Date</span></td>
-				<td><span id="tmp_due_date">08 Sep 2024</span></td>
+				<td><span id="tmp_due_date">08 Sep 2025</span></td>
 			</tr>
 	 </tbody></table>
 	</td>
 
 	<td class="pcs-border text-align-right balance-due-block">
-			<span class="pcs-label"><b>Balance Due </b></span><span><b>USD {{this.0.subtotal}}</b></span>
+			<span class="pcs-label"><b>Balance Due </b></span><span><b>USD 0</b></span>
 	</td>
 
  </tr>
@@ -126212,9 +126212,7 @@ Zimbabwe</span>
 <table class="pcs-itemtable" style="width:100%;margin-top:30px;table-layout:fixed;" border="0" cellspacing="0" cellpadding="0">
     <thead>
 			<tr style="height:32px;">
-			 	    <td style="padding: 5px 0px 5px 5px;width: 5%;text-align: center;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
-      #
-    </td>
+			 
     <td style="padding: 5px 5px 5px 10px;width: ;text-align: left;" id="" class="pcs-itemtable-header pcs-itemtable-breakword">
       Item &amp; Description
     </td>
@@ -126237,9 +126235,7 @@ Zimbabwe</span>
      <tbody class="itemBody">
        {{#each this}}
 	   <tr class="breakrow-inside breakrow-after">
-            <td rowspan="1" valign="top" style="padding: 15px 0 20px 5px;text-align: center;word-wrap: break-word;" class="pcs-item-row">
-              1
-            </td>
+           
 		<td rowspan="1" valign="top" style="padding: 15px 0px 20px 10px;" class="pcs-item-row">
 								<div>
 							<div>
@@ -126303,7 +126299,7 @@ Zimbabwe</span>
         			<tbody>
           			<tr>
                             <td valign="middle" style="padding: 5px 10px 5px 0;" class="pcs-label text-align-right">Sub Total</td>
-                            <td id="tmp_subtotal" class="text-align-right total-section-value">${{listX.0.cumulativeTotal}}</td>
+                            <td id="tmp_subtotal" class="text-align-right total-section-value">${{this.0.cumulativeTotal}}</td>
 
           			</tr>
 
@@ -126318,10 +126314,10 @@ Zimbabwe</span>
             			<td id="tmp_total" class="text-align-right total-section-value"><b>$ {{this.0.cumulativeTotal}}</b></td>
           			</tr>
 
-          			<tr style="height:40px;" class="pcs-balance">
+          			<!--<tr style="height:40px;" class="pcs-balance">
             			<td valign="middle" style="padding:5px 10px 5px 0;" class="text-align-right"><b>Balance Due</b></td>
             			<td id="tmp_balance_due" class="text-align-right total-section-value"><strong>${{this.0.subtotal}}</strong></td>
-          			</tr>
+          			</tr>-->
         		</tbody>
       			</table>
    			</td>

@@ -346,13 +346,12 @@ ul.no-bullets {
 
 <script>
 
-var refNumber = {{{refNumber}}}
 $.ajax({
    
     dataType: 'json',
     type: 'POST',
 	
-    url: "/addMaterial3/"+refNumber,
+    url: `/production/drainingPreload/{{{refNumber}}}`,
     success: function(data) {
     console.log(data)
    
@@ -367,6 +366,7 @@ $.ajax({
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
     var td6 = tr.appendChild(document.createElement('td'));
+     var td7 = tr.appendChild(document.createElement('td'));
     
    
     td1.id =data[i]._id
@@ -381,14 +381,13 @@ link.className = "text-end";*/
 /*let link = document.createTextNode("Delete")
 
 td5.appendChild(link);*/
-
-
-td1.innerHTML = data[i].weight;
-    td2.innerHTML = data[i].openingMass;
+ td1.innerHTML = data[i].date;
+    td2.innerHTML = data[i].tanks;
    // td3.innerHTML = data.casesReceived;
-    td4.innerHTML=  data[i].newMass ;
-    td5.innerHTML = data[i].closingMass
-    td6.innerHTML = data[i].refNumber
+    td4.innerHTML=  data[i].refNumber ;
+    td5.innerHTML=  data[i].blendingTank ;
+    td6.innerHTML = data[i].releasedBy
+    td7.innerHTML = data[i].receivedBy
 
     /*let link2 = "/rec/delete/"+data[i]._id
 
@@ -619,6 +618,8 @@ this.firstElementChild.select();
     
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
     $("#totalMass").val(data.closingMass)
+    $('#blendingTank').val('');
+    $('#availableLitres').val('');
     
   
 
@@ -790,7 +791,7 @@ this.firstElementChild.select();
           <button onclick="add()" class="btn btn-primary ember-view" > Add </button>
        <!-- <button class="btn btn-primary ember-view" id="connect">Connect Scale</button>-->
 
-      <a  class="btn btn-primary ember-view" href="/production/closeDraining/{{id}}"> Close Batch </a>
+      <a  class="btn btn-primary ember-view" onclick="return confirm('Are you sure you want to Close this batch ?');"  href="/production/closeDraining/{{id}}"> Close Batch </a>
 
       <!--<button class="btn btn-primary ember-view" id="disconnect">disConnect Scale</button>-->
        </div>

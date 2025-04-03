@@ -168,6 +168,32 @@ const SINCH_URL= 'https://'+REGION+'.sms.api.sinch.com/xms/v1/' + SERVICE_PLAN_I
 
 const axios = require('axios')
 
+router.get('/salesDetails',function(req,res){
+User.find({role:"sales"},function(err,docs){
+  for(var i = 0;i<docs.length;i++){
+    let id = docs[i]._id
+    User.findByIdAndUpdate(id,{$set:{balance:0,casesSold:0,address:'Granitesite Harare',mobile:"077777777",email:'sales@niyonsoft.com'}},function(err,vocs){
+
+    })
+  }
+})
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get('/text33',function(req,res){
 
 const headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + API_TOKEN}
@@ -2734,6 +2760,132 @@ product.save()
 
 })
 /////
+router.get('/addSalesPerson',function(req,res){
+
+  var errorMsg = req.flash('danger')[0];
+  var successMsg = req.flash('success')[0];
+  User.find({role:"sales"},function(err,nocs){
+  res.render('kambucha/addSalesP',{successMsg: successMsg,errorMsg:errorMsg, noMessages: !successMsg,noMessages2:!errorMsg,arr1:nocs})
+  })
+})
+
+
+router.post('/addSalesPerson', function(req,res){
+  var m = moment()
+
+  var year = m.format('YYYY')
+  var dateValue = m.valueOf()
+
+
+
+var date = m.format('L')
+                    
+          let salesPerson = req.body.salesPerson
+           let product = req.body.product
+          let branch = req.body.branch;
+          let uid = req.body.uid
+         
+              
+                
+                req.check('salesPerson','Enter SalesPerson').notEmpty();
+                 
+              
+               
+                req.check('branch','Enter Branch').notEmpty();
+
+                
+              
+                
+                      
+                   
+                var errors = req.validationErrors();
+                    if (errors) {
+                
+                    
+                      req.session.errors = errors;
+                      req.session.success = false;
+                      req.flash('danger', req.session.errors[0].msg);
+         
+          
+                  res.redirect('/addSalesPerson');
+                      
+                    
+                  }
+                  else{
+                
+                
+                           
+               
+                  SaleStock.findOne({'salesPerson':salesPerson,'product':product,'branch':branch})
+                  .then(user =>{
+                      if(user){ 
+                    // req.session.errors = errors
+                      //req.success.user = false;
+                  
+                  
+                  
+                      req.flash('danger', 'Item already in the system');
+                  
+                      res.redirect('/addSalesPerson')
+                  }
+                  else{
+                  
+                  
+                  
+                  
+                          
+                    var sale =SaleStock();
+                    sale.product =product
+                    sale.casesReceived = 0
+                    sale.openingBal = 0
+                    sale.holdingCases = 0
+                    sale.salesPerson = salesPerson
+                    sale.qty = 0
+                    sale.branch = branch
+                    sale.salesPersonId = uid
+                    sale.price = 9
+                    
+                    sale.save()
+                    .then(pas =>{
+              
+                      req.flash('success', 'Sales Person added Successfully!');
+                      res.redirect('/addSalesPerson')
+                   
+              
+                    })
+                  
+                  }
+                  
+                  })
+                  
+                  
+                  
+                  
+                  }     
+                                 
+                                     
+                   
+                                  
+                                    
+                                    
+                        
+                                   
+                        
+                
+                 
+                  
+
+                  
+})
+
+router.post('/autoSales',function(req,res){
+  var salesPerson = req.body.code
+  //console.log(product,'pro7')
+  User.find({fullname:salesPerson,role:"sales"},function(err,docs){
+    res.send(docs)
+  })
+})
+
 
 router.get('/addSales',function(req,res){
 

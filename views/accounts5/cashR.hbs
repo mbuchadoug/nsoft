@@ -548,6 +548,8 @@ this.firstElementChild.select();
               
        let date = document.getElementById('date').value 
         let code = document.getElementById('code').value 
+        let month = document.getElementById('month').value 
+        let year = document.getElementById('year').value 
        let invoiceNumber= document.getElementById('invoiceNumber').value
        let salesPersonId= document.getElementById('salesPersonId').value
        let salesPerson= document.getElementById('salesPerson').value
@@ -599,7 +601,7 @@ this.firstElementChild.select();
                 dataType: 'json',
                 data: {
                     date: date, invoiceNumber:invoiceNumber,amount:amount,salesPersonId:salesPersonId,
-                    salesPerson:salesPerson,code: code,
+                    salesPerson:salesPerson,code: code,month:month,year:year,
                     customer:customer,customerAddress:customerAddress,customerMobile:customerMobile,
                     product:product,price:price,openingStock:openingStock,closingStock:closingStock,
                     cases:cases,units:units,paymentMethod:paymentMethod,expSales:expSales
@@ -698,7 +700,8 @@ this.firstElementChild.select();
               <form class="zb-txn-form"  name="sample">
                   <div tabindex="-1" id="ember328" class="no-outline ember-view">
                     <!----></div>
-
+                    <input type="hidden" id="month" name="month" value="{{month}}">
+                     <input type="hidden" id="year" name="year" value="{{year}}">
                     <input type="hidden" id="refNumber" name="refNumber" value="{{refNumber}}">
                     <input type="hidden" id="batchId" name="batchId" value="{{batchId}}">
                      <input type="hidden" id="salesPersonId" name="salesPersonId" value="{{salesPersonId}}">
@@ -710,7 +713,7 @@ this.firstElementChild.select();
          <input role="radio" name="f24d3d5d-e4ad-4d63-9ca0-6c9dc961cff0" id="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" tabindex="-1" class="form-check-input" type="radio" value="value"> <label for="f7e9e8d0-98d9-4135-bcae-bbc1eb661e57" class="form-check-label">Value Adjustment</label></div></fieldset>-->
          <div class="row form-group">
         <div class="col-lg-2"><label class="col-form-label required">Date</label> 
-         <input placeholder="dd MMM yyyy" id="date" name="date" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="" ></div>
+         <input placeholder="dd MMM yyyy" id="date" name="date" class="ember-text-field zf-date-picker date-picker ember-view form-control" type="text" value="{{date}}" ></div>
 
          <div class="col-lg-2"><label class="col-form-label required">Invoice Number</label>
           <div id="ember330" class="ember-view">
@@ -873,11 +876,6 @@ this.firstElementChild.select();
        
                             </div><div id="zgs20_gstootltip" class="zgs19_gstootltip zgs19_gsTipBoxShadow zgs19_gsBorderBox zgs19_gsDisplayNone"><div id="zgs20_gstoolarrow" class="zgs19_gsBorderBox"></div></div></div></div></body></html>
 
-
-                     
-<script type="text/javascript"> 
- 	document.getElementById('date').value = new Date().toJSON().slice(0,10).replace(/-/g,'/'); 
-</script>
 
  <script>
       $(function(){

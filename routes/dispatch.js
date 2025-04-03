@@ -9,6 +9,7 @@ var Drivers = require('../models/drivers');
 var Delivery = require('../models/delivery');
 var Warehouse = require('../models/warehouse');
 var Customer = require('../models/customer');
+var RawMatX = require('../models/rawMatX');
 var BatchR = require('../models/batchR');
 var BatchStockUpdate = require('../models/batchStockUpdate');
 var BatchSplit = require('../models/batchSplit');
@@ -123,10 +124,10 @@ const upload = multer({ storage })
 
 
 router.get('/seom',isLoggedIn,function(req,res){
-StockV.find({pallet:1,status:"received"},function(err,docs){
-  for(var i = 0;i<80;i++){
+StockV.find({pallet:2,status:"split"},function(err,docs){
+  for(var i = 0;i<docs.length;i++){
     let id = docs[i]._id
-    StockV.findByIdAndUpdate(id,{$set:{status:"breakage"
+    StockV.findByIdAndUpdate(id,{$set:{status:"received"
     }},function(err,tocs){
 
     })
@@ -714,6 +715,7 @@ router.get('/replace',function(req,res){
     let warehouse = loc[0].warehouse
     let openingBal, closingBal
     let refNumber = loc[0].refNumber
+    let batchNumber = loc[0].batchNumber
     console.log(refNumber,'refNumber33')
     let batchdCases 
 User.findByIdAndUpdate(uid,{$set:{refNumber:refNumber,openingBal:openingStock}},function(err,focs){
@@ -817,7 +819,7 @@ else if(dispatchedPallets> 1 && dispatchedPalletsR > 1 ){
         closingBal = cases
       }
      
-      BatchD.find({status:"dispatch"},function(err,kocs){
+      BatchD.find({status:"dispatched"},function(err,kocs){
 let nSize = kocs.length + 1
     
       
@@ -842,6 +844,7 @@ let nSize = kocs.length + 1
                 //book.warehouse = warehouse
                 book.product = product
                 book.refNumber = refNumber
+                book.batchNumber = batchNumber
                 book.refNumDispatch = refNo
                 book.dispatchMformat = mformat
                 book.dateValueDispatch = dateValue
@@ -868,7 +871,7 @@ let nSize = kocs.length + 1
 
 
           User.findByIdAndUpdate(id,{$set:{date:date,openingBal:openingStock,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
-            product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,batchCount:count,currentCount:1,driver:driver,
+            product:product,refNumber:refNumber,batchNumber:batchNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,batchCount:count,currentCount:1,driver:driver,
             casesBatch:cases,currentCases:0,pallets:1,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,palletCasesBatch:palletCasesBatch,aggCases:cases,product:product }},function(err,docs){
         
             })
@@ -879,7 +882,7 @@ let nSize = kocs.length + 1
 
 
           User.findByIdAndUpdate(id,{$set:{date:date,openingBal:openingStock,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
-            product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,driver:driver,batchId:pro._id,batchCount:count,currentCount:1,
+            product:product,refNumber:refNumber,batchNumber:batchNumber,refNumDispatch:refNo,destination:destination,driver:driver,batchId:pro._id,batchCount:count,currentCount:1,
             casesBatch:cases,currentCases:0,pallets:1,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,driver:driver,palletCasesBatch:palletCasesBatch,aggCases:cases,product:product }},function(err,docs){
         
             })
@@ -889,7 +892,7 @@ let nSize = kocs.length + 1
 
 
         let pallet2 = Math.trunc(dispatchedPallets) + 1
-        User.findByIdAndUpdate(id,{$set:{date:date,openingBal:openingStock,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
+        User.findByIdAndUpdate(id,{$set:{date:date,batchNumber:batchNumber,openingBal:openingStock,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
         product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,driver:driver,batchCount:count,currentCount:1,
         casesBatch:cases,currentCases:0,pallets:pallet2,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,palletCasesBatch:palletCasesBatch,aggCases:cases,product:product }},function(err,docs){
     
@@ -897,7 +900,7 @@ let nSize = kocs.length + 1
         console.log('2U')
       }
       else if(dispatchedPallets == 0 && dispatchedPalletsR > 0){
-        User.findByIdAndUpdate(id,{$set:{date:date,openingBal:openingStock,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
+        User.findByIdAndUpdate(id,{$set:{date:date,batchNumber:batchNumber,openingBal:openingStock,cases:cases, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
           product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,batchCount:count,currentCount:1,driver:driver,
           casesBatch:cases,currentCases:0,pallets:1,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,palletCasesBatch:palletCasesBatch,aggCases:cases,product:product }},function(err,docs){
       
@@ -906,7 +909,7 @@ let nSize = kocs.length + 1
       }
       else if(dispatchedPallets == 0 && dispatchedPalletsR == 0){
 
-        User.findByIdAndUpdate(id,{$set:{date:date,openingBal:openingStock,cases:cases,driver:driver, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
+        User.findByIdAndUpdate(id,{$set:{date:date,batchNumber:batchNumber,openingBal:openingStock,cases:cases,driver:driver, truck:truck, salesPerson:salesPerson, time:time, openingStock:openingBal,
           product:product,refNumber:refNumber,refNumDispatch:refNo,destination:destination,batchId:pro._id,batchCount:count,currentCount:1,driver:driver,
           casesBatch:cases,currentCases:0,pallets:1,remainderCases:remainderCases,currentPallet:nextPallet,currentBatchCount:0,palletCasesBatch:palletCasesBatch,product:product }},function(err,docs){
       
@@ -1270,6 +1273,7 @@ console.log('else')
     var destination = req.user.destination
     var casesD = req.user.casesBatch
     var truck = req.user.truck
+    var batchNumber = req.body.batchNumber
     var time = req.user.time
     var date = req.user.date
     var casesTotal = req.user.batchTotalCases
@@ -1390,6 +1394,7 @@ else{
 
         var book = new BatchSplit();
         book.refNumber = refNumber
+        book.batchNumber = batchNumber
         book.refNumDispatch = refNo
         book.salesPerson = salesPerson
         book.destination = destination
@@ -1766,6 +1771,7 @@ console.log(cases,'casesP2')
       let casesBatchNumber = req.user.invoiceNumber
       let code,cases
       let batchTotalCases = req.user.batchTotalCases
+      let batchNumber = req.user.batchNumber
       let refNumDispatch = req.user.refNumDispatch
       //let shift = req.user.shift
        let date7 =  date6.replace(/\//g, "");
@@ -1908,6 +1914,7 @@ console.log(batchdCases,'batchdCases Iwewe')
                 //book.warehouse = warehouse
                 book.product = product
                 book.refNumber = refNumber
+                book.batchNumber = batchNumber
                 book.refNumDispatch = refNumDispatch
                 book.dispatchMformat = mformat
                 book.dateValueDispatch = dateValue
@@ -2762,6 +2769,7 @@ BatchD.findByIdAndUpdate(id3,{$set:{position:i}},function(err,locs){
 console.log(jocs,'yams')
       
         openingBal = jocs[0].closingStock
+        
       
         BatchD.find({size:rSize,product:product},function(err,yocs){
           closingBal = openingBal + yocs[0].cases
@@ -2817,6 +2825,22 @@ console.log(jocs,'yams')
                   
                 }
               
+
+                var book = new RawMatX();
+            //book.refNumber = refNumber
+            book.batchNumber ='2'
+            //book.date = date
+            book.unit = '(cases)'
+            book.stage = 'dispatch'
+            book.uniqueMeasure = number1
+            book.item = product
+            book.code = '2'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
               })
   
   
@@ -2890,6 +2914,21 @@ console.log(jocs,'yams')
                   
                 }
               
+                var book = new RawMatX();
+            //book.refNumber = refNumber
+            book.batchNumber ='2'
+            //book.date = date
+            book.unit = '(cases)'
+            book.stage = 'dispatch'
+            book.uniqueMeasure = number1
+            book.item = product
+            book.code = '2'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
               })
   
   
@@ -2971,6 +3010,21 @@ console.log(jocs,'yams')
                 
               }
             
+              var book = new RawMatX();
+            //book.refNumber = refNumber
+            book.batchNumber ='2'
+            //book.date = date
+            book.unit = '(cases)'
+            book.stage = 'dispatch'
+            book.uniqueMeasure = number1
+            book.item = product
+            book.code = '2'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
             })
 
 
@@ -3080,6 +3134,21 @@ console.log(jocs,'yams')
                       
                     }
                   
+                    var book = new RawMatX();
+            //book.refNumber = refNumber
+            book.batchNumber ='2'
+            //book.date = date
+            book.unit = '(cases)'
+            book.stage = 'dispatch'
+            book.uniqueMeasure = number1
+            book.item = product
+            book.code = '2'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
                   })
       
       
@@ -3193,6 +3262,21 @@ BatchD.findByIdAndUpdate(id2,{$set:{closingStock:gSize,openingStock:openingBalan
                   
                 }
               
+                var book = new RawMatX();
+            //book.refNumber = refNumber
+            book.batchNumber ='2'
+            //book.date = date
+            book.unit = '(cases)'
+            book.stage = 'dispatch'
+            book.uniqueMeasure = number1
+            book.item = product
+            book.code = '2'
+            book.save()
+            .then(prod =>{
+        
+             
+        
+            })
               })
   
   
@@ -9549,9 +9633,11 @@ router.post('/stockUpdate',isLoggedIn,function(req,res){
   var year = m.format('YYYY')
   var arrV=[]
   let number1
-  var date =  m.format('L')
-
-var month = m.format('MMMM')
+  var dateV = req.body.date
+  //var date =  m.format('L')
+  let date = moment(dateV).format('l');
+  var year = moment(dateV).format('YYYY')
+var month = moment(dateV).format('MMMM')
 var no1 = req.body.no1
 var no2 = req.body.no2
 var no3 = req.body.no3

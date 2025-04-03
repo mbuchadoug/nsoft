@@ -1908,6 +1908,218 @@ setTimeout(function() {
     
    
 });
+////////////////button4
+
+
+
+
+    
+var button = document.getElementById('button4').addEventListener('click', function(){
+
+    let labels3=[]
+    let labels4 = []
+    let labels5 = []
+    let product = document.getElementById('product').value
+
+    //let term = document.getElementById('term2').value
+    //let productName = document.getElementById('productName3').value
+          /*
+    
+    $.ajax({
+       
+        dataType: 'json',
+        type: 'POST',
+        url: "/feesChart",
+        success: function(data) {
+        console.log(data)
+         for (var i = 0;i<data.length;i++){
+            labels3.push(data[i].amount)
+            labels13.push(data[i].month)
+       
+       
+         }
+    */
+      
+    let colors2 = ['#49A9EA', '#36CAAB', '#34495E', '#B370CF','#FFA07A','#FFFF00'];
+    
+    //contractQty
+    var element = document.getElementById("myChart1");
+    var height = parseInt(KTUtil.css(element, 'height'));       
+    var borderColor = KTUtil.getCssVariableValue('--bs-border-dashed-color');
+    var baseColor = KTUtil.getCssVariableValue('--bs-gray-800');
+    var lightColor = KTUtil.getCssVariableValue('--bs-light-info');
+    
+    var options = {
+        series: [],
+        chart: {
+            fontFamily: 'inherit',
+            type: 'area',
+            height: height,
+            toolbar: {
+                show: false
+            }
+        },             
+        legend: {
+            show: false
+        },
+        dataLabels: {
+            enabled: false
+        },
+        fill: {
+            type: 'solid',
+            opacity: 0
+        },
+        stroke: {
+            curve: 'smooth',
+            show: true,
+            width: 2,
+            colors: [baseColor]
+        },
+        xaxis: {   
+                          
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false
+            },
+            labels: {
+                show: false
+            },
+            crosshairs: {
+                position: 'front',
+                stroke: {
+                    color: baseColor,
+                    width: 1,
+                    dashArray: 3
+                }
+            },
+            tooltip: {
+                enabled: true,
+                formatter: undefined,
+                offsetY: 0,
+                style: {
+                    fontSize: '12px'
+                }
+            }
+        },
+        yaxis: {
+            labels: {
+                show: false
+            }
+        },
+        states: {
+            normal: {
+                filter: {
+                    type: 'none',
+                    value: 0
+                }
+            },
+            hover: {
+                filter: {
+                    type: 'none',
+                    value: 0
+                }
+            },
+            active: {
+                allowMultipleDataPointsSelection: false,
+                filter: {
+                    type: 'none',
+                    value: 0
+                }
+            }
+        },
+        tooltip: {
+            style: {
+                fontSize: '12px'
+            },
+            x: {
+                formatter: function (val) {
+                    val--
+                    return labels5[val] 
+                }
+            },
+            y: {
+                formatter: function (val) {
+                    return  val 
+              
+                }
+            }
+        },
+        colors: [lightColor],
+        grid: {                 
+            strokeDashArray: 4,
+            padding: {
+                top: 0,
+                right: -20,
+                bottom: -20,
+                left: -20
+            },
+            yaxis: {
+                lines: {
+                    show: true
+                }
+            }
+        },
+        markers: {
+            strokeColor: baseColor,
+            strokeWidth: 2
+        }
+    }; 
+    
+    
+    const chart = new ApexCharts(element, options);
+    chart.render()
+    
+    // Set timeout to properly get the parent elements width
+    $.ajax({
+             
+        dataType: 'json',
+        type: 'POST',
+        data:{ product:product},
+        url: "/accounts5/dashChartG2",
+        success: function(data) {
+    console.log(data,'data')
+    
+    
+    for (var i = 0;i<data.length;i++){
+        labels3.push({"x":data[i].month ,"y":data[i].cases})
+        labels4.push(data[i].cases)
+        labels5.push(data[i].month)
+               // labels3.push(data[i].qty)
+         }
+    
+         console.log(labels3,'labels')
+         chart.updateSeries([{
+            name: 'Cases',
+            data: labels4, 
+            
+        
+          }])
+    
+         
+    
+      }
+    
+     
+    
+        })
+    })  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ///////////product stats
 
@@ -2079,6 +2291,7 @@ setTimeout(function() {
 
 
 
+/////////////////////
 
 
 

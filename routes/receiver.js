@@ -756,11 +756,22 @@ router.get('/warehouseUpdate',function(req,res){
 
 
 router.get('/batchPackagingList',isLoggedIn,function(req,res){
-  BatchPackaging.find(function(err,docs){
+  BatchPackaging.find({status:"null"},function(err,docs){
     res.render('receiver/packagingList',{listX:docs})
   })
 })
 
+
+router.get('/closePackage/:id',isLoggedIn,function(req,res){
+  var pro = req.user
+  var id = req.params.id
+  //console.log(id,'idPrice')
+  BatchPackaging.findByIdAndUpdate(id,{$set:{status:"closed"}},function(err,doc){
+    
+  
+  })
+  res.redirect('/receiver/batchPackagingList')
+  })
 
 router.get('/update/:id',isLoggedIn,function(req,res){
   var pro = req.user
@@ -1468,14 +1479,16 @@ var idU = req.user._id
     
 
 
-router.get('/closeBatch/:id',function(req,res){
+router.get('/closeBatch/:id/:id2',function(req,res){
   let id = req.params.id
+  let batchNumber = req.params.id2
   var batchId = req.user.batchId
   console.log(id,'idBatch')
 
   StockV.find({refNumber:id},function(err,docs){
   //  console.log(docs,'docs')
 let cases = docs.length
+let product = docs[0].name
   BatchR.findById(batchId,function(err,doc){
     let openingBal = doc.openingBal
     let closingBalance = doc.openingBal + docs.length
@@ -1483,6 +1496,31 @@ let cases = docs.length
     BatchR.findByIdAndUpdate(batchId,{$set:{cases:cases,closingBal:closingBalance}},function(err,tocs){
 
     })
+  })
+
+  BatchPackaging.find({refNumber:batchNumber},function(err,bocs){
+    if(bocs){
+let bid = bocs[0]._id
+let totalCases = bocs[0].cases + cases
+BatchPackaging.findByIdAndUpdate(bid,{$set:{totalCases:totalCases}},function(err,kocs){
+
+})
+    }
+  })
+
+  var book = new RawMatX();
+  //book.refNumber = refNumber
+  book.batchNumber = batchNumber
+  book.unit = '(cases)'
+  book.stage = 'receiving'
+  book.uniqueMeasure = cases
+  book.item = product
+  book.code = batchNumber
+  book.save()
+  .then(prod =>{
+
+   
+
   })
    
     var productChunks = [];
@@ -1603,7 +1641,7 @@ let cases = docs.length
   })
 })*/
 
-router.get('/closePallet/:id/:id2/:id3/:id4',isLoggedIn,function(req,res){
+router.get('/closePallet/:id/:id2/:id3/:id4/:id5',isLoggedIn,function(req,res){
   let arr16=[]
   var receiver = req.user.fullname
   var batchId = req.user.batchId
@@ -1614,6 +1652,7 @@ router.get('/closePallet/:id/:id2/:id3/:id4',isLoggedIn,function(req,res){
   var currentTime = moment();
 console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
   let refNumber  =req.params.id
+  let batchNumber = req.params.id5
   let pallet = req.params.id4
   let uid = req.user._id
   let product = req.params.id2
@@ -1629,7 +1668,7 @@ openingStock = locs.length - 140
                 book.openingStock = openingStock
                 book.closingStock = closingStock
                 book.casesReceived = 140
-                
+                book.batchNumber = batchNumber
                 book.palletNum = pallet
                 book.time = moment(currentTime).format("HH:mm")
                 book.salesPerson = receiver
@@ -2012,13 +2051,13 @@ router.post('/repo',isLoggedIn,function(req,res){
       res.redirect('/receiver/repo');
     }else{
 
-StockV.find({refNumber:"12242024S1B1R"},function(err,docs){
+StockV.find({date:date},function(err,docs){
   total = docs.length
 
-StockV.find({refNumber:"12242024S1B1R",status:"breakage"},function(err,vocs){
+StockV.find({date:date,status:"breakage"},function(err,vocs){
   breakages = vocs.length
 
-  BatchD.find({refNumber:"12242024S1B1R"},function(err,locs){
+  BatchD.find({date:date},function(err,locs){
     //console.log(locs,'locs')
     for(var i = 0;i<locs.length;i++){
       let id = locs[i]._id
@@ -2045,16 +2084,16 @@ StockV.find({refNumber:"12242024S1B1R",status:"breakage"},function(err,vocs){
 
 
 
-        StockV.find({refNumber:"12242024S1B1R"},function(err,jocs){
+        StockV.find({date:date},function(err,jocs){
           if(jocs.length >0){
       
-          let openingBalanceX = jocs[0].availableCases
+          /*let openingBalanceX = jocs[0].availableCases*/
           let totalCases = jocs.length 
-          let closingBalanceX = jocs[0].availableCases + jocs.length 
+          /*let closingBalanceX = jocs[0].availableCases + jocs.length*/ 
           
-          BatchR.find({refNumber:"12242024S1B1R"},function(err,tocs){
+          BatchR.find({date:date},function(err,tocs){
             for(var i = 0;i< tocs.length;i++){
-              BatchR.findByIdAndUpdate(tocs[i]._id,{$set:{casesRcvdX:totalCases,openingBalX:openingBalanceX,closingBalX:closingBalanceX}},function(err,noc){
+              BatchR.findByIdAndUpdate(tocs[i]._id,{$set:{casesRcvdX:totalCases}},function(err,noc){
       
               })
       
@@ -2095,7 +2134,7 @@ let date = req.user.dispatchDate
       
       
       //TestX.find({year:year,uid:uid},function(err,vocs) {
-      BatchR.find({refNumber:"12242024S1B1R"}).lean().sort({date:1}).then(vocs=>{
+      BatchR.find({date:date}).lean().sort({date:1}).then(vocs=>{
       console.log(vocs.length,'vocs')
       
       for(var x = 0;x<vocs.length;x++){
@@ -2215,6 +2254,8 @@ printBackground:true
 
 })
 
+res.redirect('/receiver/openFile/'+seqNum)
+
 
 var repo = new RepoFiles();
 
@@ -2239,24 +2280,20 @@ repo.save().then(poll =>{
 
 /*await browser.close()
 
-/*process.exit()*/
+/*process.exit()
 
 const file = await fs.readFile(`./public/statements/${year}/${month}/statementR${seqNum}`+'.pdf');
 const form = new FormData();
 form.append("file", file,filename);
-//const headers = form.getHeaders();
-//Axios.defaults.headers.cookie = cookies;
-//console.log(form)
+
 await Axios({
   method: "POST",
- //url: 'https://portal.steuritinternationalschool.org/clerk/uploadStatement',
-url: 'https://niyonsoft.org/receiver/uploadStatement',
-  //url:'http://localhost:8000/receiver/uploadStatement',
+  url:'http://localhost:8000/receiver/uploadStatement',
   headers: {
     "Content-Type": "multipart/form-data"  
   },
   data: form
-});
+});*/
 
 seqNum++
 RefNoSeq.findByIdAndUpdate(seqId,{$set:{num:seqNum}},function(err,tocs){
@@ -2264,7 +2301,7 @@ RefNoSeq.findByIdAndUpdate(seqId,{$set:{num:seqNum}},function(err,tocs){
 })
   
 
-res.redirect('/receiver/fileId/'+filename);
+//res.redirect('/receiver/fileId/'+filename);
 
 
 }catch(e) {
@@ -2284,7 +2321,25 @@ console.log(e)
 
 })
 
-
+router.get('/openFile/:id',isLoggedIn,function(req,res){
+  var seqNum = req.params.id
+  var batchNumber = req.user.batchNumber
+  var m = moment()
+  var mformat = m.format('L')
+  var month = m.format('MMMM')
+  var year = m.format('YYYY')
+  const path =`./public/statements/${year}/${month}/statementR${seqNum}`+'.pdf'
+  if (fs.existsSync(path)) {
+      res.contentType("application/pdf");
+      fs.createReadStream(path).pipe(res)
+  } else {
+      res.status(500)
+      console.log('File not found')
+      res.send('File not found')
+  }
+  
+  })
+  
 
 
 router.post('/uploadStatement',upload.single('file'),(req,res,nxt)=>{

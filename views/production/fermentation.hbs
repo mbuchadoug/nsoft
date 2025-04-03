@@ -356,7 +356,7 @@ $.ajax({
     type: 'POST',
 
     
-     url: `/production/fermentationPreload/{{{refNumber}}}`,
+     url: `/production/fermentationPreload/{{{batchNumber}}}`,
     success: function(data) {
     console.log(data)
    
@@ -370,6 +370,7 @@ $.ajax({
 	 var td3 = tr.appendChild(document.createElement('td'));
     var td4 = tr.appendChild(document.createElement('td'));
     var td5 = tr.appendChild(document.createElement('td'));
+    var td6 = tr.appendChild(document.createElement('td'));
    
    
     td1.id =data[i]._id
@@ -388,9 +389,10 @@ td5.appendChild(link);*/
 
 td1.innerHTML = data[i].date;
     td2.innerHTML = data[i].batchNumber;
-    td3.innerHTML = data[i].ingredient;
-    td4.innerHTML=  data[i].quantity ;
-    td5.innerHTML = data[i].product
+        td3.innerHTML = data[i].refNumber;
+    td4.innerHTML = data[i].ingredient;
+    td5.innerHTML=  data[i].quantity ;
+    td6.innerHTML = data[i].product
    
 
     /*let link2 = "/rec/delete/"+data[i]._id
@@ -640,6 +642,12 @@ link.classList.add('text-end','pe-0')*/
 
     document.getElementById("kt_ecommerce_report_sales_table").appendChild(tr)
     $("#totalMass").val(data.closingMass)
+      $('#ingredient').val('');
+       $('#quantity').val('');
+    $('#refNumber').val('');
+    $('#availableMass').val('');
+               
+    
      $("#mass").val('')
   
 

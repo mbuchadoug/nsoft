@@ -335,7 +335,7 @@ router.post('/dashChartStockSub',isLoggedIn,function(req,res){
   
   
    RawMatX.find({stage:stage,code:code},function(err,docs) {
-     //console.log(docs,'docs1')
+     console.log(docs,'docs1')
     for(var i = 0;i<docs.length;i++){
 
     console.log(docs,'docs')
@@ -4009,7 +4009,7 @@ console.log(docs,'docs')
     
     res.render('rStock/grvWeights',{supplier:supplier,
     item:item,date:date,refNumber:refNumber,driver:driver,regNumber:regNumber,
-  orderNumber:orderNumber,batchNumber,grvNumber:grvNumber,
+  orderNumber:orderNumber,batchNumber:id,grvNumber:grvNumber,
 requestedMass:requestedMass})
 
     }
@@ -4017,6 +4017,21 @@ requestedMass:requestedMass})
 })
 
 
+router.post('/reloadMatWeights/:id',isLoggedIn, (req, res) => {
+  var pro = req.user
+  console.log('reload')
+  var m = moment()
+  var code = req.params.id
+  var mformat = m.format("L")
+  
+  
+  StockRM.find({batchNumber:code}).lean().sort({'dateValue':1}).then(docs=>{
+  
+  
+    res.send(docs)
+            })
+  
+  });
 
 router.get('/viewGRV/:id',isLoggedIn,function(req,res){
   var id = req.params.id

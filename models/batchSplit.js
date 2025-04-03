@@ -28,6 +28,7 @@ var batchSchemaSplit = new Schema({
     dateValueDispatch: {type: Number },
     refNumDispatch:{type:String},
     refNumber:{type:String, required:true},
+    batchNumber:{type:String, required:true},
     position: {type: Number },
     size: {type: Number },
     dSize: {type: Number },

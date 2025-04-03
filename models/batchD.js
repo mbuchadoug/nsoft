@@ -26,6 +26,7 @@ var batchSchemaD = new Schema({
     currentPallet: {type: Number },
     remainderCases: {type: Number },
     batchTotalCases:{type:Number},
+    batchNumber:{type:String, required:true},
     batchStatus:{type:String},
     openingStock: {type: Number },
     closingStock: {type: Number },

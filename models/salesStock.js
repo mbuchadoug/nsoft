@@ -13,6 +13,7 @@ var schema = new Schema({
     qty: {type: Number},
     sales: {type: Number},
     mformat: {type: String},
+    branch: {type: String},
     year: {type: Number},
     month: {type: String},
     stockUpdate: {type: String},

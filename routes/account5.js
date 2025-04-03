@@ -123,6 +123,17 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 
 
+router.get('/salesPupdate',function(req,res){
+  SaleStock.find(function(err,docs){
+    for(var i = 0;i<docs.length;i++){
+      let id = docs[i]._id
+      SaleStock.findByIdAndUpdate(id,{$set:{branch:'normal'}},function(err,tocs){
+        
+      })
+    }
+  })
+})
+
 router.get('/productStat',function(req,res){
   var max
     var m = moment()
@@ -522,7 +533,7 @@ router.post('/dashChartG2',isLoggedIn,function(req,res){
   var id = req.user._id
 
   let product = req.body.product
-
+console.log(product,'product')
 
 
   SalesInvoPayments.find({product:product,year:year},function(err,docs) {
@@ -531,7 +542,7 @@ router.post('/dashChartG2',isLoggedIn,function(req,res){
    
         
        if(arr.length > 0 && arr.find(value => value.month == docs[i].month)){
-              console.log('true')
+              //console.log('true')
              arr.find(value => value.month == docs[i].month).cases+= docs[i].cases;
         }else{
 arr.push(docs[i])
@@ -539,7 +550,7 @@ arr.push(docs[i])
 
     
     }
-    //console.log(arr,'arr')
+  console.log(arr,'arrP')
    res.send(arr)
   })
 
@@ -1974,15 +1985,17 @@ if(docs.length > 0){
           let salesPerson = doc.salesPerson
           let salesPersonId = doc.salesPersonId
           let date = doc.date
+          let month = doc.month
+          let year = doc.year
         
          //var id = req.params.id
-       
+       console.log(month,year,'month,year')
      
         let sales = doc.sales
 
         //paymentStatus:"unpaid"
        
-          res.render('accounts5/cashR',{invoiceNumber:invoiceNumber,code:batchCode,id:id,batchId:id,refNumber:refNumber,sales:sales,amount:amount,salesPerson:salesPerson,salesPersonId:salesPersonId})
+          res.render('accounts5/cashR',{invoiceNumber:invoiceNumber,month:month,year:year,date:date,code:batchCode,id:id,batchId:id,refNumber:refNumber,sales:sales,amount:amount,salesPerson:salesPerson,salesPersonId:salesPersonId})
         })
 
       })
@@ -2008,9 +2021,10 @@ if(docs.length > 0){
         router.post('/addInvoiceRemitt',isLoggedIn,function(req,res){
           var m = moment()
           var mformat = m.format('L')
-          var month = m.format('MMMM')
-          var year = m.format('YYYY')
-          let dateValue = moment().valueOf()
+          var month = req.body.month
+          var year = req.body.year
+          console.log(month,year,'monthYear')
+          
           let arrV = []
           let arrD={}
           let arrCases= []
@@ -2021,6 +2035,7 @@ if(docs.length > 0){
           let salesPerson = req.body.salesPerson
           let salesPersonId = req.body.salesPersonId
           let date = req.body.date
+          let dateValue = moment(date).valueOf()
           let invoiceNumber = req.body.invoiceNumber
           let customer = req.body.customer
           let customerAddress = req.body.customerAddress

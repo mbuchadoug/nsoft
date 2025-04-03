@@ -18,6 +18,8 @@ var batchSchemaFermentation = new Schema({
     blendingVolumeDrained:{type:Number},
     volumeDrained:{type:Number},
     casesPackaged:{type:Number},
+    casesDispatched:{type:Number},
+    casesRemaining:{type:Number},
     water: {type: Number },
     operator: {type: String },
     checkedBy: {type: String },

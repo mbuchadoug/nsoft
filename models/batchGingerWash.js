@@ -10,6 +10,7 @@ var batchSchemaGW = new Schema({
     nxtStage:{type:String},
     variance: {type: Number },
     crates: {type: Number },
+    bags: {type: Number },
     qtyInMass: {type: Number },
     qtyOutMass: {type: Number },
     status: {type: String },
